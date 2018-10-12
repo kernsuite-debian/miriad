@@ -10,4 +10,15 @@ linux64/aux/subs.inc/*
 linux64/aux/subs.sym/*
 linux64/aux/subs.inclist
 linux64/aux/subs.symlist
+linux64/aux/prog.inc/*
+linux64/aux/prog.obj/*
+linux64/man/index.db
+linux64/man/man1/*.1
+doc/*.doc                                                                                                                 
+html/doc/*.html  
+html/taskindex.html
+linux64/aux/prog.inclist
+linux64/aux/prog.objlist
+specdoc/cheat.doc
+specdoc/tasks.doc
 
