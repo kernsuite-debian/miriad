@@ -1,0 +1,34 @@
+.TH im2uv 1
+.SH NAME
+im2uv - Convert an image to visibilities.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+This Fourier transforms an image and writes the result as a
+visibility file.  Thus the uv plane sampling pattern is a
+cartesian grid.  Many of the uv variables are given reasonably
+arbitrary values to make the output dataset appear mildly
+sensible.
+.SH PARAMETERS
+.TP
+\fImodel\fP
+Input image model. No default.  The model should have units of
+Jy/pixel, eg. a clean component model.  Only a two-dimensional
+model is handled.
+.TP
+\fIout\fP
+Output visibility dataset.  No default.
+.TP
+\fIregion\fP
+The region of interest in the model.  The model is treated as
+zero outside the region of interest.  See the help on "region"
+for more information.
+.TP
+\fIselect\fP
+Visibility data selection - only 'uvrange' selection is
+supported.  See the help on "select" for more information.
+.sp
+.SH REVISION
+1.4, 2011/10/06 07:18:56 UTC

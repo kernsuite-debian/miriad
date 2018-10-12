@@ -1,0 +1,63 @@
+.TH rpgen 1
+.SH NAME
+rpgen - Generate an RPFITS file based on the input parameters
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+data transfer
+.SH DESCRIPTION
+RPGEN is a MIRIAD task which generates a file in RPFITS
+format. An RPFITS file consists of a number of scans, each with
+a complete header that describes the data following. RPGEN
+currently supports writing multiple scans, but all scans will have
+the same frequency setup. You can concatenate rpfits files to
+generate more complex observations.
+.sp
+.SH PARAMETERS
+.TP
+\fIout\fP
+Name of the output RPFITS file. No default.
+.TP
+\fIsource\fP
+List of source names, default='scp'
+.TP
+\fIradec\fP
+List of phase centers corresponding to each source. Each center is
+specified as a pair of numbers (ra and dec), specified in
+hh:mm:ss,dd:mm:ss format, or as decimal hours and decimal
+degrees. The default is 0,-90.
+.TP
+\fIscan\fP
+List of scan integration times for each source, in minutes.
+.TP
+\fItime\fP
+The start time of the observation, followed by the duration in h.
+This is in the form
+.nf
+  yymmmdd.ddd,hh.h
+.fi
+or
+.nf
+  yymmmdd:hh:mm:ss.s,hh.h
+.fi
+The default is 08JAN01.0,1.0. A function of the start time
+is also used as a seed for the random number generator.
+The sources ares reused, with specified integration time, until
+the start time + duration is reached.
+.TP
+\fIinttime\fP
+The correlator integration time in seconds
+.TP
+\fIspwin\fP
+Number of spectral windows, followed by a triple of
+number of channels, frequency in GHz, bandwidth in GHz
+for each spectral window
+.TP
+\fIstokes\fP
+List of stokes parameters, default is xx,xy,yx,yy
+.TP
+\fIoptions\fP
+cabb - interpret spwin to match CABB output (combine overlaps)
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

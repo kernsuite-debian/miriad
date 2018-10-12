@@ -1,0 +1,13 @@
+%N telepar
+%D Report telescope characteristics.
+%P rjs
+%: utility
+%B
+        TELEPAR reports the characteristics of various observatories.
+        Its main use is to check that the characteristics are correct.
+ 
+%A telescop
+        Name of the observatory.  Several can be given.  If none are
+        given, TELEPAR simply lists the known observatories.
+ 
+%R 1.8, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Variable Override</TITLE>
+<META NAME="description" CONTENT="Variable Override">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node22.html">
+<LINK REL="previous" HREF="node20.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node22.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html482"
+  HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html476"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html470"
+  HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html478"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html480"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html483"
+  HREF="node22.html">UVNEXT</A>
+<B>Up:</B> <A NAME="tex2html477"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html471"
+  HREF="node20.html">Direct Access to UV</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00456000000000000000">
+Variable Override</A>
+</H2>
+Occassionally it is useful for the user to override the value of a uv variable.
+This is especially useful if the value of the variable is both wrong and
+important! When uvio opens an old file, for each variable name that is
+present in the uv file, it checks if there is a corresponding item with
+the same name. If there is, then the value of the item is used to override the
+value of the variable. Unfortunately the item must consist of a single
+number, and this single number will be copied into each value of the variable
+(if the variable consists of several elements).
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

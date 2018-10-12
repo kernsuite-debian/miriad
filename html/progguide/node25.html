@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>When Do UV Variables Change?</TITLE>
+<META NAME="description" CONTENT="When Do UV Variables Change?">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node26.html">
+<LINK REL="previous" HREF="node24.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html538"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html532"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html526"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html534"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html536"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html539"
+  HREF="node26.html">Massaging Steps Performed by</A>
+<B>Up:</B> <A NAME="tex2html533"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html527"
+  HREF="node24.html">Keeping Track of UV</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004510000000000000000"></A>
+<A NAME="sect:uvchanges"></A>
+<BR>
+When Do UV Variables Change?
+</H2>
+A uv variable can change its value in any part of the
+uv variable stream. So it can change its value after each call to
+<TT>uvread</TT>, <TT>uvnext</TT> or <TT>uvscan</TT>. The uv routines which need to
+know if a uv variable has changed (<TT>uvprobvr</TT>, <TT>uvcopyvr</TT> and
+<TT>uvupdated</TT>) normally (i.e. by default) work on whether the particular
+variable(s) of interest has changed since the last ``mark'' in the uv stream.
+By default any routine which
+causes more of the uv stream to be read (<TT>uvread</TT>, <TT>uvscan</TT> and
+<TT>uvnext</TT>) move this marker to the current point in the uv stream, before
+reading more. The <TT>uvmark</TT> routine provides greater control at
+marking the position in the stream. Calling
+<PRE>
+      call uvmark(tno,.true.)
+</PRE>
+sets the marker at the current position in the uv file, and disables
+<TT>uvread</TT>, etc, from resetting the marker. Calling
+<PRE>
+      call uvmark(tno,.false.)
+</PRE>
+also sets the marker at the current position, and enables <TT>uvread</TT>, etc,
+to reset the marker on each call.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

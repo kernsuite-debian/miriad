@@ -1,0 +1,95 @@
+.TH uvflux 1
+.SH NAME
+uvflux - Determine some statistics about visibilities.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv-analysis
+.SH DESCRIPTION
+UvFlux is a MIRIAD task which gives a mean visibility value.
+The visibilities are averaged together regardless of time, (u,v)
+coordinate, frequency or baseline. Distinct polarisations
+and sources, however, are averaged separately. This task will be
+most useful when examining the fluxes of point sources.
+.sp
+Both vector and scalar averages are formed. It also prints out
+the rms scatter around the vector mean, and the RMS variation
+in the amplitude.
+.sp
+Definitions in Detail: UvFlux prints out six quantities.
+.sp
+Theoretical RMS -- This is the rms error, resulting from
+receiver thermal noise, that would be expected in the real or
+imaginary part of each visibility.
+.sp
+Vector Average -- This is simply the normal average (mean)
+of the real and imaginary parts of the visibility data. For a
+point source, the real part should give the point source flux
+density, and the imaginary part should be noise.
+.sp
+RMS Scatter -- This is the RMS scatter of real and imaginary
+parts of the actual visibilities around their mean value. If the
+data do represent a point source, and it is well calibrated, this
+should be the same number as the ``Theoretical RMS''.
+.sp
+Average Amplitude -- This gives the mean value of the visibilty
+amplitude (the so-call amplitude scalar average). If the S/N
+ratio is much less than 1, this average amplitude will be dominated
+by thermal noise bias, and should be 1.25 times larger than the
+``Theoretical RMS''. If the S/N ratio is much greater than 1, then
+this should be a good estimate of the point-source's flux density.
+This will be unaffected by phase calibration errors (unlike the
+``Vector Average'', which decorrelates).
+.sp
+RMS Amp Scatter -- This gives the RMS scsatter of the visibility
+amplitudes around the mean visibility amplitude. If the S/N ratio
+is much less than 1, then this should be 0.65 times the ``Theoretical
+RMS'. If the S/N ratio is much greater than 1, this should be the
+same as ``Theoretical RMS''.
+.sp
+Number Corrs -- This gives the number of correlations, N, used in
+forming each mean. NOTE that the three RMS values printed are RMS
+difference between the correlations and some mean -- it is not
+an error-of-the-mean. To convert an RMS to an error-in-the-mean,
+divide by sqrt(N).
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input visibility data-set. Several files can be
+given, wildcarding is supported. No default.
+.TP
+\fIselect\fP
+Standard uv selection. The default is all data.
+.TP
+\fIline\fP
+Standard line-type specification. When there are multiple channels
+selected, uvflux averages them all together.
+.TP
+\fIstokes\fP
+Normal Stokes processing. You can select several Stokes or
+polarisation parameters, which will be be averaged independently.
+.TP
+\fIoffset\fP
+An offset (arcsec) to shift the uv data. The sign convention is the
+same as INVERT, MAXFIT, UVFIT, etc. The default is 0,0 (no shift).
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is used. Possible values are:
+.nf
+  nocal    Do not apply any antenna gain calibration corrections.
+           By default these are applied if they exist.
+  nopol    Do not apply polarisation leakage corrections. By default
+           these are applied if they exist.
+  nopass   Do not apply bandpass corrections. By default these
+           are applied if they exist.
+  uvpol    Print out fractional linear polarisation and
+           polarisation position angle (provided Stokes I,Q,U are
+           requested)
+  vlbi     Average amplitude of vector average for each integration.
+           data are vector averaged over channel and baseline,
+           and amplitude averaged for each integration interval.
+  long     Write long lines (>80 characters wide) with results in
+           more significant figures.
+  .

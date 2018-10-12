@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Flagging Visibilities</TITLE>
+<META NAME="description" CONTENT="Flagging Visibilities">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node63.html">
+<LINK REL="previous" HREF="node58.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node60.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2120"
+  HREF="node60.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2116"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2110"
+  HREF="node58.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2118"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2121"
+  HREF="node60.html">Interactive Flagging - BLFLAG</A>
+<B>Up:</B> <A NAME="tex2html2117"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2111"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001010000000000000000"></A><A NAME="2282"></A>
+<BR>
+Flagging Visibilities
+</H1>
+
+<P>
+In <I>Miriad</I>, flagging a correlation means you set a bit in a mask. There
+are no explicit weights like in AIPS or ascii flagging tables.
+When you list visibilities with <A NAME="tex2html155"
+  HREF="../doc/uvlist.html">uvlist</A>
+(see below), flagged
+correlations
+are indicated by an asterisk to the right of the phase.
+
+<P>
+There are three main flagging tasks in <I>Miriad</I>:
+
+<UL>
+<LI><A NAME="tex2html156"
+  HREF="../doc/blflag.html">blflag</A>
+- a plot-based interactive flagger. This normally plots
+one baseline at a time, with a variety of possible axes (e.g. time against
+amplitude), and you click on bad data to flag it out. This is similar to
+tha AIPS <TT>IBLED</TT> task.
+</LI>
+<LI><A NAME="tex2html157"
+  HREF="../doc/tvflag.html">tvflag</A>
+- a ``TV''-based, interactive flagger. This displays
+one baseline at a time on a ``TV'' display, with the axes of the display
+being channel number and time. You select regions of bad data in the display.
+This is similar to AIPS task <TT>SPFLG</TT>.
+</LI>
+<LI><A NAME="tex2html158"
+  HREF="../doc/uvflag.html">uvflag</A>
+- a non-interactive general flagger, where you
+specify the data to be flagged by the <TT>select</TT> keyword. This is like
+the AIPS task <TT>UVFLG</TT>.
+</LI>
+</UL>
+There are a number of other flagging tasks which occupy some niche
+which are described in the next section.
+
+<P>
+Although there is some personal taste involved, a recommended scheme for
+flagging is as follows:
+
+<UL>
+<LI>For 20 and 13&nbsp;cm observations <EM>it is strongly recommended</EM>
+that you start the flagging process with <A NAME="tex2html159"
+  HREF="../doc/tvflag.html">tvflag</A>. Narrowband
+interference is common at the wavelengths, and <A NAME="tex2html160"
+  HREF="../doc/tvflag.html">tvflag</A>
+is a good
+tool at finding and flagging this interference. <A NAME="tex2html161"
+  HREF="../doc/tvflag.html">tvflag</A>
+is conveniently
+performed on a multi-source file, straight after the data are loaded into
+<I>Miriad</I>. NOTE: one shortcoming of <A NAME="tex2html162"
+  HREF="../doc/tvflag.html">tvflag</A>
+is that it ignores any
+calibration tables that happen to be present in a dataset.
+</LI>
+<LI>Using <A NAME="tex2html163"
+  HREF="../doc/blflag.html">blflag</A>
+is generally quick compared to <A NAME="tex2html164"
+  HREF="../doc/tvflag.html">tvflag</A>,
+and some forms of bad data are more apparent with <A NAME="tex2html165"
+  HREF="../doc/blflag.html">blflag</A>.
+However, bad data is not that apparent when attempting to use it
+with datasets containing multiple sources. So we recommend that you
+split the data into single source datasets (using <A NAME="tex2html166"
+  HREF="../doc/uvsplit.html">uvsplit</A>)
+before using <A NAME="tex2html167"
+  HREF="../doc/blflag.html">blflag</A>. Using <A NAME="tex2html168"
+  HREF="../doc/blflag.html">blflag</A>
+is recommended
+even if you use have already use <A NAME="tex2html169"
+  HREF="../doc/tvflag.html">tvflag</A>
+on you data, because
+<A NAME="tex2html170"
+  HREF="../doc/blflag.html">blflag</A>
+is relatively quick and painless.
+</LI>
+<LI>Normally <A NAME="tex2html171"
+  HREF="../doc/blflag.html">blflag</A>
+will apply any calibration tables
+to the data before generating its plot. Thus it is just as useful after
+calibration as before. It is useful to look at calibrators using <A NAME="tex2html172"
+  HREF="../doc/blflag.html">blflag</A>
+both before and after solving for calibration parameters. With the program
+source, you will probably only use <A NAME="tex2html173"
+  HREF="../doc/blflag.html">blflag</A>
+after you are happy
+with the calibration.
+</LI>
+</UL>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2122"
+  HREF="node60.html">Interactive Flagging - BLFLAG</A>
+<LI><A NAME="tex2html2123"
+  HREF="node61.html">Interactive Channel/Baseline Flagging - TVFLAG</A>
+<LI><A NAME="tex2html2124"
+  HREF="node62.html">General <I>Miriad</I> Flagging - UVFLAG</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2120"
+  HREF="node60.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2116"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2110"
+  HREF="node58.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2118"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2121"
+  HREF="node60.html">Interactive Flagging - BLFLAG</A>
+<B>Up:</B> <A NAME="tex2html2117"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2111"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,128 @@
+.TH maths 1
+.SH NAME
+maths - Mathematical operations on images and image data
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+utility, map combination, map manipulation
+.SH DESCRIPTION
+MATHS is a MIRIAD task that performs arithmetic expressions on a
+number of images.  The expression to be performed is given in a
+FORTRAN-like syntax, and can consist of operators, real
+constants and FORTRAN functions.  Normal FORTRAN precedence
+applies.
+.sp
+Operators can be +, -, * and /, and all logical and relational
+operators (e.g. .and. .or. .not. .gt. .ge. etc,).  In MATHS
+convention, a positive value is considered TRUE, and a negative
+or zero value is considered FALSE.
+.sp
+Functions appear only in the generic, rather than specific
+forms.  For example use "log10" rather than "alog10", and
+"max" rather than "amax1".  Integers and double precision
+constants are converted to reals.  File names take the place of
+variables, and the expression is evaluated on each pixel of the
+image.  When there is more than one file name in the input
+expression, the expression is evaluated at corresponding pixels
+of the input images.  For example to average image "fred" with
+image "bill", use:
+.sp
+.nf
+  exp=(fred+bill)/2
+.fi
+.sp
+When a file name starts with a numeric character, or contains a
+character which might be confused with an operator the file name
+should be bracketed by angular ( < and > ). For example:
+.sp
+.nf
+  exp=(<2ndtry>+bill.dat)/2
+  mask=<bmap.fft>.gt.0.5
+.fi
+.sp
+Files cannot take the name "x", "y", or "z".  MATHS interprets
+these as being the 3 independent variables of an image, which
+vary linearly between the limits set by the XRANGE, YRANGE and
+ZRANGE parameters. The user chooses the meaning of these units.
+For example, to create one cycle of a two dimensional sine wave
+along the x and y coordinate axes use:
+.sp
+.nf
+  exp=sin(x)*sin(y) xrange=-3.14,3.14 yrange=-3.14,3.14
+.fi
+.sp
+In addition to the expression, MATHS also allows the user to
+specify a "mask expression".  MATHS main expression is only
+evaluated at pixels where the "mask expression" is TRUE or
+positive valued.
+.sp
+MATHS does not check for divide by zero, logs of a negative
+number or any similar problem.  It will probably crash if this
+is attempted.  Consequently, when performing potentially
+dangerous operations, it is best to guard the main expression
+by masking out dangerous situations.  The mask expression can
+also be used to prevent the calculation where doing so would be
+undesirable for other reasons (e.g. where the signal is too weak
+to get meaningful results).
+.sp
+For example:
+.sp
+.nf
+   exp=sqrt(fred) mask=fred.gt.0
+.SH PARAMETERS
+.TP
+\fIexp\fP
+.fi
+The expression to be evaluated.
+.TP
+\fImask\fP
+The mask expression.  The expression given by "exp" is evaluated
+only at those pixels where the mask expression is TRUE or
+positive valued.  Pixels, which fail this test, are marked as
+blank in the output image.
+.TP
+\fIregion\fP
+The region of interest in the input images.  Full region
+specifications are supported, however the output map will
+contain only the bounding box. (see also mask=)
+Default: full map.
+.TP
+\fIout\fP
+The name of the output image.
+.TP
+\fIimsize\fP
+The output image size. This is used only if there is no input
+images (i.e. the expression consists of a function of "x" and
+"y" only). No default.
+.TP
+\fIxrange\fP
+When "x" is present in the input expression, the x variable
+is varied linearly between the two limits set by XRANGE.  The
+default is -0.5,0.5.
+.TP
+\fIyrange\fP
+When "y" is present in the input expression, the y variable
+is varied linearly between the two limits set by YRANGE.  The
+default is -0.5,0.5
+.TP
+\fIzrange\fP
+When "z" is present in the input expression, the z variable
+is varied linearly between the two limits set br ZRANGE.  The
+default is 0,1.
+.TP
+\fIoptions\fP
+Extra processing options.  Several can be given, separated by
+commas.  Minimum match is used.
+.nf
+  grow    Allow inputs to "grow" extra axes, if needed,
+          through replication.  For example, if the expression
+          subtracts a single-plane image from a cube,
+          options=grow allows the operation to proceed by first
+          growing the image into a cube through replication the
+          plane.  Normally (i.e. without this option), MATHS
+          insists that the inputs must be identical in size.
+  unmask  Treat all pixels as if they were valid.
+.fi
+.sp
+.SH REVISION
+1.5, 2011/03/30 05:34:52 UTC

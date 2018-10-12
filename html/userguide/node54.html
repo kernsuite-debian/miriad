@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Archiving and Transporting Miriad Datasets</TITLE>
+<META NAME="description" CONTENT="Archiving and Transporting Miriad Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node53.html">
+<LINK REL="up" HREF="node45.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2046"
+  HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2042"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2038"
+  HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2044"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2047"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B>Up:</B> <A NAME="tex2html2043"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html2039"
+  HREF="node53.html">Reading and Writing FITS</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00860000000000000000"></A><A NAME="s:tar"></A><A NAME="2184"></A><A NAME="2185"></A>
+<BR>
+Archiving and Transporting <I>Miriad</I> Datasets
+</H1>
+As <I>Miriad</I> datasets are
+written in a machine-independent format (the bits stored on disk to represent a
+particular value are independent of the host system, whether it be a VAX,
+Sun or Cray, for example), no translation is needed when transporting
+datasets between unlike architectures.
+
+<P>
+Instead of relying on any special tasks to write tapes for
+archiving or transport, <I>Miriad</I> relies on the
+facilities of the host system. Probably the most convenient archiving
+format is <TT>tar</TT>. This is universally supported on UNIX machines, and is
+quite common on VAX/VMS machines.
+
+<P>
+The two most common commands used with <TT>tar</TT> are to copy to and
+from tape. To copy to tape, use
+<BLOCKQUOTE>
+<TT>% tar -cvf </TT><I>device datasets</I>
+
+</BLOCKQUOTE>
+where <TT>device</TT> is a tape device name such as <code>/dev/nrst0</code>
+(the non-rewinding, raw interface, i.e. device names starting with <code>nr</code>),
+and <I>datasets</I> is a list of datasets and files to copy to tape
+(If a dataset, or directory, name is given, <TT>tar</TT> works recursively, copying
+all the contents of this directory).
+These can include wildcards. For example, to copy all datasets and
+files from the current directory to <code>/dev/nrst0</code>, use
+<PRE>
+      tar -cvf /dev/nrst0 *
+</PRE>
+
+<P>
+To retrieve data from tape, use the <A NAME="tex2html137"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=tar">tar</A>
+command
+<BLOCKQUOTE>
+<TT>% tar -xvf </TT><I>device</I>
+
+</BLOCKQUOTE>
+
+<P>
+Multiple <TT>tar</TT> files can be stored on the one tape so that you do
+not overwrite old data.
+Again the UNIX <A NAME="tex2html138"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A>
+command can be used to
+manipulate the tape position.
+
+<P>
+See the <A NAME="tex2html139"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=man">man</A>
+pages on the <A NAME="tex2html140"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=tar">tar</A>
+and <A NAME="tex2html141"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A>
+commands
+for more information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2046"
+  HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2042"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2038"
+  HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2044"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2047"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B>Up:</B> <A NAME="tex2html2043"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html2039"
+  HREF="node53.html">Reading and Writing FITS</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,74 @@
+.TH gpplt 1
+.SH NAME
+gpplt - Plot and list gain and polarization correction terms.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+GpPlt is a MIRIAD task which plots and lists antenna gain and
+polarization terms. The plot for gains is against time. The
+plot for polarization characteristics is against antenna number.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input data-set. This will normally be a visibility
+data-set. No default.
+.TP
+\fIdevice\fP
+The PGPLOT plotting device to use. The default is no plot.
+.TP
+\fIlog\fP
+The log to give a listing of the gains and polarization terms. The
+default is no log.
+.TP
+\fIyaxis\fP
+This specifies what is to be plotted/listed. Several values can be
+given, separated by commas. Minimum match is used:
+.nf
+  amp      Plot/list amplitudes. This is the default if the gains
+           are being plotted/listed, and nothing else is requested.
+  phase    Plot/list phases.
+  real     Plot/list the real parts. This is the default if the
+           polarization terms are being plotted/listed, and nothing
+           else is requested.
+  imag     Plot/list the imaginary parts.
+.fi
+If nothing is given, "amp" is assumed.
+.TP
+\fIoptions\fP
+Thus gives some extra processing options. Several values can be
+given, separated by commas. Minimum match us used.
+.nf
+  gains        Plot/list the gains vs time. This is the default if
+               nothing else is requested.
+  xygains      Plot/list the ratio of X gain to Y gain.
+  xbyygain     Plot/list the product of X gain by Y gain.
+  polarization Plot/list the leakages vs antenna number.
+  2polarization Plot/list the second leakages vs antenna number.
+  delays       Plot/list the delays vs time.
+  speccor      Plot/list the spectral correction vs time.
+  bandpass     Plot/list the bandpass shape vs frequency.
+  dots         Plot things as dots (rather than chunky circles).
+  dtime        Give time in days and fractions of a day. This is more
+               useful for listing files which are to be passed into
+               some other analysis or plotting tool.
+  wrap         Don't unwrap phase plots
+.TP
+\fInxy\fP
+.fi
+Number of plots in the x and y directions. The default is 2,2.
+.TP
+\fIselect\fP
+A subset of the normal uv-selection parameters. They are not
+entirely consisently used. Antenna and time selection is supported
+for gains. Time selection is supported for delay and spectral
+correction. Antenna and frequency selection is supported for
+bandpasses. The default is to select everything.
+.TP
+\fIyrange\fP
+The min and max range along the y axis of the plots. By default
+gpplt autoscales. If the ``yrange'' parameter is given, then this
+range is used on ALL plots. So it may not make much sense to
+plot different sorts of quantities (e.g. amplitude and phases)
+when explicitly giving the plot range.

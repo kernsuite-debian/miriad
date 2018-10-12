@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Massaging Steps Performed by UVREAD - UVSET</TITLE>
+<META NAME="description" CONTENT="Massaging Steps Performed by UVREAD - UVSET">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html552"
+  HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html546"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html540"
+  HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html548"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html550"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html553"
+  HREF="node27.html">Setting Up UVWRITE -</A>
+<B>Up:</B> <A NAME="tex2html547"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html541"
+  HREF="node25.html">When Do UV Variables</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004511000000000000000"></A>
+<A NAME="sect:uvset"></A>
+<BR>
+Massaging Steps Performed by UVREAD - UVSET
+</H2>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="347"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.2:</STRONG>
+Arguments to UVSET, for STATUS=OLD</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Object	</B></TH>
+<TH ALIGN="LEFT"><B>Type	</B></TH>
+<TH ALIGN="LEFT"><B>N,P1,P2,P3		</B></TH>
+</TR>
+<TR><TD ALIGN="LEFT">data</TD>
+<TD ALIGN="LEFT">channel</TD>
+<TD ALIGN="LEFT">nchan, start, width, step</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">wide</TD>
+<TD ALIGN="LEFT">nchan, start, width, step</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">velocity</TD>
+<TD ALIGN="LEFT">nchan, start, width, step</TD>
+</TR>
+<TR><TD ALIGN="LEFT">reference</TD>
+<TD ALIGN="LEFT">channel</TD>
+<TD ALIGN="LEFT">--, start, width, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">wide</TD>
+<TD ALIGN="LEFT">--, start, width, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">velocity</TD>
+<TD ALIGN="LEFT">--, start, width, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">coord</TD>
+<TD ALIGN="LEFT">wavelength</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">nanosec</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">planet</TD>
+<TD ALIGN="LEFT">--</TD>
+<TD ALIGN="LEFT">--, plmaj, plmin, plangle</TD>
+</TR>
+<TR><TD ALIGN="LEFT">selection</TD>
+<TD ALIGN="LEFT">amplitude</TD>
+<TD ALIGN="LEFT">n, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">window</TD>
+<TD ALIGN="LEFT">n, --, --, --</TD>
+</TR>
+</TABLE>
+
+<A NAME="t:uvset-old"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+As mentioned above, the <TT>uvread</TT> routine can perform, at the programmers
+request, extra processing steps on the visibility data. These steps
+consist of averaging and
+resampling frequency channels, uv coordinate conversion and some corrections for
+planet observations. The
+steps are requested by calls to <TT>uvset</TT>. In the call to <TT>uvset</TT>,
+the argument <TT>object</TT> (a string) gives the general processing step that
+is being requested. The <TT>type</TT> argument (another string)
+gives more specific details, and the arguments <TT>n</TT> (integer)
+and <TT>p1</TT>, <TT>p2</TT> and <TT>p3</TT> (reals) give any numerical values
+needed.
+
+<P>
+Note that the set-up given by <TT>uvset</TT> only becomes correctly
+activated during the next call to <TT>uvread</TT>. Before this next call,
+the setup is in a somewhat nebulous state. So you should not expect
+various other routines associated with <TT>uvread</TT> to work
+as expected until after the next call to <TT>uvread</TT>. Associated
+routines include <TT>uvflgwr</TT> and <TT>uvinfo</TT>.
+
+<P>
+Table&nbsp;<A HREF="#t:uvset-old">2.2</A> summarizes the possible values of the arguments to <TT>uvset</TT>.
+Here the column titled ``Object'' and ``Type'' are the possible string
+values that <TT>object</TT> and <TT>type</TT> can take on. The third column
+gives the meaning for the parameters <code>n,p1,p2,p3</code>.
+Dashes in the third column indicate that the arguments value is ignored in
+this particular call. While several processing can be performed
+simultaneously (several calls to <TT>uvset</TT> will be needed to specify them
+all), others are mutually inconsistent. When mutually inconsistent
+steps are requested, the last requested step is honored. Each processing
+step requires further explanation. 
+<DL>
+<DT><STRONG><code>object='data'</code></STRONG></DT>
+<DD>This gives operations on the spectral
+data. Type <TT>'channel'</TT> selects the channels to be returned, and possible
+averaging together of the channel data. If the original channels are
+numbers from 1 to <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN>, then, by using <code>type='channel'</code>, <TT>uvread</TT> will
+return <SPAN CLASS="MATH"><IMG
+ WIDTH="48" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="$nchan$"></SPAN> massaged channels, where channel <SPAN CLASS="MATH"><IMG
+ WIDTH="9" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img10.png"
+ ALT="$i$"></SPAN> of the massaged channels
+is formed by averaging <SPAN CLASS="MATH"><IMG
+ WIDTH="45" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="$width$"></SPAN> channels of the original data, starting at
+channel <!-- MATH
+ $(i-1)\cdot step + start$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="143" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.png"
+ ALT="$(i-1)\cdot step + start$"></SPAN>. If <TT>uvset</TT> is
+called with <SPAN CLASS="MATH"><IMG
+ WIDTH="48" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="$nchan$"></SPAN> being zero, all channels are selected (note that this
+only makes sense if <SPAN CLASS="MATH"><IMG
+ WIDTH="39" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.png"
+ ALT="$start$"></SPAN>, <SPAN CLASS="MATH"><IMG
+ WIDTH="32" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img14.png"
+ ALT="$step$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="45" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="$width$"></SPAN> are all 1).
+
+<P>
+<code>type='wide'</code> is similar, but
+uses the continuum data rather than the spectral data.
+
+<P>
+<code>type='velocity'</code> is also
+similar, returning a weighted sum of the spectral data. However in this
+case <SPAN CLASS="MATH"><IMG
+ WIDTH="39" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img13.png"
+ ALT="$start$"></SPAN>, <SPAN CLASS="MATH"><IMG
+ WIDTH="45" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img11.png"
+ ALT="$width$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="32" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img14.png"
+ ALT="$step$"></SPAN> are given in units of
+km/s (rather than channels). This is particularly useful if the
+spectrometer setup is not constant throughout the data or there is no
+Doppler tracking, and so the velocity of a given channel changes.
+Note that <TT>'channel'</TT>, <TT>'wide'</TT> and <TT>'velocity'</TT> are
+mutually exclusive. The default is <TT>'channel'</TT> (or <TT>wide</TT> if there is
+no spectral data in the file), with start,increment
+and width of 1.
+
+<P>
+If there are fewer than <SPAN CLASS="MATH"><IMG
+ WIDTH="48" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="$nchan$"></SPAN> channels, then dummy channels, which are
+flagged as bad, are added. If <SPAN CLASS="MATH"><IMG
+ WIDTH="48" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img9.png"
+ ALT="$nchan$"></SPAN> is specified as 0, then <TT>uvread</TT>
+will return as many channels as possible.
+
+<P>
+</DD>
+<DT><STRONG><code>object='reference'</code></STRONG></DT>
+<DD>The ``reference line'' is a spectral channel,
+or an average of spectral channels, which the main data is divided by. Typically
+the reference line would be a strong point source (e.g. a maser). The resultant
+data is essentially normalized and shifted, but it also has atmospheric-based
+and instrument-base calibration problems removed. The extra parameters needed
+to describe the reference line is the same as for <code>object='data'</code>, except
+that the number of channels, and the increment is ignored (there is only ever
+one reference line). The default is not to have a reference line.
+</DD>
+<DT><STRONG><code>object='coord'</code></STRONG></DT>
+<DD>This sets the
+units of the <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.png"
+ ALT="$u$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$v$"></SPAN> coordinates returned in the preamble. Using
+<TT>'wavelength'</TT> or <TT>'nanosec'</TT> sets the units of the returned <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.png"
+ ALT="$u$"></SPAN>
+and <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$v$"></SPAN>. For <TT>'wavelength'</TT>, the sky frequency used is that of the first
+channel returned. The default value is <TT>'nanosec'</TT>.
+</DD>
+<DT><STRONG><code>object='planet'</code></STRONG></DT>
+<DD>This causes 
+the <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img15.png"
+ ALT="$u$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img16.png"
+ ALT="$v$"></SPAN> coordinates to be scaled and rotated, and the correlation
+values to be scaled,
+to adjust for changes when observing planets.
+The parameters <TT>plmaj, plmin</TT> and <TT>plangle</TT> give the reference
+size (arcseconds) and position angle (degrees) of the planet. If the reference
+size is 0, then the size of the first selected data record is used.
+</DD>
+<DT><STRONG><code>object='selection'</code></STRONG></DT>
+<DD>This gives extra control over the uv
+selection process (see <A HREF="node30.html#sect:select">2.6</A>). Currently there is only
+one possible type, <TT>'amplitude'</TT>, which enables or disables the
+amplitude selection process. If the argument <TT>n</TT> is positive, then
+amplitude selection is applied (i.e. the normal action), otherwise
+amplitude selection is not applied.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html552"
+  HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html546"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html540"
+  HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html548"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html550"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html553"
+  HREF="node27.html">Setting Up UVWRITE -</A>
+<B>Up:</B> <A NAME="tex2html547"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html541"
+  HREF="node25.html">When Do UV Variables</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

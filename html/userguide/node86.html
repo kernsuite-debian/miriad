@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Preparing your Data</TITLE>
+<META NAME="description" CONTENT="Preparing your Data">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node87.html">
+<LINK REL="previous" HREF="node85.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node87.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2462"
+  HREF="node87.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2458"
+  HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2452"
+  HREF="node85.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2460"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2463"
+  HREF="node87.html">Calibration</A>
+<B>Up:</B> <A NAME="tex2html2459"
+  HREF="node84.html">Calibration Strategies</A>
+<B> Previous:</B> <A NAME="tex2html2453"
+  HREF="node85.html">Introduction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001220000000000000000">
+Preparing your Data</A>
+</H1>
+
+<P>
+Before you calibrate, you must prepare your data. This consists of
+loading, flagging, perhaps converting to ``channel-0'' datasets, and then
+splitting.
+
+<P>
+
+<OL>
+<LI>ATCA data will be initially in RPFITS format. <I>Miriad</I>'s task to read
+RPFITS files is described in Chapter&nbsp;<A HREF="node45.html#c:inout">8</A>. Alternatively, the
+data may be in FITS format (e.g. VLA data). Again see Chapter&nbsp;<A HREF="node45.html#c:inout">8</A>
+for information on loading data in this format. Generally you will want
+to load all of an observation into a single <I>Miriad</I> file (i.e. use
+<A NAME="tex2html296"
+  HREF="../doc/atlod.html">atlod</A>
+to read multiple RPFITS files into a single output if necessary).
+
+<P>
+</LI>
+<LI>You should now flag your data, and possibly convert to channel-0
+(using <A NAME="tex2html297"
+  HREF="../doc/uvaver.html">uvaver</A>).
+Tasks for these operations are described in Chapter&nbsp;<A HREF="node58.html#c:edit">10</A>.
+
+<P>
+</LI>
+<LI><A NAME="3174"></A>
+As <I>Miriad</I> datasets can contain only a single set of calibration
+tables, it is rather poor at handling the calibration of datasets
+containing multiple sources and multiple frequency bands. For
+calibration purposes, it is best to work on datasets containing a
+single source and single frequency band. So, it is best to
+break the multi-source, multi-band dataset into a collection of single-source,
+single-band datasets. The best task to do this is <A NAME="tex2html298"
+  HREF="../doc/uvsplit.html">uvsplit</A>.
+Task <A NAME="tex2html299"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+generates the names of the output datasets itself,
+forming these from the source name and the central frequency (in MHz) of
+the data.
+It is rather unforgiving if you already have a files with one of the names
+that it wants to use. Make sure your directory is free of files that may
+usurp <A NAME="tex2html300"
+  HREF="../doc/uvsplit.html">uvsplit</A>'s name choice. Task <A NAME="tex2html301"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+allows you to
+perform extra selection if you wish, which may be convenient if you
+only want to deal with part of your observation at a time.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVSPLIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uvxy</TD>
+<TD ALIGN="LEFT">The input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Extra selection.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+For large spectral line data-sets, if disk space is low, it may be useful not
+to split off the program source. Rather you can split off the calibrators,
+determine the calibration tables from them, copy the calibration back to
+the multi-source file, and then image directly from the multi-source file.
+This way you avoid making a second copy of your program source data.
+For example, to avoid the source ``<TT>vela</TT>'' from being split off, use
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVSPLIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">The input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=-source(vela)</TD>
+<TD ALIGN="LEFT">Do not select <TT>vela</TT> data.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2462"
+  HREF="node87.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2458"
+  HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2452"
+  HREF="node85.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2460"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2463"
+  HREF="node87.html">Calibration</A>
+<B>Up:</B> <A NAME="tex2html2459"
+  HREF="node84.html">Calibration Strategies</A>
+<B> Previous:</B> <A NAME="tex2html2453"
+  HREF="node85.html">Introduction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

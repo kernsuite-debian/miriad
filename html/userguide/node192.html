@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Antenna gain considerations and flux calibration</TITLE>
+<META NAME="description" CONTENT="Antenna gain considerations and flux calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node193.html">
+<LINK REL="previous" HREF="node191.html">
+<LINK REL="up" HREF="node190.html">
+<LINK REL="next" HREF="node193.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3834"
+  HREF="node193.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3830"
+  HREF="node190.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3824"
+  HREF="node191.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3832"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3835"
+  HREF="node193.html">Instrumental phase</A>
+<B>Up:</B> <A NAME="tex2html3831"
+  HREF="node190.html">Some theory</A>
+<B> Previous:</B> <A NAME="tex2html3825"
+  HREF="node191.html">Atmospheric opacity and system</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002312000000000000000">
+Antenna gain considerations and flux calibration</A>
+</H2>
+One characteristic of the ATCA dishes is that they are big by 3-mm
+standards. Indeed <A NAME="tex2html1034"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1967AJ.....72...35V">van Hoerner (1967)</A>
+has considered the limits to the size
+of an antenna before various effects become significant.
+For construction styles like the ATCA dishes, he suggests that 11m is the
+maximum dish size for 3-mm observations before thermal effects become
+significant.
+As the ATCA dishes are twice this, it is not surprise that the
+ATCA antenna gain and primary beam response varies as a result of thermal
+distortions. Changes in temperature, the position of the sun, cloudiness and
+shadows will all affect the gain of the ATCA antennas. Measurements to
+date
+tend to bear this out with changes in antenna gain of 25% in some observations
+being attributed
+to thermal effects.
+Distortion of the dishes by gravity is also significant
+(eg <A NAME="tex2html1035"
+  HREF="http://ieeexplore.ieee.org/iel5/8/32084/01492610.pdf?tp=&amp;arnumber=1492610&amp;isnumber=32084">Subrahmanyan 2005</A>). 
+A gain/elevation
+correction will solve this - to first order at least.
+Because of the way the ATCA panels are set, the antenna gain peaks at
+about 60 degrees elevation. 
+
+<P>
+Note that gravitational
+and thermal distortions can be coupled - perfect measurement or correction for these
+effects is never possible. 
+
+<P>
+To first order, the gain change will be calibrated out provided the 
+secondary calibrator is very close to the target source.
+Applying the standard gain/elevation curve to the data as the first step in
+the data reduction will also help.
+However these two steps will
+not account for changes in the beamshape. This might be an important
+effect for widefield imaging and mosaicing.
+
+<P>
+The best way to avoid thermally-induced gain variations is by observing
+in the pre-dawn hours or on a calm cloudy day. The best way to avoid large
+elevation changes in an observation is to observe in a hybrid array - hybrid arrays
+allow an observation to be performed without the need to track the source from
+horizon to horizon.
+
+<P>
+Gain variations must be considered when bootstrapping the flux density 
+scale. The best approach to ensuring a good flux scale is to ensure that the
+secondary and the flux density calibrator are observed nearly
+simultaneously and at the same elevation.
+Although this may at first glance sound difficult if not impossible, generally
+it is straightforward. Generally there should be a time when the secondary
+and the flux
+density calibrator are at the same elevation. It may be that one is rising
+while the other is setting, and that they are at significantly different parts
+of the sky (i.e. significantly different azimuths). Unless the sky is
+cloudy, being at different azimuths is not important.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3834"
+  HREF="node193.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3830"
+  HREF="node190.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3824"
+  HREF="node191.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3832"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3835"
+  HREF="node193.html">Instrumental phase</A>
+<B>Up:</B> <A NAME="tex2html3831"
+  HREF="node190.html">Some theory</A>
+<B> Previous:</B> <A NAME="tex2html3825"
+  HREF="node191.html">Atmospheric opacity and system</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

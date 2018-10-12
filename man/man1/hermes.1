@@ -1,0 +1,35 @@
+.TH hermes 1
+.SH NAME
+hermes - Make model images for Mercury.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis, planets.
+.SH DESCRIPTION
+First calculates a Hermographic brightness temperature map,
+then uses interpolation and coordinate rotations to find
+the corresponding map in geocentric RA and DEC offsets from
+the sub-earth point.  Next, the Fresnel reflection coef-
+ficients are applied to obtain the model map.  Finally, a
+set of CLEAN components are generated for use in the RAL
+software package.  This is the non-linear diffusion version.
+.sp
+$MIR/cat/hermes.in is a sample input file, and can be copied
+to the user's own directory.  A more complete discussion of
+program HERMES can be found in file $MIR/cat/hermes.txt.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Parameter file.  Default is "hermes.in".
+.TP
+\fIimsize\fP
+Image size.  Default is 64.
+.TP
+\fIlog\fP
+Output log file.  Default is "hermes.log".
+.TP
+\fIout\fP
+Output image.  Units JY/PIXEL.  No default.
+.sp
+.SH REVISION
+1.7, 2013/08/30 01:49:21 UTC

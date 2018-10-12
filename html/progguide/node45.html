@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>WHEN and ISRCH Routines</TITLE>
+<META NAME="description" CONTENT="WHEN and ISRCH Routines">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node46.html">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="node42.html">
+<LINK REL="next" HREF="node46.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html819"
+  HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html813"
+  HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html807"
+  HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html815"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html817"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html820"
+  HREF="node46.html">Blas and Linpack Routines</A>
+<B>Up:</B> <A NAME="tex2html814"
+  HREF="node42.html">Numeric Routines</A>
+<B> Previous:</B> <A NAME="tex2html808"
+  HREF="node44.html">Min and Max Value</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004153000000000000000">
+WHEN and ISRCH Routines</A>
+</H2>
+<PRE>
+      subroutine whenxxx(n,array,step,target,index,nindex)
+      integer function isrchxxx(n,array,step,target)
+</PRE>
+The <TT>when</TT> routines return the indices of all locations in an array that
+have a ``true relational value'' to the target. See page 4-64 of the
+Cray ``Library Reference Manual'' for more information. The <TT>isrch</TT>
+routines return the first location in an array that has a ``true
+relational value'' to the target. See page 4-59 of the Cray ``Library
+Reference Manual''. For both routines, ``<TT>xxx</TT>'' can be one of
+<TT>ieq, ine, ilt, ile, igt, ige, feq, fne, flt, fle, fgt</TT> or <TT>fge</TT>.
+These give the type of <TT>array</TT> (Integer or Floating), and the relation
+(equal, not equal, less than, etc).
+
+<P>
+Because these are well optimized routines, these routines should be used in
+preference to straightforward FORTRAN
+code that performs an equivalent function.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

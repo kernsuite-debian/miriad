@@ -1,0 +1,17 @@
+%N prthd
+%D Summarise the contents of a data-set.
+%P rjs
+%: miscellaneous
+%B
+        PRTHD is a Miriad task that summarises a Miriad data-set.
+%A in
+        Input image and/or uv data-sets.  Several may be given, and
+        their names may include wildcards.  No default.
+%A log
+        Output log file.  Default is the terminal.
+%A options
+        Extra processing options.  Possible values are:
+          brief   Give one line description of each file.
+          full    Several line description of each file (default).
+ 
+%R 1.10, 2012/03/02 06:13:02 UTC

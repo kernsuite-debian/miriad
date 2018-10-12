@@ -1,0 +1,124 @@
+.TH ratty 1
+.SH NAME
+ratty - FORTRAN preprocessor, so that same code works on more machines
+.SH PERSON RESPONSIBLE
+bpw
+.SH CATEGORIES
+tools
+.SH DESCRIPTION
+Ratty is a FORTRAN preprocessor for MIRIAD source code, intended to
+make the same FORTRAN code compatible on VMS, SUN, Cray, Alliant,
+and Convex. The output is suitable for use with the specified compilers
+for these machines.
+.sp
+Usage:
+.sp
+ratty [-h] [-s system] [-I incdir] [-D symbol] [-bglu [-n start inc]
+.nf
+      [-p data-type] [in] [out]
+.fi
+.sp
+.nf
+   system:  compiler/system type, one of
+              "alliant"   (alliant unix compiler)
+              "alpha"     (DEC alpha compiler)
+              "convex"    (CONVEX unix compiler)
+              "f2c"       (NETLIBs f2c compiler)
+              "f77"       (generic unix compiler)
+              "g77"       (GNU g77 compiler)
+              "gfortran"  (GNU gfortran chmpiler)
+              "hpux"      (HPUX compiler)
+              "linux"     (generic Linux compiler)
+              "sgi"       (SGI compiler)
+              "sun"       (sun unix compiler)
+              "unicos"    (Cray Fortran compiler)
+              "vms"       (VMS Fortran compiler)
+.fi
+.sp
+.nf
+   incdir:  Directory to search for include files.  The -I option may
+            be used repeatedly, but must list only one directory for
+            each -I parameter (eg, list two directories as
+            "-I dir1 -I dir2").
+.fi
+.sp
+.nf
+   symbol:  Define this symbol to the preprocessor. Multiple
+            definitions are allowed, defining one symbol per -D entry
+            (eg, define two symbols as "-D sym1 -D sym2").
+.fi
+.sp
+.nf
+   -b:      If specified, backslashes inside quoted textstrings are
+            doubled. This allows for compilers which treat the
+            backslash as an escape character.
+.fi
+.sp
+.nf
+   -g:      If specified, it will direct the code to include line number
+            directives for your native compiler, if it understands them.
+            This will enable you to run dbx, and look directly at your
+            [in] file, instead of your [out] file. Note that standard
+            input cannot be used with this option.
+.fi
+.sp
+.nf
+   -h:      give some help and exit
+.fi
+.sp
+.nf
+   -n:      This gives the start and increment for line numbers generated
+            by ratty. The default is 90000 1.
+.fi
+.sp
+.nf
+   -l:      Convert all variables, etc, to lower case.
+.fi
+.sp
+.nf
+   -u:      Convert all variables, etc, to upper case.
+            (some of the system-generated if/then/else/endif/continue
+             are not converted to upper case)
+.fi
+.sp
+.nf
+   -p:      Give the FORTRAN type to be used for "ptrdiff" data type.
+.fi
+.sp
+.nf
+   in:      Input file name. If omitted, standard input is assumed
+            and output must be the standard output.
+.fi
+.sp
+.nf
+   out:     Output file name. If omitted, standard output is assumed.
+.fi
+.sp
+.sp
+Ratty recognizes the standard C preprocessor directives #ifdef,
+#ifndef, #else and #endif.
+.sp
+The VAX do/dowhile/enddo extension for do loops is converted to
+ANSI-FORTRAN if the host machine does not support this extension.
+.sp
+'IMPLICIT NONE' and 'IMPLICIT UNDEFINED(A-Z)' are converted to
+whatever the specified compiler supports.
+.sp
+Certain directives are recognized if the target machine has
+vector processing capacities (compilers "unicos", "alliant" and "convex"):
+.sp
+.nf
+   #maxloop, followed by a number, is converted to "cdir$ shortloop"
+   on "unicos" and to "cvd$  shortloop" on "alliant".
+.fi
+.sp
+.nf
+   #ivdep is converted to "cdir$ ivdep" on "unicos", to "cvd$  nodepchk"
+   on "alliant", and to "c$dir no_recurrence" on "convex".
+.fi
+.sp
+.nf
+   #nooptimize is converted to "cdir$ nextscalar" on "unicos" and to
+   "cvd$ noconcur" followed by "cvd$ novector" on "alliant".
+.fi
+.sp

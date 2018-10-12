@@ -1,0 +1,158 @@
+%N mbspect
+%D Make spectrum and measure velocities from a Miriad image.
+%P lss
+%: image analysis and display.
+%B
+        MBSPECT makes a spectrum of the velocity or frequency axis of
+        a Miriad image.  The spectrum is integrated, averaged or beam-
+        weighted, over the width specified, for the other image axes.
+        Robust spectral baselines can be fitted, and the profile
+        parameterised (velocities, widths, moments).  The output
+        spectrum can be plotted and/or written out as a miriad and/or
+        ascii file for further analysis.
+%A in
+        The input image. vxy and xyv images are acceptable inputs.
+        No default.
+%A out
+        The output spectrum, if required.  Spectral units are always in
+        the same units as the input file (even if a conversion is
+        performed for the plot and/or log file).  This spectrum can be
+        read back into MbSpect.
+%A coord
+        The position, in world coordinates, for which the spectrum is
+        required, e.g. coord=12:00:13,-42:00:43.  The cube must have
+        an RA and a DEC axis.  The pixel with the nearest position is
+        chosen.  The default is the centre of the image (not necessarily
+        the reference pixel).
+%A width
+        Two numbers, being the spatial width of the box in pixels (in RA
+        and DEC) within which the spectrum is averaged (or integrated).
+        Must be odd numbers.  Default is 1,1.
+%A xaxis
+        The x-axis can be plotted as 'channel', 'frequency' ('FREQ'),
+        'radio' velocity ('VELO'), 'optical' velocity ('FELO'), or the
+        units in the image.  The default is whatever units are in the
+        header. A second value will overwrite the default label for this
+        axis. You can use pgplot escape characters to change fonts
+        and sub/superscript level, e.g.,
+        'Optical Velocity, \ficz\fr km\u-1s\d' will write 'cz' in
+         italics and '-1' as a superscript.
+%A yaxis
+        If 'average' then the pixels enclosed in the x-y area specified
+        are averaged.  If 'sum' they are summed and normalized if the
+        units are known.  If 'point' they are optimally weighted
+        according to the beam parameters, assuming that the source is
+        unresolved.  Default is 'average'. A second value will overwrite
+        the default label for this axis.
+%A xrange
+        X-axis range for plot.  The default is to self-scale to the
+        region requested.  The units are km/s for velocity and MHz for
+        frequency (i.e. not the normal miriad convention).
+%A yrange
+        Y-axis range for plot.  The default is to self-scale.
+%A hann
+        Hanning smoothing length (an odd integer < 15).  The default is
+        no smoothing (hann = 1).
+%A order
+        Order of optional robust (clipped polynomial) fit (0-10) to be
+        applied to the spectral axis.  If the order is positive (0 to
+        10), the fit is plotted on top of the data; if negative (-0 to
+        -10), the fit is subtracted before plotting.  The fit is always
+        subtracted from any output data written.  (For bulk removal of
+        baselines in a cube, use contsub).  Default is no fit.
+%A options
+        List of minimum match task enrichment options.
+        1deriv  Take 1-sided derivative of spectrum before plotting
+                and after Hanning smoothing.  Useful for Zeeman
+                enthusiasts.
+        2deriv  Take 2-sided derivative of spectrum before plotting.
+        histo   Plot the spectrum as a histogram instead of joining
+                points.
+        pstyle1 Alternative plot style, where the object and position
+                information is omitted and the comment field is centered
+                at the top of the plot. Typically, this is used for
+                publication-quality plots (the source name, if required.
+                should be inserted into the comment field).
+        pstyle2 Alternative plot style, where the object and position
+                information is omitted, the comment field is centered
+                at the top of the plot (as with options=pstyle1), and
+                the x and y axis labels are omitted. Typically, this is
+                used to generate publication-quality n x m matrix plots
+                (the source name, if required should be inserted into
+                the comment field).
+        posfit  If width > 1, a source position is estimated from a
+                Gaussian fit to the moment map.  The moment map is
+                formed using the velocity range specified by the profile
+                parameter.  If yaxis = point, this new position is used
+                when forming the spectrum (the region set by the initial
+                coord parameter and the width parameter is not changed).
+        measure Measure various spectral parameters on plotted spectrum.
+                If a profile window is set, the line is only measured
+                within this window.  If the order keyword is used, the
+                fit is always subtracted before spectral fitting.  If a
+                plot device is selected, the width-maximised 50% and 20%
+                points are highlighted with a circle and the width-
+                minimised points are highlighted with a cross.  Zeroth
+                moment (profile area), first moment (mean velocity/
+                frequency/channel) and second moment (dispersion) are
+                calculated in the usual way.  These parameters are not
+                robust unless careful use of the profile and clip
+                parameters is made.  However, more robust moment-like
+                parameters are also calculated by using an algorithm
+                that minimises the mean absolute deviation of the flux-
+                weighted velocities.
+       minicube If an output file is selected (out parameter selected),
+                a 3x3 mincube is produced.  No extra spatial information
+                is available; the extra spatial dimensions just
+                duplicate spectral information in the central pixel.
+                Useful for tasks such as regrid that only work with
+                cubes whose dimensions are not unity.
+%A clip
+        Two values.  Exclude pixels with values in the range clip(1) to
+        clip(2).  If only one value is given, then exclude -abs(clip) to
+        abs(clip).
+%A mask
+        This specifies the x-axis ranges to be excluded from any
+        continuum fit, e.g. those containing line emission.  It consists
+        of a number of pairs, each pair giving a start and end x-value.
+        The default is that all channels are line-free, which is quite a
+        good approximation if the line is weak compared to the
+        continuum.  The units of the x-axis values are the same as given
+        by the xaxis keyword.
+%A profile
+        Two values.  This specifies the x-axis range to be included for
+        profile measurement (options=measure).  It consists of a start
+        and end x-value.  The default is that all channels are used for
+        profile measurement.  For weak lines, you will normally need to
+        set a profile window, a mask window a clip level, or any
+        combination of the above.  The profile and mask windows may be
+        the same, although the profile window is limited to a single
+        pair of values.  The units of the x-axis values are the same as
+        given by the xaxis keyword.
+%A device
+        Standard PGPLOT device.  See the help on "device" for more
+        information.
+%A csize
+        Up to 2 values.  Character sizes in units of the PGPLOT default
+        (which is ~ 1/40 of the view surface height) for the plot axis
+        labels and the title.
+        Defaults try to choose something sensible.  Use 0.0 to default
+        any particular value.
+%A lines
+        Up to 2 values. Line widths for the axes and the plot.
+        Defaults to 1,1.
+%A colors
+        Up to 3 values. Colors for the main spectrum, the polynomial
+        fit and the 'measure' parameters. Defaults to 1,2,3
+%A log
+        Write spectrum to this ascii file. Spectral axis units are as
+        specified by the xaxis keyword. Default is no output file.
+%A comment
+        A one-line comment which is written into the logfile and any
+        plot. If the comment contains spaces you need to enclose it
+        in single quotes.
+ 
+  Note that this program does not report its version number so that gif
+  and ps output can be piped.
+ 
+%R 1.23, 2015/05/12 00:05:35 UTC

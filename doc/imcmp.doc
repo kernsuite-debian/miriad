@@ -1,0 +1,33 @@
+%N imcmp
+%D Compare two images
+%P pjt
+%: map analysis
+%B
+        IMCMP is a MIRIAD task to compare two images. The maps must have
+        the same dimensions.
+        The two images are compared on a pixel by pixel basis, within a
+        user defined region.
+%A in1
+        The first input image.  No default
+%A in2
+        The second input image.  No default
+%A region
+        Region to select data to compare. Only pixels where both input
+        maps were unmasked will be compared. Only a rectangular region
+        of interest is supported.
+%A cut
+        Cutoff applied to data. By default not used, all data used.
+%A tol
+        Tolerance when comparing the absolute difference between the two
+        maps on pixel by pixel basis. Default: 0
+%A device
+        PGPLOT Plotting device. Default: no plot.
+%A limx
+        Minimum and maximum for plotting the pixel values of image 1.
+        Default: autoscaling.
+%A limy
+        Minimum and maximum for plotting the pixel values of image 2
+        Default: autoscaling.
+%A log
+        File in which to write the data (as two columns).
+        Default: no logfile.

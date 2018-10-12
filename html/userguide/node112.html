@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Restoring an image</TITLE>
+<META NAME="description" CONTENT="Restoring an image">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node111.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node113.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2789"
+  HREF="node113.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2785"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2781"
+  HREF="node111.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2787"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2790"
+  HREF="node113.html">Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html2786"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2782"
+  HREF="node111.html">Other deconvolution tasks</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001460000000000000000"></A><A NAME="s:restor"></A><A NAME="3933"></A>
+<BR>
+Restoring an image
+</H1>
+Having produced a model of the sky with either <A NAME="tex2html473"
+  HREF="../doc/clean.html">clean</A>, <A NAME="tex2html474"
+  HREF="../doc/maxen.html">maxen</A>
+or <A NAME="tex2html475"
+  HREF="../doc/mfclean.html">mfclean</A>, you will probably want to use <A NAME="tex2html476"
+  HREF="../doc/restor.html">restor</A>
+to
+convolve this with a Gaussian CLEAN beam (restoring
+beam) and add the remaining residuals. For models produced
+by <A NAME="tex2html477"
+  HREF="../doc/mfclean.html">mfclean</A>, <A NAME="tex2html478"
+  HREF="../doc/restor.html">restor</A>
+convolves only the intensity (<I>I</I>) plane
+with the CLEAN beam, although it does use the <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img59.png"
+ ALT="$I\alpha$"></SPAN> plane when
+determining the residuals.
+
+<P>
+Having the restoration as a separate step does have
+some flexibility advantage, but the user then has to run another task
+to produce the final image.  Task <A NAME="tex2html479"
+  HREF="../doc/restor.html">restor</A>
+optionally fits the dirty beam with a Gaussian CLEAN beam, and then
+either produces a restored image or, alternatively, a residual image.  There
+are a few other possibilities, but these are less common.  The inputs to
+<A NAME="tex2html480"
+  HREF="../doc/restor.html">restor</A>
+are:
+
+<P>
+
+<UL>
+<LI><TT>model</TT>: This is normally the output CLEAN component image, but can be
+any image that is a good representation of the source. It should have units
+of Jy/pixel.
+
+<P>
+</LI>
+<LI><TT>map, beam</TT>: These are the input dirty image and beam.
+
+<P>
+</LI>
+<LI><TT>mode</TT>: This parameter determines the operation to be performed by
+<A NAME="tex2html481"
+  HREF="../doc/restor.html">restor</A>. The most common operations are to produce a restored
+image (<code>mode=clean</code>) or a residual image (<code>mode=residual</code>).
+
+<P>
+</LI>
+<LI><TT>out</TT>: The output restored or residual image.
+
+<P>
+</LI>
+<LI><TT>fwhm, pa</TT>: Parameters of the CLEAN beam; <code>fwhm</code> gives the
+size, in arcseconds, of the Gaussian beam to be used in the restoration.
+This will normally be two numbers, giving the full-width at half maximum
+of the major and minor axes of the Gaussian.  If only one value is
+given, then the Gaussian is assumed to be circularly symmetric.
+Parameter <code>pa</code> gives the position angle, in degrees, of the
+restoring beam, measured east from north.  If no values are given for
+<code>fwhm</code>, <A NAME="tex2html482"
+  HREF="../doc/restor.html">restor</A>
+first checks the beam dataset to see if it
+contains Gaussian fit parameters.  If not, <A NAME="tex2html483"
+  HREF="../doc/restor.html">restor</A>
+performs a fit
+to the beam data.  Note that the fitting procedure will probably give
+different values to the AIPS <A NAME="tex2html484"
+  HREF="../doc/MX.html">MX</A>
+and <A NAME="tex2html485"
+  HREF="../doc/APCLN.html">APCLN</A>
+tasks.
+Generally the value computed by <A NAME="tex2html486"
+  HREF="../doc/restor.html">restor</A>
+is to be preferred to the
+<A NAME="tex2html487"
+  HREF="../doc/APCLN.html">APCLN</A>
+and <A NAME="tex2html488"
+  HREF="../doc/MX.html">MX</A>
+values.
+
+<P>
+</LI>
+</UL>
+
+<P>
+Typical inputs are given below:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>RESTOR</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=vela.imap</TD>
+<TD ALIGN="LEFT">Dirty image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=vela.ibem</TD>
+<TD ALIGN="LEFT">Dirty beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">model=vela.icmp</TD>
+<TD ALIGN="LEFT">Component image produced by CLEAN</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.icln</TD>
+<TD ALIGN="LEFT">Output restored image (or residuals)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Leave unset to get restored image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm</TD>
+<TD ALIGN="LEFT">Beam size - Leave unset to let <A NAME="tex2html471"
+  HREF="../doc/restor.html">restor</A></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">fit it</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa</TD>
+<TD ALIGN="LEFT">Leave unset to let <A NAME="tex2html472"
+  HREF="../doc/restor.html">restor</A>
+fit it</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2789"
+  HREF="node113.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2785"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2781"
+  HREF="node111.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2787"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2790"
+  HREF="node113.html">Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html2786"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2782"
+  HREF="node111.html">Other deconvolution tasks</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

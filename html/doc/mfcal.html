@@ -1,0 +1,105 @@
+<title>mfcal</title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on mfcal</h1>
+<pre>
+
+Task: mfcal
+Purpose: Multifrequency antenna and passband calibration.
+Categories: calibration
+
+        MfCal is a Miriad task which determines calibration corrections
+        (antenna gains, delay terms and passband responses) from a
+        multi-frequency observation.  The delays and passband are
+        determined from an average of all the selected data.  The gains
+        are worked out periodically depending upon the user set interval.
+
+Key: <a name="vis"><a href="vis.html">vis</a>
+        Input visibility data file. No default. This can (indeed should)
+        contain multiple channels and spectral windows. The frequency
+        set-up can vary with time.
+
+Key: <a name="line"><a href="line.html">line</a>
+        Standard line parameter, with standard defaults.
+
+Key: <a name="stokes"><a href="stokes.html">stokes</a>
+        Stokes parameters to process. The default is to process the parallel
+        hand polarisations.
+
+Key: <a name="edge">edge
+        The number of channels, at the edges of each spectral window, that
+        are to be dropped. Either one or two numbers can be given, being the
+        number of channels at the start and end of each spectral window to be
+        dropped. If only one number is given, then this number of channels
+        is dropped from both the start and end of each window. The default
+        value is 0.
+
+Key: <a name="select"><a href="select.html">select</a>
+        Standard uv selection. The default is to select all data.
+
+Key: <a name="flux">flux
+        Three to five numbers, giving the source flux density, a reference
+        frequency (in GHz) and the source spectral index parameters.
+        The flux and spectral index parameters are at the reference frequency.
+        If no values are given, then MFCAL checks whether the source is one
+        of a set of known sources, and uses the appropriate flux variation
+        with frequency. Otherwise the default flux is determined so that
+        the rms gain amplitude is 1, and the default spectral index is 0.
+        The default reference frequency is the mean of the frequencies in
+        the input data. Also see the `oldflux' option.
+
+Key: <a name="refant">refant
+        The reference antenna. Default is 3. The reference antenna needs
+        to be present throughout the observation. Any solution intervals
+        where the reference antenna is missing are discarded.
+
+Key: <a name="minants">minants
+        The minimum number of antennae that must be present before a
+        solution is attempted. Default is 2.
+
+Key: <a name="interval">interval
+        This gives one, two or three numbers, all in units of minutes, being
+        used to determine the lengths of the antenna gain and passband
+        calibration solution interval.
+        The first gives the maximum length of a gain solution interval.
+        The default is 5 minutes.
+        The second gives the maximum gap size in a gain solution interval.
+        A new solution interval is started when either the max length is
+        exceeded, or a gap larger than the max gap size is encountered.
+        The default default max gap size is the same as the max length.
+        The third number specifies the passband solution interval.
+        The default is a single passband solution for the entire observation.
+        Each passband solution interval will consist of one or more
+        full gain solution intervals.
+
+Key: <a name="options"><a href="options.html">options</a>
+        Extra processing options. Several values can be given, separated by
+        commas. Minimum match is used. Possible values are:
+          delay     Attempt to solve for the delay parameters. This can
+                    be a large sink of CPU time. This option rarely works and
+                    should be used with caution.
+          nopassol  Do not solve for bandpass shape. In this case if a bandpass
+                    table is present in the visibility data-set, then it will
+                    be applied to the data.
+          interpolate Interpolate (and extrapolate) via a spline fit (to
+                    the real and imaginary parts) bandpass values for
+                    channels with no solution. This is commonly used because
+                    a set of channels are flagged, possibly because of RFI or
+                    spectral features in the bandpass calibrator.  If
+                    less than 50% of the channels are good, the
+                    interpolation (extrapolation) is not done and those
+                    channels will not have a bandpass solution
+          oldflux   This causes MFCAL to use the pre-August 1994 ATCA flux
+                    density scale below 11 GHz and and the pre-May 2016 mm
+                    fluxscale above 11 GHz.
+                    See the help on <a href="oldflux.html">oldflux</a> for more information.
+
+Key: <a name="tol">tol
+        Solution convergence tolerance. Default is 0.001.
+Revision: 1.20, 2017/05/08 02:31:10 UTC
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 08 May 2017 </address>
+</body>

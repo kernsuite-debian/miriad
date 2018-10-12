@@ -1,0 +1,26 @@
+%N uvrms
+%D Measure the RMS value of a visibility dataset.
+%P rjs
+%: uv analysis
+%B
+        UVRMS determines the RMS value of a Miriad visibility data.
+%A vis
+        The names of the input uv data sets. No default.
+%A stokes
+        The Stokes/polarisation visibilities to select. The default is to
+        not perform any polarisation conversion, but to apply polarisation
+        calibration (see below).
+%A select
+        The normal uv selection commands. The default is to select everything.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels.
+%A options
+        Extra processing options.
+           nocal       Do not apply the gains table.
+           nopass      Do not apply bandpass corrections. It is unwise
+                       to turn off bandpass correction, as the continuum
+                       estimation process will be confused by a bandpass
+                       which is not flat.
+           nopol       Do not apply polarization corrections.

@@ -1,0 +1,35 @@
+%N imlist
+%D List items and pixel values from an image
+%P rjs
+%: image analysis
+%B
+        IMLIST reports information concerning a Miriad image.  By
+        default it lists pixel values.  Alternatively, it can list the
+        mosaic table or image statistics.
+ 
+%A in
+        Input image name.  No default.
+ 
+%A options
+        Several options can be given separated by commas, and can be
+        abbreviated to uniqueness.  Possible options are:
+          data       List some data.
+          mosaic     List the mosaic table of an image (if present).
+          statistics List total flux, min and max and rms for each
+                     plane.
+ 
+%A region
+        The region of interest.  See the help on "region" for more
+        information.  This gives the region of pixels to be listed, or
+        the region for which statistics are calculated.  Only
+        rectangular regions of interest are supported.  The default is
+        the entire image (which is usually too big for listing).
+ 
+%A format
+        This gives the FORTRAN format for listing pixel values.
+        For example: 1pe11.4, f5.2, 1pg12.5. The default is 1pe10.3
+ 
+%A log
+        The output log file.  The default is the terminal.
+ 
+%R 1.4, 2013/08/30 01:49:21 UTC

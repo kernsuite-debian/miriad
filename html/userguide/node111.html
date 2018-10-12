@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Other deconvolution tasks</TITLE>
+<META NAME="description" CONTENT="Other deconvolution tasks">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node112.html">
+<LINK REL="previous" HREF="node110.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node112.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2779"
+  HREF="node112.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2775"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2769"
+  HREF="node110.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2777"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2780"
+  HREF="node112.html">Restoring an image</A>
+<B>Up:</B> <A NAME="tex2html2776"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2770"
+  HREF="node110.html">Multi-frequency deconvolution - MFCLEAN</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001450000000000000000">
+Other deconvolution tasks</A>
+</H1>
+The following tasks are primarily written for multiple-pointing (mosaiced)
+observations (see Chapter <A HREF="node165.html#c:mosaicing">21</A>). However they also work equally well for a conventional single
+pointing dataset (in <I>Miriad</I>, a single pointing observation is treated as
+a degenerate mosaic). The first two provide functionality not available
+with the other single-pointing deconvolution tasks.
+
+<UL>
+<LI><A NAME="tex2html465"
+  HREF="../doc/mosmem.html">mosmem</A>: This is a maximum entropy deconvolution
+task which can handle a joint
+deconvolution with an interferometric and single dish observation. A joint
+deconvolution of a single dish and single pointing interferometric observation
+is not common: usually if the source is large enough to warrant a single
+dish observation, then it is likely that the interferometric observation
+would be a mosaic.
+</LI>
+<LI><A NAME="tex2html466"
+  HREF="../doc/pmosmem.html">pmosmem</A>: This is another maximum entropy deconvolution task.
+It differs in that it can perform a joint deconvolution of the four
+Stokes parameters simultaneously. With polarised emission being potentially
+positive and negative valued, the entropy measure for this is different
+from a simple total intensity deconvolution. See
+<A NAME="tex2html467"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1999A%26AS..139..387S">Sault et al. (1999)</A>
+(A&amp;A, 139, 387) for more background on joint polarimetric deconvolution.
+</LI>
+<LI><A NAME="tex2html468"
+  HREF="../doc/moscsdi.html">moscsdi</A>: This is a clean deconvolution task that does a
+joint deconvolution of the combination of linear Stokes parameters Q+iU. 
+This approach avoids bias due to the position angle of the linear polarisation 
+and gives better results than mossdi for extended polarised emission. See
+<A NAME="tex2html469"
+  HREF="http://arxiv.org/abs/1606.01482">Pratley and Johnston-Hollitt (2016)</A>
+for the details of the algorithm. There is 
+a single pointing version of this task called <A NAME="tex2html470"
+  HREF="../doc/csdi.html">csdi</A>.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2779"
+  HREF="node112.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2775"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2769"
+  HREF="node110.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2777"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2780"
+  HREF="node112.html">Restoring an image</A>
+<B>Up:</B> <A NAME="tex2html2776"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2770"
+  HREF="node110.html">Multi-frequency deconvolution - MFCLEAN</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

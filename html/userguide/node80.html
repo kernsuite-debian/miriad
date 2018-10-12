@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Determining Gains and Polarimetric Properties - GPCAL</TITLE>
+<META NAME="description" CONTENT="Determining Gains and Polarimetric Properties - GPCAL">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node81.html">
+<LINK REL="previous" HREF="node79.html">
+<LINK REL="up" HREF="node73.html">
+<LINK REL="next" HREF="node81.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2383"
+  HREF="node81.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2379"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2373"
+  HREF="node79.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2381"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2384"
+  HREF="node81.html">Copying Calibration Tables -</A>
+<B>Up:</B> <A NAME="tex2html2380"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2374"
+  HREF="node79.html">Determining Gains and Bandpass</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001150000000000000000"></A><A NAME="s:gpcal"></A>
+<BR>
+Determining Gains and Polarimetric Properties - GPCAL
+</H1>
+Task <A NAME="tex2html268"
+  HREF="../doc/gpcal.html">gpcal</A>
+is the main workhorse of the <I>Miriad</I> calibration
+system, although it is only particularly useful if you have measured
+all four polarisation products (<I>XX</I>, <I>YY</I>, <I>XY</I> and <I>YX</I>). It has
+a plethora of options to turn on and off various solvers. Most of these
+will be irrelevant to normal use - particularly when calibrating a
+source, such as 1934-638, which is known to be unpolarised. However it
+does not determine a bandpass function. So, if you have not averaged
+you data into a channel-0 dataset, you should precede <A NAME="tex2html269"
+  HREF="../doc/gpcal.html">gpcal</A>
+with
+<A NAME="tex2html270"
+  HREF="../doc/mfcal.html">mfcal</A>
+- <A NAME="tex2html271"
+  HREF="../doc/gpcal.html">gpcal</A>
+will normally apply any bandpass function
+it finds with the dataset before it performs it real work.
+
+<P>
+Do not be intimidated by the number of options - we
+give you advice on which ones to use in the following chapter. We now discuss
+the various inputs.
+
+<P>
+
+<UL>
+<LI><TT>vis</TT>: The input dataset.
+</LI>
+<LI><TT>line</TT> can be used to select the range of channels, and the
+averaging to be performed on a multi-channel dataset. See Section&nbsp;<A HREF="node35.html#s:line">5.4</A>
+for more information. Generally you <EM>should not</EM> specify any
+averaging. Task <A NAME="tex2html272"
+  HREF="../doc/gpcal.html">gpcal</A>
+performs its own averaging in a fashion which
+gives best results.
+</LI>
+<LI><TT>interval</TT>: This <TT>interval</TT> parameter has the same meaning
+as that described in Section&nbsp;<A HREF="node79.html#s:mfcal">11.4</A> above, and the advice for setting
+it is the same.
+</LI>
+<LI><TT>flux</TT> gives the values of the four Stokes parameters for
+your calibrator source.  If you choose to solve for <I>Q</I> and <I>U</I>, (see
+<TT>options</TT> below) then these are initial guesses only - it is not
+necessary to give them accurately, or at all, in this case.
+Make sure you get the
+signs of <I>Q</I>, <I>U</I> and <I>V</I> right; these are real numbers, not visibility
+amplitudes.  Note that <A NAME="tex2html273"
+  HREF="../doc/gpcal.html">gpcal</A>
+does recognise a small group of
+calibrators for which it knows the spectrum in <I>I</I>, and sometimes <I>Q</I>
+and <I>U</I> - see the help file for details. The primary calibrator
+1934-638 is amongst these. If <A NAME="tex2html274"
+  HREF="../doc/gpcal.html">gpcal</A>
+does not
+recognise the source, the default is an unpolarised source. This will
+be quite inappropriate if you have a polarised source and do not solve
+for <I>Q</I> and <I>U</I>. If no flux density is given, and the source is not known, then
+<A NAME="tex2html275"
+  HREF="../doc/gpcal.html">gpcal</A>
+assumes that the rms gain amplitudes are 1 - and determines
+the calibrator flux density accordingly. This will be a good approximation
+if you equalised the gains at the start of the observation
+(which is the normal practise). However, at this stage, this approximation
+is largely a convenience - any error in the assumption will be corrected later.
+
+<P>
+</LI>
+<LI><TT>tol</TT>: The iterative procedure converges when the solutions
+are unchanged from the previous solutions by an amount <TT>tol</TT>.  The
+default is <I>0.001</I>.  Make this smaller if you want more iterations.
+
+<P>
+</LI>
+<LI><TT>xyphase</TT>:
+<A NAME="3003"></A><A NAME="3004"></A> This parameter is an
+artifact of history - it can be ignored when following the current
+recommended procedure for calibrating ATCA data.
+This parameter can be used as an
+alternative way of specifying
+the <I>XY</I> phase of the antennas.
+If the <I>XY</I> phase on the reference antenna is constant to
+good approximation, and provided you <EM>have not</EM> already applied
+any <I>XY</I> phase correction (i.e. neither in AIPS or <I>Miriad</I> <A NAME="tex2html276"
+  HREF="../doc/atlod.html">atlod</A>
+nor with
+<A NAME="tex2html277"
+  HREF="../doc/atxy.html">atxy</A>), then you can give the <I>XY</I> phases of the antennas here.
+Unless you explicitly turn off solving for <I>XY</I> phase in <A NAME="tex2html278"
+  HREF="../doc/gpcal.html">gpcal</A>, then
+the only important <I>XY</I> phase value is that for the reference antenna.
+All the same you should give values for all antennas.
+One significant catch (for arcane reasons) is that the
+<I>XY</I> phase reported by AIPS is not the <I>XY</I> phase used by <I>Miriad</I>.
+They are related by:
+<A NAME="3017"></A>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\phi_{miriad} = \left\{ \begin{array}{ll}
+		\phi_{aips} - 180 & \mbox{if sideband indicator is 1}\\
+		-\phi_{aips}- 180 & \mbox{if sideband indicator is -1}\\
+		\end{array}\right.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="374" HEIGHT="45" BORDER="0"
+ SRC="img28.png"
+ ALT="\begin{displaymath}
+\phi_{miriad} = \left\{ \begin{array}{ll}
+\phi_{aips} - 180...
+...80 &amp; \mbox{if sideband indicator is -1}\\
+\end{array}\right.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+The value of the sideband indicator is noted
+in the history generated by <A NAME="tex2html279"
+  HREF="../doc/ATLOD.html">ATLOD</A>. More simply,
+however, it will also be the  sign of the frequency increment.
+
+<P>
+</LI>
+<LI><TT>options</TT> controls what <A NAME="tex2html280"
+  HREF="../doc/gpcal.html">gpcal</A>
+solves for.  Several
+options, separated by commas, can be given.  It is important that you
+understand the different choices.
+
+<P>
+<DL>
+<DT><STRONG><TT>oldflux</TT></STRONG></DT>
+<DD>If you are calibrated data that are to be combined
+or compared with ATCA data reduced before August 1994, you will generally
+want to use the `<TT>oldflux</TT>' option to select the pre-August 1994 ATCA
+flux scale. See Section&nbsp;<A HREF="node93.html#s:1934flux">12.6</A> for more information.
+
+<P>
+</DD>
+<DT><STRONG><TT>qusolve</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html281"
+  HREF="../doc/gpcal.html">gpcal</A>
+will solve for <I>Q</I> and <I>U</I>,
+taking the model you gave in <TT>flux</TT> as a starting point.  You need
+many cuts of the calibrator with good parallactic angle coverage to do
+this successfully. You should not attempt to solve for <I>Q</I> and <I>U</I> of
+the primary, as you will invariably have too little data. Additionally
+1934-638 is known to be unpolarised.
+
+<P>
+</DD>
+<DT><STRONG><TT>xyvary</TT>:</STRONG></DT>
+<DD>If the telescope settings are not altered, the <I>XY</I> phases
+(which are purely instrumental) appear to remain constant to better than
+a few degrees.
+By default, <A NAME="tex2html282"
+  HREF="../doc/gpcal.html">gpcal</A>
+assumes the <I>XY</I> phases are constant. Because of the
+reliability of the <I>XY</I> phase measurement system, this assumption is now
+known to be inappropriate. It is better to let <A NAME="tex2html283"
+  HREF="../doc/gpcal.html">gpcal</A>
+solve for
+the <I>XY</I> phases as a function of time - use option <TT>xyvary</TT> for this.
+Note that <A NAME="tex2html284"
+  HREF="../doc/gpcal.html">gpcal</A>
+can do this for
+all antennas <EM>except</EM> the reference antenna - the reference antenna
+is assumed to be constant and (generally) zero.
+
+<P>
+</DD>
+<DT><STRONG><TT>xyref</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html285"
+  HREF="../doc/gpcal.html">gpcal</A>
+will solve for the <I>XY</I> phase of the
+reference antenna.  To do this, the source must be strongly polarised.
+
+<P>
+</DD>
+<DT><STRONG><TT>noxy</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html286"
+  HREF="../doc/gpcal.html">gpcal</A>
+will not solve for any <I>XY</I> phases.
+By default it solves for all <I>XY</I> phases, except for the
+reference antenna. This is generally not an appropriate switch to use.
+
+<P>
+</DD>
+<DT><STRONG><TT>polref</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html287"
+  HREF="../doc/gpcal.html">gpcal</A>
+solves for all the leakage
+parameters of the reference antenna.  By default it does
+not attempt to solve for the misalignment and ellipticity of the <I>X</I>
+feed of the reference antenna.  It is only possible to use this option
+if the source is strongly polarised (at least 5%).  If you specify <I>Q</I>
+and <I>U</I>, both these terms can be found.  However, if you ask for the
+<TT>qusolve</TT> option, then the misalignment term cannot be determined.
+
+<P>
+</DD>
+<DT><STRONG><TT>nopol</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html288"
+  HREF="../doc/gpcal.html">gpcal</A>
+does not solve for the polarisation
+leakage terms.  You <EM>must</EM> use this option if you are calibrating
+data without <I>XY</I> or <I>YX</I> correlations.
+
+<P>
+</DD>
+<DT><STRONG><TT>noamphase</TT></STRONG></DT>
+<DD>means that <A NAME="tex2html289"
+  HREF="../doc/gpcal.html">gpcal</A>
+does not solve for the antenna
+gains.  This option is rarely useful.
+
+<P>
+</DD>
+</DL>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2383"
+  HREF="node81.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2379"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2373"
+  HREF="node79.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2381"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2384"
+  HREF="node81.html">Copying Calibration Tables -</A>
+<B>Up:</B> <A NAME="tex2html2380"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2374"
+  HREF="node79.html">Determining Gains and Bandpass</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+%N demos
+%D Inverse mosaicing operation
+%P rjs
+%: map manipulation
+%B
+        DEMOS (de-mosaic) is a MIRIAD task that takes a model of the sky
+        (that is primary beam corrected), and multiplies by a primary
+        beam response function at a number of different pointing
+        centers.  It produces a different output for each pointing
+        center.  Thus this task performs the inverse of mosaicing.  The
+        input pointing centers and the primary beam size are indirectly
+        specified by a visibility dataset.
+ 
+        Because the output of DEMOS have primary beams applied, they can
+        be used for comparison with visibility data and uncorrected
+        images.  In particular SELFCAL cannot handle a model that is
+        primary beam corrected, though it can handle a visibility data
+        file containing multiple pointings.  Thus you could use DEMOS to
+        break the model into several models which are not primary beam
+        corrected.
+%A map
+        This is the name of the image to be de-mosaiced.  A primary beam
+        corrected image, single dish image, or one that is partially
+        primary beam corrected (e.g. the output of MOSMEM).  No default.
+%A vis
+        This is one or more input visibility datasets.  The pointing
+        centres and primary beams corresponding to the selected
+        visibilities are used in the de-mosaicing process.
+%A select
+        Normal uv selection. See help on "select".  Generally you will
+        select only those pointings of interest.
+%A out
+        This gives a template name for the output images.  The actual
+        output image names are formed by appending a number
+        corresponding to each pointing center to this output name.  For
+        example, if out=cygnus, then the output images will be called
+        cygnus1, cygnus2, etc.
+%A imsize
+        This gives two values, being the output image size, in x and y.
+        If no value is given, then the outputs will be one primary beam
+        width in size. If one value is given, then this is used for both
+        x and y. Each output size might be smaller than this, to prevent
+        each output from extending beyond the edges of the input image.
+%A options
+        Extra processing options. There is currently only one option.
+          detaper    This indicates that the input image is not fully
+                     primary beam corrected. Such images are formed by
+                     LINMOS with options=taper or by MOSMEM.
+ 
+%R 1.8, 2014/05/21 04:34:59 UTC

@@ -1,0 +1,130 @@
+.TH atfix 1
+.SH NAME
+atfix - Apply various miscellaneous corrections to ATCA visibility data
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ATFIX performs various miscellaneous offline corrections appropriate
+for ATCA 3mm data. Steps that can be performed are
+.nf
+  Apply gain/elevation effect
+  Apply system temperature measurements
+  Correct for incorrect baseline length and instrumental phase.
+  Correct antenna table (when some antennas were off-line)
+.fi
+.sp
+NOTE: This task will usually be used very early in the data reduction
+process. It should be used before calibration.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. No default.
+.TP
+\fIselect\fP
+Standard visibility data selection. See the help on "select" for
+more information. The default is to select all data.
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.TP
+\fIdantpos\fP
+Currently the on-line system uses the antenna locations derived from
+preliminary observations.
+If a higher precision solution for the baseline lengths is available,
+you will want to correct your data to account for this.
+.sp
+This also invokes corrections of known instrumental phase errors.
+.sp
+The inputs are the equatorial coordinate offsets entered in the
+following order (NO checking is done for consistency):
+.nf
+    dantpos = A1,X1,Y1,Z1,A2,X2,Y2,Z2,A3,X3,Y3,Z3,....
+.fi
+The input values are the antenna number and the three equatorial
+coordinate offsets (entered in units of nanoseconds).  These input
+values are added to the absolute coordinates read from the data.
+Antenna present in the data but not included in the input value
+list are treated as having a zero coordinate offset.
+.sp
+The arcane unit of nanoseconds is used for historical compatibililty.
+Note 1 nanosec = 0.2997 meters.
+.sp
+A collection of parameter files giving the corrections to apply are
+stored in $MIRCAT. These have names of the form "dantpos.yymmdd"
+where "yymmdd" is the date of the start of a new array configuration.
+Baseline corrections are believed to be constant between array
+configurations.
+.sp
+If a data file is present, you can instruct atfix to read this
+directly using the indirect parameter input. For example, to read
+parameters appropriate for a hypothetical array configuration
+starting on 16 October 2002, use
+.nf
+    dantpos=@$MIRCAT/dantpos.021016
+.TP
+\fItsyscal\fP
+.fi
+The determines the way that system temperature measurements are
+applied to the visibility data. Usually this will be used
+to make changes to the way system temperature measurements have
+been applied to the data by the on-line system. The default
+is to interpolate values between successive system temperature
+measurements. Possible values
+for this parameter are:
+.nf
+  none        Do not apply any system temperature measurements. If the
+              the measurements were applied on-line, they are undone.
+  any         Do nothing. Leave the Tsys calibration as is.
+  constant    Apply a constant Tsys between successive Tsys measurements.
+              This is the approach used by the on-line system at 3mm
+              wavelength.
+  extrapolate Apply a Tsys value between measurements which accounts
+              for predicted changes in Tsys with elevation and measured
+              weather.
+  interpolate Interpolate a Tsys value between measurements which
+              accounts for predicted changes in Tsys with elevation
+              and measured weather. This is the default.
+.TP
+\fIoptions\fP
+.fi
+Extra processing options. Several options can be given,
+separated by commas. Minimum match is supported.
+.nf
+  nogainel  This disables applying a instrumental gain/elevation
+            correction to the data. Currently the gains of the
+            antennas are a function of elevation. By default,
+            a correction is made for gain/elevation effects.
+  noinst    Do not correct for instrumental baseline effects. By
+            default a phase correction is made for instrumental
+            baseline effects.
+.TP
+\fIarray\fP
+.fi
+One of the flaws in the current ATCA datafiles is that antenna locations
+are not recorded for antennas that are off-line (and hence not producing
+data). While this might not seem a serious flaw, the off-line antennas
+can still cause shadowing. In particular, this was an issue when
+using the 3-antenna system in compact arrays.
+.sp
+By giving a value to this parameter, atfix will fill in any
+antenna locations that are missing from the input visibility file.
+NOTE: This just fills in missing antenna locations, it does not perform
+any flagging of shadowed data.
+.sp
+The value given to this parameter is either an array configuration name
+(e.g. EW352 or 750A) or a list of six station names (e.g. W106 or N3).
+When giving the station names, these must be in the order of the antennas
+(i.e. CA01, CA02, CA03 etc).
+.sp
+NOTE: When antennas are in a shuffled order, or for arrays using
+the north spur, you should generally give the list of station
+names, as the standard array configuration names assume the
+standard antenna order (not the shuffled order).
+.sp
+If in doubt, see the on-line history of configurations:
+.nf
+  http://www.narrabri.atnf.csiro.au/operations/array_configurations/config_hist.html
+.fi
+.sp

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>RATTY</TITLE>
+<META NAME="description" CONTENT="RATTY">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node47.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html955"
+  HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html949"
+  HREF="node47.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html945"
+  HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html951"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html953"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html956"
+  HREF="node55.html">The Command</A>
+<B>Up:</B> <A NAME="tex2html950"
+  HREF="node47.html">Utility Programs</A>
+<B> Previous:</B> <A NAME="tex2html946"
+  HREF="node53.html">Interface Definition Libraries</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00520000000000000000"></A><A NAME="936"></A>
+<BR>
+RATTY
+</H1>
+RATTY is a FORTRAN preprocessor, which is intended to simplify the job of
+developing code that is to run on several machines.
+RATTY checks for some non-ANSI or dubious programming
+practises, secondly it converts some FORTRAN extensions into standard
+FORTRAN, and thirdly it handles some compiler directives associated with
+conditional compilation or code optimization.
+
+<P>
+Apart from the
+extra trouble of running the preprocessor before compilation,  preprocessors
+are generally a nuisance, in that they make the code that is developed
+and the code that is debugged different (both compile and run time debugging).
+This tends to complicate the debugging process. To this end, RATTY
+attempts to make the minimum changes necessary to code to get it to compile.
+Comments and indentation are retained in the output, so that the output
+should
+be nearly as readable as the input. Additionally when 
+conditional compilation directives are avoided, it will be found that much
+code does not need to be preprocessed on a number of compilers.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html957"
+  HREF="node55.html">The Command</A>
+<LI><A NAME="tex2html958"
+  HREF="node56.html">Language Extensions</A>
+<LI><A NAME="tex2html959"
+  HREF="node57.html">Optimization Directives</A>
+<LI><A NAME="tex2html960"
+  HREF="node58.html">Conditional Compilation Directives</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

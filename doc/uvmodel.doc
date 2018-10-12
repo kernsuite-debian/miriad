@@ -1,0 +1,98 @@
+%N uvmodel
+%D Add, subtract, etc, a model from a uv data set.
+%P rjs
+%: uv analysis
+%B
+        UVMODEL is a MIRIAD task that modifies a visibility dataset by
+        combining or replacing it a model.  Allowed operations are
+        adding, subtracting, multiplying, dividing and replacing.  The
+        model is specified in the image domain, so that its Fourier
+        transform is first computed before application to the
+        visibilities.  The model may be either an image (e.g., a CLEAN
+        component image) or a point source.
+ 
+        As an example, UVMODEL could be used to remove CLEAN components
+        from a visibility data file.  The residual data base could then
+        be examined for anomalous points, which could in turn be
+        clipped.  UVMODEL could then be reapplied to add the CLEAN
+        components back into the visibility data base for re-imaging.
+%A vis
+        Input visibility data file.  No default
+%A model
+        Input model cube.  The default is a point source model.  This
+        will generally be a deconvolved map formed from the visibility
+        data being modified.  It should be made with "channel" linetype.
+        The model should have units of JY/PIXEL and be weighted by the
+        primary beam.  The task DEMOS can be used to extract primary
+        beam weighted models from a mosaiced image.
+%A select
+        The standard uv selection subcommands.  The default is all data.
+%A options
+        This gives extra processing options.  Several values can be
+        given though many are mutually exclusive, separated by commas.
+        Option values can be abbreviated to uniqueness.
+        Possible options are (no default):
+          add       Form: out = vis + model
+          subtract  Form: out = vis - model
+          multiply  Form: out = vis * model
+          divide    Form: out = vis / model
+          replace   Form: out = model
+          flag      Form: out = vis, but flag data where the difference
+                    between vis and model is greater than "sigma"
+                    sigmas.
+          unflag    Unflag any flagged data in the output.
+          mosaic    Select only those visibilities whose observing
+                    centre is within plus or minus three pixels of the
+                    model reference pixel.  This is needed if there are
+                    multiple pointings or multiple sources in the input
+                    uv file.  By default no observing centre selection
+                    is performed.
+          mfs       This is used if there is a single plane in the input
+                    model, which is assumed to represent the data at all
+                    frequencies.  This should also be used if the model
+                    has been derived using MFCLEAN.
+          zero      Use zero as the value of the model if it cannot be
+                    calculated.  This can be used to avoid flagging the
+                    data in the outer parts of the u-v-plane when
+                    subtracting a low resolution model.
+        The operations add, subtract, multiply, divide, replace and flag
+        are mutually exclusive.  The operations flag and unflag are also
+        mutually exclusive.
+ 
+        The unflag option should be used with caution.  Data in the
+        output may still be flagged, if it was not possible to calculate
+        the model.
+%A clip
+        Clip level.  Pixels in the model below this level are set to
+        zero.  The default is not to perform any clipping.
+%A flux
+        If MODEL is blank, then the flux (Jy) of a point source model
+        should be specified here.  Also used as the default flux in the
+        apriori option.  The default is 1 (assuming the model parameter
+        is not given).  The flux can optionally be followed by i,q,u,v
+        or the other polarisation mnemonics to indicate the polarisation
+        type. The 3rd-6th parameter optionally specify the reference
+        frequency in GHZ and the spectral index and higher order terms
+        (as given by uvsfit or uvfmeas with options=mfflux).
+%A offset
+        The RA and DEC offsets (arcsec) of the point source from the
+        observing centre.  A point source to the north and east has
+        positive offsets.  Defaults are zero.
+%A line
+        The visibility linetype to use, in the standard form, viz:
+          type,nchan,start,width,step
+        Generally if there is an input model, this defaults to the
+        linetype parameters used to construct the map.  For a point
+        source or planet model, the default is all channels.  This
+        parameter may be used if you wish to override these defaults,
+        or if the relevant information is not present in the header,
+%A sigma
+        For options=flag, UVMODEL flags those points in the output that
+        differ by more than "sigma" sigmas.  The default is 100.
+%A out
+        Output visibility data file name.  The output file will contain
+        only as many channels as there are planes in the model cube.
+        The various uv variables that describe the windows are adjusted
+        accordingly.  No default.
+ 
+%R 1.8, 2015/03/24 04:56:24 UTC

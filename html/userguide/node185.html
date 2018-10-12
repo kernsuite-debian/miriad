@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Some Alternative Non-Linear Methods</TITLE>
+<META NAME="description" CONTENT="Some Alternative Non-Linear Methods">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node184.html">
+<LINK REL="up" HREF="node181.html">
+<LINK REL="next" HREF="node186.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3728"
+  HREF="node186.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3724"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3720"
+  HREF="node184.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3726"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3729"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B>Up:</B> <A NAME="tex2html3725"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3721"
+  HREF="node184.html">The Non-Linear Method -</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002184000000000000000">
+Some Alternative Non-Linear Methods</A>
+</H2>
+Here we describe two ad hoc methods of combining single-dish and
+mosaic images. To some extent, these are of historical
+interest only - the linear and non-linear methods mentioned before
+are to be preferred.
+
+<P>
+These alternative methods are not implemented as tasks within <I>Miriad</I>, so
+the steps to implement them are more hands-on. For example, if needed, you
+will want to correct the flux calibration factor manually before using either
+of these (e.g. <A NAME="tex2html1007"
+  HREF="../doc/immerge.html">immerge</A>
+can do this for you).
+Some examples of using these approaches are given
+in the
+<A NAME="tex2html1008"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2002sdra.conf..375S">paper by Snezana Stanimirovic</A>
+(ASP Conf. Series, vol. 278, p. 375).
+
+<P>
+
+<UL>
+<LI>An alternative combination technique using <A NAME="tex2html1009"
+  HREF="../doc/mosmem.html">mosmem</A>
+is to
+use the single-dish image as the default image (<TT>default</TT> keyword)
+rather than as a separate <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.png"
+ ALT="$\chi^2$"></SPAN> constraint. That is, you use just
+the mosaic image and beam with the <TT>map</TT> and <TT>beam</TT> parameters,
+and set the single-dish image as the <TT>default</TT> image. Strictly
+the default image should be in units of Jy/pixel. However
+<A NAME="tex2html1010"
+  HREF="../doc/mosmem.html">mosmem</A>
+is smart enough to divide the pixel values by the beam
+volume (where necessary) to perform some sort of crude conversion from
+Jy/beam to Jy/pixel. You can constrain the total flux of the resultant
+model to agree with the single-dish total flux, by using <TT>options=doflux</TT>.
+Task <A NAME="tex2html1011"
+  HREF="../doc/mosmem.html">mosmem</A>
+is smart enough to use the default image as an flux
+estimate when the <TT>doflux</TT> option is used and when the <TT>flux</TT>
+is left unset.
+
+<P>
+</LI>
+<LI>You could form an image which is a simple weighted average
+of the mosaic and single-dish dirty images (i.e. before any deconvolution),
+and then pass this to <A NAME="tex2html1012"
+  HREF="../doc/mosmem.html">mosmem</A>
+as
+if it was a normal mosaic. In doing this, you are
+trying to fool <A NAME="tex2html1013"
+  HREF="../doc/mosmem.html">mosmem</A>
+to some extent, so there are a number of fudges that you should do
+to make the data better approximate what <A NAME="tex2html1014"
+  HREF="../doc/mosmem.html">mosmem</A>
+expects.
+
+<P>
+Before adding the mosaic and single-dish images, you should apply
+the residual primary beam attenuation present in the mosaic
+to the single-dish data. Task <A NAME="tex2html1015"
+  HREF="../doc/mossen.html">mossen</A>
+will generate an
+image of the residual primary beam attenuation (set the <TT>gain</TT>
+parameter).
+Having generated a 
+the residual primary beam attenuation, you can then apply this to
+the single-dish image using <A NAME="tex2html1016"
+  HREF="../doc/maths.html">maths</A>.
+
+<P>
+The weights used to add the mosaic and single-dish
+images should sum to 1, but the actual way of determining the
+relative weights is not well defined. One good choice, advocated by
+Stanimirovic et al., is to weight the images in inverse proportional to the
+beam volumes. When the difference in resolution between the mosaic
+and single-dish observations is appreciable (i.e. the normal situation),
+this weighting reduces to nearly the same as that performed by
+<A NAME="tex2html1017"
+  HREF="../doc/immerge.html">immerge</A>. Normalisation the weights to add to 1 gives
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+w_{\rm mos} &=& \frac{\Omega_{\rm SD}}{\Omega_{\rm mos}+\Omega_{\rm SD}} \\
+w_{\rm SD} &=& \frac{\Omega_{\rm mos}}{\Omega_{\rm mos}+\Omega_{\rm SD}}
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="163" HEIGHT="83" BORDER="0"
+ SRC="img118.png"
+ ALT="\begin{eqnarray*}
+w_{\rm mos} &amp;=&amp; \frac{\Omega_{\rm SD}}{\Omega_{\rm mos}+\Omega...
+...D} &amp;=&amp; \frac{\Omega_{\rm mos}}{\Omega_{\rm mos}+\Omega_{\rm SD}}
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+(where <!-- MATH
+ $\Omega_{\rm mos}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="38" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img119.png"
+ ALT="$\Omega_{\rm mos}$"></SPAN> and <!-- MATH
+ $\Omega_{\rm SD}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img120.png"
+ ALT="$\Omega_{\rm SD}$"></SPAN> are the beam volumes of 
+the synthesised mosaic beam and the single-dish beam respectively).
+
+<P>
+To generate the effective beam dataset, you will also want to add
+a component to the mosaic beam. Because of the process that
+<A NAME="tex2html1018"
+  HREF="../doc/mosmem.html">mosmem</A>
+believes was used to generate a mosaic, the
+component you add is not simply the single-dish beam - the mosaicing process
+narrows down the width of the beams from that of individual
+pointings. If both the interferometer primary beam and the single-dish beam
+are gaussian forms with widths <!-- MATH
+ $\theta_{\rm int}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="28" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img121.png"
+ ALT="$\theta_{\rm int}$"></SPAN> and <!-- MATH
+ $\theta_{\rm SD}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="29" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img122.png"
+ ALT="$\theta_{\rm SD}$"></SPAN> 
+respectively, then you will want to add a gaussian to the mosaic beam
+dataset which has a width
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\theta = \sqrt{\frac{2\theta_{\rm int}^2\theta_{\rm SD}^2}{2\theta^2_{\rm int}-\theta^2_{\rm SD}}}.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="128" HEIGHT="55" BORDER="0"
+ SRC="img123.png"
+ ALT="\begin{displaymath}
+\theta = \sqrt{\frac{2\theta_{\rm int}^2\theta_{\rm SD}^2}{2\theta^2_{\rm int}-\theta^2_{\rm SD}}}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+This gaussian will be somewhat broader than
+the single-dish resolution (for an ATCA and Parkes combination, it will be about
+7% broader than the Parkes beam). You will want to add this gaussian and the
+mosaic beam with the same weights that were used for the single-dish
+and mosaic images.
+Note that the mosaic beam dataset consists of one image per pointing, and that
+you will want to add a gaussian to each plane.
+Task <A NAME="tex2html1019"
+  HREF="../doc/imgen.html">imgen</A>
+can be used to do this,
+although it warns you that its handling of cubes
+is crude!
+With <A NAME="tex2html1020"
+  HREF="../doc/imgen.html">imgen</A>, you can set the weighting by appropriately setting the 
+scaling factor (<TT>factor</TT> parameter) and the amplitude of the
+gaussian (<TT>spar</TT> parameter).
+
+<P>
+Note that this technique ignores some edge effects.
+Also it uses the theoretical noise level derived for the 
+mosaic observation. This will be close to what you want if the noise
+levels for all pointings are about the same. 
+</LI>
+</UL>
+
+<P>
+
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3728"
+  HREF="node186.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3724"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3720"
+  HREF="node184.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3726"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3729"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B>Up:</B> <A NAME="tex2html3725"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3721"
+  HREF="node184.html">The Non-Linear Method -</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

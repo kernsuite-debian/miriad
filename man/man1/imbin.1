@@ -1,0 +1,48 @@
+.TH imbin 1
+.SH NAME
+imbin - Bin up an image.
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+IMBIN bins up (averages) pixels, and/or picks out every Nth
+pixel, in some combination of the first three dimensions of an
+image.  If the selected binning size does not integrally fit
+into the size of the axis, the region is adjusted so that it
+does if possible.
+.sp
+An output pixel is blanked only if there were no valid
+contributing input pixels.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+Input image.  Wild card expansion supported.  No default.
+.TP
+\fIregion\fP
+Standard region of interest.  See the help on "region" for
+more information.  The default is the entire input.
+.TP
+\fIbin\fP
+A pair of values for each axis.  These give the spatial
+increment and binning size in pixels for each axis to be applied
+to the selected region.  If the binning size is not unity, it
+must equal the increment.  For example, to bin up the image by 2
+pixels in the x direction, and to pick out every third pixel in
+the z direction, set BIN=2,2, 1,1, 3,1
+Defaults are 1,1 for each axis.
+.TP
+\fIout\fP
+Output image
+.TP
+\fIoptions\fP
+Extra processing options.  Only the minimum characters to avoid
+ambiguity is needed.
+.nf
+  sum       Produce sum rather than average of pixels in
+            each bin
+.fi
+.sp
+.SH REVISION
+1.9, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,41 @@
+%N lagflg
+%D Flag visibility data in the lag domain.
+%P rjs
+%: calibration
+%B
+        LAGFLG is a Miriad task to flag visibility data in the lag domain.
+        As visibility flags are correlation-based (not lag based), this task
+        has to produce a new outpput file.
+ 
+        Ideally, the input visibility file would be before Hanning smoothing
+        (if any), any calibration has been applied, and certainly before any
+        subsetting of the visibility spectrum has been performed.
+ 
+        This requires that the number of channels is 2**n+1, for some value of
+        n.
+%A vis
+        Input visibility file to be flagged. No default.
+%A out
+        Output visibility file, after flagging. No default.
+%A lags
+        A list of pairs, giving the lags to be flagged. Each pair gives
+        a range of lag values. These are indices, with the zero lag having
+        the value 0. This is the same lag numbering system used by uvspec
+        when displaying lags. No default - at least one range pair must be
+        given.
+%A select
+        Normal visibility selection. See the help on "select" for more
+        information. All data in the input is copied to the output, but
+        only those data selected using the "select" keyword will go through
+        the lag flagging process. Currently only "polarization", "antenna"
+        and "time" selection is supported in this task. This should be
+        sufficient to select a correlator product that is bad over a
+        particular period.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+          noflag    By default, "lagflg" zeros flagged data before it
+                    transforms to the lag domain. At times this might
+                    no be desirable - in which case use this option.
+ 

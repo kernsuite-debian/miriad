@@ -1,0 +1,64 @@
+%N zeefake
+%D Generate fake Zeeman data.
+%P nebk
+%: profile analysis
+%B
+        ZEEFAKE is a MIRIAD program to generate fake I and V cubes with
+        Zeeman splitting.  Zero velocity is put at the centre of the
+        band and image.  The cubes are output in VXY order ready for the
+        ZEESTAT program.
+ 
+%A iout
+        The output Stokes I cube. No default.
+ 
+%A iuout
+        The output Stokes I cube in the case of no splitting.  Default
+        is not to write this cube out.
+ 
+%A vout
+        The output Stokes V cube.  No default.
+ 
+%A imsize
+        The output cube sizes, all three dimensions required (VXY).
+ 
+%A vinc
+        The velocity increment along the cubes in km/s.  No default.
+ 
+%A delv
+        The Zeeman splitting (separation of split lines) in km/s.
+        B < 0 if DELV > 0.  No default.
+ 
+%A fwhm
+        The FWHM of the Gaussian line profile in km/s.  No default.
+ 
+%A grvc
+        The velocity increment of the line centre in the x-direction
+        per pixel (km/s).  Makes a linear ramp across the source.
+ 
+%A grint
+        Intensity increment in the x direction per pixel.  Makes
+        a triangular weighting function.  Peak response is 1.0.
+ 
+%A grfwhm
+        FWHM increment in the x direction per pixel.  Makes
+        a linear ramp across the source.
+ 
+%A grsplit
+        Splitting increment in the x direction.  Makes a linear ramp
+        across the source.
+ 
+%A theta
+        The angle of the magnetic field to the line-of-sight in degrees.
+        No default.
+ 
+%A noise
+        The RMS noise to be added to the RR and LL responses.  Note that
+        the peak RR or LL response in this program is 1.0 for theta=0.
+ 
+%A restfreq
+        Line rest frequency in GHz.
+ 
+%A type
+        The line type - "e" for emission (default), "a" for absorption.
+ 
+%R 1.7, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,40 @@
+%N mossdi
+%D Mosaic Steer CLEAN algorithm
+%P rjs
+%: deconvolution
+%B
+        MOSSDI is a MIRIAD task that performs a Steer CLEAN on a
+        mosaiced image or cube.
+ 
+%A map
+        The input dirty map, which should have units of Jy/beam
+        No default.
+%A beam
+        The input dirty beam. No default
+%A model
+        An initial model of the deconvolved image. The default is 0.
+%A out
+        The name of the output map.  The units of the output will be
+        Jy/pixel.
+%A gain
+        CLEAN loop gain. The default is 0.1.
+%A niters
+        The maximum number of iterations. The default is 100.
+%A cutoff
+        Iterating stops if the absolute maximum residual falls below t
+        his level.  The default is 0.
+        When two values are given, do a deep clean to the second cutoff
+        limiting peak finding to the pixels that are already in the
+        model.
+%A clip
+        This sets the relative clip level.  Values are typically 0.75 to
+        0.9.  The default is 0.9.
+%A region
+        The standard region of interest keyword.  See the help on
+        "region" for more information. The default is the entire image.
+%A options
+        Extra processing options:
+          positive   Constrain the deconvolved image to be positive
+                     valued.
+ 
+%R 1.12, 2018/05/10 02:17:12 UTC

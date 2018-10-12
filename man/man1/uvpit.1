@@ -1,0 +1,57 @@
+.TH uvpit 1
+.SH NAME
+uvpit - Fit polarisation of a time-varying point source.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVPIT is a Miriad task which fits visibility data with a time
+varying, polarised point source. Optionally the model or
+residual visibilities can be written out.
+.sp
+This will work for datasets that contain either all four
+linear polarisations, or just the parallel hands.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Name of the input visibility file. No default.
+.TP
+\fIline\fP
+Normal line-type processing with normal defaults. However, you
+must select only a single channel!!
+.TP
+\fIselect\fP
+Normal data selection. Default is all cross-correlation data.
+.TP
+\fIflux\fP
+Initial estimates of the I,Q,U,V flux densities. The default is
+1,0,0,0.
+.TP
+\fIoffset\fP
+Initial estimates of the source offset, in arcsec. The default is
+0,0.
+.TP
+\fIout\fP
+The optional output data-set. The default is not to create an
+output data-set. If an output dataset name is given, then
+either the model or residual visibilities can be saved.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by commas.
+Minimum match is used. Possible values are:
+.nf
+  noqu     Do not attempt to solve for Stokes-Q and U.
+  nov      Do not attempt to solve for Stokes-V. The default is
+           to attempt to solve for V if there are XY and YX
+           correlations present.
+  noshift  Fix the source position.
+  constant The source does not vary with time. The default is
+           to assume the source varies with time.
+  residual The output data-set is the residual visibilities.
+           If an output is being created, the default is to make
+           this the fitted model.
+.fi
+.sp
+.SH REVISION
+1.6, 2013/08/30 01:49:21 UTC

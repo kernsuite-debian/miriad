@@ -1,0 +1,13 @@
+%N mirhelp
+%D Give help on a Miriad task
+%P rjs
+%: user utility
+%B
+   Usage: mirhelp [-w] [-k keyword] task
+ 
+   mirhelp gives help on a Miriad task.
+ 
+   Options:
+     -w    Use the netscape browser to display the help.
+     -k    Get help about a specific task keyword.
+ 

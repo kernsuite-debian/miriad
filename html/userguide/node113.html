@@ -1,0 +1,233 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Self-Calibration</TITLE>
+<META NAME="description" CONTENT="Self-Calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node123.html">
+<LINK REL="previous" HREF="node99.html">
+<LINK REL="up" HREF="userhtml.html">
+<LINK REL="next" HREF="node114.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2801"
+  HREF="node114.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2797"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2791"
+  HREF="node112.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2799"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2802"
+  HREF="node114.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2798"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html2792"
+  HREF="node112.html">Restoring an image</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001500000000000000000"></A><A NAME="c:selfcal"></A><A NAME="3970"></A>
+<BR>
+Self-Calibration
+</H1>
+
+<P>
+Because the basic interpolated calibrator gains do not
+determine the antenna gains perfectly at each time stamp, the quality of the
+resultant image suffers.  Often the technique of self-calibration is
+used to make additional corrections to the antenna gains as a function of time.
+It is notionally very similar to the basic calibration. The main
+difference is than the model of the source is generally more complex
+than just
+assuming its a point source at the phase centre.
+The self-calibration technique finds antenna gains, <SPAN CLASS="MATH"><IMG
+ WIDTH="17" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img63.png"
+ ALT="$g_i$"></SPAN>, which minimise
+the difference between
+the measured visibilities, <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img64.png"
+ ALT="$V_{ij}$"></SPAN>, and the model visibilities,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img65.png"
+ ALT="$\hat{V}_{ij}$"></SPAN>, viz
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\epsilon^2 = \sum |V_{ij} - g_ig_j^{\ast}\hat{V}_{ij}|^2.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="168" HEIGHT="33" BORDER="0"
+ SRC="img66.png"
+ ALT="\begin{displaymath}
+\epsilon^2 = \sum \vert V_{ij} - g_ig_j^{\ast}\hat{V}_{ij}\vert^2.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Like basic calibration, these gains are normally described as `antenna gains'.
+This, however, is somewhat of a misnomer when a telescope measures dual
+polarisations. In this case, it would be better to describe the gains as
+`feed gains', as the gain factors will generally differ between the two
+antenna feeds. The above equation should include subscripts to indicate the
+polarisation type of the correlation (<I>e.g.</I> <SPAN CLASS="MATH"><IMG
+ WIDTH="37" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img67.png"
+ ALT="$V_{XX}$"></SPAN>) and the gain
+(<I>e.g.</I> <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img68.png"
+ ALT="$g_{X}$"></SPAN>).
+
+<P>
+The model visibilities are generally derived from a model image (which should
+have units of Jy/pixel). For a complex source, the model image will usually
+be determined by the deconvolution tasks (the outputs of <A NAME="tex2html489"
+  HREF="../doc/clean.html">clean</A>,
+<A NAME="tex2html490"
+  HREF="../doc/mfclean.html">mfclean</A>
+or <A NAME="tex2html491"
+  HREF="../doc/maxen.html">maxen</A>
+<EM>without</EM> the restore step).
+If the source is a point source, then a
+point-source model could
+be used, although the restriction that it be located at the phase centre
+is lifted.
+
+<P>
+The self-calibration procedure is often performed iteratively, each time
+with a better model, until finally the sequence converges and no
+more improvement in the image quality can be made.
+
+<P>
+Self-calibration is not a technique that should be applied blindly.
+This is especially true for ATCA data because, compared with the VLA, the
+problem is only slightly over-determined.  This is because
+the ATCA has, at most, 15 baselines to determine the complex gains for 6
+antennas, whereas the VLA has, at most, 351 baselines to determine the
+complex gains for 27 antennas. Because we can set the phase of one antenna
+to zero, the problem reduces to finding
+11 real numbers from 30 real equations.  With the 5-antenna compact
+array, we must find 9 real numbers from 20 real equations.  This problem
+is exacerbated when one antenna is absent from the data for a period
+of time, or you have flagged it out because of poor data quality.
+
+<P>
+There are other problems to do with the east-west nature of the ATCA  - see
+Bob Sault's technical memo <A NAME="tex2html492"
+  HREF="http://www.atnf.csiro.au/observers/memos/d96f87~1.pdf">`Some simulations of
+self-calibration for the AT'</A>
+(AT Memo 39.3/058).
+One important point to keep in mind is that
+self-calibration with the ATCA  depends  crucially on the initial
+model that you start with - much more so than with the VLA where you can
+start with quite a poor model but arrive at the correct result after
+just a few iterations.
+
+<P>
+Self-calibration, like basic calibration, requires that the
+signal-to-noise ratio on each baseline be of the order of at least 5 or
+so.  For weak sources, this may require a long solution interval, within
+which the gains are assumed to be constant.
+If, in reality, the gains are changing on a time-scale significantly
+shorter than your solution interval, and these changes are degrading
+your image quality, then you will be unable to improve the image
+quality.  The time-scale on which you will often find it necessary to
+correct the gains is approximately one minute.  Thus, weak sources often
+cannot be self-calibrated. For a continuum observation (100 MHz bandwidth)
+with the ATCA, you will, typically, need a signal strength of 100 mJy
+before self-calibration is possible.
+
+<P>
+Note that it is not the receivers that cause the gains to be unsteady
+with time, but the atmosphere.  In a similar way to the degradation of
+an optical image by the atmosphere, a radio image is defocused by the
+phase (and amplitude) noise that atmospheric cells induce into the
+wavefront. Self-calibration can be thought of as an off-line mimicry of
+adaptive optics in optical astronomy.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2803"
+  HREF="node114.html">Computation</A>
+<UL>
+<LI><A NAME="tex2html2804"
+  HREF="node115.html">Apply Your Original Calibration Before Self-Calibrating</A>
+<LI><A NAME="tex2html2805"
+  HREF="node116.html">Self-Calibrating with Multiple Models</A>
+<LI><A NAME="tex2html2806"
+  HREF="node117.html">Polarisation Handling</A>
+<LI><A NAME="tex2html2807"
+  HREF="node118.html">Frequency Handling</A>
+<UL>
+<LI><A NAME="tex2html2808"
+  HREF="node119.html">Multi-Plane Models</A>
+<LI><A NAME="tex2html2809"
+  HREF="node120.html">Multi-Frequency Models</A>
+</UL>
+<LI><A NAME="tex2html2810"
+  HREF="node121.html">Input Parameters to the Self-Calibration Tasks</A>
+<LI><A NAME="tex2html2811"
+  HREF="node122.html">Summary</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2801"
+  HREF="node114.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2797"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2791"
+  HREF="node112.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2799"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2802"
+  HREF="node114.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2798"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html2792"
+  HREF="node112.html">Restoring an image</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

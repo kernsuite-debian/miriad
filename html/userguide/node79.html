@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Determining Gains and Bandpass Functions - MFCAL</TITLE>
+<META NAME="description" CONTENT="Determining Gains and Bandpass Functions - MFCAL">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node80.html">
+<LINK REL="previous" HREF="node78.html">
+<LINK REL="up" HREF="node73.html">
+<LINK REL="next" HREF="node80.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2371"
+  HREF="node80.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2367"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2361"
+  HREF="node78.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2369"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2372"
+  HREF="node80.html">Determining Gains and Polarimetric</A>
+<B>Up:</B> <A NAME="tex2html2368"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2362"
+  HREF="node78.html">Determining Calibration Solutions</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001140000000000000000"></A><A NAME="s:mfcal"></A>
+<BR>
+Determining Gains and Bandpass Functions - MFCAL
+</H1>
+As noted above, <A NAME="tex2html263"
+  HREF="../doc/mfcal.html">mfcal</A>
+solves for antenna gains and bandpass function.
+It can also solve for the delay terms, but this is rarely useful. However
+it does assume an unpolarised calibrator and that the polarisation leakage
+terms are zero. If you have measured only the <I>XX</I> and <I>YY</I> correlations,
+you <EM>have to</EM> make these assumptions. However if you have measured
+all four polarisation products, then you can correct
+for these assumptions by running <A NAME="tex2html264"
+  HREF="../doc/gpcal.html">gpcal</A>
+after <A NAME="tex2html265"
+  HREF="../doc/mfcal.html">mfcal</A>.
+
+<P>
+We will now discuss some of the inputs to <A NAME="tex2html266"
+  HREF="../doc/mfcal.html">mfcal</A>.
+
+<UL>
+<LI><TT>vis:</TT> The input dataset - the dataset containing the primary
+calibrator in this case.
+</LI>
+<LI><TT>line:</TT> The standard linetype parameter, used to select and
+average channels. See the discussion of this in Section&nbsp;<A HREF="node35.html#s:line">5.4</A>.
+Assuming the 128 MHz / 33 channel continuum system, you
+will want to discard the first and last few channels, calibrating only
+the central 25 channels of so. Otherwise you
+will not normally want to perform any averaging.
+</LI>
+<LI><TT>edge:</TT> This is an alternative way of indicating the channels
+to discard. When working with single IF datasets, it is probably
+easier to use the <TT>line</TT> parameter.
+</LI>
+<LI><TT>interval:</TT> This gives one or two numbers,
+in minutes, being the maximum solution interval length, and
+maximum solution gap, in minutes. The latter can usually be allowed to
+default. The default maximum interval length is
+5 minutes.
+During stable observing
+conditions (good phase stability) you should set the maximum solution length
+to no more than the calibrator scan time.
+Set it to a small value if phase stability is poor (e.g. 1 to 0.1 minutes).
+If you set it to a smaller value, however, the solution process becomes
+more sensitive to bad data - make sure you flag it well. Additionally you
+might run into program memory limitations, where it aborts due to ``buffer
+overflows'' or the like.
+</LI>
+<LI><TT>select:</TT> Normal data-selection.
+</LI>
+<LI><TT>refant:</TT> The reference antenna. Set this to the antenna
+which had the cleanest <I>XY</I> phase.
+The default is 3 (which may not be very appropriate).
+</LI>
+<LI><TT>flux:</TT> This gives the flux density and spectral index of the calibrator.
+</LI>
+<LI><TT>options:</TT> There are a few extra options, which are not of
+great use or interest.
+<DL>
+<DT><STRONG><TT>delay</TT></STRONG></DT>
+<DD>Note that old versions of <A NAME="tex2html267"
+  HREF="../doc/mfcal.html">mfcal</A>
+attempted
+to solve for a delay by default. This is no longer the case. To solve
+for delays (which is strongly discouraged when calibrating a single IF band),
+you now have to explicitly use the <TT>delay</TT> option.
+</DD>
+<DT><STRONG><TT>interpolate</TT></STRONG></DT>
+<DD>The <TT>interpolate</TT>
+option may be useful if you cannot determine the bandpass for some
+completely flagged channels but still need an estimate of the bandpass
+function.  With this option, the bandpass is spline
+fit (in real and imaginary) and evaluated for the flagged channels.
+Be careful if a substantial fraction of channels are bad - the algorithm
+is only implemented if less than 50% of the channels are flagged bad.
+</DD>
+<DT><STRONG><TT>oldflux</TT></STRONG></DT>
+<DD>If you are calibrated data that are to be combined
+or compared with ATCA data reduced before August 1994, you will generally
+want to use the `<TT>oldflux</TT>' option to select the pre-August 1994 ATCA
+flux scale. See Section&nbsp;<A HREF="node93.html#s:1934flux">12.6</A> for more information.
+</DD>
+</DL>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2371"
+  HREF="node80.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2367"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2361"
+  HREF="node78.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2369"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2372"
+  HREF="node80.html">Determining Gains and Polarimetric</A>
+<B>Up:</B> <A NAME="tex2html2368"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2362"
+  HREF="node78.html">Determining Calibration Solutions</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

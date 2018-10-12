@@ -1,0 +1,407 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Selecting UV Data in Miriad</TITLE>
+<META NAME="description" CONTENT="Selecting UV Data in Miriad">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node37.html">
+<LINK REL="previous" HREF="node35.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node37.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1823"
+  HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1819"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1813"
+  HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1821"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1824"
+  HREF="node37.html">Spectral Window Selection</A>
+<B>Up:</B> <A NAME="tex2html1820"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1814"
+  HREF="node35.html">Channel Selection, Averaging and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00550000000000000000"></A>
+<A NAME="s:select"></A>
+<BR>
+Selecting UV Data in <I>Miriad</I>
+</H1>
+It is common to wish to process only a subset of the possible
+visibility data.
+In <I>Miriad</I>, the visibility data to be selected are usually specified by one
+parameter - the <TT>select</TT> keyword.
+This parameter is constructed from
+<A NAME="4494"></A> <A NAME="1461"></A>
+a number of subcommands, each subcommand selecting or rejecting
+visibility data which satisfies some condition. The subcommands, which can
+be abbreviated to uniqueness, are as follows:
+<DL>
+<DT><STRONG><TT>time(<I>t1,t2</I>)</TT></STRONG></DT>
+<DD>This selects visibilities observed between times
+<I>t1</I> and <I>t2</I>. Times are given in UT.
+The second time (<I>t2</I>) is optional.
+If missing, it is assumed to be 24 hours after <I>t1</I>.
+
+<P>
+The time is composed of a date and `time-of-day' portions, either of which
+can be omitted (but not both at the same time!). When the date is omitted,
+then the selection matches data, for the given time-of-day, regardless of
+the day. This is most useful for files containing only a single day's data.
+When the time-of-day is omitted, then 00:00 is assumed.
+
+<P>
+The times
+<A NAME="1468"></A>
+<I>t1</I> and <I>t2</I> are given in the form:
+<BLOCKQUOTE>
+<I>yymmmdd.fff</I>
+
+</BLOCKQUOTE>
+or
+<BLOCKQUOTE>
+<I>yymmmdd:hh:mm:ss.s</I>
+
+</BLOCKQUOTE>
+Here <I>yy</I> is the year, <I>mmm</I> are the first three letters of the
+month's name, <I>dd</I> is the day of the month, <I>fff</I> is a fraction of
+a day, <I>hh</I> is the hour (24-hour clock), <I>mm</I> are the minutes, and
+<I>ss.s</I> are seconds and fractions of a second.
+The `time-of-day' portion can be abbreviated. For
+example, the seconds part can be omitted. Indeed (provided a date is given)
+the `time-of-day' portion can be totally omitted if desired.
+
+<P>
+Note that only a two-digit year is given. These two digits give a year
+in the century 1940 - 2040.
+
+<P>
+For example:
+<PRE>
+   90jan12:12:30
+</PRE>
+is 12:30 on 12 January, 1990, whereas
+<PRE>
+   78jun03.5
+</PRE>
+is midday on 3 June, 1978, and finally
+<PRE>
+   00apr01
+</PRE>
+is April Fools Day in the year 2000.
+
+<P>
+To give some examples:
+<PRE>
+   select=time(91jan05:10:50,91jan05:17:20)
+</PRE>
+will select data observed on 5th January, 1991, between 10:50 UT to 17:20 UT.
+
+<P>
+The form where no date is given:
+<PRE>
+   select=time(10:50,17:20)
+</PRE>
+will select data observed on any day between 10:50 and 17:20.
+
+<P>
+To give an example where only one time is given, the following
+<PRE>
+   select=time(91jan03)
+</PRE>
+will select all data observed on 3rd January, 1991. This form is only
+useful for a file containing several days of data.
+
+<P>
+</DD>
+<DT><STRONG><TT>antennae(<I>a1,a2,...</I>)(<I>b1,b2...</I>)</TT></STRONG></DT>
+<DD>This selects according to the
+antennas and baseline. Here <I>a1,a2,...</I> is a list of antennas to select.
+The second list, <I>b1,b2,...</I> is optional. If present, only baselines
+corresponding to the antennas pair (a1,b1), (a1,b2), ..., (a2,b1), ..., etc
+are selected. For example, to select all visibilities using antennas 1 or 3,
+<A NAME="1500"></A>
+use
+<PRE>
+   select=antennae(1,3)
+</PRE>
+To select all visibilities using baselines with antennas 1 and 2, or 3 and 2,
+use
+<PRE>
+   select=antennae(1,3)(2)
+</PRE>
+</DD>
+<DT><STRONG><TT>uvrange(<I>uvmin,uvmax</I>)</TT></STRONG></DT>
+<DD>This selects visibilities whose <I>u-v</I>
+radius
+is in the range <I>uvmin</I> to <I>uvmax</I>.
+If only one value is given, then <I>uvmin</I> is
+<A NAME="1510"></A>
+taken as zero. The units of <I>uvmin</I> and <I>uvmax</I> are kilowavelengths.
+</DD>
+<DT><STRONG><TT>uvnrange(<I>uvmin,uvmax</I>)</TT></STRONG></DT>
+<DD>This is the same as the <TT>uvrange</TT> subcommand,
+except that the units are nanoseconds.
+</DD>
+<DT><STRONG><TT>ha(<I>h1,h2</I>)</TT></STRONG></DT>
+<DD>This selected data based on the hour angle of
+the data. <I>h1</I> and <I>h2</I> are the hour angle (in decimal hours).
+</DD>
+<DT><STRONG><TT>elevation(<I>e1,e2</I>)</TT></STRONG></DT>
+<DD>This selects data based on the elevation
+at which the data were observed. <I>e1</I> and <I>e2</I> give the elevation
+range in degrees.
+</DD>
+<DT><STRONG><TT>lst(<I>l1,l2</I>)</TT></STRONG></DT>
+<DD>This selects data based on the LST of the
+observation. l1 and l2 are the start and end LST values, and can be given
+in the form hh:mm:ss  or as decimal hours.
+</DD>
+<DT><STRONG><TT>visibility(<I>n1,n2</I>)</TT></STRONG></DT>
+<DD>This selects visibilities numbered <I>n1</I>
+<A NAME="1524"></A>
+to <I>n2</I> inclusive.
+</DD>
+<DT><STRONG><TT>increment(<I>inc</I>)</TT></STRONG></DT>
+<DD>This selects only every <I>inc</I>'th visibility.
+<A NAME="1528"></A>
+</DD>
+<DT><STRONG><TT>ra(<I>hh:mm:ss1,hh:mm:ss2</I>)</TT></STRONG></DT>
+<DD>Select visibility data within
+a particular range of right ascension. Right ascension is given in <I>hh:mm:ss</I>
+format, or as decimal hours.
+</DD>
+<DT><STRONG><TT>dec(<I>dd:mm:ss1,dd:mm:ss2</I>)</TT></STRONG></DT>
+<DD>Select visibility data within
+a particular range of declination. Declination is given in <I>dd:mm:ss</I>
+format, or as decimal degrees.
+</DD>
+<DT><STRONG><TT>dra(<I>p1,p2</I>)</TT></STRONG></DT>
+<DD>For data files containing several pointing
+centres, this
+selects visibilities whose pointing centre is offset, in RA, from the main
+<A NAME="1534"></A>
+pointing centre, by between <I>p1</I> and <I>p2</I> arcseconds.
+</DD>
+<DT><STRONG><TT>ddec(<I>p1,p2</I>)</TT></STRONG></DT>
+<DD>For data files containing several pointing centres, this
+selects visibilities whose pointing centre is offset, in DEC, from the main
+<A NAME="1538"></A>
+pointing centre, by between <I>p1</I> and <I>p2</I> arcseconds.
+</DD>
+<DT><STRONG><TT>pointing(<I>p1,p2</I>)</TT></STRONG></DT>
+<DD>For data files containing rms pointing error data,
+this selects visibilities with the rms pointing error in the range <I>p1</I>
+<A NAME="1543"></A>
+to <I>p2</I> arcseconds. If only one number is given, <I>p1</I> is taken as 0.
+The rms
+pointing error of a visibility is taken as the maximum of the rms azimuth and
+rms elevation pointing errors of the two antennas.
+</DD>
+<DT><STRONG><TT>source(<I>srcnam1,srcnam2,...</I>)</TT></STRONG></DT>
+<DD>For data files which contain multiple
+sources, this selects data according to source name. Several source names
+can be given, separated by commas. The source name can include an
+asterisk, which acts as a wildcard.
+<A NAME="1547"></A>
+</DD>
+<DT><STRONG><TT>frequency(<I>loval,hival</I>)</TT></STRONG></DT>
+<DD>This selects data according to the sky
+frequency of the first channel. The <I>loval</I> and <I>hival</I> values
+give the permissible range, in GHz, of frequencies to accept. If only a single
+value is given, then this is used as a mid-frequency, and frequencies within
+a tolerance of 1% are accepted.
+<A NAME="1551"></A>
+</DD>
+<DT><STRONG><TT>amplitude(<I>x,y</I>)</TT></STRONG></DT>
+<DD>Any correlation, where the amplitude
+is between <I>x</I> and <I>y</I>, is processed.
+If only one value is given, it is assumed to be <I>x</I>, and
+<I>y</I> is assumed to be infinity.
+<A NAME="1557"></A>
+</DD>
+<DT><STRONG><TT>window(<I>w1,w2,...</I>)</TT></STRONG></DT>
+<DD>This can be used when the dataset contains
+multiple spectral windows (or IF bands in AIPS terminology). This is
+discussed in Section&nbsp;<A HREF="node37.html#s:window">5.6</A>.
+<A NAME="1560"></A>
+</DD>
+<DT><STRONG><TT>shadow(<I>d</I>)</TT></STRONG></DT>
+<DD>This selects data that would be shadowed by an
+antenna of diameter <I>d</I> meters. If <I>d</I> is zero, then the actual
+diameter of the antennas (if known) is used. If some data is shadowed, it
+is advisable to use an antenna diameter value greater than the physical
+antenna size (<I>e.g.</I> 20% larger).
+<A NAME="1565"></A>
+</DD>
+<DT><STRONG><TT>auto</TT></STRONG></DT>
+<DD>This selects auto-correlation data only. So the
+negated form (<TT>-auto</TT>) selects cross-correlation data only.
+<A NAME="1568"></A>
+</DD>
+<DT><STRONG><TT>on</TT></STRONG></DT>
+<DD>This is intended for use with beam switched single dish
+observations, and selects based on the `on' variable in the visibility
+dataset.
+The `on' variable indicates whether the telescope is pointing on or off
+source.
+<A NAME="1570"></A>
+</DD>
+<DT><STRONG><TT>bin(<I>n1,n2</I>)</TT></STRONG></DT>
+<DD>This selects visibilities whose pulsar
+bin number is in the range <I>n1</I> to <I>n2</I> inclusive. If <I>n2</I>
+is omitted, just bin <I>n1</I> is selected.
+</DD>
+<DT><STRONG><TT>polarization(<I>a,b,c,...</I>)</TT></STRONG></DT>
+<DD>This selects based on the polarization/Stokes
+type of the visibility. The possible values for <I>a,b,c,</I> etc. are mnemonics
+for the polarization type, as discussed in Section&nbsp;<A HREF="node39.html#s:polar">5.8</A>.
+<A NAME="1579"></A>
+</DD>
+<DT><STRONG><TT>or</TT></STRONG></DT>
+<DD>This is discussed below.
+<A NAME="1581"></A>
+</DD>
+</DL>
+As noted before, all
+subcommand names can be abbreviated to the minimum number of characters
+needed to keep them unambiguous (minimum match).
+
+<P>
+Each subcommand can
+be prefixed with a plus or minus sign (<code>+</code> or
+<code>-</code>). A plus sign means to select the data given by the following
+subcommand, whereas a minus sign means to discard the data. If neither
+a plus nor a minus sign is present, a plus sign is assumed. For example
+<PRE>
+   select=uvrange(0,10)
+</PRE>
+means to select all visibilities between 0 and 10 kilowavelengths, whereas
+<PRE>
+   select=-uvrange(0,10)
+</PRE>
+selects all data <I>except</I> visibilities between 0 and 10 kilowavelengths.
+
+<P>
+Several subcommands can be combined on the same line, separated by commas.
+When combining several subcommands of <I>different</I> types,
+the visibility must be selected by all the
+subcommands to be accepted (a logical AND).
+When combining several subcommands of
+the same type, then the visibility is accepted if it is selected
+after sequentially examining each of the subcommands (a logical OR).
+For example:
+<PRE>
+   select=uvrange(0,10),uvrange(20,30)
+</PRE>
+selects data with a <I>u-v</I> radius in the intervals 0 to 10 kilowavelengths as well
+as 20 to 30 kilowavelengths. The following uses a `select then discard'
+approach to selecting the same <I>u-v</I> ranges as above:
+<PRE>
+   select=uvrange(0,30),-uvrange(10,20)
+</PRE>
+The following selects the same <I>u-v</I> ranges, but only for the baseline between
+antennas 1 and 3.
+<PRE>
+   select=uvrange(0,10),uvrange(20,30),antennae(1)(3)
+</PRE>
+The following selects all baselines, with the exception of 1-2, 5-7 and 6-7:
+<PRE>
+   select=-antennae(1)(2),-antennae(5,6)(7)
+</PRE>
+
+<P>
+Another way of combining subcommands, is with the <TT>or</TT> subcommand.
+This allows you to OR together two `clauses' of selection commands.
+For example, to select spectral
+windows 1 and 2 for the times 0:00 to 1:00, and spectral windows 4 and 5 for
+times 2:00 to 3:00, use:
+<PRE>
+   select=time(0:00,1:00),window(1,2),or
+          time(2:00,3:00),window(4,5)
+</PRE>
+
+<P>
+By combining the various subcommands and the <TT>or</TT> subcommand, quite complex
+selection criteria can be developed. For complex selections, an
+<code>@</code> file (as described in Section&nbsp;<A HREF="node18.html#s:atfile">2.5</A>) may be preferred.
+
+<P>
+For example, consider a file, <TT>select.data</TT>, containing the text:
+<PRE>
+   time(1:00,2:00),window(1,2),or
+   time(2:00,3:00),window(1,2),-uvrange(50,100),-antennae(1)(3),or
+   time(3:00,4:00),window(1,2,3,4)
+</PRE>
+Then
+<PRE>
+   select=@select.data
+</PRE>
+will use windows 1 and 2 for time 1:00 to 2:00, and windows 1, 2, 3 and 4 for
+times 3:00 to 4:00. For time 2:00 to 3:00, it uses windows 1 and 2, but omits
+data for baseline 1-3 which has a <I>u-v</I> range of 50 to 100 kilowavelengths.
+<A NAME="1611"></A>
+
+<P>
+There are a few limitations on the use of <TT>amplitude</TT>,
+<TT>polarization</TT> and <TT>window</TT> selection. Some of these limitations
+are mentioned in following sections, whereas others are not.
+Few of these limitations affect normal practice,
+and the selection software will inform you if there is an problem.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1823"
+  HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1819"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1813"
+  HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1821"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1824"
+  HREF="node37.html">Spectral Window Selection</A>
+<B>Up:</B> <A NAME="tex2html1820"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1814"
+  HREF="node35.html">Channel Selection, Averaging and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

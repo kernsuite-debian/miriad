@@ -1,0 +1,42 @@
+.TH gethd 1
+.SH NAME
+gethd - Print the value of a header item.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+miscellaneous
+.SH DESCRIPTION
+GetHd simply prints the value of a header item. Its main use will
+be in scripts, where it can be used to extract information from
+the image header.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The name of an item within a dataset. This is given in the form
+.nf
+  in=dataset/item
+.fi
+There is no default. The dataset may be either a uv or image data-set.
+.TP
+\fIformat\fP
+For numeric values, this determines the way that the output value
+is converted and formated. Possible values are:
+.nf
+  default   No conversion. This is the default.
+  time      The value is assumed to be a Julian day, and is formatted
+            into Miriad's date format.
+  pol       The value is assumed to be a polarization tag, and is
+            formatted as I,Q,U,V,XX,YY, etc.
+.fi
+The following assume that the value is in radians.
+.nf
+  arcsec    The value is converted to arcsec.
+  arcmin    The value is converted to arcmin.
+  degrees   The value is converted to degrees.
+  hours     The value is converted to hours.
+  hms       The value is formatted as hh:mm:ss.
+  dms       The value is formatted as dd:mm:ss.
+.TP
+\fIlog\fP
+.fi
+Output log file. Default is the terminal.

@@ -1,0 +1,75 @@
+.TH mosgen 1
+.SH NAME
+mosgen - Generate a mosaic file for the on-line system or for UVGEN.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+MOSGEN generates a file containing mosaic pointing centres.  The
+output format may be chosen either for the ATCA on-line system
+or UVGEN.
+.SH PARAMETERS
+.TP
+\fIradec\fP
+RA and DEC of the centre of the mosaic in hh:mm:ss,dd:mm:ss
+format, or decimal hours and degrees.  The default is 0,0.
+.TP
+\fIwidth\fP
+Width of the field to mosaic, in degrees.  One or two values can
+be given, being the width in RA and DEC.  Default is 0.1 deg.
+.TP
+\fIfreq\fP
+The observing frequency, in GHz.  Default is 1.4 GHz.
+.TP
+\fIdevice\fP
+Standard PGPLOT plotting device to display a diagram of the
+pointing centres relative to the mosaic centre.  Default is not
+to produce a plot.
+.TP
+\fIlog\fP
+Output file listing the pointing centres.  Default is the
+terminal.
+.TP
+\fIolay\fP
+Output file listing the pointing centres in a form suitable for
+display with the task cgdisp. If unset, no overlay is output.
+.sp
+.TP
+\fImode\fP
+Format of the output file:
+.nf
+  atmosaic  Mosaic file format understood by the ATCA on-line
+            system.
+.fi
+.sp
+.nf
+            NOTE: The ATCA mosaic files produced by mosgen have
+            the offsets referenced to the pointing in the lower
+            left corner (earliest RA, least DEC value).  That
+            is, it is not the centre of the mosaic given by the
+            user.  The coordinate of the reference pointing is
+            given as a comment in the head of the file.  The
+            reason for the use of the lower left is to minimise
+            drive times and to pixel the reference as the first
+            point in the mosaic that rises. Note the ATCA on-
+            line system has a limit of 2048 pointing centers.
+.fi
+.sp
+.nf
+  uvgen     Format required for UVGEN's "center" keyword.
+.TP
+\fItelescop\fP
+.fi
+Primary beam type.  Default is ATCA.
+.TP
+\fIname\fP
+For mode=atmosaic, a name used to derive the pointing name.  For
+example, using name=lmc, MOSGEN will generate pointing names of
+lmc_1, lmc_2, etc.  The full name must be 9 characters or less.
+.TP
+\fIcycles\fP
+For mode=atmosaic, the number of cycles spent on each pointing.
+.sp
+.SH REVISION
+1.6, 2012/01/30 00:37:52 UTC

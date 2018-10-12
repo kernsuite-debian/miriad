@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>General Item Routines</TITLE>
+<META NAME="description" CONTENT="General Item Routines">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node40.html">
+<LINK REL="previous" HREF="node38.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html733"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html727"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html721"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html729"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html731"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html734"
+  HREF="node40.html">History Item</A>
+<B>Up:</B> <A NAME="tex2html728"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html722"
+  HREF="node38.html">Scratch Files</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004120000000000000000"></A><A NAME="737"></A>
+<BR>
+General Item Routines
+</H1>
+These routines read and write ``small'' items (items consisting of a single
+value), or perform some operation on an entire item.
+
+<P>
+In many processing systems these routines would be called ``header handling''
+routines. This has led to the rather misleading use of the
+letters ``hd'' as a component of each of the following routine names.
+<PRE>
+      subroutine rdhda(tno,itemname,value,default)
+      subroutine rdhri(tno,itemname,value,default)
+      subroutine rdhdr(tno,itemname,value,default)
+      subroutine rdhdd(tno,itemname,value,default)
+      subroutine rdhdc(tno,itemname,value,default)
+      subroutine wrhda(tno,itemname,value)
+      subroutine wrhdi(tno,itemname,value)
+      subroutine wrhdr(tno,itemname,value)
+      subroutine wrhdd(tno,itemname,value)
+      subroutine wrhdc(tno,itemname,value)
+      logical function hdprsnt(tno,itemname)
+      subroutine hdcopy(tin,tout,itemname)
+      subroutine hdprobe(tno,itemname,descr,type,n)
+</PRE>
+Before these can be accessed, the data set must be
+opened with either <TT>xyopen</TT>, <TT>uvopen</TT> or <TT>hopen</TT>. <TT>Tno</TT> is the
+handle returned by these open routines.
+The name of the item to access is given by <TT>itemname</TT> (a string).
+These names should be up to 8 lowercase alphanumeric
+characters, and (where possible) they should conform to the FITS standard.
+The <TT>rdhd</TT> routines read an item, returning its value in <TT>value</TT>.
+The routines <TT>rdhda, rdhdi, rdhdr, rdhdd</TT> and <TT>rdhdc</TT> return a string,
+integer, real, double precision or complex value, respectively. If the item
+is not found, the <TT>rdhd</TT> routines return the default value given
+by <TT>default</TT> (note <TT>value</TT> and <TT>default</TT> should be a string,
+integer, real, double precision or complex values, depending on the routine
+called). Similarly
+the <TT>wrhd</TT> routines save the value of an item.
+
+<P>
+The logical function <TT>hdprsnt</TT> can be called to determine if a
+particular item exists.
+
+<P>
+The routine <TT>hdcopy</TT> copies an item from one data set to another.
+The item can be
+arbitrarily large. <TT>Hdcopy</TT> copies from the data set, whose handle
+is given by <TT>tin</TT>, to the data set whose handle is <TT>tout</TT>.
+
+<P>
+The routine <TT>hdprobe</TT> is used to probe the characteristics of an
+item.  The string <TT>descr</TT> returns a brief description of the item
+(intended for people, not programs, to read). If the item consists of a 
+single value (or string), the description gives the value. Otherwise
+the description gives the type and size of the item (in human readable
+form). The string <TT>type</TT> is one of <TT>'nonexistent',
+'integer*2', 'integer', 'real', 'double', 'complex', 'character', 'text'</TT>
+or <TT>'binary'</TT> (unknown type). The integer <TT>n</TT> gives the number
+of elements in the item. If the item does not exist, <TT>type</TT> returns
+<TT>'nonexistent'</TT> and <TT>n</TT> returns zero.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html733"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html727"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html721"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html729"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html731"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html734"
+  HREF="node40.html">History Item</A>
+<B>Up:</B> <A NAME="tex2html728"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html722"
+  HREF="node38.html">Scratch Files</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

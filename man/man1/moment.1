@@ -1,0 +1,95 @@
+.TH moment 1
+.SH NAME
+moment - Calculate moments of a Miriad image.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+MOMENT calculates the nth moment of a Miriad image.  The
+spectral axis, which is determined automatically, must be on
+axis 1, 2, or 3.  Moments may be computed for other axis types
+by specifying the axis number, though the brightness units
+recorded in the output image header will likely not be correct.
+They can be fixed using PUTHD.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image.  No default.
+.TP
+\fIregion\fP
+Region of the input image to be used, only the bounding box is
+supported.  See documentation for region on how to specify this.
+.TP
+\fIout\fP
+The output image.  No default.
+.TP
+\fImom\fP
+-3: Velocity at peak intensity using a three-point quadratic fit
+.nf
+    around the peak (km/s).
+.fi
+-2: Peak intensity using a three-point quadratic fit (units same
+.nf
+    as individual channels).
+.fi
+-1: Average intensity (units same as individual channels).
+.nf
+ 0: 0th moment = sum(I) (integrated intensity, I x km/s).
+ 1: 1st moment = sum(I*v)/sum(I), (velocity centroid, km/s),
+                 where v is the velocity.
+ 2: 2nd moment = sqrt(sum(I*(v-M1)**2)/sum(I)), (velocity
+                 dispersion, km/s), where M1 is the first
+                 moment.  If the line profile is Gaussian,
+                 this produces a map of Gaussian sigma, and
+                 FWHM = 2*sqrt(2*ln(2))*sigma = 2.355*sigma.
+.fi
+.sp
+.nf
+    The moments are calculated independently for each pixel
+    using spectral channels with intensity satisfying the
+    specified clip range.
+.fi
+.sp
+.nf
+    For frequency axes the radio velocity is computed from the
+    line rest frequency recorded in the header.  For velocity
+    axes the axis scale is used directly.
+.TP
+\fIaxis\fP
+.fi
+Axis for which the moment is calculated.  Moments may be
+computed for non-spectral axes though brightness units recorded
+in the output image header will usually be incorrect.  Defaults
+to the spectral axis determined from the input image header.
+.TP
+\fIclip\fP
+Two values.  For mom >= -1, exclude spectral channels with
+intensity in the range clip(1) to clip(2) inclusive.  If only
+one value is given, then exclude -abs(clip) to +abs(clip).
+Default = 0 which excludes nothing.
+.TP
+\fIspan\fP
+For mom >= -1, exclude channels further than the specified
+number of channels from the peak, hence using a total of
+2*span + 1 channels to compute the moment.  If the peak is too
+close to the first or last channel to allow the full span, then
+the pixel will be blanked in the output map.  Please bear this
+in mind when specifying the channel range (via 'region').
+Default = 0 which means no restriction.
+.TP
+\fIrngmsk\fP
+For mom > 0, mask pixels in the output map when the 1st moment
+lies outside the range of the spectral axis.  This can happen
+because sum(I) can be arbitrarily small in emission-free
+channels but with sum(I*v) non-vanishing.  Default: false.
+.TP
+\fIpkmask\fP
+Two values.  For mom = -3, 1, and 2 (velocities) mask pixels in
+the output map for which the peak intensity lies within the
+range pkmask(1) to pkmask(2) exclusive.  If only one value is
+given, then mask pixels with peak intensity less than pkmask.
+Default = 0.
+.sp
+.SH REVISION
+1.17, 2011/10/25 09:43:44 UTC

@@ -1,0 +1,30 @@
+%N pbplot
+%D Plot primary beam shapes.
+%P rjs
+%: utility
+%B
+        PBPLOT plots the primary beam function.
+%A telescop
+        Used to determine the type of the primary beam.  Several values
+        can be given.  Normally this will simply be a telescope name.
+%A freq
+        Frequency at which to determine the primary beam, in GHz.
+        Default is 1.4 GHz.
+%A bw
+        Bandwidth, in GHz.  The response is averaged over the bandwidth.
+        The default is 0. An optional second parameter specifies how
+        many intervals in frequency to use for the average. The default
+        for this is 10. Steps may be visible at the edge of the beam.
+%A options
+        Extra processing options:
+          derivative  Plot the derivative with frequency of the primary
+                      beam (rather than the normal primary beam).
+          alpha       Plot the spectral index of the beam
+          frequency   Plot the effective frequency. This is only
+                      useful for non zero bw.
+%A device
+        PGPLOT device.  Default is no plot.
+%A log
+        Log file for listing.  Default is no log file.
+ 
+%R 1.6, 2013/10/24 01:03:53 UTC

@@ -1,0 +1,22 @@
+.TH arrfix 1
+.SH NAME
+arrfix - Correct ASKAP antennna table caused by faulty uv FITS file.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+This corrects an ASKAP antenna table caused by a bug in CASA resulting
+in a faulty FITS antenna table.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. No default.
+.TP
+\fIselect\fP
+Standard visibility data selection. See the help on "select" for
+more information. The default is to select all data.
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.sp

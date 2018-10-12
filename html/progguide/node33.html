@@ -1,0 +1,241 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Coordinate System</TITLE>
+<META NAME="description" CONTENT="Image Coordinate System">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node34.html">
+<LINK REL="previous" HREF="node32.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node34.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html648"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html642"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html636"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html644"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html646"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html649"
+  HREF="node34.html">Region of Interest and</A>
+<B>Up:</B> <A NAME="tex2html643"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html637"
+  HREF="node32.html">Image Data Sets</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00490000000000000000">
+Image Coordinate System</A>
+</H1>
+<I>Miriad</I> defines and stores image coordinate system information in a similar
+fashion to AIPS and FITS. Most cubes will have coordinates along its three
+axis of RA, DEC and velocity. The item <TT>ctype</TT> gives the
+type of coordinate along a particular axis, whereas <TT>crval, crpix</TT> and
+<TT>cdelt</TT> give the value of the coordinate at the reference pixel, the
+value of the reference pixel, and the increment between pixels, respectively.
+Unlike AIPS and FITS, RA and DEC are given in radians, and velocity is given
+in km/sec. RA and DEC will generally need to be converted to
+hours,minutes,seconds, or degrees,minutes,seconds, before being presented
+to the user.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="615"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.8:</STRONG>
+Image Coordinate System</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT">Ctype</TD>
+<TD ALIGN="CENTER">Crval</TD>
+<TD ALIGN="CENTER">Crpix</TD>
+<TD ALIGN="CENTER">Cdelt</TD>
+<TD ALIGN="LEFT">Equation</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT>RA--xxx</TT></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img17.png"
+ ALT="$\alpha_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.png"
+ ALT="$i_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="28" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img19.png"
+ ALT="$\Delta\alpha$"></SPAN></TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $\alpha=\alpha_0+\Delta\alpha/\cos(\delta_0)(i-i_0)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="204" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img20.png"
+ ALT="$\alpha=\alpha_0+\Delta\alpha/\cos(\delta_0)(i-i_0)$"></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT>DEC-xxx</TT></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img21.png"
+ ALT="$\delta_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.png"
+ ALT="$i_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img22.png"
+ ALT="$\Delta\delta$"></SPAN></TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $\delta=\delta_0+\Delta\delta(i-i_0)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="138" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img23.png"
+ ALT="$\delta=\delta_0+\Delta\delta(i-i_0)$"></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT>VELO-xxx</TT></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img24.png"
+ ALT="$v_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.png"
+ ALT="$i_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img25.png"
+ ALT="$\Delta v$"></SPAN></TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $v=v_0+\Delta v(i-i_0)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="139" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img26.png"
+ ALT="$v=v_0+\Delta v(i-i_0)$"></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">Others</TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img27.png"
+ ALT="$x_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="16" HEIGHT="29" ALIGN="MIDDLE" BORDER="0"
+ SRC="img18.png"
+ ALT="$i_0$"></SPAN></TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img28.png"
+ ALT="$\Delta x$"></SPAN></TD>
+<TD ALIGN="LEFT"><!-- MATH
+ $x=x_0+\Delta x(i-i_0)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="142" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img29.png"
+ ALT="$x=x_0+\Delta x(i-i_0)$"></SPAN></TD>
+</TR>
+</TABLE>
+
+<A NAME="t:coord"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+Table&nbsp;<A HREF="#t:coord">2.8</A> gives quite approximate formulae for converting from
+pixel number to an astronomical coordinate. For more accurate formulae, see
+AIPS Memo No. 27, ``Non-linear Coordinate Systems in AIPS'' (Eric Greisen).
+
+<P>
+For example, the following code fragment calculates RA, DEC and velocity.
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="622"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.9:</STRONG>
+Coordinate System Code Example</CAPTION>
+<TR><TD><IMG
+ WIDTH="491" HEIGHT="568" BORDER="0"
+ SRC="img30.png"
+ ALT="\begin{table}\begin{verbatim}character ctype1*8,ctype2*8,ctype3*8
+double pre...
+... + cdelt2 *(j-crpix2)
+v = crval3 + cdelt3 *(k-crpix3)\end{verbatim}
+\end{table}"></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+This code fragment checks that the  axis are in the order RA, DEC then velocity
+(i.e. the normal ordering)
+and aborts if they are not. Smarter code would allow them in any order, and
+would probably treat any unrecognized ctype as a linear coordinate system.
+It uses default values (if values of crval, crpix and cdelt are missing)
+of 0, 1 and 1. Probably better default values could be chosen, though if
+ctype is an item, then we can be fairly certain that the other parameters
+will also be present.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html648"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html642"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html636"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html644"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html646"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html649"
+  HREF="node34.html">Region of Interest and</A>
+<B>Up:</B> <A NAME="tex2html643"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html637"
+  HREF="node32.html">Image Data Sets</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

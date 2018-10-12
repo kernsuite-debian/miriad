@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Moment Analysis</TITLE>
+<META NAME="description" CONTENT="Moment Analysis">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node159.html">
+<LINK REL="previous" HREF="node157.html">
+<LINK REL="up" HREF="node156.html">
+<LINK REL="next" HREF="node159.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3382"
+  HREF="node159.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3378"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3372"
+  HREF="node157.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3380"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3383"
+  HREF="node159.html">Smoothing the Velocity Axis</A>
+<B>Up:</B> <A NAME="tex2html3379"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3373"
+  HREF="node157.html">Introduction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002020000000000000000">
+Moment Analysis</A>
+</H1>
+The task <A NAME="tex2html760"
+  HREF="../doc/moment.html">moment</A>
+can be used to generate moment images from
+a spectral-line cube.   The moment axis should be either the first
+or third in the cube (e.g. <I>vxy</I> or <I>xyv</I> order).  You should use
+<A NAME="tex2html761"
+  HREF="../doc/reorder.html">reorder</A>
+if you want the moment of the second axis for some reason.
+The moments (evaluated for each spatial pixel and along the
+velocity axis)  are defined as
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+M_n = \int I(v) v^n dv
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="126" HEIGHT="42" BORDER="0"
+ SRC="img99.png"
+ ALT="\begin{displaymath}
+M_n = \int I(v) v^n dv
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+where <I>I(v)</I> is the intensity at a given velocity <I>v</I>.  Thus, the
+zeroth moment corresponds to the integrated intensity over velocity, the
+first moment corresponds to the intensity weighted velocity, and
+the second moment corresponds to the intensity weighted velocity dispersion
+squared.
+
+<P>
+Note that <A NAME="tex2html762"
+  HREF="../doc/moment.html">moment</A>
+is actually a little inconsistent in applying
+this equation depending on which moment it is working out.  Here is what
+it finds:
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+M_0 = \int I(v) dv
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="107" HEIGHT="42" BORDER="0"
+ SRC="img100.png"
+ ALT="\begin{displaymath}
+M_0 = \int I(v) dv
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+in units of Jy&nbsp;km/s.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+M_1 = {\int I(v) v dv  \over {\int I(v) dv}}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="113" HEIGHT="46" BORDER="0"
+ SRC="img101.png"
+ ALT="\begin{displaymath}
+M_1 = {\int I(v) v dv \over {\int I(v) dv}}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+in km/s.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+M_2 = \sqrt{{\int I(v) (v-M_1)^2 dv \over {\int I(v) dv}}}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="192" HEIGHT="55" BORDER="0"
+ SRC="img102.png"
+ ALT="\begin{displaymath}
+M_2 = \sqrt{{\int I(v) (v-M_1)^2 dv \over {\int I(v) dv}}}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+in km/s.
+
+<P>
+In the example we compute the second moment of a cube in <I>xyv</I>
+order excluding all pixels below 3-sigma which happens
+to be 2&nbsp;mJy it seems; there is no point to adding noise
+to our sums.  We select only the inner quarter of
+each spatial plane and we select only planes 40 to 480 for
+this analysis.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MOMENT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ngc253.icln</TD>
+<TD ALIGN="LEFT">Input cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=quarter(40,480)</TD>
+<TD ALIGN="LEFT">Select region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=ngc253.m2</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mom=2</TD>
+<TD ALIGN="LEFT">Second moment</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=3</TD>
+<TD ALIGN="LEFT">Cube in xyv order</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clip=0.002</TD>
+<TD ALIGN="LEFT">Clip below this value</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3382"
+  HREF="node159.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3378"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3372"
+  HREF="node157.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3380"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3383"
+  HREF="node159.html">Smoothing the Velocity Axis</A>
+<B>Up:</B> <A NAME="tex2html3379"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3373"
+  HREF="node157.html">Introduction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

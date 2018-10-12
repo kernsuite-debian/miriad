@@ -1,0 +1,25 @@
+%N im2uv
+%D Convert an image to visibilities.
+%P rjs
+%: uv analysis
+%B
+        This Fourier transforms an image and writes the result as a
+        visibility file.  Thus the uv plane sampling pattern is a
+        cartesian grid.  Many of the uv variables are given reasonably
+        arbitrary values to make the output dataset appear mildly
+        sensible.
+%A model
+        Input image model. No default.  The model should have units of
+        Jy/pixel, eg. a clean component model.  Only a two-dimensional
+        model is handled.
+%A out
+        Output visibility dataset.  No default.
+%A region
+        The region of interest in the model.  The model is treated as
+        zero outside the region of interest.  See the help on "region"
+        for more information.
+%A select
+        Visibility data selection - only 'uvrange' selection is
+        supported.  See the help on "select" for more information.
+ 
+%R 1.4, 2011/10/06 07:18:56 UTC

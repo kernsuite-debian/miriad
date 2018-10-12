@@ -1,0 +1,29 @@
+.TH imsharp 1
+.SH NAME
+imsharp - Sharpen an image
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map analysis
+.SH DESCRIPTION
+IMSHARP is a MIRIAD task which sharpens an image. No sub region can
+be selected, the whole image is processed. Masking information
+is properly processed though: if any of the associated pixels has
+been masked out, so will be the corresponding pixel in the output
+image.
+Other methods to sharpen images: use SMOOTH with norm=0.0 and
+divide the smoothed map by the original map using MATHS (unsharp
+masking). Also: Shift or rotate an image, and subtract it from
+the original. Good for (non)axysymmetric features resp.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image. No default.
+.TP
+\fIout\fP
+The output image. No default.
+Note: Nasty things happen to 4D+ datasets.
+.TP
+\fImethod\fP
+Select the method to use to sharped an image.
+Currently only simple 2D laplacian derivatives.

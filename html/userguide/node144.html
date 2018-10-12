@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Source Fitting and Positions</TITLE>
+<META NAME="description" CONTENT="Source Fitting and Positions">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node145.html">
+<LINK REL="previous" HREF="node143.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node145.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3206"
+  HREF="node145.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3202"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3196"
+  HREF="node143.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3204"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3207"
+  HREF="node145.html">Copying, Reordering and Regridding</A>
+<B>Up:</B> <A NAME="tex2html3203"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3197"
+  HREF="node143.html">Listing Image Values</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001830000000000000000"></A><A NAME="11681"></A><A NAME="11682"></A><A NAME="11683"></A><A NAME="11684"></A>
+<BR>
+Source Fitting and Positions
+</H1>
+
+<P>
+
+<UL>
+<LI><I>Miriad</I> has a couple of tasks available for finding positions of
+sources (see also <A NAME="tex2html652"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+in Chapter&nbsp;<A HREF="node135.html#c:display">17</A>).  The
+simplest of these is <A NAME="tex2html653"
+  HREF="../doc/maxfit.html">maxfit</A>.  It fits a 2-D parabola to the image
+intensities in a 3 by 3 pixel box centred on the brightest
+pixel in a specified region and reports the fitted location and
+intensity. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MAXFIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=relpix,box(-20,-20,20,20)(1,10)</TD>
+<TD ALIGN="LEFT">Search region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=ic4296.maxfit</TD>
+<TD ALIGN="LEFT">Write results to log file</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>If you would like to do something slightly more sophisticated than
+just find a good value for the peak and location of your source, you
+might like to fit a Gaussian to it with <A NAME="tex2html654"
+  HREF="../doc/imfit.html">imfit</A>.  This
+task can also fit levels and disks. 
+
+<P>
+In this example, we fit a Gaussian to a region of an image by inputting
+the region in a file.  The file was generated interactively by
+<A NAME="tex2html655"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+(see Chapter&nbsp;<A HREF="node135.html#c:display">17</A>); you delineate a polygonal
+region around the source of interest with a cursor.  The quality of your
+fit can improve significantly by selecting a snug region, and/or using
+the <code>clip</code> keyword to keep pixel values with little signal (e.g. 
+sidelobes and noise) out of the fitting process. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMFIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=@cgcurs.region</TD>
+<TD ALIGN="LEFT">Fit region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clip=0.1</TD>
+<TD ALIGN="LEFT">Only use pixels greater than 0.1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">in the fitting process</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=gaussian</TD>
+<TD ALIGN="LEFT">Fit a single gaussian</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar</TD>
+<TD ALIGN="LEFT">Unset to let task set initial guess</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fix</TD>
+<TD ALIGN="LEFT">Unset to let everything float</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=ic4296.model</TD>
+<TD ALIGN="LEFT">Write residuals of fit out to a dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=residual</TD>
+<TD ALIGN="LEFT">Specify residuals</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Task <A NAME="tex2html656"
+  HREF="../doc/imfit.html">imfit</A>
+can fit multiple components. In this case, you
+will need to set good initial estimates of the source parameters with
+the <code>spar</code> keyword, and good values for <code>region</code> and <code>clip</code>
+become more important.
+
+<P>
+</LI>
+<LI>There is a task called <A NAME="tex2html657"
+  HREF="../doc/gaufit.html">gaufit</A>
+for fitting Gaussians
+to profiles from cubes.  You are on your own here.
+
+<P>
+</LI>
+<LI>Tasks often report positional information in absolute image pixel
+coordinates, but you may often find you would like to convert to some
+other units.  For example, a task has told you that there is something
+of interest at a certain pixel in your image, but you would like to know
+its RA, DEC, and velocity.  You can use <A NAME="tex2html658"
+  HREF="../doc/impos.html">impos</A>
+to convert for you. 
+This task enables you to convert coordinates from one system to another. 
+The keyword <TT>type</TT> specifies the input units of the specified
+coordinate, given by the keyword <TT>coord</TT>.  The coordinate is then
+converted to all useful types (e.g.  pixel to absolute and offset
+coordinate). 
+
+<P>
+Note that if you specify a coordinate in km/s then the keyword
+<TT>stype</TT> indicates what convention that coordinate is in (radio or
+optical).  You can specify the spectral-axis coordinate in any of
+frequency and the two velocity conventions, regardless of what the
+header says the spectral axis is; all spectral axis conversions are done
+as needed.  In addition, any spectral-axis coordinate is converted to
+each of frequency, and optical and radio convention velocities (if
+possible). 
+
+<P>
+See the help file for all the choices. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMPOS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">coord=-20.3,234.5,2400.123</TD>
+<TD ALIGN="LEFT">Input coordinate</TD>
+</TR>
+<TR><TD ALIGN="LEFT">type=arcsec,abspix,abskms</TD>
+<TD ALIGN="LEFT">Input coordinate types</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stype=radio</TD>
+<TD ALIGN="LEFT">Velocity is in radio conventions</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3206"
+  HREF="node145.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3202"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3196"
+  HREF="node143.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3204"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3207"
+  HREF="node145.html">Copying, Reordering and Regridding</A>
+<B>Up:</B> <A NAME="tex2html3203"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3197"
+  HREF="node143.html">Listing Image Values</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

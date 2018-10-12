@@ -1,0 +1,16 @@
+%N delhd
+%D Delete a dataset item.
+%P rjs
+%: utility
+%B
+    DELHD is a MIRIAD task to delete an item from a MIRIAD dataset.
+ 
+    For image datasets items are not only header variables, such as
+    ``crpix1'', ``datamin'' etc., but also the ``mask'' and ``image''
+    items.
+    For visibility datasets examples of items are ``wflags'', ``gains''
+    and ``pdata'', but NOT the uv variables. They cannot be deleted.
+    See also copyhd, itemize, mathd and puthd.
+%A in
+    The name of an item within a dataset. This is given in the form:
+          % delhd in=dataset/item

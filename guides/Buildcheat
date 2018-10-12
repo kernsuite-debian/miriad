@@ -1,0 +1,93 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Usage: Buildcheat
+#-----------------------------------------------------------------------------
+# Create the miriad task-and-keyword summary (cheat-sheet).
+#
+# $Id: Buildcheat,v 1.4 2006/10/20 03:43:32 cal103 Exp $
+#-----------------------------------------------------------------------------
+
+cat << EOT
+%D Miriad tasks and keyword summary
+%: miscellaneous
+%B
+EOT
+
+echo "Creation date: `date`"
+
+cat << EOT
+
+Task name conventions:
+
+	im* .... operates on xyv images.
+	uv* .... operates on uv datasets.
+	tv* .... uses a TV device.
+	gp* .... gain/polarisation calibration task (antenna based).
+	cg* .... PGPLOT-based image display tasks.
+	zee* ... application programs often with application symbol.
+	or use common name (eg, clean).
+
+Keyword conventions:
+
+	device ..... PGPLOT device.
+	server ..... TV server/device.
+	in ......... input image dataset.
+	out ........ output dataset.
+	vis ........ uv dataset.
+	dataset .... calibration dataset.
+	region ..... image region-of-interest.
+	select ..... uv data selection.
+	line ....... uv linetype.
+	map/beam ... xy image.
+
+	  ----------------------------------------------
+EOT
+
+AWKSCRIPT=/tmp/$$.awk
+trap "rm -f $AWKSCRIPT ; trap 0" 0 1 2 3 15
+
+cat << EOT > "$AWKSCRIPT"
+BEGIN {
+  b  = "";
+  nc = 0;
+  f  = sprintf("          ");
+  g  = sprintf("          ");
+  h  = sprintf("          ");
+  i  = sprintf("          ");
+  j  = sprintf("          ");
+  print "";
+}
+/%N/ {
+  a = \$2;
+}
+/%D/ {
+  for (z=2; z<=NF; z++) b = sprintf("%s %s",b,\$z);
+  b = sprintf("%-9.8s%-70.70s",a,b);
+  print b;
+}
+/%A/ {
+  nc++;
+  if (nc <= 7)       f = sprintf("%s%-9.8s",f,\$2);
+  else if (nc <= 14) g = sprintf("%s%-9.8s",g,\$2);
+  else if (nc <= 21) h = sprintf("%s%-9.8s",h,\$2);
+  else if (nc <= 28) i = sprintf("%s%-9.8s",i,\$2);
+  else               j = sprintf("%s%-9.8s",j,\$2);
+}
+END {
+  if (nc >= 1)  print f;
+  if (nc >= 8)  print g;
+  if (nc >= 15) print h;
+  if (nc >= 22) print i;
+  if (nc >= 29) print j;
+}
+EOT
+
+for FILE in $MIR/doc/*.doc
+do
+  NAME=`echo "$FILE" | sed -e '{s|.*/||;s|\..*||;}'`
+
+  if [ -x "$MIRBIN/$NAME" ]
+  then
+    cat $FILE | awk -f "$AWKSCRIPT"
+  fi
+done

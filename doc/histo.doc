@@ -1,0 +1,22 @@
+%N histo
+%D Find statistics of image and plot simple histogram
+%P mchw
+%: map analysis
+%B
+        HISTO is a Miriad task which finds the minimum, maximum, mean and
+        rms deviation from the mean for the selected region of the image.
+        It also displays a simple histogram which is useful for determining
+        the clip levels for clean and selfcal.
+%A in
+        The input file name. No default.
+%A region
+        The region of interest of the input. Default is the entire input.
+        See the Users Manual for instructions on how to specify this.
+        Pixel blanking is not supported; all pixels in the selected region
+        are used.
+%A range
+        The range in pixel values over which the histogram is calculated.\
+        The minmax, mean and dispersion are now also computed in this range.
+        The default is the image minima and maxima.
+%A nbin
+        The number of bins used in the histogram. Default is 16.

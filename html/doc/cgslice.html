@@ -1,0 +1,332 @@
+<title> Documentation on cgslice </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on cgslice</h1>
+<pre>
+
+Task: cgslice
+Purpose: Display an image and interactively extract 1-D slices
+Categories: plotting
+
+        CGSLICE displays an image via a contour plot or a pixel map
+        representation on a PGPLOT device.  The cursor (or a text file
+        with slice positions) is then used to define the end points of
+        1-D slices which are marked on the image, and then plotted.
+ 
+        After the image has been displayed, use the mouse (any button)
+        or keyboard (enter any character) to define each end of the
+        slice.  You can define many slices if you wish.  When you have
+        marked all the slices you want, click the right button of the
+        mouse (or enter 'X' from the keyboard).  You are then offered
+        the choice to redo all the slices if you didn't like them (enter
+        'R' from the keyboard) or to continue on and display the slices
+        (click the right button or enter 'X' from the keyboard).
+ 
+        Options to fit a Gaussian plus a baseline are available.  If
+        you invoke the fitting, it is activated after each of all the
+        slices defined is plotted.  With the cursor (any button of a
+        mouse or any characer from the keyboard) you define the initial
+        guesses for the Gaussian parameters.   The data, fitted model
+        and residual are then plotted.   You can the redo the fitting if
+        you wish (right button of mouse or entering 'X' from keyboard)
+        before proceeding to fit the next slice that you defined.
+ 
+        Options to save the slice values, slice positions and slice
+        models are available.
+ 
+        If you ask CGSLICE to display several sub-plots (e.g. each a
+        different channel from a cube), the slicing is activated after
+        each sub-plot is drawn.
+ 
+        Blanked pixels are not displayed (or saved) and each slice is
+        divided into segments with good points between blanked pixels.
+ 
+        Manipulation of the device colour lookup table is available
+        when you display with a pixel map representation (formerly
+        called a "grey scale")
+ 
+
+Key: <a name="in"><a href="in.html">in</a>
+        The input image.
+
+Key: <a name="type">type
+        Specifies the image type given, respectively, in the IN keyword.
+        Minimum match is supported (note that "pixel" was formerly
+        "grey" which is still supported).  Choose from:
+ 
+        "contour"  (contour)
+        "pixel"    (pixel map)
+ 
+        Default is "pixel"
+
+Key: <a name="region"><a href="region.html">region</a>
+        Region of interest.  Choose only one spatial region (bounding
+        box only supported), but as many spectral regions (i.e.,
+        multiple IMAGE specifications) as you like.  If you display
+        3-D image, the slicing option is activated after each sub-plot
+        (channel or group of channels; see CHAN below) is drawn.
+        Default is full image
+
+Key: <a name="xybin">xybin
+        Upto 4 values.  These give the spatial increment and binning
+        size in pixels for the x and y axes to be applied to the
+        selected region.  If the binning size is not unity, it must
+        equal the increment.  For example, to bin up the image by 4
+        pixels in the x direction and to pick out every third pixel in
+        the y direction, set XYBIN=4,4,3,1
+        Defaults are 1,XYBIN(1),XYBIN(1),XYBIN(3)
+
+Key: <a name="chan">chan
+        2 values. The first is the channel increment, the second is
+        the number of planes to average, for each sub-plot.  Thus
+        CHAN=5,3  would average groups of 3 channels together, starting
+        5 channels apart such as: 1:3, 6:8, 11:13 ...   The channels
+        available are those designated by the REGION keyword.  A new
+        group of channels (sub-plot) is started if there is a
+        discontinuity in the REGION selected channels (such as
+        IMAGE(10,20),IMAGE(22,30).
+ 
+        Defaults are 1,1
+
+Key: <a name="slev">slev
+        2 values.   First value is the type of contour level scale
+        factor.  "p" for percentage and "a" for absolute.   Second
+        value is the level to scale LEVS by.  Thus  SLEV=p,1  would
+        contour levels at LEVS * 1% of the image peak intensity.
+        Similarly, SLEV=a,1.4e-2   would contour levels at LEVS * 1.4E-2
+        Default is no additional scaling of LEVS
+
+Key: <a name="levs">levs
+        Levels to contour for first image, are LEVS times SLEV
+        (either percentage of the image peak or absolute).
+        Defaults try to choose something sensible
+
+Key: <a name="range">range
+        4 values.  These are the image intensity range to display (min
+        to max), the transfer function type and the colour lookup table
+        for the displayed pixel map image.  The transfer function type
+        can be one of "lin" (linear), "sqr" (square root), "log"
+        (logarithmic), and "heq" (histogram equalization).  The colour
+        lookup table is an integer from 1 to 8 specifying a lookup
+        table.  Valid values are 1 (b&amp;w), 2 (rainbow), 3 (linear pseudo
+        colour), 4 (floating zero colour contours), 5 (fixed zero colour
+        contours), 6 (rgb), 7 (background), 8 (heat) and 9 (absolute
+        b&amp;w).  If you enter a negative integer, then the reversed lookup
+        table is displayed.
+ 
+        The transfer function changes available with OPTIONS=FIDDLE are
+        in addition (on top of) to the selections here, but the colour
+        lookup table selections will replace those selected here.
+ 
+        Default is linear between the image minimum and maximum with
+        a b&amp;w lookup table.   You can default the intensity range with
+        zeros, viz. "range=0,0,log,-2" say.
+
+Key: <a name="xrange">xrange
+        The slice display x-axis range.  This may be useful if you use
+        OPTIONS=accum (see below).  Default is autoscale.
+
+Key: <a name="yrange">yrange
+        The slice display y-axis range.  This may be useful if you use
+        OPTIONS=accum (see below).  Default is autoscale.
+
+Key: <a name="device"><a href="device.html">device</a>
+        The PGPLOT plot device, such as plot.plt/ps. No default.
+
+Key: <a name="nxy">nxy
+        Number of sub-plots in the x and y directions on the page.
+        Defaults choose something sensible
+
+Key: <a name="labtyp">labtyp
+        Up to three values.  The first two are the spatial label types
+        of the x and y axes of the image. The third is the label type
+        for the x-axis of the slice plot. Minimum match is active.
+ 
+        Select from:
+ 
+        "hms"       the label is in H M S (e.g. for RA)
+        "dms"       the label is in D M S (e.g. for DEC)
+        "arcsec"    the label is in arcsecond offsets
+        "arcmin"    the label is in arcminute offsets
+        "arcmas"    the label is in mas offsets
+        "absdeg"    the label is in degrees
+        "reldeg"    the label is in degree offsets
+                    The above assume the  pixel increment is in radians.
+        "abspix"    the label is in pixels
+        "relpix"    the label is in pixel offsets
+        "abskms"    the label is in Km/s
+        "relkms"    the label is in Km/s offsets
+        "absghz"    the label is in GHz
+        "relghz"    the label is in GHz offsets
+        "absnat"    the label is in natural coordinates as defined by
+                    the header.
+        "relnat"    the label is in offset natural coordinates
+        "none"      no labels or ticks on the axes
+ 
+        All offsets are from the reference pixel.
+        Defaults are "abspix", LABTYP(1) unless LABTYP(1)="hms"
+        whereupon LABTYP(2) defaults to "dms" (for RA and DEC).
+ 
+        LABTYP(3) can only be "arcsec", "arcmin","arcmas", "reldeg" or
+        "relpix". Default is "arcsec" for RA, DEC, LAT or LONG axes.
+ 
+ 
+ 
+
+Key: <a name="options"><a href="options.html">options</a>
+        Task enrichment options.  Minimum match is active.
+ 
+        "accumulate" means accumulate slices from different sub-plots on
+          the same display.  By default, the slice display is cleared
+          before the slices from the current sub-plot are displayed.
+          The initial slice window extrema are defined from the first
+          sub-plot so slices from succeeding sub-plots may not fit
+          unless you use keywords XRANGE and YRANGE.
+        "baseline" means fit a baseline (offset and slope) as well as
+          a Gaussian when OPTIONS=fit.
+        "fiddle" means enter a routine to allow you to interactively
+          change the display lookup table.  You can cycle through a
+          variety of colour lookup tables, as well as alter a linear
+          transfer function by the cursor location, or by selecting
+          predefined transfer functions (linear, square root,
+          logarithmic, histogram equalization)
+ 
+          For hard copy devices (e.g. postscript), a keyboard driven
+          fiddle is offered; you can cycle through different colour
+          tables and invoke the predefined transfer functions, but the
+          linear fiddler is not available.  In this way you can make
+          colour hardcopy plots.
+        "fit" means fit a Gaussian to each slice.  The cursor is used
+          to make the initial estimates of the Gaussian parameters.
+        "grid" means overlay a  coordinate grid on the display
+        "noerase"  Don't erase a snugly fitting rectangle into which the
+          "3-axis" value string is written.
+        "noimage"  means do not generate the pixel map or contour plot
+          display of the image.   Useful if you have specified the slice
+          locations with a text file via the POSIN keyword and you don't
+          want to see the slice locations displayed on the image.  The
+          region of the viewsurface used for the slice display is larger
+          with this option active.
+        "unequal"  means display image with unequal scales in x and y.
+          The default is that the scales are equal.
+        "wedge" means that if you are drawing a pixel map, also draw
+          and label a wedge to the right of the plot, showing the map
+          of intensity to colour.
+        "xrange" means when OPTIONS=fit, use the cursor to define an
+          x-range outside of which pixels will be excluded from the fit.
+        "3value"   means label each sub-plot with the appropriate value
+          of the third axis (e.g. velocity or frequency for an
+          xyv ordered cube, position for a vxy ordered cube).
+        "3pixel"   means label each sub-plot with the pixel value of
+          the third axis.
+ 
+          Both "3pixel" and "3value" can appear, and both will be
+          written on the plot.  They are the average values when the
+          third axis is binned up with CHAN.  If the third axis is not
+          velocity or frequency, the units type for "3VALUE" will be
+          chosen to be the complement of any like axis in the first 2.
+          E.g., the cube is in vxy order and LABTYP=abskms,arcsec the
+          units for the "3VALUE" label will be arcsec.  If
+          LABTYP=abskms,hms the "3VALUE" label will be DMS (if the third
+          [y] axis is declination).
+
+Key: 3format
+        If you ask for "3value" labelling, this keyword allows you
+        specify the FORTRAN format of the labelling.  I have given
+        up trying to invent a decent algorithm to choose this. Examples
+        are "1pe12.6", or "f5.2" etc   If you leave this blank cgdisp
+        will try something that you probably won't like.
+
+Key: <a name="csize">csize
+        Three values.  Character sizes in units of the PGPLOT default
+        (which is ~ 1/40 of the view surface height) for the plot axis
+        labels, the velocity/channel labels and the slice plot labels
+        Defaults choose something sensible.
+
+Key: <a name="posin">posin
+        The BLC and TRC of the slices can be defined in this text file
+        rather than being defined interactively with the cursor. The
+        slices defined in this file will be marked on the 2-D image
+        (unless you set OPTIONS=noimage) display and then the slices
+        extracted, displayed and optionally fitted and saved.
+ 
+        Entries in this file can be white space or comma delimitered or
+        both.  All lines beginning with # are ignored.
+ 
+                        **** DO NOT USE TABS ****
+ 
+        Double quotes " are used below to indicate a string.  The "
+        should not be put in the file.   For the string parameters
+        discussed below, you can abbreviate them with minimum match.
+ 
+        Each line describes a slice and should be as follows:
+ 
+         ##### The columns in each line must be
+ 
+            1       2     3   4    5   6   7   8       Logical column
+        -----------------------------------------
+         XOTYPE  YOTYPE   X1  Y1   X2  Y2  CS  CE      where
+ 
+ 
+        XOTYPE and YOTYPE  give the coordinate types of the slice BLC
+        and TRC in the file for the x- and y-directions, respectively.
+        Choose from:
+ 
+         "hms", "dms", "arcsec", "arcmin", "absdeg", "reldeg", "abspix",
+         "relpix", "absnat", "relnat", "absghz", "relghz", "abskms", &amp;
+         "relkms"  as described in the keyword LABTYP.
+        Note that %OTYPE does not depend upon what you specified for
+        LABTYP.
+ 
+        X1,Y1 defines the BLC of the slice in the nominated OTYPE
+        coordinate system (X- and Y-OTYPE can be different).
+        X2,Y2 defines the TRC of the slice in the nominated OTYPE
+        coordinate system (X- and Y-OTYPE can be different).
+ 
+          For %OTYPE = "abspix ", "relpix", "arcsec", "arcmin",
+                       "absdeg", "reldeg", "absghz", "relghz", "abskms",
+                       "relkms", "absnat" and "relnat"   X1,Y1 and X2,Y2
+                       are all single numbers.
+ 
+          For %OTYPE = "hms" or "dms", the X and/or Y location is/are
+          replaced by three numbers such as  HH MM SS.S or DD MM SS.S.
+          Thus if XOTYPE=hms &amp; YOTYPE=dms then the line should be
+          structured like
+ 
+           hms  dms  HH MM SS.S DD MM SS.S  HH MM SS.S DD MM SS.S  CS CE
+              or perhaps
+           hms  relpix HH MM SS.S Y1  HH MM SS.S Y2  CS CE
+ 
+        CS to CE is the channel range (image planes) from which the
+        slice is to be extracted.  If you specify only CS than the slice
+        is extracted from that channel.  If CS=0 then the slice is
+        extracted from all channels.  If CS and CE are both omitted, the
+        default is to extract the slice from all channels.
+ 
+
+Key: <a name="posout">posout
+        An ascii file into which the BLC and TRC for each slice are
+        saved.  The columns are in the same format as is needed for the
+        POSIN keyword.
+
+Key: <a name="valout">valout
+        An ascii file into which the slices are saved.  If the file
+        already exists, new slices are appended to it.  The columns of
+        the file are the slice number, the slice segment number, the
+        slice segment point number, the slice abcissa and the slice
+        value.
+
+Key: <a name="modout">modout
+        An ascii file into which the Gaussian models for the slices are
+        saved (OPTIONS=fit or OPTIONS=fit,baseline).  If the file
+        already exists, new models are appended to it.  The columns of
+        the file are the slice number, the model peak, centre, FWHM,
+        baseline offset and baseline slope.
+ 
+Revision: 1.14, 2012/03/02 00:55:01 UTC
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

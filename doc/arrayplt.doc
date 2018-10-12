@@ -1,0 +1,23 @@
+%N arrayplt
+%D Plot antenna layout of the array.
+%P rjs
+%: plotting
+%B
+        Arrayplt is a MIRIAD task which plots the array layout of an
+        interferometer array. Only the first antenna table in the
+        file is plotted.
+%A vis
+        The name of the input data-set. No default.
+%A select
+        Normal visibility selection, although only the antenna
+        selection is honoured (no other selection is honoured!).
+%A options
+        Extra processing options. Several can be given, abbreviated to
+        uniqueness. Possible options are:
+          name   Label each antenna with its name rather than its number.
+%A device
+        The PGPLOT plotting device to use. The default is no plot.
+%A log
+        A log file where a KML file will be written to giving the antenna position.
+        The default is no KML file. (KML files are read by Google Earth and many
+        geographical information systems).

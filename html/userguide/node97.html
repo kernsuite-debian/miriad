@@ -1,0 +1,237 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Weighting</TITLE>
+<META NAME="description" CONTENT="Weighting">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node98.html">
+<LINK REL="previous" HREF="node96.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node98.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2597"
+  HREF="node98.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2593"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2587"
+  HREF="node96.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2595"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2598"
+  HREF="node98.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2594"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2588"
+  HREF="node96.html">Spectral Line Imaging Considerations</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001330000000000000000">
+Weighting</A>
+</H1>
+Each visibility sample is given a weight in the imaging step. This weighting
+can be used to account for differences in the density of sampling in
+different parts of the <I>u-v</I> plane, or to account for different noise
+variances in different samples, or to improve sensitivity to extended
+objects, etc. Here we briefly review some weighting schemes:
+<DL>
+<DT><STRONG>Natural weighting</STRONG></DT>
+<DD>This gives constant weights to all
+visibilities (or, more strictly,
+inversely proportional to the noise variance of a visibility). This weighting
+gives optimum point-source sensitivity in an image. However the synthesised
+beam-shape and sidelobe levels are usually poor.
+</DD>
+<DT><STRONG>Uniform weighting</STRONG></DT>
+<DD>This gives a weight inversely proportional to
+the sampling density function. This form of weighting minimises the sidelobe
+level. However the noise level can be a factor of 2 worse than natural
+weighting.
+</DD>
+<DT><STRONG>Super- and sub-uniform weighting</STRONG></DT>
+<DD>Uniform weighting computes the
+sampling density function on a grid that is the same size as the
+gridded <I>u-v</I> plane. This results in the synthesised beam sidelobes
+being minimised over the same field-of-view as the region being
+image. Surprisingly, making the field-of-view very large (bigger than
+the primary beam size) or very small (comparable to the synthesised beam)
+both cause uniform weighting to reduce to natural weighting.
+Super- and sub-uniform weighting decouple the weighting from the field size
+being imaged. Instead, the sidelobes in the synthesised image are minimised
+over some arbitrary field size, with this field being either smaller or
+larger than the field being imaged (for super- or sub-uniform weights
+respectively).
+</DD>
+<DT><STRONG>Robust weighting</STRONG></DT>
+<DD>Uniform weighting (including super- and sub-uniform
+weighting) minimising sidelobes, whereas natural weighting minimises
+the noise level. Robust weighting provides a compromise between the two,
+doing so in an optimal sense (similar to Wiener optimisation).
+See <A NAME="tex2html363"
+  HREF="http://www.aoc.nrao.edu/dissertations/dbriggs/">Dan Briggs' thesis</A>
+for more information.
+</DD>
+<DT><STRONG>Tapering</STRONG></DT>
+<DD>In signal processing theory, the optimum way to
+detect a signal of known form, which is buried in noise, is to convolve that
+signal with a ``matched filter''. This filter has an impulse response which
+is just the reverse of the form of the signal that is being detected.
+Applying
+this principle to detecting sources in radio interferometry, the optimum
+weighting for detecting
+a Gaussian source is to weight the visibility data
+by a Gaussian. This is often called `tapering'. Using a Gaussian weight
+will significantly increase the detectability
+of an extended source. However it also degrades the resolution. Gaussian
+weighting can be combined with any of the above weighting schemes to
+achieve some form of balance between sidelobes and sensitivity.
+</DD>
+</DL>
+
+<P>
+<I>Miriad</I> gives good (excessive?) control over the visibility
+weighting schemes, via three parameters and one option.
+
+<UL>
+<LI><TT>fwhm</TT> controls tapering of the data. Unlike AIPS, this taper
+is specified in the image domain, in arcseconds.
+If you are interested in
+features of a particular angular size, then the signal-to-noise ratio in the
+resultant dirty image is optimised for these features if the taper FWHM is
+the same as the source FWHM (or source scale size).
+
+<P>
+</LI>
+<LI><TT>sup</TT> is used to control super- and sub-uniform weighting.
+The <TT>sup</TT> parameter indicates the region of the <EM>dirty beam</EM>
+(centred on the beam centre) where sidelobes are to be suppressed or
+minimised.  Like the <code>fwhm</code> parameter, the <code>sup</code> parameter is
+given in arcseconds.  The weights that <A NAME="tex2html364"
+  HREF="../doc/invert.html">invert</A>
+calculates are
+optimal, or near optimal, in a least-squares sense to minimising
+the sidelobes in the specified region of <EM>the beam</EM>.  Although the
+sidelobe suppression region is not a direct control of resolution and
+signal-to-noise ratio, it does have an effect on these
+characteristics.
+
+<P>
+Suppressing sidelobes over the entire field of the dirty beam
+corresponds to uniform weighting - that is, we get uniform weighting if
+<TT>sup</TT> is set to the field size of the dirty beam; this is the
+default.  Alternately making no attempt to
+suppress sidelobes (<TT>sup=0</TT>) corresponds to natural weighting.
+
+<P>
+Increasing <code>sup</code> from 0 to the field size results initially in an
+improvement in resolution until the value of <code>sup</code> is approximately
+equal to the best resolution.  Increasing <code>sup</code> beyond this results
+in a slow degradation in resolution.  The noise level varies in
+a less regular way with <code>sup</code>.  Apart from saying that <code>sup=0</code>
+(natural weighting) gives the optimum signal-to-noise ratio, it is not
+possible to generalise.  However the noise level will be no worse than
+a factor of a few from the optimum.
+
+<P>
+The default value for <code>sup</code> is the field size (<I>i.e.</I>  uniform
+weighting).
+
+<P>
+</LI>
+<LI><TT>robust</TT>: In <I>Miriad</I>, robust weighting is parameterised
+by a ``robustness'' parameter. Values less than about -2 correspond
+essentially to minimising sidelobe levels only, whereas values greater than
+about +2 just minimising noise. A value of about 0.5
+gives nearly the same sensitivity as natural weighting, but with
+a significantly better beam.
+
+<P>
+</LI>
+<LI><TT>options=systemp</TT>: The basic weight of a visibility (the weight used
+for natural weighting, or the weight used for a point in determining the
+local sampling density function) is ideally <SPAN CLASS="MATH"><IMG
+ WIDTH="37" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img34.png"
+ ALT="$1/\sigma^2$"></SPAN>, where <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.png"
+ ALT="$\sigma^2$"></SPAN> is
+the noise variance of a visibility. Because historically the value for this
+in a <I>Miriad</I> data-set has been of dubious reliability, <A NAME="tex2html365"
+  HREF="../doc/invert.html">invert</A>
+normally assumes the
+noise variance is inversely proportional to the integration time of a
+visibility. However ATCA data
+loaded with <I>Miriad</I> <A NAME="tex2html366"
+  HREF="../doc/atlod.html">atlod</A>
+will contain good estimates of <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.png"
+ ALT="$\sigma^2$"></SPAN>:
+using the true <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.png"
+ ALT="$\sigma^2$"></SPAN> will result in some improvement in sensitivity in
+the final image. In this case, the
+<code>systemp</code> option can instruct <A NAME="tex2html367"
+  HREF="../doc/invert.html">invert</A>
+to compute the basic
+weights using <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.png"
+ ALT="$\sigma^2$"></SPAN>.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2597"
+  HREF="node98.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2593"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2587"
+  HREF="node96.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2595"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2598"
+  HREF="node98.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2594"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2588"
+  HREF="node96.html">Spectral Line Imaging Considerations</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

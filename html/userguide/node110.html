@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Multi-frequency deconvolution - MFCLEAN</TITLE>
+<META NAME="description" CONTENT="Multi-frequency deconvolution - MFCLEAN">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node111.html">
+<LINK REL="previous" HREF="node108.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node111.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2767"
+  HREF="node111.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2763"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2757"
+  HREF="node109.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2765"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2768"
+  HREF="node111.html">Other deconvolution tasks</A>
+<B>Up:</B> <A NAME="tex2html2764"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2758"
+  HREF="node109.html">Computation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001440000000000000000"></A><A NAME="3865"></A>
+<A NAME="3866"></A><A NAME="3867"></A><A NAME="s:mfclean"></A>
+<BR>
+Multi-frequency deconvolution - MFCLEAN
+</H1>
+If you have used multi-frequency synthesis in the imaging stage, you will
+have to have considered a fly in the ointment - the
+flux density of the source will vary with frequency (as well as spatially).
+For detection and low dynamic-range work, mild spectral
+variation can generally be ignored.  For high dynamic range imaging, the
+variation with frequency will cause a distortion in the resulting image.
+
+<P>
+The <I>Miriad</I> deconvolution task <A NAME="tex2html442"
+  HREF="../doc/mfclean.html">mfclean</A>
+can be used to
+avoid this distortion.  Rather than just determining a flux density estimate,
+<A NAME="tex2html443"
+  HREF="../doc/mfclean.html">mfclean</A>
+simultaneously solves for both a flux density and spectral
+variation for each source. To understand how this is possible,
+consider a noiseless observation of a single point source at the phase centre.
+Assume that it has a linear spectral variation. While this is obviously
+an approximation, it is an adequate one for dynamic ranges up to several
+thousand to one (assuming typical spectral variation and fractional spread in
+frequencies of no more than 30%). The visibility function
+for this source can be described by two parameters: the source brightness at
+some reference frequency, and the brightness derivative.
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+V(\nu) = I(\nu_0) + \frac{\partial I}{\partial\nu}\Delta\nu
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="154" HEIGHT="39" BORDER="0"
+ SRC="img52.png"
+ ALT="\begin{displaymath}
+V(\nu) = I(\nu_0) + \frac{\partial I}{\partial\nu}\Delta\nu
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+If we temporarily assume that the derivative is zero, then the image resulting
+from a multi-frequency synthesis observation of this source will just be the
+normal point-spread function (beam pattern) scaled by <SPAN CLASS="MATH"><IMG
+ WIDTH="40" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img53.png"
+ ALT="$I(\nu_0)$"></SPAN>. If we now
+assume some non-zero
+derivative, we will get a different image. Because
+of the linearity of the system, the output image will be a sum of the two
+terms. The first term is just the normal point spread function
+scaled by <SPAN CLASS="MATH"><IMG
+ WIDTH="40" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img53.png"
+ ALT="$I(\nu_0)$"></SPAN> as before, while the second term is caused by the
+derivative.
+The importance of the second term will be related to the size of the derivative
+and the range of frequencies sampled.
+This second term has been called the ``spectral dirty beam'' - it is
+a point-spread function resulting from a linear frequency variation. While it
+may seem that the most logical definition of the spectral dirty beam is the
+additional response resulting from a source with a flux density derivative
+of 1, there is a more convenient scaling. If we assume that the flux density
+variation is due to a spectral index, <SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img54.png"
+ ALT="$\alpha$"></SPAN>, where
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I(\nu) = I(\nu_0)(\frac{\nu}{\nu_0})^\alpha
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="126" HEIGHT="37" BORDER="0"
+ SRC="img55.png"
+ ALT="\begin{displaymath}
+I(\nu) = I(\nu_0)(\frac{\nu}{\nu_0})^\alpha
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+then
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I(\nu_0)\alpha = \nu_0\left.
+\begin{array}{c}\displaystyle\frac{\partial I}{\partial\nu}\end{array}\right|_{\nu_0}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="141" HEIGHT="47" BORDER="0"
+ SRC="img56.png"
+ ALT="\begin{displaymath}
+I(\nu_0)\alpha = \nu_0\left.
+\begin{array}{c}\displaystyle\frac{\partial I}{\partial\nu}\end{array}\right\vert _{\nu_0}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Conventionally the spectral dirty beam is scaled so that
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+I_D(\ell,m) &=& I(\nu_0) B_0(\ell,m) + \nu_0
+\left.\begin{array}{c}\displaystyle\frac{\partial I}{\partial\nu}\end{array}
+\right|_{\nu_0}B_1(\ell,m)\\
+	  &=& I(\nu_0) B_0(\ell,m) + (I(\nu_0)\alpha)B_1(\ell,m)
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="354" HEIGHT="69" BORDER="0"
+ SRC="img57.png"
+ ALT="\begin{eqnarray*}
+I_D(\ell,m) &amp;=&amp; I(\nu_0) B_0(\ell,m) + \nu_0
+\left.\begin{arra...
+...ll,m)\\
+&amp;=&amp; I(\nu_0) B_0(\ell,m) + (I(\nu_0)\alpha)B_1(\ell,m)
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+For a general source, a sum of the two beams is replaced by a convolution
+relation:
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I_D = I \ast B_0 + (I\alpha) \ast B_1
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="166" HEIGHT="28" BORDER="0"
+ SRC="img58.png"
+ ALT="\begin{displaymath}
+I_D = I \ast B_0 + (I\alpha) \ast B_1
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+(in the above equation, <I>I</I> is evaluated at <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\nu_0$"></SPAN>).
+The problem of multi-frequency deconvolution is to estimate
+<I>I</I> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img59.png"
+ ALT="$I\alpha$"></SPAN> images simultaneously. A more detailed discussion of the
+algorithm <A NAME="tex2html444"
+  HREF="../doc/mfclean.html">mfclean</A>
+uses is
+given in <A NAME="tex2html445"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1994A%26AS..108..585S">Sault &amp; Wieringa (1994)</A>
+(A&amp;AS 108, 585).
+
+<P>
+But how important are the effects that spectral variation causes?
+Generally you will want to ignore them if you can, because then
+the deconvolution procedure has to solve only the
+standard convolution equation,
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I_D\approx I \ast B_0,
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="86" HEIGHT="27" BORDER="0"
+ SRC="img60.png"
+ ALT="\begin{displaymath}
+I_D\approx I \ast B_0,
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+and the other deconvolution tasks - <A NAME="tex2html446"
+  HREF="../doc/clean.html">clean</A>
+and <A NAME="tex2html447"
+  HREF="../doc/maxen.html">maxen</A>
+- can
+be used.
+
+<P>
+Surprisingly spectral effects are not very important in a wide variety
+of problems. For fractional bandwidths of 10%, spectral effects
+need to be considered for dynamic ranges of better than 1000.  For
+fractional bandwidths of 30%, the effects become important for dynamic
+ranges of a few hundred.  This assumes typical spectral variations
+equivalent to spectral indices of order 1.  When imaging beyond the
+half-power points of the primary beam, the frequency dependence of the
+primary beam will be quite substantial, and so spectral variation will
+need to be considered for lower dynamic range images.
+
+<P>
+Generally you will need to consider at the imaging step (task <A NAME="tex2html448"
+  HREF="../doc/invert.html">invert</A>)
+whether you <EM>may</EM> need to account for spectral variation in the
+deconvolution step. If you <EM>may</EM>, then you need to form the spectral
+dirty beam, <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img61.png"
+ ALT="$B_1$"></SPAN>, as well as the normal dirty beam, <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img38.png"
+ ALT="$B_0$"></SPAN>.
+If so, you must have set the <TT>sdb</TT> option in
+<A NAME="tex2html449"
+  HREF="../doc/invert.html">invert</A>. This produces the spectral dirty beam as a second
+plane of the beam dataset. If
+you did produce this spectral dirty beam plane, and then use
+<A NAME="tex2html450"
+  HREF="../doc/clean.html">clean</A>
+and <A NAME="tex2html451"
+  HREF="../doc/maxen.html">maxen</A>, they will issue warnings (which can be
+safely ignored) about the existence of the second plane.
+
+<P>
+The inputs to <A NAME="tex2html452"
+  HREF="../doc/mfclean.html">mfclean</A>
+are fairly similar to <A NAME="tex2html453"
+  HREF="../doc/clean.html">clean</A>. Task
+<A NAME="tex2html454"
+  HREF="../doc/mfclean.html">mfclean</A>
+differs in that it does not have a Prussian helmet
+or SDI CLEAN capability. Task <A NAME="tex2html455"
+  HREF="../doc/mfclean.html">mfclean</A>
+does not support a number
+of the <TT>options</TT> given by CLEAN. More fundamental, though, is that,
+whereas <A NAME="tex2html456"
+  HREF="../doc/clean.html">clean</A>
+can only CLEAN an area a quarter of the beam area, <A NAME="tex2html457"
+  HREF="../doc/mfclean.html">mfclean</A>
+can strictly
+speaking CLEAN an area only one ninth of the beam area. To explain the
+reason for this, we must consider some of the details of <A NAME="tex2html458"
+  HREF="../doc/mfclean.html">mfclean</A>. To
+aid it in finding peaks in the flux density and spectral index domains, it
+correlates the residuals with the beam and the spectral dirty beam. More
+strictly it correlates the residuals with a portion of the beam and spectral
+dirty beam - the sub-beam. Strictly the sub-beam size should be the same
+as the region being CLEANed. However in practise, provided it contains most
+of the main sidelobes, a smaller portion is adequate. Task <A NAME="tex2html459"
+  HREF="../doc/mfclean.html">mfclean</A>
+will tell you the sub-beam size, and indeed may complain about it
+being small. However provided it is either at least as big as the region
+being CLEANed, or is 50-100 pixels, you are probably OK.
+All the same, however, you should attempt to produce
+images with larger guard bands if <A NAME="tex2html460"
+  HREF="../doc/mfclean.html">mfclean</A>
+is to be used.
+
+<P>
+As with <A NAME="tex2html461"
+  HREF="../doc/clean.html">clean</A>, you will almost certainly want to restore your
+resultant image - see Section&nbsp;<A HREF="node112.html#s:restor">14.6</A>.
+The output from <A NAME="tex2html462"
+  HREF="../doc/mfclean.html">mfclean</A>
+is a CLEAN component image with a difference -
+it contains two planes. The first plane is the normal CLEAN component image
+(like the one determined by <A NAME="tex2html463"
+  HREF="../doc/clean.html">clean</A>), while the second plane contains the
+estimate of <!-- MATH
+ $\alpha(\ell,m)I(\ell,m)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="103" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img62.png"
+ ALT="$\alpha(\ell,m)I(\ell,m)$"></SPAN>.
+Both <A NAME="tex2html464"
+  HREF="../doc/restor.html">restor</A>
+(Section&nbsp;<A HREF="node112.html#s:restor">14.6</A>) and a number of other tasks
+use this second plane.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2767"
+  HREF="node111.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2763"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2757"
+  HREF="node109.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2765"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2768"
+  HREF="node111.html">Other deconvolution tasks</A>
+<B>Up:</B> <A NAME="tex2html2764"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2758"
+  HREF="node109.html">Computation</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

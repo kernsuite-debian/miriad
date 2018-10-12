@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Making Flint Quieter</TITLE>
+<META NAME="description" CONTENT="Making Flint Quieter">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html889"
+  HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html883"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html877"
+  HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html885"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html887"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html890"
+  HREF="node50.html">Other Flags and Arguments</A>
+<B>Up:</B> <A NAME="tex2html884"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html878"
+  HREF="node48.html">FLINT</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00511000000000000000">
+Making Flint Quieter</A>
+</H2>
+Flint assumes that the programmer follows a fairly strict programming
+convention. If the programmer does not, then Flint can produce a voluminous
+number of warning messages. There are a number of switches which help
+quieten Flint to manageable proportions.
+<DL>
+<DT><STRONG>-c</STRONG></DT>
+<DD>Allow interwoven continuation and comment lines. Normally Flint
+generates warnings about this (even though it is standard FORTRAN)
+An unpleasant side effect of allowing interwoven
+comment and continuation lines is that comments are not copied to the
+listing file.
+</DD>
+<DT><STRONG>-d</STRONG></DT>
+<DD>Do not warn when variables are not explicitly declared. Normally
+Flint insists that all variables must be explicitly declared with a `REAL',
+`INTEGER', etc, statement.
+</DD>
+<DT><STRONG>-f</STRONG></DT>
+<DD>Do not generate warnings about lines greater than 72 characters long
+or with an odd number of quotes. When checking if a line is
+greater than 72 characters, Flint interprets tabs as if the equivalent
+number of spaces had been typed (the VMS compiler treats a tab as a single
+character, rather than as multiple spaces).
+</DD>
+<DT><STRONG>-h</STRONG></DT>
+<DD>By default, Flint does not understand hollerith data. The <TT>-h</TT>
+flag instructs Flint to recognize hollerith data as integers.
+</DD>
+<DT><STRONG>-j</STRONG></DT>
+<DD>Do not check if a variable has been initialized before being used.
+If a variable is not in a DATA, COMMON, PARAMETER or SAVE statement,
+and if it is not a dummy subroutine argument, then Flint normally
+attempts to check that the variable is initialized before it is used. It does
+this by checking that it is assigned to at a earlier line in the routine than
+where it is first used. This is not necessarily correct in routines with
+EQUIVALENCE statements, a maze of gotos, or which
+have conditional blocks within loops. Applying this same rule to subroutine
+arguments provides Flint with a technique for determining subroutine argument
+intent. Disabling initialization checking will also disable these
+intent-determining rules, and so should eliminate
+spurious warnings about inconsistent subroutine argument intent.
+</DD>
+<DT><STRONG>-k</STRONG></DT>
+<DD>Suppress warnings about common blocks with possible alignment
+problems.
+</DD>
+<DT><STRONG>-r</STRONG></DT>
+<DD>Do not warn about seemingly redundant variables. Redundant variables
+are those that are assigned to but never otherwise used. A common
+source of most messages is when a value returned by a subroutine
+is never used. For example, Flint will complain if you ignore values
+returned in an array used by a subroutine for scratch storage, or if values
+returned by a general subroutine are ignored in specific cases.
+</DD>
+<DT><STRONG>-s</STRONG></DT>
+<DD>Load definitions of FORTRAN-IV and specific intrinsic functions.
+By default, Flint only knows about the standard FORTRAN-77 generic intrinsic
+functions (e.g. COS, REAL, MAX). It does not know specific function names
+or obsolete FORTRAN-IV functions (e.g. DCOS, FLOAT, AMAX0). The `s'
+flag causes Flint to load the definitions of these as well.
+</DD>
+<DT><STRONG>-u</STRONG></DT>
+<DD>Do not generate a warning about variables which do not seem to be
+used. By default Flint produces such a warning for local variables (but
+not COMMON or PARAMETER variables).
+</DD>
+<DT><STRONG>-x</STRONG></DT>
+<DD>Allow extended subroutine and variable names. By default Flint
+warns if subroutine or variable names are longer than 8 characters, or if
+they contain underline or dollar characters. Using this flag
+allows names of arbitrary length, with dollar and underline characters.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html889"
+  HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html883"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html877"
+  HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html885"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html887"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html890"
+  HREF="node50.html">Other Flags and Arguments</A>
+<B>Up:</B> <A NAME="tex2html884"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html878"
+  HREF="node48.html">FLINT</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

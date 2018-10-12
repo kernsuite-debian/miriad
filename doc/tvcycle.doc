@@ -1,0 +1,20 @@
+%N tvcycle
+%D Cycle through TV channels to compare different images.
+%P nebk
+%: visual display
+%B
+        TVCYCLE is a MIRIAD task to cycle through TV channels thus
+        allowing different images to be compared.   Use button D
+        to exit.  Use button C for local fiddle mode.
+%A tvchan
+        List of channels to cycle around.
+%A delay
+        Delay in seconds between channel changes. Default is 0.5 s
+        This can be altered with the x-location of the cursor.
+        The cursor at the left and right hand edges give 0*delay
+        and  2*delay respectively.
+%A server
+        The TV device where the image is to be displayed. No default.
+%A options
+        reverse   Default is to loop around the channels. For example
+                   1-2-3-1-2-3   This options does 1-2-3-2-1-2-3

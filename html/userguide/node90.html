@@ -1,0 +1,176 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Averaging Antenna Gains with Time - GPAVER</TITLE>
+<META NAME="description" CONTENT="Averaging Antenna Gains with Time - GPAVER">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node91.html">
+<LINK REL="previous" HREF="node89.html">
+<LINK REL="up" HREF="node88.html">
+<LINK REL="next" HREF="node91.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2513"
+  HREF="node91.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2509"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2503"
+  HREF="node89.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2511"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2514"
+  HREF="node91.html">Preventing Gain Interpolation -</A>
+<B>Up:</B> <A NAME="tex2html2510"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2504"
+  HREF="node89.html">Interpolation/Extrapolation Tolerance</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001242000000000000000"></A><A NAME="s:gpaver"></A><A NAME="3475"></A><A NAME="3476"></A>
+<BR>
+Averaging Antenna Gains with Time - GPAVER
+</H2>
+
+<P>
+If the phase stability is bad during the observation
+(the atmospheric conditions are poor), the
+phase of the antenna gains can vary rapidly. A change of tens of degrees
+or more during the calibrator scan is not uncommon. However the software that
+determines the antenna gains assumes that the gains are constant during
+a solution interval. So during periods of poor phase stability, it is often
+desirable to make the solution interval of the calibration software quite
+short. While the resultant gains probably track the phase during the
+calibrator scan, what we are really interested in are the antenna gains for the
+program
+source. If you solved for a number of time intervals during the
+calibrator scan, the
+best guess at the antenna gains for the program source is derived by
+interpolating between some average of the calibrator scan gains.
+Thus after determining the gains at a fine time step in the calibrator
+scan, you should average these gains together to get some representative
+gain for the whole calibrator scan.
+This is probably the best guess you can make (at least as far as correcting
+the program source is concerned), although in times of truly
+awful phase stability, its a pretty poor guess (self-calibration will
+be needed in this case).
+
+<P>
+There are two ways to average your gains, either  the ``vector'' or ``scalar''
+averages. Which is the most appropriate will depend on whether you want
+good estimates of the gains or good estimates of the resultant images.
+
+<UL>
+<LI>Scalar averaging consists of averaging the amplitude of the gains
+separately (the `average' phase is still determined by a traditional
+(vector) average of the real and imaginary parts of the gains).
+Assuming the
+variation in gain is purely due to poor phase stability, a scalar average
+will give you a good estimate of the amplitude of the gain.
+If you are going to self-calibrate
+later, then scalar averages are probably the most appropriate.
+This means that
+when you come to self-calibrate, you only have to solve for the phase
+(at least initially), because you already have a good amplitude estimate.
+</LI>
+<LI>On the other hand, if you are not going to self-calibrate, you are more
+interested in getting a good estimate of your image at this stage, and less
+concerned about partially correct gains (the two do not necessarily go hand
+in hand). If we
+were to use vector averaged antenna gains (averaging the real and imaginary
+parts), the poor
+phase stability will cause partial decorrelation in both the program
+source and calibrator. This will result in
+apparent reduced flux densities of both of them. Assuming
+that the decorrelation is approximately the same for both, then we could scale
+up the program source by the decorrelation that we note in the calibrator.
+This can be achieved by vector averaging the antenna gains.
+</LI>
+</UL>
+To summarise the above discussion, when phase stability is poor, it is
+best to use a very short solution interval when solving for the antenna
+gains of the calibrator scan. The gains during a scan should then be
+averaged before applying them to the program source. Scalar averaging is
+appropriate if self-calibration is to be used later. Otherwise vector
+averaging should be used.
+
+<P>
+The task <A NAME="tex2html350"
+  HREF="../doc/gpaver.html">gpaver</A>
+can be used to perform averaging of antenna
+gains. Its pretty straightforward.Typical inputs are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPAVER</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.4800</TD>
+<TD ALIGN="LEFT">Average the gain table for the program source</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=10</TD>
+<TD ALIGN="LEFT">Averaging interval (calibrator scan length)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=scalar</TD>
+<TD ALIGN="LEFT">Scalar average if self-calibrating later,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=vector</TD>
+<TD ALIGN="LEFT">vector average otherwise</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2513"
+  HREF="node91.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2509"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2503"
+  HREF="node89.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2511"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2514"
+  HREF="node91.html">Preventing Gain Interpolation -</A>
+<B>Up:</B> <A NAME="tex2html2510"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2504"
+  HREF="node89.html">Interpolation/Extrapolation Tolerance</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

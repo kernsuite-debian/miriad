@@ -1,0 +1,540 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Plotting Visibilities</TITLE>
+<META NAME="description" CONTENT="Plotting Visibilities">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node71.html">
+<LINK REL="previous" HREF="node69.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node71.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2255"
+  HREF="node71.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2251"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2245"
+  HREF="node69.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2253"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2256"
+  HREF="node71.html">Examining Visibility Variables</A>
+<B>Up:</B> <A NAME="tex2html2252"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2246"
+  HREF="node69.html">Copying, Concatenating and Averaging</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001050000000000000000"></A><A NAME="s:visplot"></A><A NAME="2659"></A>
+<BR>
+Plotting Visibilities
+</H1>
+
+<P>
+
+<OL>
+<LI>You may tire of all this listing of numbers, and would prefer to
+make some plots.  The task <A NAME="tex2html225"
+  HREF="../doc/uvplt.html">uvplt</A><A NAME="2662"></A> provides a variety
+of choices when plotting visibilities, and ancillary information
+associated with the visibilities.  It has rather a lot of inputs, so
+read the help file first for the details.  We discuss some of the
+keywords below and then give a couple of examples.
+
+<P>
+
+<UL>
+<LI><TT>vis</TT> specifies the visibility datasets to plot.  It can take
+multiple dataset names, each separated by a comma, and wildcard
+expansion (via an asterisk) of file names is supported.
+
+<P>
+</LI>
+<LI><TT>line</TT> and <TT>select</TT> are the standard visibility selection
+keywords.  The default for the <TT>line</TT> parameter is the first channel,
+so be careful if you are plotting a dataset with many channels; you would
+need to explicitly select the channels you require, especially as in
+multi-channel datasets the first few channels are either rubbish or
+flagged.  The default for <TT>select</TT>
+is all the data.
+
+<P>
+</LI>
+<LI>Select the desired polarization or Stokes parameter with <TT>stokes</TT>.
+Conversions from linear (or circular) polarizations to Stokes parameters
+are supported.  You can have any combination that you like on one plot,
+but they will all be plotted with the same symbol.  This generally
+does not matter as any signal will make the distinctions clear and colours are
+used on devices that support it.
+
+<P>
+</LI>
+<LI><TT>axis</TT> is used to tell <A NAME="tex2html226"
+  HREF="../doc/uvplt.html">uvplt</A>
+what to plot on each axis.
+You can put any of the allowed choices (see the help file) on either of
+the axes.  For example, you could set <TT>axis=imag,real</TT> to plot the
+imaginary part of the visibility on the x-axis, and the real part on the
+y-axis.  Such a plot is very useful to examine calibrator data.
+The default is to plot visibility amplitude versus time.
+
+<P>
+</LI>
+<LI><TT>xrange</TT> and <TT>yrange</TT> specify the plot ranges for the
+x- and y-axes.  If they are unset, the plot(s) are auto-scaled.
+Generally, each of these keywords takes two values.  However,
+if the corresponding axis is <TT>time</TT>, then you must specify eight
+values; a day, hour, minute and second for the start and stop
+times.
+
+<P>
+</LI>
+<LI>You can average the plotted quantities in time by setting <TT>average</TT> in minutes (but see the <TT>options</TT> keyword for exceptions to
+this unit).  Baselines and polarizations are averaged separately (unless
+<TT>options=avall</TT>), but channels are not - they are all lumped in
+together.
+
+<P>
+The complex visibilities are vector averaged by default, and the real
+quantities are scalar averaged by default.  For example, if you ask for
+an averaged amplitude or phase, the real and imaginary parts of the
+visibilities are averaged, and then the amplitude or phase formed.  If
+you ask for, say, <I>u</I> versus time, <I>u</I> is scalar averaged.  You can
+override the vector averaging by setting <TT>options=scalar</TT>; a scalar
+averaged amplitude is useful if the phase is winding rapidly.  A scalar
+averaged phase is pretty meaningless under most conditions.
+
+<P>
+Averaged points are plotted with filled-in circles rather than dots,
+unless <TT>options=dots</TT>.
+
+<P>
+</LI>
+<LI>If you plot, say, amplitude or phase versus time, you may find the
+application of Hanning smoothing useful to knock off the rough edges,
+rather than applying box-car smoothing (which is what you get
+when you average in time).  Set <TT>hann</TT> to an odd number.
+
+<P>
+</LI>
+<LI>If you do not want to see all the selected points, you can set <TT>inc</TT> to plot every <TT>inc</TT>th point that would normally have been
+selected.  For example, it is useful for plotting <I>u</I> versus <I>v</I>.  Be
+careful of a value of <TT>inc</TT> that divides exactly into the number of
+baselines in time-ordered data (you end up seeing the same baselines
+over and over).
+
+<P>
+</LI>
+<LI><TT>uvplt</TT> has a vast complement of <TT>options</TT>.  They
+are all described in the help file.  We will mention a few
+of them here.
+
+<P>
+<DL>
+<DT></DT>
+<DD>Like most of the visibility tasks, it has <TT>nocal, nopol</TT> and
+<TT>nopass</TT> to turn off the calibration tables, which, by default, are
+applied if they exist.  <I>Miriad</I> will tell you when it applies any
+calibration table.
+
+<P>
+</DD>
+<DT></DT>
+<DD>By default, <A NAME="tex2html227"
+  HREF="../doc/uvplt.html">uvplt</A>
+puts each baseline on a separate sub-plot on
+the page (see <TT>nxy</TT> below).  Setting <TT>options=nobase</TT> means that
+all baselines go on the same plot.
+
+<P>
+</DD>
+<DT></DT>
+<DD><TT>options=scalar</TT> instructs <A NAME="tex2html228"
+  HREF="../doc/uvplt.html">uvplt</A>
+to do scalar averaging in
+time.
+
+<P>
+</DD>
+<DT></DT>
+<DD>On occasion, you may not wish to time average baselines or
+polarizations separately.  Setting <TT>options=avall</TT> instructs
+<A NAME="tex2html229"
+  HREF="../doc/uvplt.html">uvplt</A>
+to average together everything that is to be plotted on a separate
+sub-plot.
+
+<P>
+</DD>
+<DT></DT>
+<DD><TT>options=rms</TT> instructs <A NAME="tex2html230"
+  HREF="../doc/uvplt.html">uvplt</A>
+to plot error bars on
+any time-averaged quantities.  However, note that error bars are not yet
+implemented for vector averaging.
+
+<P>
+</DD>
+<DT></DT>
+<DD>By default, if you plot many sub-plots (one for each baseline), all the
+sub-plots are displayed with the same axis ranges, which encompass the
+data on all the sub-plots.  Setting <TT>options=xind</TT> or <TT>options=yind</TT> (or both) scales that axis on each sub-plot independently.
+
+<P>
+</DD>
+<DT></DT>
+<DD><A NAME="tex2html231"
+  HREF="../doc/uvplt.html">uvplt</A>
+has an interactive mode invoked by setting
+<TT>options=inter</TT>.  This gives you a chance to redraw the plot
+with different axis ranges, without having to read all the data in
+again.  This option also prompts you for a new plot device, so
+that following display and range refinement on your workstation,
+you can them make a hard copy without re-running <A NAME="tex2html232"
+  HREF="../doc/uvplt.html">uvplt</A>.
+
+<P>
+</DD>
+</DL>
+
+<P>
+</LI>
+<LI>Select the PGPLOT device to plot on with a command such as
+<TT>device=/xs</TT> (plot on local X-window) or <TT>device=amp.plt/ps</TT>
+(write plot to a PostScript file called `amp.plt').
+
+<P>
+</LI>
+<LI>Specify the number of sub-plots in the x- and y-directions
+with a command such as <TT>nxy=4,3</TT>.
+
+<P>
+</LI>
+</UL>
+
+<P>
+The following example plots <I>u</I> versus <I>v</I>, and <I>-u</I> versus <I>-v</I>,
+selecting channels at the start, middle and end of a band of 32 channels
+(so that the <I>u-v</I> coverage benefit obtained across the band can be
+seen).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela*.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset(s)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=channel,3,2,1,15</TD>
+<TD ALIGN="LEFT">Plot channels 2,17,32</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset for all data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=xx</TD>
+<TD ALIGN="LEFT"><I>u-v</I> coverage same for all polarizations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=uc,vc</TD>
+<TD ALIGN="LEFT">Plot <I>u-v</I> and conjugate <I>u-v</I> plane</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">average</TD>
+<TD ALIGN="LEFT">No averaging</TD>
+</TR>
+<TR><TD ALIGN="LEFT">hann</TD>
+<TD ALIGN="LEFT">No Hanning</TD>
+</TR>
+<TR><TD ALIGN="LEFT">inc=1</TD>
+<TD ALIGN="LEFT">Plot every point</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nobase</TD>
+<TD ALIGN="LEFT">All baselines on one plot</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on local X-window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=1</TD>
+<TD ALIGN="LEFT">One sub-plot only please</TD>
+</TR>
+<TR><TD ALIGN="LEFT">size</TD>
+<TD ALIGN="LEFT">Default character sizes</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The next example shows how to plot a scatter diagram (real vs imaginary)
+from a single-channel dataset for the <I>Q</I>, <I>U</I> and <I>V</I>.
+polarizations, with all baselines plotted on the one plot.  This is a
+quite useful plot to make of calibrated calibrator data.  Because you
+are asking for Stokes parameters, it is assumed that a calibration has
+been made (the calibration tables will be applied by <A NAME="tex2html233"
+  HREF="../doc/uvplt.html">uvplt</A>
+and a
+reminder issued) or that you converted to Stokes parameters along the
+way (e.g.  with the AIPS task <TT>ATLOD</TT> or with <A NAME="tex2html234"
+  HREF="../doc/uvaver.html">uvaver</A>).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Plot the first channel only</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset for all data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=q,u,v</TD>
+<TD ALIGN="LEFT">Select Stokes <I>Q</I>, <I>U</I> and <I>V</I></TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=real,imag</TD>
+<TD ALIGN="LEFT">Is the default</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">hann</TD>
+<TD ALIGN="LEFT">No Hanning</TD>
+</TR>
+<TR><TD ALIGN="LEFT">inc</TD>
+<TD ALIGN="LEFT">Plot all points</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nobase</TD>
+<TD ALIGN="LEFT">Scalar averaging</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on local X-window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=1</TD>
+<TD ALIGN="LEFT">1 plot per page</TD>
+</TR>
+<TR><TD ALIGN="LEFT">size</TD>
+<TD ALIGN="LEFT">Default character sizes</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="2746"></A>
+
+<P>
+Task <A NAME="tex2html235"
+  HREF="../doc/closure.html">closure</A>
+is another useful plotting task. It is
+most useful for plotting
+the closure phases of point sources. The closure phase
+of an object is the sum of the baseline phases around a triangle. For
+example, for antennas 1, 2 and 3 we measure three baseline phases
+<SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img11.png"
+ ALT="$\phi_{12}$"></SPAN>, <SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.png"
+ ALT="$\phi_{23}$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img13.png"
+ ALT="$\phi_{31}$"></SPAN>. It can be shown that
+the closure phase, which is the sum of these three baseline phases
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\phi_{\rm closure} = \phi_{12} + \phi_{23} + \phi_{31}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="176" HEIGHT="27" BORDER="0"
+ SRC="img14.png"
+ ALT="\begin{displaymath}
+\phi_{\rm closure} = \phi_{12} + \phi_{23} + \phi_{31}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+will be independent of any antenna-based gain errors (atmosphere and
+instrumental). This quantity will not be affected by <I>Miriad</I>'s
+antenna calibration process. Additionally for a point
+source (or any source with 180 degree rotational symmetry) the closure
+phase should be zero. Plotting the closure phase of a calibrator
+is thus a way of checking the quality of the data. If the closure
+phase is large, the data are probably bad, or there is some calibration
+error that is not accounted for in <I>Miriad</I>'s antenna-based model.
+
+<P>
+Task <A NAME="tex2html236"
+  HREF="../doc/closure.html">closure</A>
+plots averages of closure phases (actually it
+averages together <EM>triple products</EM> and then takes the phase of
+this). The averages are taken over the the different correlator
+channels and polarizations, and optionally over time.
+
+<P>
+The inputs to <A NAME="tex2html237"
+  HREF="../doc/closure.html">closure</A>
+are simple enough.
+See the help file for more information. Typical inputs to
+<A NAME="tex2html238"
+  HREF="../doc/closure.html">closure</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CLOSURE</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela*.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset(s)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=</TD>
+<TD ALIGN="LEFT">Set the channels of interest.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset for all data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=xx</TD>
+<TD ALIGN="LEFT">Closure phase for XX</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=notrip</TD>
+<TD ALIGN="LEFT">Plot all closure phases on one plot</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on local X-window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=1</TD>
+<TD ALIGN="LEFT">One sub-plot only please</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="2767"></A>
+If you are working with spectral data (line or continuum) you may
+want to look at some spectra.  Use task <A NAME="tex2html239"
+  HREF="../doc/uvspec.html">uvspec</A><A NAME="2769"></A> for this.
+The inputs to
+<A NAME="tex2html240"
+  HREF="../doc/uvspec.html">uvspec</A>
+are pretty much self-explanatory.  Here is an example of
+how to plot the spectra (phase) of the <I>XX</I> and <I>YY</I> correlations
+averaged over 15&nbsp;minutes for all baselines involving antenna 1 with all
+calibration turned off.  <A NAME="tex2html241"
+  HREF="../doc/uvspec.html">uvspec</A>
+makes a new sub-plot every time
+it begins a new averaging interval.  Assuming that there are five antennas
+in this dataset, we have arranged for each baseline to occupy one column
+of the plot page with time increasing down the page.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVSPEC</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=ant(1)</TD>
+<TD ALIGN="LEFT">Baselines involving antenna 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Unset for all channels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=xx,yy</TD>
+<TD ALIGN="LEFT"><I>XX</I> and <I>YY</I> correlations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=15</TD>
+<TD ALIGN="LEFT">15 minute averages</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nocal,nopol,nopass</TD>
+<TD ALIGN="LEFT">Turn off calibration,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=freq,phase</TD>
+<TD ALIGN="LEFT">Plot phase versus frequency</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange=-185,185</TD>
+<TD ALIGN="LEFT">Specify y-range for plot</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on local X-window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=5,6</TD>
+<TD ALIGN="LEFT">6 time intervals in y directions</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2255"
+  HREF="node71.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2251"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2245"
+  HREF="node69.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2253"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2256"
+  HREF="node71.html">Examining Visibility Variables</A>
+<B>Up:</B> <A NAME="tex2html2252"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2246"
+  HREF="node69.html">Copying, Concatenating and Averaging</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

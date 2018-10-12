@@ -1,0 +1,66 @@
+.TH imstore 1
+.SH NAME
+imstore - Write out image data in an ascii format.
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map analysis
+.SH DESCRIPTION
+IMSTORE is a Miriad task which dumps or tabulates a region of
+an image in a format suitable for other programs.
+Different output modes can be selected.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input file name. No default.
+.TP
+\fIregion\fP
+The region of interest of the input. Default is the entire input.
+Full region specifations are supported.
+Note: 3D datacubes do not display their 3rd coordinate.
+.TP
+\fIclip\fP
+Only image pixels above the clip value are written. The default
+is all data.
+.TP
+\fIscale\fP
+Scale factor with which the image data is multiplied
+before output. The default is 1. Note this scaling is done before
+the clip test (as described above).
+.TP
+\fImode\fP
+Output mode. This determines the format of the output. Currently
+accepted are: dump, uvgen and nemo. The default is dump.
+.sp
+mode=dump writes out the values of the selected pixel, only, with
+there being 8 pixels per line.
+.sp
+mode=uvgen produces an output suitable for input to uvgen.
+.nf
+    FLUX,DRA,DDEC,WMAJ,WMIN,WPA,POLN,POLPA
+.fi
+where the last 5 parameters are set to 0.0. DRA and DDEC are
+given in arcsec w.r.t. the reference pixel if the axis
+type is a recognized astronomical one.
+.sp
+mode=nemo outputs in the format:
+.nf
+    DRA, DDEC, FLUX
+.TP
+\fIformat\fP
+.fi
+Override the default mode-dependant output format. Default: none.
+Note: The format specification must be a legal fortran
+format, including the parenthesis; e.g. ``format=(3F20.10)''
+.TP
+\fIunits\fP
+Units of the output axes. Valid options are "absolute" and
+"relative" (with respect to the reference pixel).
+If an axis is a known astronomical coordinate system, the units
+are displayed in arcsecs. The default is "relative".
+.TP
+\fIlog\fP
+The output log file. The default is the terminal.
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

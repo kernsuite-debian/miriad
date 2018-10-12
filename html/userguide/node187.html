@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Loading data into Miriad: ATLOD</TITLE>
+<META NAME="description" CONTENT="Loading data into Miriad: ATLOD">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node188.html">
+<LINK REL="previous" HREF="node186.html">
+<LINK REL="up" HREF="node186.html">
+<LINK REL="next" HREF="node188.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3754"
+  HREF="node188.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3750"
+  HREF="node186.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3744"
+  HREF="node186.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3752"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3755"
+  HREF="node188.html">Calibration</A>
+<B>Up:</B> <A NAME="tex2html3751"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3745"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002210000000000000000"></A><A NAME="s:atlod12mm"></A>
+<BR>
+Loading data into <I>Miriad</I>: ATLOD
+</H1>
+ATCA millimetre observations are loaded into <I>Miriad</I> in the same fashion
+as centimetre data: task <A NAME="tex2html1021"
+  HREF="../doc/atlod.html">atlod</A>
+is used.
+
+<P>
+At 12mm, the opacity of the atmosphere can be significant: in mediocre
+conditions, the signal loss is can be a 20% at low elevations.  With
+12-mm data, an opacity correction should be applied to the data during
+the <A NAME="tex2html1022"
+  HREF="../doc/atlod.html">atlod</A>
+step.  To apply this correction, <A NAME="tex2html1023"
+  HREF="../doc/atlod.html">atlod</A>
+uses a
+model of the atmosphere (using meteorological data contained
+within the dataset) to compute a model opacity.  Note that this is just
+that - a model - and so has its limitation.  To apply atmospheric
+opacity correction, use <code>options=opcorr</code>. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=opcorr,birdie,reweight,xycorr</TD>
+<TD ALIGN="LEFT">Options for typical 12-mm</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">continuum observation, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=opcorr,hanning,compress</TD>
+<TD ALIGN="LEFT">possible options for spectral</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">line observations.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Please note the following:
+
+<UL>
+<LI>ATCA observations made before October 2003 failed to contain the
+meteorological data, and so <code>options=opcorr</code> cannot be used. 
+</LI>
+<LI>At 12mm, no self-generated RFI at multiples of 128&nbsp;MHz is seen. Task
+<A NAME="tex2html1024"
+  HREF="../doc/atlod.html">atlod</A>'s <code>birdie</code> option for continuum data is
+used to discard edge channels and every second channel (as noted earlier,
+successive channels are not independent, and so there is no sensitivity
+penalty in discarding every second channel).
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3754"
+  HREF="node188.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3750"
+  HREF="node186.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3744"
+  HREF="node186.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3752"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3755"
+  HREF="node188.html">Calibration</A>
+<B>Up:</B> <A NAME="tex2html3751"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3745"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

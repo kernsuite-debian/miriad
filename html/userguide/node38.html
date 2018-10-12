@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Selection and Multi-Source/Multi-Frequency Datasets</TITLE>
+<META NAME="description" CONTENT="Selection and Multi-Source/Multi-Frequency Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1847"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1843"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1837"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1845"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1848"
+  HREF="node39.html">Polarization/Stokes Handling (stokes and</A>
+<B>Up:</B> <A NAME="tex2html1844"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1838"
+  HREF="node37.html">Spectral Window Selection</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00570000000000000000">
+Selection and Multi-Source/Multi-Frequency Datasets</A>
+</H1>
+Having no distinction between single- and multi-source files has the
+advantage that all visibility tasks can manipulate any visibility
+dataset.  However manipulating a dataset with, say, several sources can
+require more care on the part of the user.  For example, it rarely makes
+sense to make an image using data from several sources.  Generally the
+user is given reasonable flexibility to perform whatever s/he deems
+appropriate - but this has some disadvantages.  For example, consider
+determining calibration for an observation where the calibrator (a point
+source) and the program source are within the one dataset.  In deriving
+the antenna gains, you would want to select only the data from the
+calibrator, whereas when imaging you would select only the data from the
+program source.  The visibility selection mechanism (see
+Section&nbsp;<A HREF="node36.html#s:select">5.5</A>) handles this situation.  But to forget to select
+the appropriate data (calibrating with data including the program
+source, or imaging including the calibrator) would result in a mess.
+
+<P>
+Thus, for example, if
+the calibrator was <I>0823-500</I>, and the program source was <TT>vela</TT>,
+one would use
+<PRE>
+       select=source(0823-500)
+</PRE>
+and
+<PRE>
+       select=source(vela)
+</PRE>
+to select the appropriate source.
+
+<P>
+The selection criteria most appropriate for datasets containing multiple
+sources, frequencies and mosaiced pointing centres are <TT>source, frequency,
+window, ra, dec, dra</TT> and <TT>ddec</TT>.
+
+<P>
+Other examples of using the <code>select</code> keyword are given below:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>SELECT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=window(2)</TD>
+<TD ALIGN="LEFT">Select only data from the 2nd IF</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=freq(4.74)</TD>
+<TD ALIGN="LEFT">Select data where the frequency of the first</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">channel is 4.74 GHz (<SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$\pm 1$"></SPAN>%)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=ra(05:30,06:00)</TD>
+<TD ALIGN="LEFT">Select visibilities with RA between 5:50 and 6:00</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">hours.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=dra(0),ddec(0)</TD>
+<TD ALIGN="LEFT">Select data from only the central pointing (delta</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">RA and DEC of 0) of a mosaiced observation.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(vela)</TD>
+<TD ALIGN="LEFT">Take data for source vela only</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=window(2),freq(4.74)</TD>
+<TD ALIGN="LEFT">Select data from the 2nd IF where its frequency</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">is 4.74 GHz.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1847"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1843"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1837"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1845"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1848"
+  HREF="node39.html">Polarization/Stokes Handling (stokes and</A>
+<B>Up:</B> <A NAME="tex2html1844"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1838"
+  HREF="node37.html">Spectral Window Selection</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

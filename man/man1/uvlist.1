@@ -1,0 +1,60 @@
+.TH uvlist 1
+.SH NAME
+uvlist - Print data, variables and other information from uv dataset
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVLIST produces various listing of a MIRIAD UV data file.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input UV dataset name. No default.
+.TP
+\fIoptions\fP
+This controls what is listed, and the verbosity. Several can be
+given, separated by commas. Minimum match is used. Possible values
+are:
+.nf
+  brief     Short listing (default).
+  full      The opposite of "brief".
+  data      List correlation data. For brief listings, a maximum
+            of 6 channels is printed.
+  variables List uv variables.
+  sigma     List the value and rms of the first data channel.
+  spectral  List spectral and velocity information.
+  array     List antenna and array information.
+  source    List information about the source.
+.fi
+If no listing options are given, uvlist uses options=brief,data.
+The following options determine the application of calibration
+corrections to the data, for the data list options. The default
+is to apply calibration corrections when they are available.
+.nf
+  nocal     Do not apply antenna gain corrections.
+  nopol     Do not correct for polarisation leakage.
+  nopass    Do not apply bandpass corrections.
+.TP
+\fIselect\fP
+.fi
+This selects the data to be processed, using the standard uvselect
+format. Default is all data.
+.TP
+\fIstokes\fP
+Normal stokes keyword. The default is to list the unconverted
+polarisations. NOTE: When you set this parameter, the "Visibility
+Number" printed in some listing may no longer be entirely accurate,
+as there is not a correspondence a visibility listed and a visibility
+in the data-set.
+.TP
+\fIline\fP
+For options=data, this gives the normal uv linetype, with the normal
+defaults. See the help on "line" for more information.
+.TP
+\fIrecnum\fP
+The number of output records. This is used to cut off long outputs.
+The default is either 1 or 20, depending on the options.
+.TP
+\fIlog\fP
+The list output file name. The default is the terminal.

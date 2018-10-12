@@ -1,0 +1,38 @@
+%N tvall
+%D Interact with a previously displayed image
+%P jm
+%: visual display
+%B
+        TVALL is a WERONG/MIRIAD task which allows interactive
+        modification of the TV lookup tables, etc. Usually this would be
+        used to manipulate an image previously loaded with TVDISP.
+        A menu for operations
+        to be performed will appear on the TV screen. The following are
+        possible:
+ 
+        Choose the channel being displayed (Select the channel number
+        from the menu).
+ 
+        Blink between two channels (The mouse y-coordinate determines
+        the blink rate. It blinks between the current and succeeding
+        image, mod 3. Hit any button to stop blinking).
+ 
+        Fiddle the lookup tables (The transfer function is governed by
+        the mouse position. Hit any button to finish the command).
+ 
+        Change the lookup tables between black and white, or colour.
+ 
+        Zoom and pan (the left button zooms in, the middle button zooms
+        out, and the mouse position controls pan. The cursor drawn on
+        the IVAS gives the position, on the unzoomed screen, of the
+        central pixel currently being displayed. To finish, hit the
+        right button.).
+ 
+        Switch the menu off (by `selecting' the asterisk). This is
+        useful if you want to take a photograph of the screen.
+ 
+        Return cursor position. The coordinates given are coordinates
+        (not image coordinates).
+%A server
+        The TV device. No default. See the Users Manual for information
+        on how to specify this.

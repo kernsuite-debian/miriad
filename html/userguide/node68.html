@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Listing Visibilities</TITLE>
+<META NAME="description" CONTENT="Listing Visibilities">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node69.html">
+<LINK REL="previous" HREF="node63.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node69.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2231"
+  HREF="node69.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2227"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2221"
+  HREF="node67.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2229"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2232"
+  HREF="node69.html">Copying, Concatenating and Averaging</A>
+<B>Up:</B> <A NAME="tex2html2228"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2222"
+  HREF="node67.html">Flagging a Sector of</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001030000000000000000"></A><A NAME="2587"></A><A NAME="2588"></A>
+<A NAME="s:vislist"></A>
+<BR>
+Listing Visibilities
+</H1>
+
+<P>
+
+<OL>
+<LI>The task <A NAME="tex2html218"
+  HREF="../doc/prthd.html">prthd</A><A NAME="2592"></A> summarizes some basic information about your
+visibility dataset (it also summarizes images). It only reads the
+first few records of the data, so if you have multiple frequency
+setups or sources, it will only report the first setting.  It will tell
+you the number of visibilities, the number of spectral-channels,
+the number of spectral-windows (IFs), the polarizations
+present and some information about frequencies.  Output can be directed
+to a log file (the terminal is the default), and either a brief or
+full listing can be given (the default is the full listing). Several
+inputs can be given (wildcards are supported).
+
+<P>
+</LI>
+<LI>The task <A NAME="tex2html219"
+  HREF="../doc/uvindex.html">uvindex</A>
+scans through the visibility dataset and reports
+changes in the source, pointing centre, number of spectral-channels,
+observing frequency, and polarization.  Thus, it builds a description of
+your observation for general reference.  Give the visibility dataset
+name with the keyword <TT>vis</TT>.  The output can be directed to a text
+file for printing via the keyword <TT>log</TT>.
+
+<P>
+</LI>
+<LI>The task <A NAME="tex2html220"
+  HREF="../doc/uvlist.html">uvlist</A><A NAME="2597"></A> can be used to list the values of the
+correlations.  The generic <I>Miriad</I> keyword <TT>options</TT> is used to
+control exactly what is listed (see the help file).  The standard
+keywords <TT>select</TT> and <TT>line</TT> are used to select the desired
+visibility data and the desired part of the spectrum, respectively.
+Here is an example.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVLIST</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=data,brief</TD>
+<TD ALIGN="LEFT">Lists correlations (this is the default)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=spectra,brief</TD>
+<TD ALIGN="LEFT">Lists info. about the spectral-windows</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=pol(xx),ant(1)</TD>
+<TD ALIGN="LEFT">List <I>XX</I> correlation for all</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">baselines involving antenna 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=channel,1,128,1,1</TD>
+<TD ALIGN="LEFT">List data for channel 128 only</TD>
+</TR>
+<TR><TD ALIGN="LEFT">recnum=100</TD>
+<TD ALIGN="LEFT">List 100 records</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=xx.txt</TD>
+<TD ALIGN="LEFT">Write results to this text file or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">leave unset to write to standard output</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2231"
+  HREF="node69.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2227"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2221"
+  HREF="node67.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2229"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2232"
+  HREF="node69.html">Copying, Concatenating and Averaging</A>
+<B>Up:</B> <A NAME="tex2html2228"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2222"
+  HREF="node67.html">Flagging a Sector of</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

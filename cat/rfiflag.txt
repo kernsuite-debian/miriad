@@ -1,0 +1,35 @@
+# CABB rfi flagging    
+#  based on http://www.narrabri.atnf.csiro.au/operations/rfi/rfi_ext.html
+#  and inspection of 4 and 16cm data from Jul 2014
+#
+1087 1104  # Mt Dowe digital TV (from Jul 2014)
+1115 1115
+1118 1118
+1131 1132  # ?
+1139 1139
+1141 1141  
+1168 1292  # GPS/Glonas etc
+1430 1431  # 1.5 GHz Terrestrial Microwave Link Band'
+1440 1441 
+1448 1449
+1458 1459
+1500 1504
+1508 1510
+1525 1525  # L-band Satellite downlinks
+1530 1608
+1618 1627
+1676 1678 
+1685 1697
+1702 1703 
+1806 1820  # 1.8 GHz Terrestrial Microwave Link Band
+1893 1911
+2104 2109  # 2.1GHz Terrestrial Microwave Link Band
+2145 2165  # strong & persistent
+2202 2202  # 
+# 2215 2264 # time variable, short baselines
+2490 2494  # S-band Globalstar satellite phone system downlinks
+2879 2881  # Gunnedah weather radar
+3036 3055  # ?
+5623 5625  # Moree weather radar
+#7750 7775  # 8 GHz Terrestrial Microwave Link Band - short baselines only
+#8061 8087  

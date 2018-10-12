@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Regular Regions of Interest</TITLE>
+<META NAME="description" CONTENT="Regular Regions of Interest">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node36.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html679"
+  HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html673"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html667"
+  HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html675"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html677"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html680"
+  HREF="node36.html">Arbitrary Regions of Interest</A>
+<B>Up:</B> <A NAME="tex2html674"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html668"
+  HREF="node34.html">Region of Interest and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004101000000000000000">
+Regular Regions of Interest</A>
+</H2>
+Generally a minimum of three routines are needed to process even ``regular''
+regions of interest. By ``regular'' we mean that the region of interest is
+describable by a bottom left corner and top right corner (i.e. it is a filled
+grid). The routines of interest are:
+<PRE>
+        subroutine BoxInput(key,dataset,boxes,maxboxes)
+        subroutine BoxSet(boxes,naxis,nsize,flags)
+        subroutine BoxInfo(boxes,naxis,blc,trc)
+</PRE>
+All routines require an integer array, <TT>boxes</TT>, which is used to
+accumulate a description of the region of interest. Its size is given
+by argument <TT>maxboxes</TT>. The required size is a function of the
+complexity of the region of interest, etc. Typically 1024 elements
+should be adequate.
+
+<P>
+<TT>BoxInput</TT> reads the task parameters that the user gives to
+specify the region of interest. The way this is specified is moderately
+general and (consequently) complex. See the description in the users guide.
+Included is the ability to give the region specification in a variety of
+units. To convert between some units and absolute pixels, <TT>BoxInput</TT>
+needs information about the coordinate system being used (e.g.
+parameters <TT>crval</TT>, <TT>crpix</TT> and <TT>cdelt</TT>). <TT>BoxInput</TT> determines
+these from the <I>Miriad</I> data-set given by <TT>dataset</TT>. Normally this is the name
+of the image dataset which we are interested in. If <TT>dataset</TT> is
+blank, <TT>BoxInput</TT> still functions correctly, but cannot perform unit
+conversion.
+
+<P>
+<TT>BoxInput</TT> breaks up the specification into an intermediate form, and
+stores it in the <TT>boxes</TT> array.
+The keyword associated with the task parameter is <TT>key</TT>,
+which would normally be <TT>'region'</TT>. If the <TT>key</TT> argument is blank,
+<TT>BoxInput</TT> does not attempt to get a region-of-interest specification,
+but instead just initialises the <TT>boxes</TT> array with the default
+region-of-interest.
+
+<P>
+The programmer passes to <TT>BoxSet</TT> information about the size of the image
+of interest. This is given in the integer array <TT>nsize</TT>, which consists
+if <TT>naxis</TT> elements (as with the corresponding arguments to <TT>xyopen</TT>).
+The <TT>flags</TT> argument is an input character string, giving information
+about the default region of interest. It can consist of:
+<DL COMPACT>
+<DT>q</DT>
+<DD>The default region of interest is the inner quarter of the image.
+</DD>
+<DT>1</DT>
+<DD>The default region of interest consists of the first plane only.
+</DD>
+<DT>s</DT>
+<DD>The region of interest must be ``regular''. If it is not, <TT>BoxSet</TT>
+generates a warning message, and will use the bounding box of the selected
+region.
+</DD>
+</DL>
+
+<P>
+<TT>BoxInfo</TT> returns integer arrays <TT>blc</TT> and <TT>trc</TT>, which give the
+bottom
+left corner and top right corner of the region which encloses the overall
+region of interest. Both these arrays are of size <TT>naxis</TT> integers.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html679"
+  HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html673"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html667"
+  HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html675"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html677"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html680"
+  HREF="node36.html">Arbitrary Regions of Interest</A>
+<B>Up:</B> <A NAME="tex2html674"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html668"
+  HREF="node34.html">Region of Interest and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

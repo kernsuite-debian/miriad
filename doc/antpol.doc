@@ -1,0 +1,20 @@
+%N antpol
+%D Calculate instrumental polarization from averaged uv-data.
+%P mchw
+%: uv analysis
+%B
+        ANTPOL - Calculate instrumental polarization from averaged uv-data.
+        ANTPOL does not apply the gains, bandpass, or polarization corrections.
+%A vis
+        The input UV dataset name. No default.
+%A select
+        This selects the data to be processed, using the standard uvselect
+        format. Default uses all the data.
+%A line
+        this gives the linetype that is used, in the
+        form:
+          type,nchan,start,width,step
+        where type can be `channel' (default), `wide' or `velocity'.
+        Default is channel,1,1,1,1
+%A log
+        The list output file name. The default is the terminal.

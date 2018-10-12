@@ -1,0 +1,22 @@
+%N uvindex
+%D Scan a uvdata file, and note when uvvariables change.
+%P mchw
+%: uv analysis, checking
+%B
+        UVINDEX is a Miriad program which scans a uvdata file.
+        Changes in source name, pointing center, number of wideband
+        and spectral line channels, the observing frequency, and
+        polarization are listed in the output.
+%A vis
+        The input visibility file. No default.
+%A interval
+        Reissue source information if no data for this period in minutes.
+        The default is 60 minutes.
+%A log
+        The output log file. Default is the terminal.
+%A options
+        Extra processing options. Currently there is but one of these:
+          mosaic  Do not generate messages for different pointings
+                  of a mosaic.
+ 
+  $Id: uvindex.for,v 1.7 2014/09/30 13:58:54 wie017 Exp $

@@ -1,0 +1,24 @@
+.TH imload 1
+.SH NAME
+imload - Make a Miriad image from an ascii file.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+image conversion, analysis.
+.SH DESCRIPTION
+ImLoad reads in an image given as pixel values in an ascii file.
+Lines should have no more than 256 characters, but a row of
+pixels can span multiple lines in the file.
+The first row of pixels read from the text file is the bottom
+row of the image.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Text file containing the image pixel values. No default.
+Please split lines longer than 256 characters.
+.TP
+\fIimsize\fP
+Image size. 1 to 3 values nx,ny,nz. Default ny=nx, and nz=1.
+.TP
+\fIout\fP
+Output image. No default.

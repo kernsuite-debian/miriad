@@ -1,0 +1,56 @@
+.TH qvack 1
+.SH NAME
+qvack - Flag after change to observing setup
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+Qvack is a Miriad task to flag data for a number of integrations
+near an observing setup change. For example, this is used to
+flag data that is suspect because the instrument had not settled
+correctly after the change in the setup. The visibility data are
+should to be in time order.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility data file. No default.
+.TP
+\fIselect\fP
+Standard uv data selection. Default is to select all data.
+.TP
+\fIinterval\fP
+This gives the time interval, in minutes, for which the data are
+flagged after a setup change (or before a setup change, if its
+value is negative).  The default is 0.1, which flags for
+the first 6 seconds after a switch.
+.TP
+\fIforce\fP
+The time interval, in minutes, which indicates the amount of time
+that should ellapse before forcing a (virtual) setup change.
+Thus you can QVACK on data that has distinct scans but no actual
+change in observing setup.  Note that this means the first
+INTERVAL amount of data is always flagged. The MODE option is
+not needed, nor is it used if you set FORCE
+Defaults to no forced setup change.
+.TP
+\fIoptions\fP
+Extra processing options. Currently only one exists:
+.nf
+  anticipate   Normally the interval given by the "interval" keyword
+               is relative to the time of the first data found with
+               a new setup. options=anticipate makes it relative
+               to the time of the last data before a setup change
+               occurs.
+.TP
+\fImode\fP
+.fi
+This determines what changes in setup cause flagging. Several
+values can be given, separated by commas, and minimum match is used.
+Possible values are:
+.nf
+  frequency    A change in the frequency setup. Do not use this
+               option if Doppler tracking is used.
+  source       A change in the source observed.
+  mosaic       A change in the observing centre of a mosaiced
+               observation.

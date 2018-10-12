@@ -1,0 +1,6 @@
+%N mirversion (file: mirversion)
+%D Give the version of Miriad.
+%P rjs
+%: user utility
+%B
+   Usage: mirversion

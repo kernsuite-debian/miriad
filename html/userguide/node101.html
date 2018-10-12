@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Deconvolution with CLEAN</TITLE>
+<META NAME="description" CONTENT="Deconvolution with CLEAN">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node108.html">
+<LINK REL="previous" HREF="node100.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node102.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2656"
+  HREF="node102.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2652"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2646"
+  HREF="node100.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2654"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2657"
+  HREF="node102.html">The Clark CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2653"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2647"
+  HREF="node100.html">Introduction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001420000000000000000"></A>
+<A NAME="s:clean"></A><A NAME="3694"></A>
+<BR>
+Deconvolution with CLEAN
+</H1>
+
+<P>
+The CLEAN algorithm <A NAME="tex2html396"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1974A%26AS...15..417H">(H&#246;gbom 1974)</A>
+(A&amp;AS 15, 417)
+represents the image as a number of point
+sources in an otherwise empty field of view.  A simple iterative procedure is
+used to find the locations and strengths of these point sources.
+
+<P>
+The H&#246;gbom CLEAN algorithm looks for the brightest (in an absolute sense) pixel
+(called a CLEAN component) in a specified region in the image (called the CLEAN
+window which must include all the real emission in the image).
+For Stokes <I>I</I> images (but not <I>Q</I>, <I>U</I> or <I>V</I>), ideally
+only positive components would be encountered. However noise,
+errors in previous CLEAN iterations and calibration errors will
+mean that eventually negative
+components will also be found. Often it is quite valid to CLEAN these negative
+components. Having found this peak pixel, it subtracts a
+fraction (called the loop gain, and generally about <I>0.1</I> or less) of the dirty
+beam from the dirty image at the location of that brightest pixel. This
+subtracted image is called the residual image. The search and subtraction loop
+is repeated until the sidelobes in the image are reduced to below the noise
+level.   It is easy to see how CLEAN works if you just think about a single
+point source.  For extended sources, one thinks of the emission as a collection
+of point sources.
+Except for point sources, the flux density units of the dirty image are not very
+useful.  However, convolved CLEAN components do have meaningful units of
+Jy per CLEAN beam area, which can be converted to Jy per unit area,
+because the equivalent area of the CLEAN beam can be calculated.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2658"
+  HREF="node102.html">The Clark CLEAN</A>
+<LI><A NAME="tex2html2659"
+  HREF="node103.html">The SDI CLEAN</A>
+<LI><A NAME="tex2html2660"
+  HREF="node104.html">Region-of-Interest Considerations</A>
+<LI><A NAME="tex2html2661"
+  HREF="node105.html">The Cotton-Schwab CLEAN</A>
+<LI><A NAME="tex2html2662"
+  HREF="node106.html">CLEAN Stripes</A>
+<LI><A NAME="tex2html2663"
+  HREF="node107.html">Computation</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2656"
+  HREF="node102.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2652"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2646"
+  HREF="node100.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2654"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2657"
+  HREF="node102.html">The Clark CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2653"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2647"
+  HREF="node100.html">Introduction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

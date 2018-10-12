@@ -1,0 +1,60 @@
+.TH uvdiff 1
+.SH NAME
+uvdiff - Difference two visibility datasets.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+Given two Miriad visibility datasets, UVDIFF matches and
+optionally subtracts one from the other.  In doing this, UVDIFF
+assumes that the two datasets sample the same source using the
+same array configuration and observing frequency setup (no
+checks are made to verify these).  UVDIFF matches visibility
+records based on baseline number, polarisation type and hour
+angle.  If the hour angles in the two datasets do not match to
+better than 1 second, UVDIFF linearly interpolates between two
+integrations of one dataset to the appropriate hour angle of the
+other.
+.sp
+NOTE: UVDIFF does not apply calibration corrections to either
+of the input datasets.  The datasets should be in time order.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The two datasets to difference.  No default.  When differencing,
+the output is the first minus the second.  The first visibility
+dataset is used as the template for the output.  It is the
+second dataset that is interpolated when needed.
+.TP
+\fIselect\fP
+Standard visibility selection keyword.  See the help on "select"
+for more information.  Note that this selection is applied ONLY
+to the first visibility dataset.  The default is to select
+everything.
+.TP
+\fIout\fP
+The output dataset.  No default.
+.TP
+\fImode\fP
+This determines what data is written.  Possible values are:
+.nf
+  difference Write the difference of the two inputs (the first
+             minus the second).  This is the default.
+  two        Write the data from the second input, interpolated
+             to the first.
+  one        Write the first dataset.
+.fi
+With the exception of the visibility data itself, all three
+possibilities will produce identical datasets.  This includes
+identical flagging information.
+Any of these modes can be prefixed with a minus sign.  In this
+case the output visibilities are negated.
+.TP
+\fItol\fP
+Interpolation tolerance, in minutes.  This gives the maximum gap
+between two integrations to interpolate across.  The default is
+2 minutes.
+.sp
+.SH REVISION
+1.8, 2013/08/30 01:49:21 UTC

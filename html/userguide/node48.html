@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reading Visibility FITS Files</TITLE>
+<META NAME="description" CONTENT="Reading Visibility FITS Files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node52.html">
+<LINK REL="previous" HREF="node47.html">
+<LINK REL="up" HREF="node45.html">
+<LINK REL="next" HREF="node49.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1975"
+  HREF="node49.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1971"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1965"
+  HREF="node47.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1973"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1976"
+  HREF="node49.html">Information Missing or Incorrect</A>
+<B>Up:</B> <A NAME="tex2html1972"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1966"
+  HREF="node47.html">FITS Tapes and Miriad</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00830000000000000000"></A><A NAME="2033"></A>
+<BR>
+Reading Visibility FITS Files
+</H1>
+
+<P>
+For visibility data, the current version of <A NAME="tex2html93"
+  HREF="../doc/fits.html">fits</A>
+can cope with both
+single- and multi-source files, with single or multiple antenna
+configurations (earlier versions of <A NAME="tex2html94"
+  HREF="../doc/fits.html">fits</A>
+were more limited). Flagging
+(FG) tables are copied (if present), but the flagging specified by these
+tables <EM>is not performed</EM>. An additional <I>Miriad</I> task, <A NAME="tex2html95"
+  HREF="../doc/fgflag.html">fgflag</A>
+(see Section&nbsp;<A HREF="node64.html#s:fgflag">10.2</A>), must be invoked to apply the flagging tables.
+Task <A NAME="tex2html96"
+  HREF="../doc/fits.html">fits</A>
+does not read or use AIPS calibration tables
+(SN, CL, BP, and BL).  Consequently if you want to
+preserve your AIPS calibration, you will need to apply the
+relevant tables with AIPS <A NAME="tex2html97"
+  HREF="../doc/SPLIT.html">SPLIT</A>
+before writing the FITS file.
+
+<P>
+<A NAME="tex2html98"
+  HREF="../doc/fits.html">fits</A>
+can handle linearly and circularly polarized correlations,
+as well as correlations that have been converted to Stokes parameters.
+In addition, it knows that the ATCA produces linearly polarized data.
+Because AIPS does not handle linear polarizations well, it is common
+practice to label the linear polarizations of ATCA data as if they were
+circular.  If <A NAME="tex2html99"
+  HREF="../doc/fits.html">fits</A>
+finds data from the ATCA which is
+nominally circularly polarized, it issues a warning, and relabels the
+correlations as linearly polarized.
+
+<P>
+Alternately, you could correct the polarization labelling explicitly
+within AIPS by changing the reference value of the Stokes axis to
+<I>-5</I>.  Do this with <A NAME="tex2html100"
+  HREF="../doc/PUTHEAD.html">PUTHEAD</A>. It is necessary to do this after
+<TT>SPLIT</TT> because it puts them back to circulars !
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>AIPS/PUTHEAD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">keyword = 'crval2'</TD>
+<TD ALIGN="LEFT">Select the Stokes axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">keyvalue=-5</TD>
+<TD ALIGN="LEFT">Change to -5 (<I>XX</I>)</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+By default the AIPS task to write FITS files, <TT>FITTP</TT>, writes to the
+directory <code>/DATA/FITS</code>.
+This directory has a time-destroy limit of 1 day. Alternately you
+can set up an environment variable to direct <TT>FITTP</TT> to write the
+FITS file to any directory. For example, after setting the environment
+variable <TT>MYAREA</TT> with the UNIX command
+<PRE>
+       % setenv MYAREA /DATA/ATLAS_1/miriad/rsault
+</PRE>
+you can direct <TT>FITTP</TT> to write into this directory, by
+setting the <TT>OUTFILE</TT> adverb appropriately. For example:
+<PRE>
+       &gt; OUTFILE = 'MYAREA:MYUV.FITS'
+</PRE>
+will direct <TT>FITTP</TT> to write a FITS file <code>MYUV.FITS</code> in
+<code>/DATA/ATLAS_1/miriad/rsault</code>.
+
+<P>
+A quick way to set an environment variable to the current working directory
+is with the <TT>pwd</TT> command:
+<PRE>
+       % setenv MYAREA `pwd`
+</PRE>
+
+<P>
+Note that the environment variable name <EM>must</EM> be in upper case, though
+the directory name itself need not be.
+
+<P>
+<I>Miriad</I> handles only the new binary table format (<TT>donewtab=1</TT> in
+<TT>FITTP</TT>). Typical inputs to AIPS <TT>FITTP</TT> are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>AIPS/FITTP</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">doall=-1</TD>
+<TD ALIGN="LEFT">One file at a time</TD>
+</TR>
+<TR><TD ALIGN="LEFT">outfile='myarea:0823.fits'</TD>
+<TD ALIGN="LEFT">Specify area and file name or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">outfile='0823.fits'</TD>
+<TD ALIGN="LEFT">default to <code>/DATA/FITS</code> directory</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dostokes=-1</TD>
+<TD ALIGN="LEFT">No conversions</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dotable=1</TD>
+<TD ALIGN="LEFT"><I>Miriad</I> understands FITS tables</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dotwo=-1</TD>
+<TD ALIGN="LEFT">Single precision adequate</TD>
+</TR>
+<TR><TD ALIGN="LEFT">donewtab=1</TD>
+<TD ALIGN="LEFT">Only the new tables can be handled</TD>
+</TR>
+<TR><TD ALIGN="LEFT">format=3</TD>
+<TD ALIGN="LEFT">Floating point FITS. Values of 1 or 2 also OK</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Using <TT>format=1</TT> (16-bit integers) for visibility datasets with
+many channels will result in an output <I>Miriad</I> dataset in compressed
+format.  It also produces a much smaller FITS file - which may be
+important if disk space is low. Note that FITS data compression is different
+from <I>Miriad</I> and AIPS data compression. FITS compression uses one scale factor for
+the <EM>entire</EM> dataset, whereas <I>Miriad</I> and AIPS compression uses one
+scale factor per visibility record.
+
+<P>
+In most cases converting the FITS file to <I>Miriad</I> format is straightforward.
+Apart from the <code>op</code> parameter, which indicates the operation to
+be performed by <A NAME="tex2html101"
+  HREF="../doc/fits.html">fits</A>
+(<code>op=uvin</code> is used to read in a visibility FITS
+file), you need only supply the names of an input FITS and output
+<I>Miriad</I> dataset.
+Note that <I>Miriad</I> follows the case conventions of the host
+operating system.  Thus, under Unix, <I>Miriad</I> is case sensitive, and so
+you must give the FITS file name in the correct case.  As it has most
+likely come from AIPS, the file name will usually be in upper case.
+
+<P>
+For spectral line observations, the velocity reference frame used in
+<I>Miriad</I> (and some other velocity information) must be set when the visibility
+dataset is created. The default is to extract the appropriate information
+from the FITS file. Alternatively, the <code>velocity</code> parameter can be
+used to override or alter the velocity information given in the FITS file.
+See Chapter&nbsp;<A HREF="node123.html#c:lineobs">16</A> for more information.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FITS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=$MYAREA/0823.FITS</TD>
+<TD ALIGN="LEFT">Re-use your environment variable</TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=/DATA/FITS/0823.FITS</TD>
+<TD ALIGN="LEFT">or give AIPS default directory; get case right</TD>
+</TR>
+<TR><TD ALIGN="LEFT">op=uvin</TD>
+<TD ALIGN="LEFT">Read in visibility data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=0823.uv</TD>
+<TD ALIGN="LEFT"><I>Miriad</I> dataset name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">velocity=lsr</TD>
+<TD ALIGN="LEFT">Compute info for LSR velocities, for</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">spectral line observations.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Leave everything else <TT>unset</TT>.  Once <A NAME="tex2html102"
+  HREF="../doc/fits.html">fits</A>
+has
+run to completion, you should see the new directory containing
+the `items' describing your visibility data.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1977"
+  HREF="node49.html">Information Missing or Incorrect in FITS Files</A>
+<LI><A NAME="tex2html1978"
+  HREF="node50.html">AIPS Frequency Bugs</A>
+<LI><A NAME="tex2html1979"
+  HREF="node51.html">Time and FITS Files</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1975"
+  HREF="node49.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1971"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1965"
+  HREF="node47.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1973"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1976"
+  HREF="node49.html">Information Missing or Incorrect</A>
+<B>Up:</B> <A NAME="tex2html1972"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1966"
+  HREF="node47.html">FITS Tapes and Miriad</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

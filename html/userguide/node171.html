@@ -1,0 +1,207 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Joint Approach</TITLE>
+<META NAME="description" CONTENT="The Joint Approach">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node176.html">
+<LINK REL="previous" HREF="node170.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node172.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3556"
+  HREF="node172.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3552"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3546"
+  HREF="node170.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3554"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3557"
+  HREF="node172.html">Imaging - INVERT</A>
+<B>Up:</B> <A NAME="tex2html3553"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3547"
+  HREF="node170.html">Summary of Imaging Strategies</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002160000000000000000"></A><A NAME="14174"></A>
+<A NAME="s:mosjoint"></A>
+<BR>
+The Joint Approach
+</H1>
+For the joint approach, the reduction proceeds in a fashion which appears
+very similar to conventional observations. First a dirty image is formed
+(with associated point-spread function), and then a deconvolution algorithm
+is used to `clean' this dirty image. Finally the `restore' step is performed.
+There are, however, substantial differences - although these are largely
+hidden from the user.
+
+<P>
+The task to form the dirty image is still <A NAME="tex2html848"
+  HREF="../doc/invert.html">invert</A>.  The dirty
+image is formed by imaging (using a conventional algorithm) each of the
+pointings separately.  These individual pointing images are them
+combined in a linear mosaicing process.  This linear mosaicing simply
+consists of a weighted average of the pixels in the individual
+pointings, with the weights determined by the primary beam
+response and the expected noise level.  The resultant output dirty image
+is thus an image of the entire region mosaiced. 
+
+<P>
+The weights are computed to minimise the noise in the resultant image as well
+as to correct for primary beam attenuation. The output image, <I>I(l,m)</I>,
+is given by
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I(\ell,m) = g(\ell,m) \frac{\sum_i P(\ell-\ell_i,m-m_i)I_i(\ell,m)/\sigma_i^2}
+		 {\sum_i P^2(\ell-\ell_i,m-m_i)/\sigma_i^2}.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="349" HEIGHT="46" BORDER="0"
+ SRC="img112.png"
+ ALT="\begin{displaymath}
+I(\ell,m) = g(\ell,m) \frac{\sum_i P(\ell-\ell_i,m-m_i)I_i(\ell,m)/\sigma_i^2}
+{\sum_i P^2(\ell-\ell_i,m-m_i)/\sigma_i^2}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Here the summation, <I>i</I>, is over the set of pointing centres, 
+<SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img113.png"
+ ALT="$(\ell_i,m_i)$"></SPAN>. <SPAN CLASS="MATH"><IMG
+ WIDTH="56" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img114.png"
+ ALT="$I_i(\ell,m)$"></SPAN> is the image formed from the <I>i</I>'th pointing,
+and <I>P(l,m)</I> is the primary beam pattern. The expected noise
+variance in the <I>i</I>'th field is <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img115.png"
+ ALT="$\sigma_i^2$"></SPAN>.
+
+<P>
+Primary beam attenuation is only corrected for within limits.
+Because there are large variations in sensitivity across a mosaiced
+image (the edges of a mosaiced region will have low sensitivity), the
+imaging software does not always attempt to fully correct for primary
+beam attenuation.  Instead, it constrains the weights
+so that the noise level does not exceed a certain limit (this
+limit is based on the noise in individual pointings). This
+results in some residual primary beam attenuation at the edges of
+a mosaic (or in holes in the pointing grid). This is
+done by the function <I>g(l,m)</I>. This function normally has a
+value of 1, but its value drops towards 0 at edges or holes.
+In this way, the noise level across a mosaiced image is crudely uniform.
+
+<P>
+Task <A NAME="tex2html849"
+  HREF="../doc/invert.html">invert</A>
+also applies geometric corrections to account for the fact 
+that the sky is not a plane.
+For an east-west array, such as the ATCA, these corrections are exact,
+meaning that the coordinate geometry of the resultant images is also
+(nominally) exact. For other array types, the corrections are optimal in
+the sense that they are the best approximation that still results in
+a convolution relationship (in the sense that such arrays obey a
+convolution relationship!).
+
+<P>
+Because the <I>u-v</I> coverage of the different pointings will not
+be identical, the synthesised beam patterns will differ between pointings. This,
+and the weighted average process, means that the point-spread function
+of the resultant dirty image is position-dependent. As most
+deconvolution algorithms assume a position-independent point-spread
+function, a conventional
+algorithm cannot be used. However the point-spread function from
+the linear mosaicing process is still reasonably compactly described and
+readily computed. The
+beam dataset that <A NAME="tex2html850"
+  HREF="../doc/invert.html">invert</A>
+produces is not a normal one; it is
+a cube of beam patterns,
+one for each pointing. Given this, and some information stored in an
+auxiliary mosaic information table, the deconvolution tasks can
+compute the true point-spread function at any position in the dirty
+image. Being able to compute a point-spread function (or rather,
+being able to compute a dirty
+image, given a trial deconvolved image) is the difficult part of
+writing a deconvolution task. A maximum entropy-based deconvolution
+algorithm is readily implemented.
+
+<P>
+The practicalities of this processing are now described.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3558"
+  HREF="node172.html">Imaging - INVERT</A>
+<LI><A NAME="tex2html3559"
+  HREF="node173.html">Deconvolution and Restoration</A>
+<LI><A NAME="tex2html3560"
+  HREF="node174.html">Self-Calibration</A>
+<LI><A NAME="tex2html3561"
+  HREF="node175.html">Some Additional Tools</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3556"
+  HREF="node172.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3552"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3546"
+  HREF="node170.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3554"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3557"
+  HREF="node172.html">Imaging - INVERT</A>
+<B>Up:</B> <A NAME="tex2html3553"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3547"
+  HREF="node170.html">Summary of Imaging Strategies</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

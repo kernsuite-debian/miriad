@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Atmospheric opacity and system temperature</TITLE>
+<META NAME="description" CONTENT="Atmospheric opacity and system temperature">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node192.html">
+<LINK REL="previous" HREF="node190.html">
+<LINK REL="up" HREF="node190.html">
+<LINK REL="next" HREF="node192.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3822"
+  HREF="node192.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3818"
+  HREF="node190.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3812"
+  HREF="node190.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3820"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3823"
+  HREF="node192.html">Antenna gain considerations and</A>
+<B>Up:</B> <A NAME="tex2html3819"
+  HREF="node190.html">Some theory</A>
+<B> Previous:</B> <A NAME="tex2html3813"
+  HREF="node190.html">Some theory</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002311000000000000000">
+Atmospheric opacity and system temperature</A>
+</H2>
+To provide correct flux density units for the visibilities, <I>V</I>, from an
+interferometer, the
+measured correlation coefficient at the correlator (<SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img124.png"
+ ALT="$\rho$"></SPAN>) needs to be
+scaled by a
+system temperature <SPAN CLASS="MATH"><IMG
+ WIDTH="31" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img125.png"
+ ALT="$T_{\rm sys}$"></SPAN> and a telescope sensitivity
+factor (<I>K</I>). The telescope sensitivity factor is determined by the
+overall antenna size and system efficiency.
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+V = KT_{\rm sys}\rho
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="82" HEIGHT="29" BORDER="0"
+ SRC="img126.png"
+ ALT="\begin{displaymath}
+V = KT_{\rm sys}\rho
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+At millimetre wavelengths, the atmosphere can no longer be approximated
+as perfectly transparent. It degrades overall sensitivity in two
+ways: the atmosphere emits radiation, and so raises the
+system temperature, and the atmosphere attenuates the astronomical signal.
+For a zenith opacity <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img17.png"
+ ALT="$\tau$"></SPAN>, observing at an elevation of <I>e</I>, and
+if the atmosphere is approximated as having a uniform temperature
+<SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img127.png"
+ ALT="$T_{\rm0}$"></SPAN>, then the atmospheric contribution to
+system temperature is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+T_{\rm sky} = T_{\rm0}\left(1-\exp(-\tau/\sin e)\right)
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="206" HEIGHT="29" BORDER="0"
+ SRC="img128.png"
+ ALT="\begin{displaymath}
+T_{\rm sky} = T_{\rm0}\left(1-\exp(-\tau/\sin e)\right)
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+and the atmospheric transmissivity is <!-- MATH
+ $\exp(-\tau/\sin e)$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="102" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img129.png"
+ ALT="$\exp(-\tau/\sin e)$"></SPAN>.
+
+<P>
+In converting correlation coefficients to visibility measurements, we
+can notionally include the effect of the atmospheric 
+attenuation either in the effective system efficiency
+factor, or in an effective system temperature.
+The approach used will depend on the calibration scheme
+implemented at the telescope.
+
+<P>
+For the ATCA at 3-mm wavelength, it is most natural to include the effect of the
+opacity in an effective system temperature - the so-called
+``above atmosphere'' system temperature.
+The above atmosphere system temperature is simply
+the physical system
+temperature divided by the atmospheric transmissivity. The
+widespread use of above atmosphere system temperatures in millimetre
+astronomy
+is in part because it can be measured directly. It
+can be deduced
+by periodically flipping an absorber at atmospheric
+temperature in front of the feed system.
+The technique to do this is the so-called ``chopper wheel''
+method (e.g.
+<A NAME="tex2html1032"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1980ApL....21...21U">Ulich 1980</A>).
+The ATCA uses the chopper wheel method (also call paddle or vane calibration)
+in its 3-mm system
+to determine an above atmosphere
+system temperature.
+
+<P>
+This measurement will only be done occasionally. That is, unlike the
+centimetre and 12-mm bands, continuous measurement of system temperature 
+is not available at 3-mm wavelength. To partly remedy this, <I>Miriad</I>'s <A NAME="tex2html1033"
+  HREF="../doc/atfix.html">atfix</A>
+includes an algorithm to ``interpolate'' the above-atmosphere
+system temperature measurements
+based on changes in telescope elevation and weather.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3822"
+  HREF="node192.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3818"
+  HREF="node190.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3812"
+  HREF="node190.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3820"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3823"
+  HREF="node192.html">Antenna gain considerations and</A>
+<B>Up:</B> <A NAME="tex2html3819"
+  HREF="node190.html">Some theory</A>
+<B> Previous:</B> <A NAME="tex2html3813"
+  HREF="node190.html">Some theory</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

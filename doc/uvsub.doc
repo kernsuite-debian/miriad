@@ -1,0 +1,54 @@
+%N uvsub
+%D Subtract point source models from visibilities
+%P nebk
+%: uv analysis
+%B
+        UVSUB reads a file containing point source models and subtracts
+        them from the visibilities.  Each model applies either to a
+        single spectral channel, or to all channels (continuum mode).
+        The output file contains all of the input channels whether
+        modified or not.
+ 
+%A vis
+        The name of the input visibility data sets (no default).
+%A line
+        Standard Linetype: 'channel' (default) and 'velocity' are
+        recognized.  Do 'help line' for more information.  uvsub assumes
+        that only a single spectral window is processed.
+%A model
+        The name of a text file containing the models (no default).
+        Each row must contain four columns which depend on the line type
+        specified.  For line = 'channel':
+ 
+          CHAN No.    FLUX DENSITY    X OFFSET      Y OFFSET
+ 
+        A channel number of zero is recognized as applying to all
+        channels (i.e. continuum).  Otherwise, it is an error for the
+        channel number to lie outside the range in the data.
+ 
+        The flux density is in Jy and the offsets, true angular
+        distances in radians, are measured from the phase centre in the
+        sense
+ 
+          offset = point source location - phase centre
+ 
+        For line = 'velocity', the channel number is replaced by
+        velocity:
+ 
+          VELOCITY    FLUX DENSITY    X OFFSET      Y OFFSET
+ 
+        The velocity must be in km/s, radio definition, i.e.
+ 
+          v = c (f0 - f) / f0,
+ 
+        with the same rest standard as the data-set.  The model
+        visibility will be subtracted from the channel closest to this
+        velocity.  Note that a rest frequency (f0) must be set in the
+        input visibility dataset in order to convert between velocity
+        and channel number (i.e. frequency).
+ 
+        Lines beginning with "#" are ignored.
+%A out
+        The name of the output visibility data set (no default).
+ 
+%R 1.6, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Primary Beams and Primary Beam Correction</TITLE>
+<META NAME="description" CONTENT="Primary Beams and Primary Beam Correction">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node167.html">
+<LINK REL="previous" HREF="node165.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node167.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3496"
+  HREF="node167.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3492"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3486"
+  HREF="node165.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3494"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3497"
+  HREF="node167.html">Mosaicing</A>
+<B>Up:</B> <A NAME="tex2html3493"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3487"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002110000000000000000"></A><A NAME="14069"></A>
+<A NAME="14070"></A>
+<BR>
+Primary Beams and Primary Beam Correction
+</H1>
+
+<P>
+In interferometry, the image formed normally by the imaging and
+deconvolution steps is a representation of the sky <EM>multiplied
+by the primary beam response</EM> of the antennas. The primary beam is
+typically similar to a Gaussian function, although it also has sidelobes.
+
+<P>
+<I>Miriad</I> tasks which require knowledge of the primary beam response of a
+telescope use built-in models of the responses of various telescopes
+(e.g. ATCA, VLA, Hat Creek, WSRT) - the primary beam model used is
+determined by the `<code>pbtype</code>' or `<code>telescop</code>' item or variable
+(<code>pbtype</code>, if present, takes precedence over <code>telescop</code>).
+Currently these models assume the primary beam is circularly symmetric and time
+independent. The task <A NAME="tex2html826"
+  HREF="../doc/pbplot.html">pbplot</A>
+produces some information and can
+make a plot of the primary beam models. The model of the ATCA primary
+beam is described in <A NAME="tex2html827"
+  HREF="http://www.atnf.csiro.au/observers/memos/d97f7b~1.pdf">Mark Wieringa &amp; Mike Kesteven's memo</A>
+(AT Memo 39.3/024).
+
+<P>
+If you wish to override <I>Miriad</I>'s model, or if <I>Miriad</I> does not have a
+model of the telescope of interest, you may set the primary beam
+associated with an image or visibility dataset to be a particular
+type or Gaussian of a
+given size. This is done by setting the <code>pbtype</code> item using
+<A NAME="tex2html828"
+  HREF="../doc/puthd.html">puthd</A>. <A NAME="tex2html829"
+  HREF="../doc/pbplot.html">pbplot</A>
+(without any additional parameter) produces
+a listing of the primary beam types known to <I>Miriad</I>.
+
+<P>
+Setting a Gaussian primary beam type differs from setting
+other primary beams in that you also must give an additional parameter
+enclosed in brackets) giving the 
+FWHM of the primary beam, in arc
+seconds, at the reference frequency (the `reference frequency' for a
+visibility dataset is the frequency of the first channel imaged!!). For
+example, to set the primary beam to be a Gaussian of the image <code>lmc.map</code>, use:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.map/pbtype</TD>
+<TD ALIGN="LEFT">Set <code>pbfwhm</code> of <code>lmc.map</code>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=gaus(1200)</TD>
+<TD ALIGN="LEFT">Set the primary beam FWHM to 20 arcmin (1200 arcsec).</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Although there are a few exceptions (e.g. <A NAME="tex2html830"
+  HREF="../doc/mfspin.html">mfspin</A>
+and <A NAME="tex2html831"
+  HREF="../doc/ellint.html">ellint</A>),
+<I>Miriad</I>'s analysis tasks do not correct for primary beam attenuation
+automatically. The task to correct an image for the primary beam
+is <A NAME="tex2html832"
+  HREF="../doc/linmos.html">linmos</A>. To use <A NAME="tex2html833"
+  HREF="../doc/linmos.html">linmos</A>
+for this function, you need only
+set the input and output dataset names. For example
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>LINMOS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.map</TD>
+<TD ALIGN="LEFT">Image to primary beam correct.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.pbcorr</TD>
+<TD ALIGN="LEFT">Output, corrected, image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3496"
+  HREF="node167.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3492"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3486"
+  HREF="node165.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3494"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3497"
+  HREF="node167.html">Mosaicing</A>
+<B>Up:</B> <A NAME="tex2html3493"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3487"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

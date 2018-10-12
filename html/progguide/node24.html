@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Keeping Track of UV Variables</TITLE>
+<META NAME="description" CONTENT="Keeping Track of UV Variables">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html524"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html518"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html512"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html520"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html522"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html525"
+  HREF="node25.html">When Do UV Variables</A>
+<B>Up:</B> <A NAME="tex2html519"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html513"
+  HREF="node23.html">Determining UV Variables and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00459000000000000000">
+Keeping Track of UV Variables</A>
+</H2>
+With many variables streaming past, there is a need to keep track on some
+particular variables. It would be rather inefficient and laborious to need
+to continually call <TT>uvprobvr</TT>, to check on particular variables. The
+<TT>uvtrack</TT> routine is used to instruct the uv routines to keep track
+of when certain variable changes its value, and to perform special
+processing on these variables at a later stage. Typically <TT>uvtrack</TT>
+would be called soon after <TT>uvopen</TT>, marking all the variables of
+particular interest. The special processing that the uv routines perform
+is dictated by the <TT>switches</TT> argument. This is a string,
+consisting of several characters, each character representing a particular
+processing step to be taken. Currently there are two switches -
+<TT>u</TT> and <TT>c</TT>. The <TT>u</TT> switch is used by <TT>uvupdate</TT>, whereas
+the <TT>c</TT> switch is used by <TT>uvcopyvr</TT>.
+
+<P>
+The routine
+<TT>uvupdate</TT> returns a <TT>.true.</TT> value if one of the variables, marked
+with the <TT>u</TT> switch, has been updated ``recently''
+(see Section&nbsp;<A HREF="node25.html#sect:uvchanges">2.5.10</A>).
+
+<P>
+The routine <TT>uvcopyvr</TT> copies variables marked with the <TT>c</TT>
+switch, from the input dataset (given by <TT>tin</TT>) to the output
+dataset (given by <TT>tout</TT>) if they have changed ``recently'' (see
+Section&nbsp;<A HREF="node25.html#sect:uvchanges">2.5.10</A>). You need only
+mark the variables in the input dataset.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html524"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html518"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html512"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html520"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html522"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html525"
+  HREF="node25.html">When Do UV Variables</A>
+<B>Up:</B> <A NAME="tex2html519"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html513"
+  HREF="node23.html">Determining UV Variables and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Miriad Subroutine Library</TITLE>
+<META NAME="description" CONTENT="Miriad Subroutine Library">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node47.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="progguide.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html278"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html272"
+  HREF="progguide.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html266"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html274"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html276"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html279"
+  HREF="node11.html">Task Parameters</A>
+<B>Up:</B> <A NAME="tex2html273"
+  HREF="progguide.html">progguide</A>
+<B> Previous:</B> <A NAME="tex2html267"
+  HREF="node9.html">Task Version Identification</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00400000000000000000">
+<I>Miriad</I> Subroutine Library</A>
+</H1>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html280"
+  HREF="node11.html">Task Parameters</A>
+<LI><A NAME="tex2html281"
+  HREF="node12.html">Error Handling</A>
+<LI><A NAME="tex2html282"
+  HREF="node13.html">Text I/O</A>
+<LI><A NAME="tex2html283"
+  HREF="node14.html">General Data Set Handling</A>
+<LI><A NAME="tex2html284"
+  HREF="node15.html">UV Data Sets</A>
+<UL>
+<LI><A NAME="tex2html285"
+  HREF="node16.html">General</A>
+<LI><A NAME="tex2html286"
+  HREF="node17.html">Open, Close and Rewind</A>
+<LI><A NAME="tex2html287"
+  HREF="node18.html">Reading and Writing Visibilities</A>
+<LI><A NAME="tex2html288"
+  HREF="node19.html">Reading and Writing Continuum Visibilities</A>
+<LI><A NAME="tex2html289"
+  HREF="node20.html">Direct Access to UV Variables</A>
+<LI><A NAME="tex2html290"
+  HREF="node21.html">Variable Override</A>
+<LI><A NAME="tex2html291"
+  HREF="node22.html">UVNEXT</A>
+<LI><A NAME="tex2html292"
+  HREF="node23.html">Determining UV Variables and Their Characteristics</A>
+<LI><A NAME="tex2html293"
+  HREF="node24.html">Keeping Track of UV Variables</A>
+<LI><A NAME="tex2html294"
+  HREF="node25.html">When Do UV Variables Change?</A>
+<LI><A NAME="tex2html295"
+  HREF="node26.html">Massaging Steps Performed by UVREAD - UVSET</A>
+<LI><A NAME="tex2html296"
+  HREF="node27.html">Setting Up UVWRITE - UVSET</A>
+<LI><A NAME="tex2html297"
+  HREF="node28.html">Selection Steps Performed by UVREAD - UVSELECT</A>
+<LI><A NAME="tex2html298"
+  HREF="node29.html">Getting Information After UVREAD</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html299"
+  HREF="node30.html">UV Selection - SelInput and SelApply</A>
+<LI><A NAME="tex2html300"
+  HREF="node31.html">The UVDAT routines</A>
+<LI><A NAME="tex2html301"
+  HREF="node32.html">Image Data Sets</A>
+<LI><A NAME="tex2html302"
+  HREF="node33.html">Image Coordinate System</A>
+<LI><A NAME="tex2html303"
+  HREF="node34.html">Region of Interest and Pixel Blanking</A>
+<UL>
+<LI><A NAME="tex2html304"
+  HREF="node35.html">Regular Regions of Interest</A>
+<LI><A NAME="tex2html305"
+  HREF="node36.html">Arbitrary Regions of Interest and Blanking Information</A>
+<LI><A NAME="tex2html306"
+  HREF="node37.html">Reading and Writing Blanking Information</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html307"
+  HREF="node38.html">Scratch Files</A>
+<LI><A NAME="tex2html308"
+  HREF="node39.html">General Item Routines</A>
+<LI><A NAME="tex2html309"
+  HREF="node40.html">History Item</A>
+<LI><A NAME="tex2html310"
+  HREF="node41.html">Low Level I/O Routines</A>
+<LI><A NAME="tex2html311"
+  HREF="node42.html">Numeric Routines</A>
+<UL>
+<LI><A NAME="tex2html312"
+  HREF="node43.html">FFT Routines</A>
+<LI><A NAME="tex2html313"
+  HREF="node44.html">Min and Max Value Routines</A>
+<LI><A NAME="tex2html314"
+  HREF="node45.html">WHEN and ISRCH Routines</A>
+<LI><A NAME="tex2html315"
+  HREF="node46.html">Blas and Linpack Routines</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

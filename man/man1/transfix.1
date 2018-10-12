@@ -1,0 +1,65 @@
+.TH transfix 1
+.SH NAME
+transfix - Correct for leakage near transit of DEC ~ -30 sources.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+This corrects for polarisation leakage caused by errors in
+the ATCA antenna orientation. The importance of this effect
+goes inversely with the square of the difference of the source
+declination from -30. It is most extreme at transit.
+.sp
+To run this task, you must have the pointing parameter file used
+at the ATCA during your observation.
+.sp
+To first order, it is not too important whether this correction is
+applied before or after gpcal is used, particularly for sources
+very close to DEC=-30. Some experimentation might be helpful.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input uv data set. No default.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is to select everything.
+.TP
+\fIline\fP
+The normal uv linetype in the form:
+.nf
+  line,nchan,start,width,step
+.fi
+The default is all channels. Note that if there are multiple
+spectral windows, the fitting process is performed on each window
+separately.
+.TP
+\fIpparams\fP
+Pointing parameter table. These tables are stored on the observing
+machine at Narrabri in the file pparams.log.
+The actively used version is:
+/atomsexport/caobsonline/caobs_pparms/pparams.dat
+Previous versions of the file are archived here:
+/archive/backup/caobsonline/caobs_pparams/pparams.dat.yyyymmdd-hhmm
+It is usually entered as an indirect parameter file.
+The table consists of 6 lines (one per antenna),
+each consisting of 12 numbers (the first number being the
+antenna number).
+.TP
+\fIoptions\fP
+Task enrichment options. Possible values are
+.nf
+  replace  Replace the XY and YX correlations with an estimate
+           of the error. This option is only meaningful for
+           a polarisation-calibrated unpolarised dataset.
+.fi
+Additionally there are the standard options to turn off calibration:
+.nf
+  nocal    Do not apply antenna calibration.
+  nopol    Do not apply leakage correction.
+  nopass   Do no apply bandpass calibration.
+.fi
+.sp
+.TP
+\fIout\fP
+The name of the output uv data-set. There is no default name.

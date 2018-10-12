@@ -1,0 +1,84 @@
+.TH uvdump 1
+.SH NAME
+uvdump - Generate an output text file of information from a visibility dataset.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVDUMP generates a text file containing information from a visibility
+dataset. This information will usually be used as input to other
+analysis outside Miriad.
+.sp
+For each data record selected, an line is produced in the output
+text file. Each line can consist of several values.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input UV dataset name. No default.
+.TP
+\fIvars\fP
+The name of the values to be written. Possible names are the names
+of visibility variables (with no additional processing), or some
+of the following special names given below. Note these names cannot
+be abbreviated.
+.nf
+  real      Real part of a correlation.
+  imag      Imaginary part of a correlation.
+  amp       Amplitude of a correlation.
+  phase     Phase of a correlation, in degrees.
+  flag      Data flag. This is 1 for good data and zero for bad data.
+  variance  Theoretical variance of the real/imag parts.
+  blno      Baseline number in the form xx-yy (character string).
+  ant1      First antenna of the baseline.
+  ant2      Second antenna of the baseline.
+  polid     Polarization identifier (character string).
+  dtime     Offset time, as a fraction of a day, relative to the date of
+            first sample.
+  tod       Time-of-day, as a day fraction.
+  freq      Frequency of each channel, in GHz.
+  uu        U coordinate of the first channel after any frequency averaging
+            is performed. The units are in wavelengths.
+  vv        V coordinate. See "uu" above.
+  ww        W coordinate. See "uu" above.
+.fi
+Several names can be given, separated by commas.
+.TP
+\fIline\fP
+This selects which channels to include. See the help on `line' for
+more information. The default is to include all data.
+.TP
+\fIselect\fP
+This selects the data to be processed, using the standard uvselect
+format. Default is all data.
+.TP
+\fIstokes\fP
+Normal stokes keyword. The default is to list the unconverted
+polarisations.
+.TP
+\fIlog\fP
+The list output file name. The default is the terminal.
+.TP
+\fIoptions\fP
+This controls what is listed, and the verbosity. Several can be
+given, separated by commas. Minimum match is used. Possible values
+are:
+.nf
+  flagged   Process flagged data only. By default only unflagged data
+            are processed.
+  all       Process all data. By default only unflagged data are processed.
+  nofqav    Do not average the channels of each spectral to produce an average
+            value. Note averaging affects the output for values:
+            real,imag,amp,phase,flag,freq,variance,uu,vv,ww. Depending on
+            the "flagged" and "all" options, either just the good, bad or all
+            channels are used in the averaging.
+  unwrap    Attempt to unwrap the phase (assumes consecutive data has the
+            same wrap).
+  space     By default values are separated by a comma. This option causes the
+            values to be separated by a space instead.
+.fi
+The following control application of calibration corrections.
+.nf
+  nocal     Do not apply antenna gain calibration.
+  nopol     Do not apply polarization leakage correction.
+  nopass    Do not apply bandpass response correction.

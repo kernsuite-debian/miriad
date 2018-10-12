@@ -1,0 +1,105 @@
+%N impol
+%D Compute polarized intensity and position angle from Q and U
+%P nebk
+%: image analysis
+%B
+        IMPOL computes the total linearly polarized intensity
+        (optionally debiasing it) and position angle images from
+        Stokes Q and U images.  Position angle is positive N -> E.
+%A in
+        Up to three values; the Q, U and I images, respectively.
+        The I image is only needed if you want to compute the fractional
+        polarization image as well or if you want to blank the output
+        based upon an I S/N ratio.  Wild card expansion is supported.
+%A poli
+        Up to two values; the output polarized intensity image and
+        optionally, its associated error image (which will be constant).
+        Default is no output images.
+%A polm
+        Up to two values; the output fractional polarization image and
+        optionally, its associated error image.  You need to input an I
+        image to keyword "in" for this.
+%A pa
+        Up to two values; the output position angle image and
+        optionally, its associated error image (which will not be
+        constant).  These will be in degrees (but see OPTIONS=RADIANS),
+        Default is no output images.
+%A sigma
+        Up to two values; the mean standard deviation of the noise in
+        the Q & U images (i.e. one number for them both),  and the
+        standard deviation of the I image.
+ 
+        These are required for debiasing (Q,U only), or for generating
+        output error images, or for blanking the output.  Try to make
+        the Q,U value as accurate as possible for the debiasing.
+        Perhaps measure it from a V image
+        No default for sigma_QU, sigma_I defaults to sigma_QU
+%A sncut
+        Up to 2 values.  The first is the S/N ratio, P/SIGMA_QU, below
+        which the output images are blanked (see also options=zero
+        below).  It is generally recommended that an SNCUT of at least 2
+        is used.  The second value, which is only valid when you have
+        input an I image and sigma, is the S/N ratio, I/SIGMA_I, below
+        which output images are blanked (defaults to no I based
+        blanking) The default is 2.0 and 0.0.
+%A pacut
+        The output images are blanked if the error in the position
+        angle image (degrees or radians depending on OPTIONS) is greater
+        than this value.  This is active even if you don't output
+        the PA image.   Note that there is no equivalent for the output
+        error of the POLI image because the error is constant and
+        equal to SIGMA.  Keyword SNCUT essentially takes care of this.
+        The default is no position angle error based blanking.
+%A rm
+        After computing the position angle image, rotate the position
+        angles back to zero wavelength by an amount specified by
+        RM (rad/m**2).   Better to use IMRM to generate the rotation
+        measure and zero wavelength position angle images.
+        Default is 0.0
+%A options
+        Task enrichment options.  Minimum match is active.
+ 
+        "bias"     If computing polarized intensity, do NOT remove the
+                   Ricean bias in the image.  By default, the bias is
+                   removed to first order with P = sqrt(P_obs**2 -
+                   sigma**2).  You should have a very good reason for
+                   using this option (e.g. a detection experiment).  See
+                   VLA memo no. 161 by Patrick Leahy for more details of
+                   bias removal.
+ 
+        "zero"     When the output pixel is clipped because the
+                   debiasing fails (P**2 may become negative), setting
+                   OPTIONS=ZERO will cause the output polarized
+                   intensity image (not the position angle image) pixel
+                   to be set to 0.0 rather than being masked out.  This
+                   is very important if you are interested in doing
+                   statistics on a region of low polarized intensity S/N
+                   ratio.  If you leave the region masked rather than
+                   zeroed, you will bias the statistics in that region -
+                   zero is a better estimate of the pixel than just
+                   excluding it from the statistics (provided the clip
+                   level is sufficiently small). Residual bias in the
+                   statistical results from the area then depend upon
+                   how well the bias remover works and at what level
+                   clipping was performed.  See VLA memo no. 161 by
+                   Patrick Leahy.
+ 
+        "radians"  Output the position angle image in radians instead
+                   of degrees.
+ 
+        "relax"    Only warn about image axis descriptor mismatches
+                   instead of giving a fatal error
+%A device
+        PGPLOT device on which to draw a plot showing the effect of bias
+        in polarized intensity images.  It plots true polarized
+        intensity versus the bias, which is the estimated polarized
+        intensity minus the true polarized intensity.  Three estimators
+        are shown; observed, first order, and maximum likelhood.  It is
+        assumed that sigma_P = 1  in these plots.  Because these plots
+        are drawn following a Monte Carlo simulation of some 15,000
+        trials of the noise, you will need to be patient.  You can just
+        make this bias plot without actually working on any data if you
+        wish. See also VLA memo no. 161 by Patrick Leahy.
+        Default is no plot.
+ 
+%R 1.20, 2011/11/03 04:42:13 UTC

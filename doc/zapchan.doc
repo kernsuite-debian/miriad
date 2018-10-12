@@ -1,0 +1,19 @@
+%N zapchan
+%D replace range of channels with average of adjacent channels.
+%P thw
+%: image-analysis
+%B
+  zapchan reads in a datacube and replaces selected "bad" channels with
+  the average of the two adjacent channels.  Needless to say, it will
+  not work on edge channels or consecutive channels.
+ 
+%A in
+  Name of input datacube.  No default.
+ 
+%A out
+  Name of output datacube to create.  No default.
+ 
+%A chans
+  Integer list of channels to zap.  You cannot zap edge channels or
+  consecutive channels.  Maximum 32.  No default.
+ 

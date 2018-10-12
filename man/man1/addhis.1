@@ -1,0 +1,31 @@
+.TH addhis 1
+.SH NAME
+addhis - Add comments to the history of a dataset
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+ADDHIS is a MIRIAD task to add information to the history item
+of a miriad dataset.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Name of the dataset to which information is added
+.TP
+\fIcomment\fP
+Comments to be added, one line only.
+Commas and tabs are treated like spaces,
+and multiple spaces are treated like a single space.
+.TP
+\fIfile\fP
+Name of a text file whose contents is added to the history.
+Default: not used. Use the keyword ``lines'' to select
+only certain lines.
+.TP
+\fIlines\fP
+Linenumbers to select from input file. Only used if a file
+is specified. Default: all. Linenumbers are specified by
+given the first and last line that are to be added, e.g.
+lines=20,25 will copy lines 20 through 25. Multiple doublets
+can be given.

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Handling large spectral bandwidths</TITLE>
+<META NAME="description" CONTENT="Handling large spectral bandwidths">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node196.html">
+<LINK REL="up" HREF="node189.html">
+<LINK REL="next" HREF="node207.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html4006"
+  HREF="node207.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4002"
+  HREF="node189.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3998"
+  HREF="node205.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4004"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4007"
+  HREF="node207.html">ATCA Bin Mode Observations</A>
+<B>Up:</B> <A NAME="tex2html4003"
+  HREF="node189.html">Reducing 3-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3999"
+  HREF="node205.html">Information on planets</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002330000000000000000">
+Handling large spectral bandwidths</A>
+</H1>
+When using a single spectral window, and observing spectral lines, the
+bandwidth of the ATCA can be problematically narrow, or the channel 
+widths can be too coarse. This is most likely to be an issue when observing
+spectral lines of extragalactic sources at high frequencies.
+
+<P>
+A partial work around for this situation is to use the two ATCA 
+frequency bands to observe in adjacent somewhat overlapping windows, and using the
+same bandwidths and channel counts for the two windows. With the ATCA this
+is possible with some correlator configurations when observing with
+bandwidths of 16, 64 or 128&nbsp;MHz. <I>Miriad</I> allows you to stitch these
+two spectral windows together in a reasonably straightforward fashion (although
+some quirks do become apparent). In
+so doing, it handles any overlap region between the two windows in a sensible
+fashion. The steps to achieve this are as follows:
+
+<OL>
+<LI>Make sure you set a rest frequency in <A NAME="tex2html1083"
+  HREF="../doc/atlod.html">atlod</A>
+(or during the
+subsequent processing). If you really want to view the spectrum in
+frequency (rather than velocity), then you might set a dummy rest frequency
+as the average of the centre frequencies of the two spectral windows.
+</LI>
+<LI>During the flagging process, flag any channels in the overlap region
+between the two spectral windows which you <EM>do not</EM> wish to contribute
+to the final output stitched spectrum. These would be channels
+where the bandpass gain is quite low in one, but reasonable in
+another band. Task <A NAME="tex2html1084"
+  HREF="../doc/uvflag.html">uvflag</A>'s <code>edge</code>
+parameter is the easiest way to flag these channels.
+
+<P>
+</LI>
+<LI>Perform the calibration as described above, keeping both bands
+within the one file.
+
+<P>
+</LI>
+<LI>Subtract any continuum, using task <A NAME="tex2html1085"
+  HREF="../doc/uvlin.html">uvlin</A>
+as normal. Task
+<A NAME="tex2html1086"
+  HREF="../doc/uvlin.html">uvlin</A>
+handles multiple spectral windows within a single dataset.
+
+<P>
+Task <A NAME="tex2html1087"
+  HREF="../doc/uvlin.html">uvlin</A>
+processes each frequency band separately.
+You will want to give some thought when setting the range of
+channels to use in the fitting of the continuum.
+If the
+spectral of interest in near the edge of the individual spectra, you will want
+to set the channels to use in <A NAME="tex2html1088"
+  HREF="../doc/uvlin.html">uvlin</A>'s fitting process carefully. You
+may wish to use a zeroth order fit, and just fit using channels at the
+edges away from the overlap region. Alternatively you may wish to run
+<A NAME="tex2html1089"
+  HREF="../doc/uvlin.html">uvlin</A>
+after the two spectra are stitched together instead. Some
+experimentation (and certainly thought) will be required.
+
+<P>
+Note that
+when handling multiple bands, both <I>Miriad</I>'s <code>line</code> and <A NAME="tex2html1090"
+  HREF="../doc/uvlin.html">uvlin</A>'s
+<code>chans</code> parmaters number channels consecutively from 1 to the total 
+number of simultaneous channels. The distinction between simultaneous bands is
+ignored in this numbering. But when fitting to the continuum, the
+boundaries between bands act as a break point.
+
+<P>
+</LI>
+<LI>It is nearly time to stitch the two spectral windows together.
+To do this you will need to use the ``velocity linetype''
+One of <I>Miriad</I>'s quirks is that you cannot apply on-the-fly
+bandpass calibration
+and use a ``velocity linetype'' within the same task. You will need
+to make a copy of the dataset with the bandpass (and presumably other
+calibration) applied directly to the data. If you have used
+<A NAME="tex2html1091"
+  HREF="../doc/uvlin.html">uvlin</A>, you will have done this already. If not, create a copy
+of your dataset using <A NAME="tex2html1092"
+  HREF="../doc/uvaver.html">uvaver</A>.
+
+<P>
+</LI>
+<LI>With a dataset with calibration applied, you can now stitch the two
+spectral windows together.
+See Sections&nbsp;<A HREF="node35.html#s:line">5.4</A> and <A HREF="node131.html#s:veloline">16.8</A> for information on
+using velocity linetypes.
+Do the copying and linetype conversion with <A NAME="tex2html1093"
+  HREF="../doc/uvaver.html">uvaver</A>
+(or possible <A NAME="tex2html1094"
+  HREF="../doc/uvlin.html">uvlin</A>
+if you have not already used it) to generate a new stitched
+copy of the data.
+By using a velocity linetype, when creating an output spectrum,
+<I>Miriad</I> copies channels by their velocity. Any channels that
+overlap between the two spectral windows are averaged together.
+</LI>
+</OL>
+
+<P>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html4006"
+  HREF="node207.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4002"
+  HREF="node189.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3998"
+  HREF="node205.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4004"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4007"
+  HREF="node207.html">ATCA Bin Mode Observations</A>
+<B>Up:</B> <A NAME="tex2html4003"
+  HREF="node189.html">Reducing 3-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3999"
+  HREF="node205.html">Information on planets</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

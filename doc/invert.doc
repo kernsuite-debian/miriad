@@ -1,0 +1,231 @@
+%N invert
+%D Transform multi-pointing visibility data into a map
+%P rjs
+%: map making
+%B
+        INVERT is a MIRIAD task that forms images from visibilities.
+        INVERT can form continuum images or spectral line cubes.  It can
+        generate images/cubes for several polarisations, as well as
+        handling multi-frequency synthesis and mosaicing observations.
+        INVERT can also form complex-valued images from non-Hermitian
+        data (e.g. holography data).  Appropriate point-spread functions
+        can also be generated.
+%A vis
+        Input visibility data files.  Several files can be given.
+        No default.
+%A map
+        Output map (image) file name.  Each output file consists of a
+        single polarization/Stokes parameter.  If several different
+        pols/Stokes images are being made, then several file names
+        should be given.  No default.
+%A beam
+        Output beam (point-spread function) file name.  The default is
+        not to make a beam.
+%A imsize
+        The size of the output dataset.  The default is to image out to
+        primary beam half power points. Add 'beam' as the third value
+        to specify the image size in primary beam FWHMs (e.g.,
+        imsize=2,2,beam).
+      . For options=mosaic, an image of this size is made for each
+        pointing before a linear mosaic operation is performed.
+%A cell
+        Image cell size, in arcsec.  If two values are given, they give
+        the RA and DEC cell sizes.  If only one value is given, the
+        cells are made square.  The default is about one third of the
+        resolution of the resultant images. Add 'res' as the third value,
+        to specify the the cellsize in terms of the number of pixels per
+        resolution element (e.g., cell=5,5,res)
+%A offset
+        When not mosaicing, this gives the sky position to shift to the
+        center of the output images.  The position is specified as an
+        offset (in arcsec) from the observing center.  The default is to
+        perform no shifting.
+ 
+        When mosaicing, this gives the sky coordinate (RA and DEC) of
+        the reference pixel in the imaging process.  The value can be
+        given in the form hh:mm:ss,dd:mm:ss, or as decimal hours and
+        degrees.  INVERT applies appropriate shifts to make this
+        location fall on a pixel.  The default is a central observing
+        center.
+%A fwhm
+        This determines a gaussian taper to apply to the visibility
+        data.  It specifies the FWHM of an image-domain gaussian --
+        tapering the visibility data is equivalent to convolving with
+        this image-domain gaussian.
+ 
+        Either one, two or three values can be given. For one or two
+        values this speciefies the FWHM in arcsec in the RA and DEC
+        directions.  If only one value is given, the taper is assumed
+        to be symmetric.  If three values are given, they specify the
+        FWHM major and minor axis in arcsec and the position angle in
+        degrees. The default is no taper.
+ 
+        The signal-to-noise ratio will be optimised in the output image
+        if this parameter is set to the FWHM of typical image features
+        of interest.
+ 
+        If you are more accustomed to giving this parameter in the uv
+        plane (as AIPS requires), then:
+          fwhm(image plane) = 182 / fwhm(uv plane)
+        where the image plane fwhm is measured in arcseconds, and the uv
+        plane fwhm is measured in kilowavelengths.
+%A sup
+        Sidelobe suppression area, given in arcseconds.  This parameter
+        gives the area around a source where INVERT attempts to suppress
+        sidelobes.  Two values (for the RA and DEC directions
+        respectively) can be given.  If only one value is given, the
+        suppression area is made square.  The default is to suppress
+        sidelobes in an area as large as the field being mapped.
+ 
+        Note that uniform weighting can produce images with spuriously
+        high noise, especially for mfs imaging. It is recommended
+        to use robust~0.5 if sup is non zero or unset.
+ 
+        The suppression area is essentially an alternate way of
+        specifying the weighting scheme being used.  Suppressing
+        sidelobes in the entire field corresponds to uniform weighting
+        (so the default corresponds to uniform weighting).  Natural
+        weighting gives the best signal to noise ratio, at the expense
+        of no sidelobe suppression.  Natural weighting corresponds to
+        SUP=0.  Values between these extremes give a tradeoff between
+        signal to noise and sidelobe suppression, and roughly correspond
+        to AIPS "super-uniform" weighting. [A better way to move between
+        these extremes is to leave sup unset and vary the robust
+        parameter from -2 to 2.]
+%A robust
+        Brigg's visibility weighting robustness parameter.  This
+        parameter can be used to down-weight excessive weight being
+        given to visibilities in relatively sparsely filled regions of
+        the $u-v$ plane when using uniform weighting.  Most useful
+        settings are in the range [-2,2], with values less than -2
+        corresponding to very little down-weighting, and values greater
+        than +2 reducing the weighting to natural weighting.
+ 
+        Sidelobe levels and beam-shape degrade with increasing values of
+        robustness, but the theoretical noise level will also decrease.
+ 
+        The default is no down-weighting (robust=-infinity).
+%A line
+        Standard "line" parameter, with the normal defaults.  In
+        particular, the default is to image all channels.  See the help
+        on "line" for more information.
+        The "line" parameter consists of a string followed by up to
+        four numbers, viz:
+ 
+          linetype,nchan,start,width,step
+ 
+        where 'linetype' is one of "channel", "wide", "velocity" or
+        "felocity".
+%A ref
+        Line type of the reference channel, specified in a similar to
+        the "line" parameter.  Specifically, it is in the form:
+          linetype,start,width
+        Before mapping, the visibility data are divided by the reference
+        channel.  The default is no reference channel.
+%A select
+        This allows a subset of the uv data to be used in the mapping
+        process.  See the Users Manual for information on how to specify
+        this parameter.  The default is to use all data.
+%A stokes
+        Standard polarisation/Stokes parameter selection.  See the help
+        on "stokes" for more information.  Several polarisations can be
+        given.  The default is "ii" (i.e. Stokes-I, given the assumption
+        that the source is unpolarised).
+%A options
+        This gives extra processing options.  Several options can be
+        given (abbreviated to uniqueness), and separated by commas:
+          nocal     Do not apply gains table calibration to the data.
+          nopol     Do not apply polarisation leakage corrections.
+          nopass    Do not apply bandpass table calibration to the data.
+          double    Normally INVERT makes the beam patterns the same
+                    size as the output image.  This option causes the
+                    beam patterns to be twice as large.
+          systemp   Weight each visibility in inverse proportion to the
+                    noise variance.  Normally visibilities are weighted
+                    in proportion to integration time.  Weighting based
+                    on the noise variance optimises the signal-to-noise
+                    ratio (provided the measures of the system
+                    temperature are reliable!).
+          fsystemp  Like systemp, but use frequency dependent Tsys.
+                    You need to run atrecal before invert to create the
+                    systempf variable containing the Tsys spectrum.
+                    Atrecal requires autocorrelations to be present.
+                    This option only works in combination with the
+                    mfs option.
+          mfs       Perform multi-frequency synthesis.  The causes all
+                    the channel data to be used in forming a single map.
+                    The frequency dependence of the uv coordinate is
+                    thus used to give better uv coverage and/or avoid
+                    frequency smearing.  For this option to produce
+                    useful maps, the intensity change over the frequency
+                    band must be small.  Set the 'line' parameter to
+                    select the channels that you wish to grid.
+          sdb       Generate the spectral dirty beam as well as the
+                    normal beam, when MFS processing.  The default is
+                    only to create the normal beam.  If the spectral
+                    dirty beam is created, this is saved as an extra
+                    plane in the beam dataset.
+          mosaic    Process multiple pointings, and generate a linear
+                    mosaic of these pointings. For single pointings
+                    to be combined with linmos you can use this to
+                    specify a common reference position with the
+                    offset parameter. Observations using OTF mosaicing
+                    always need to specify this to ensure the moving
+                    beam is handled properly.
+          imaginary Make imaginary image for non-Hermitian data
+                    (holography).
+          amplitude Produce a image using the data amplitudes only.  The
+                    phases of the data are set to zero.
+          phase     Produce an image using the data phase only.  The
+                    amplitudes of the data are set to 1.
+          sin       Label the output map and beam as a SIN projection.
+                    Default is NCP unless non-east-west baselines are
+                    present or the field centre is within 3 deg of the
+                    celestial equator (because NCP blows up near the
+                    equator).  Note that this option simply changes
+                    ctype1 and ctype2 in the header, the translation
+                    only being correct to first order about the field
+                    centre.  A similar result could be obtained by
+                    running 'puthd' on the output map, e.g.
+                      puthd in=<map>/ctype1 value=RA---SIN
+                      puthd in=<map>/ctype2 value=DEC--SIN
+                    and likewise for the beam
+          ncp       Force invert to use the NCP projection even when
+                    significant non E-W baselines are present.
+                    Use with care..
+%A mode
+        This determines the algorithm to be used in imaging.
+        Possible values are:
+          fft    The conventional grid-and-FFT approach.  This is the
+                 default and by far the fastest.
+          dft    Use a discrete Fourier transform.  This avoids aliasing
+                 but at a hugh time penalty.
+          median This uses a median approach.  This is generally robust
+                 to bad data and sidelobes, has a even larger time
+                 penalty and produces images that cannot be deconvolved.
+        NOTE: Dft and median modes are not supported with
+        options=mosaic.
+%A slop
+        NOTE: This parameter should be used with caution!  See the Users
+        Guide for more information on its applicability.
+ 
+        When forming spectral cubes, INVERT normally insists that all
+        channels in a given visibility spectrum must be good before
+        accepting the spectrum for imaging.  This keyword allows this
+        rule to be relaxed.  It consists of two parts: a tolerance and
+        a method for replacing the bad channels.
+ 
+        The tolerance is a value between 0 and 1, giving the fraction of
+        channels that INVERT will tolerate as being bad before the
+        spectrum is totally discarded.  The default is 0, indicating
+        that INVERT will not tolerate any bad channels.  A value of 1
+        indicates that INVERT will accept a spectrum as long as there is
+        at least one good channel.
+ 
+        The replacement method is either the value `zero' or
+        'interpolate', indicating that the bad channels are either to be
+        replaced with 0, or to be estimated by linear interpolation of
+        two adjacent good channels.  See the Users Guide for the merits
+        and evils of the two approaches.  The default is 'zero'.
+ 
+%R 1.23, 2017/07/27 05:46:17 UTC

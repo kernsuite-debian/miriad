@@ -1,0 +1,66 @@
+.TH tmcal 1
+.SH NAME
+tmcal - Gain/phase/polarization calibration for SMA data.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+tmcal is a MIRIAD task which determines calibration corrections
+(both antenna gains and instrumental polarisation characteristics).
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility data file. No default. The visibility data
+must be in time order.
+.TP
+\fIselect\fP
+Standard uv selection. Default is all data.
+.TP
+\fIline\fP
+Standard line-type specification. Multiple channels can be given.
+Generally it is better to give multiple channels, rather than
+averaging them into a `channel-0'. The default is all the channel
+data (or all the wide data, if there is no channel data).
+.TP
+\fIflux\fP
+The values of the I,Q,U Stokes parameters. If no values are
+given, and it is a source known to tmcal, tmcal uses its known
+flux as the default. If tmcal does not know the source, the
+flux is determined by assuming that the rms gain amplitude is 1.
+For a planet, the values are interpreted as brightness temperature
+in Kelvin (planets are assumed to be unpolarised). Otherwise the values
+are assumed to be in Janskys.
+.sp
+If the option `qusolve' is used, the given fluxes for Q and U are
+used as the initial estimates.
+.TP
+\fIrefant\fP
+The reference antenna. Default is 1. The reference antenna needs to be
+present throughout the observation, and so needs to be chosen with some
+care. Any solution intervals where the reference antenna is missing are
+discarded.
+.TP
+\fIminants\fP
+The minimum number of antenna that must be present before a
+solution is attempted. Default is 2.
+.TP
+\fIinterval\fP
+This gives the solution interval, in minutes. Antenna gains are assumed
+to be constant over the solution interval.
+.TP
+\fItol\fP
+Error tolerance. The default is 0.001, which should be adequate.
+.TP
+\fIoptions\fP
+These options determine what TMCAL solves for. Several options
+can be given,separated by commas.
+.nf
+  nopass     Do not apply any passband calibration.
+  qusolve    Solve for Q and U fluxes. Good parallactic
+             angle coverage is required for this.
+  twoleak    Solve for a "two part" leakage solution,
+  onegain    Solve for a single antenna gain, which is assumed to be
+             independent of polarisation. When time-multiplexing of a single
+             feed is used to measure two states (e.g. R and L), then it should
+             be accurate to assume the antenna gains to R and L are the same.

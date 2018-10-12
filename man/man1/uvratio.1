@@ -1,0 +1,36 @@
+.TH uvratio 1
+.SH NAME
+uvratio - Determines the ratio of the XX to YY (or RR to LL) correlations.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVRATIO is a MIRIAD task which writes out a uv file, which is the
+ratio of the XX to YY correlations of the input visibility file.
+It can also find the ratio of RR and LL -- see option=circular.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. No default.
+.TP
+\fIline\fP
+Standard line-type parameters. Standard default.
+.TP
+\fIselect\fP
+The normal uv selection commands. Polarisation selection should
+not generally be used. Default is to select all data.
+.TP
+\fIout\fP
+The name of the output uv data set, which is the ratio of the
+inputs. No default.
+.TP
+\fIoptions\fP
+Program enrichment options. Several can be given, separated
+by commas. Minimum match is used
+.nf
+  "nopol"    Do not apply polarisation corrections.
+  "nocal"    Do not apply calibration corrections.
+  "nopass"   Do not apply bandpass corrections.
+  "circular" Find the ratio for circulars. Default is for
+             linears.

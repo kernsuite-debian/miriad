@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Miriad's Calibration Model</TITLE>
+<META NAME="description" CONTENT="Miriad's Calibration Model">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node34.html">
+<LINK REL="previous" HREF="node32.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node34.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1787"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1783"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1777"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1785"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1788"
+  HREF="node34.html">On-the-Fly Calibration Correction</A>
+<B>Up:</B> <A NAME="tex2html1784"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1778"
+  HREF="node32.html">Miriad Visibility File Format</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00520000000000000000"></A><A NAME="1354"></A>
+<A NAME="1355"></A>
+<A NAME="1356"></A>
+<BR>
+<I>Miriad</I>'s Calibration Model
+</H1>
+
+<P>
+<I>Miriad</I>'s suite of calibration tasks generally produce or use items
+which contain the relevant calibration tables and parameters.
+The tasks to manipulate these calibration tables generally
+have names start
+with <code>gp</code>, though there are a few exceptions such as <A NAME="tex2html39"
+  HREF="../doc/selfcal.html">selfcal</A>
+and
+<A NAME="tex2html40"
+  HREF="../doc/mfcal.html">mfcal</A>.
+The calibration parameters are antenna-based ones, with
+the calibration data being used to derive a model of the response of each
+antenna. The response of an antenna to radiation is modelled by
+four sets of parameters:
+
+<P>
+
+<UL>
+<LI>Antenna gains. These are complex-valued gains which vary with time, but
+not frequency. These are predominantly atmospheric in origin, though there is
+a significant instrumental component (the two cannot be distinguished
+readily). <I>Miriad</I> stores these in the <TT>gains</TT> item of a visibility
+dataset.
+
+<P>
+</LI>
+<LI>Delay factors.  These are antenna-based parameters
+which give a time delay, which will probably be a sum of atmospheric and
+instrumental components.
+This term is assumed to vary with time, but not frequency. It is
+stored in the <TT>gains</TT> item.
+
+<P>
+</LI>
+<LI>Antenna bandpass functions.  These are complex-valued gains
+modelling the instrumental bandpass.  These vary with frequency but not
+with time. These are largely instrumental in origin.
+These are stored in the <TT>bandpass</TT> item (and some associated
+items).
+
+<P>
+</LI>
+<LI>Antenna leakages. These are complex-valued terms (which do not
+vary with time or frequency) which model the leakage of one polarisation into
+another. These are entirely instrumental in origin.
+Current experience suggests that leakages may vary moderately with
+frequency. These are stored in the <TT>leakage</TT> item.
+
+<P>
+</LI>
+</UL>
+
+<P>
+Ignoring leakage (which is discussed in too much detail in
+Chapter&nbsp;<A HREF="node84.html#c:polarimetry">12</A>), we model the composite gain function of an
+antenna (representing both atmospheric and instrumental terms) as
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+g(t)g_{P1}(\nu)	\exp(i2\pi\tau(t)(\nu-\nu_0))
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="216" HEIGHT="28" BORDER="0"
+ SRC="img1.png"
+ ALT="\begin{displaymath}
+g(t)g_{P1}(\nu) \exp(i2\pi\tau(t)(\nu-\nu_0))
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Here <I>g(t)</I> is the frequency-independent part of the antenna gain,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="44" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img2.png"
+ ALT="$g_P(\nu)$"></SPAN> is the bandpass function,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="31" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img3.png"
+ ALT="$\tau(t)$"></SPAN> is a delay term. The delay is calculated with respect to a
+reference frequency, <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\nu_0$"></SPAN>.
+For dual polarisation systems the two polarisation bands are
+assumed to have independent gains and band passes, although the delay
+is common.
+
+<P>
+Note that <I>Miriad</I> datasets <EM>cannot</EM> contain more than one set of calibration
+tables - you cannot have multiple versions of calibration tables.
+Running a calibration task twice will result in the first calibration
+table being overwritten.  This may be inconvenient if the dataset has
+two sets of data that need to be calibrated separately.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1787"
+  HREF="node34.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1783"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1777"
+  HREF="node32.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1785"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1788"
+  HREF="node34.html">On-the-Fly Calibration Correction</A>
+<B>Up:</B> <A NAME="tex2html1784"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1778"
+  HREF="node32.html">Miriad Visibility File Format</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

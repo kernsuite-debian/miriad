@@ -1,0 +1,40 @@
+.TH uv2ms 1
+.SH NAME
+uv2ms - Converst a Miriad uv file into a MeasurementSet 
+.SH PERSON RESPONSIBLE
+mhw
+.SH CATEGORIES
+data transfer
+.SH DESCRIPTION
+uv2ms is a script that calls the casacore task importmiriad.
+This task converts uv files from Miriad format to
+a MeasurementSet that can be used in CASA.
+Note that because there is not a perfect correspondence between
+all information in a Miriad file and a MeasurementSet, some 
+information may be lost in the conversion step.
+.sp
+.sp
+WARNING: When conveting uv files, uv2ms can handle a
+single array configuration only. Minimal
+checks are made to see that these restrictions are observed!
+.sp
+References:
+.nf
+  For a description of the MeasurementSet standard, see
+    http://casa.nrao.edu/Memos/229.html
+.fi
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Name of the input Miriad uv file. No default.
+.TP
+\fIms\fP
+Name of the output MeasurementSet. No default.
+.TP
+\fItsys\fP
+Use Tsys data to fill the weights? Default False, specify True 
+to select this option.
+.sp
+.SH REVISION
+1.1, 2013/05/24 21:08:16 UTC

@@ -1,0 +1,32 @@
+.TH uvindex 1
+.SH NAME
+uvindex - Scan a uvdata file, and note when uvvariables change.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+uv analysis, checking
+.SH DESCRIPTION
+UVINDEX is a Miriad program which scans a uvdata file.
+Changes in source name, pointing center, number of wideband
+and spectral line channels, the observing frequency, and
+polarization are listed in the output.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file. No default.
+.TP
+\fIinterval\fP
+Reissue source information if no data for this period in minutes.
+The default is 60 minutes.
+.TP
+\fIlog\fP
+The output log file. Default is the terminal.
+.TP
+\fIoptions\fP
+Extra processing options. Currently there is but one of these:
+.nf
+  mosaic  Do not generate messages for different pointings
+          of a mosaic.
+.fi
+.sp
+$Id: uvindex.for,v 1.7 2014/09/30 13:58:54 wie017 Exp $

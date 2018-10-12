@@ -1,0 +1,70 @@
+%N imom
+%D Compute intensity-weighted moment of an image
+%P vjm
+%: image analysis
+%B
+        IMOM finds the 'centroid' of a Miriad image, and the 'spread'
+        about that centroid, by evaluating the expressions
+          mom1 = SUM{I(x)*x} / SUM{I(x)}
+          mom2 = sqrt(SUM{I(x)*(x-mom1)**2} / SUM{I(x)})
+        along the first two axes of an image.
+ 
+        Notes:
+        * The first moment should always be in the range 1..naxis(n).
+        * mom2 is equivalent to the standard deviation, not the FWHM,
+          for a gaussian intensity distribution.
+        * mom2 shows the spread along the directions parallel to the
+          *image axes*. So if your object of interest is elongated along
+          some random angle, the mom2 values returned will be a
+          combination of the major and minor-axis sizes, projected onto
+          the x- and y-axes.
+        * If all pixels in the region are blank, moments of -1.0 are
+          returned and a warning is printed.
+        * In case of a rounding error etc, moments of 0.0 are returned
+          and a warning is printed.
+ 
+%A in
+        Input image name. No default.
+%A options
+        The following options can be given (minimum match applies):
+          skew
+            Compute the 'third moment'. Since the formal third moment
+            has the rather useless dimensions of pixel**3, what
+            is actually returned is the dimensionless quantity
+                 SUM{ I(x)*(x - mom1)**3 } / SUM{ I(x) } / mom2**3.
+            A negative value means the distribution is skewed towards
+            values less than the first moment; i.e. the pixels at
+            lower pixel number than mom1 are generally brighter than
+            those at higher pixel number. A positive value
+            means the pixels at higher pixel number than the first
+            moment are brighter.
+          clipmean
+            When you use this program to estimate the peak of a source,
+            better accuracy can be had by ignoring low-intensity values.
+            Setting this option forms the moments using only pixels that
+            are brighter than the (local) mean.
+            If a min or max value is specified (see below), the mean is
+            computed using only the values within the selected range.
+          clip1sigma
+            Forms moments using just the pixels brighter than
+            local_mean + local_rms.
+            If a min or max value is specified, the mean and rms are
+            computed using only the values within the selected range.
+%A region
+        The region of interest. See the help on "region" for more
+        information. This gives the region of pixels to calculate the
+        moments within. Only rectangular regions are supported.
+        The default is the entire image.
+        If a cube is given as the input image, the program computes
+        moments for each plane along axis 3 (within the selected range).
+%A min
+        The minimum pixel value for inclusion in the moment calculation.
+        The default is the image minimum.
+%A max
+        The maximum pixel value for inclusion in the moment calculation
+        The default is the image maximum.
+%A log
+        The output log file. The default is the terminal. Output to
+        the terminal is paged.
+ 
+%R 1.6, 2012/02/29 23:54:44 UTC

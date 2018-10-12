@@ -1,0 +1,15 @@
+%N arrfix
+%D Correct ASKAP antennna table caused by faulty uv FITS file.
+%P rjs
+%: uv analysis
+%B
+        This corrects an ASKAP antenna table caused by a bug in CASA resulting
+        in a faulty FITS antenna table.
+%A vis
+        The names of the input uv data sets. No default.
+%A select
+        Standard visibility data selection. See the help on "select" for
+        more information. The default is to select all data.
+%A out
+        The name of the output uv data set. No default.
+ 

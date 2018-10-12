@@ -1,0 +1,71 @@
+.TH pcsub 1
+.SH NAME
+pcsub - Subtract a plane (optional by polynomial fit) from a cube
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map combination
+.SH DESCRIPTION
+PCSUB (Polynomial Continuum Subtraction) is a MIRIAD task that
+does a polynomial least squares fit to selected planes of a cube
+to make a continuum map that can be subtracted from the input
+cube.  Alternatively, if a continuum map is already known, this
+can be subtracted.
+.sp
+Limitations:
+.nf
+ 1) only designed for 3-D images
+ 2) the region input parameter should be specified only
+    with the IMAGE command, e.g.,
+.fi
+.sp
+.nf
+    region=image(1,5),image(125,128)
+.fi
+.sp
+.nf
+    would average and subtract planes 1:5 and 125:128
+    any specified x-y sub-regions will be ignored
+ 3) Blanked pixels in the image are only partially handled.
+    If a plane is completely blank then it is ignored, however,
+    a plane that is partially blanked is not dealt with.
+ 4) No fit to a polynomial greater than 10 is permitted.
+.fi
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image dataset. No default.
+.TP
+\fIout\fP
+The output image.  For default see cont= keyword.
+.TP
+\fIorder\fP
+The order of the highest term of the polynomial fit.
+Default is 0, i.e. a constant.
+.TP
+\fIregion\fP
+Specify the channels to fit with a command of the region of
+interest format, e.g.
+.nf
+  region=image(1,5),image(120,128)
+.fi
+This would fit and subtract channels 1:5 and 120:128 from the
+cube.  Note that blanked planes are correctly ignored, but
+isolated blanked pixels in a plane are not.
+.TP
+\fIcont\fP
+If "out" is provided, the continuum is generated from the region
+(channels) selected.  This continuum (cont=) is subtracted from
+each of the channels of the cube (in=) to yield an output cube
+(out=).
+If "out" alone is provided, this is all that occurs.
+If "cont" is also provided, the continuum map is also written to
+the file specified, if that file did not exist yet.
+If "cont" did already exist, it is assumed to be the continuum
+map, and subtracted from the input cube.
+If "cont" alone is provided, ONLY the continuum map is written,
+no output cube is written.
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

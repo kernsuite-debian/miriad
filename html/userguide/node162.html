@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Fitting a rotation curve</TITLE>
+<META NAME="description" CONTENT="Fitting a rotation curve">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node163.html">
+<LINK REL="previous" HREF="node161.html">
+<LINK REL="up" HREF="node161.html">
+<LINK REL="next" HREF="node163.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3432"
+  HREF="node163.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3428"
+  HREF="node161.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3422"
+  HREF="node161.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3430"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3433"
+  HREF="node163.html">Fitting a tilted ring</A>
+<B>Up:</B> <A NAME="tex2html3429"
+  HREF="node161.html">Modelling galactic disks</A>
+<B> Previous:</B> <A NAME="tex2html3423"
+  HREF="node161.html">Modelling galactic disks</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002051000000000000000">
+Fitting a rotation curve</A>
+</H2>
+<A NAME="tex2html792"
+  HREF="../doc/velfit.html">velfit</A>
+is a task to fit a rotation curve to an isovelocity
+image of a rotating disk. This is classical ``moment analysis''.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VELFIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=inten,veloc</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">centre=0,-60</TD>
+<TD ALIGN="LEFT">Rotation centre is 60 arcsec south of map centre.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa=40</TD>
+<TD ALIGN="LEFT">Position angle of major axis.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">incline=65</TD>
+<TD ALIGN="LEFT">The believed inclination of the disk.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vsys=440</TD>
+<TD ALIGN="LEFT">Systemic velocity of the galaxy.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=rot.log</TD>
+<TD ALIGN="LEFT">File to hold results - defaults to terminal.</TD>
+</TR>
+</TABLE>
+</DIV>
+<code>inten</code> is the <I>(x,y)</I> intensity distribution of <code>data.cube</code>
+integrated over the <I>z</I> (velocity) axis. It is obtained using <A NAME="tex2html793"
+  HREF="../doc/moment.html">moment</A>
+as follows:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MOMENT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=data.cube</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=iten</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mon=-1</TD>
+<TD ALIGN="LEFT">Get average intensity.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=3</TD>
+<TD ALIGN="LEFT">Squash along the third axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clip=-2.0,0.0</TD>
+<TD ALIGN="LEFT">Or whatever.</TD>
+</TR>
+</TABLE>
+</DIV>
+<code>veloc</code> is an <I>(x,y)</I> model for the velocity values, a mean velocity
+image. It would be obtained as follows:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MOMENT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=data.cube</TD>
+<TD ALIGN="LEFT">Input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=veloc</TD>
+<TD ALIGN="LEFT">The output dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mon=1</TD>
+<TD ALIGN="LEFT">First order moment.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=3</TD>
+<TD ALIGN="LEFT">Squash along the third axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clip=-2.0,0.0</TD>
+<TD ALIGN="LEFT">Or whatever.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3432"
+  HREF="node163.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3428"
+  HREF="node161.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3422"
+  HREF="node161.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3430"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3433"
+  HREF="node163.html">Fitting a tilted ring</A>
+<B>Up:</B> <A NAME="tex2html3429"
+  HREF="node161.html">Modelling galactic disks</A>
+<B> Previous:</B> <A NAME="tex2html3423"
+  HREF="node161.html">Modelling galactic disks</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

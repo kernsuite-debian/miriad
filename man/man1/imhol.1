@@ -1,0 +1,92 @@
+.TH imhol 1
+.SH NAME
+imhol - Compute amplitude and phase images from real and imaginary
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+IMHOL computes amplitude and phase images from real and
+imaginary holographic images.  The amplitude image can be
+debiased, and the phase image is computed as
+atan2(imaginary/real).
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+Two values; the real and imaginary images, respectively.
+The imaginary image can be made using INVERT with
+options=imaginary.  If the (u,v) coordinates for the holography
+data are in arcsec units then the images have units of nanosec
+(the inverse of the usual situation for astronomical imaging).
+Alternatively, the real and imaginary images can be obtained
+from images of the beam pattern using the MIRIAD task FFT.  The
+default units for the axes are in wavelengths.  Wild card
+expansion is supported.
+.TP
+\fImag\fP
+Up to two values; the output intensity image and
+optionally, its associated error image (which will be constant).
+Default is no output images.
+.TP
+\fIphase\fP
+Up to two values; the output position angle image and
+optionally, its associated error image (which will not be
+constant).  These will be in degrees, radians or microns (see
+'options').  Default is no output images.
+.TP
+\fIsigma\fP
+The mean standard deviation of the noise in the images.
+Required when debiasing or blanking; try to make it as accurate
+a value as possible.  The default is 0.
+.TP
+\fIsncut\fP
+This is the S/N ratio below which the output images
+are blanked (see also options=zero below). It is STRONGLY
+recommended that SNCUT of at least 2 is used.
+The default is 0.
+.TP
+\fIpacut\fP
+The output images are blanked if the error in the phase image
+(degrees, radians or mircrons depending on OPTIONS) is greater
+than this value.  This is active even if you don't output the PA
+image.   Note that there is no equivalent for the output error
+of the POLI image because the error is constant and equal to
+SIGMA.  Keyword SNCUT essentially takes care of this.
+The default is no position angle error based blanking.
+.TP
+\fIoptions\fP
+Task enrichment options.  Minimum match is active.
+.nf
+  bias    If computing polarized intensity, do NOT remove the
+          Ricean bias in the image.  By default, the bias is
+          removed to first order with
+            P = sqrt(P_obs**2 - sigma**2).
+          You should have a very good reason for using this
+          option.  See VLA memo no. 161 by Patrick Leahy for
+          more details of bias removal.
+  zero    When the output pixel is clipped, by setting CLIP(1),
+          setting OPTIONS=ZERO will cause the output polarized
+          intensity image (not the position angle image) pixel
+          to be set to 0.0 rather than being masked out.  This
+          is very important if you are interested in doing
+          statistics on a region of low polarized intensity S/N
+          ratio.  If you leave the region masked rather than
+          zeroed, you will bias the statistics in that region --
+          zero is a better estimate of the pixel than just
+          excluding it from the statistics (provided the clip
+          level is sufficiently small).  Residual bias in the
+          statistical results from the area then depend upon how
+          well the bias remover works and at what level clipping
+          was performed.  See VLA memo no. 161 by Patrick Leahy.
+  radians Output the phase image in radians instead of degrees.
+  microns Output the phase image as equivalent surface error in
+          microns.
+  relax   Only warn about image axis descriptor mismatches
+          instead of giving a fatal error
+  bmfit   Fit focus and pointing offsets to aperture E-field
+          maps.
+.fi
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Calibration</TITLE>
+<META NAME="description" CONTENT="Calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node187.html">
+<LINK REL="up" HREF="node186.html">
+<LINK REL="next" HREF="node189.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3764"
+  HREF="node189.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3760"
+  HREF="node186.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3756"
+  HREF="node187.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3762"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3765"
+  HREF="node189.html">Reducing 3-mm ATCA observations</A>
+<B>Up:</B> <A NAME="tex2html3761"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3757"
+  HREF="node187.html">Loading data into Miriad:</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002220000000000000000">
+Calibration</A>
+</H1>
+For 12-mm data, calibration is essentially identical to the centimetre bands.
+Primary flux calibration can be done using <A NAME="tex2html1025"
+  HREF="../doc/gpboot.html">gpboot</A>
+and observations
+of 1934-638, in much
+the same fashion
+as at the lower frequencies. 1934-638 is about 1 Jy at 12-mm wavelengths: the
+<I>Miriad</I> calibration software contains a built-in model of 1934-638's change
+of flux density with frequency. For information about this flux scale,
+see the <A NAME="tex2html1026"
+  HREF="http://www.atnf.csiro.au/observers/memos/AT39.3_124.pdf">memo by Bob Sault</A>
+``ATCA flux density scale at 12mm'' (2003).
+
+<P>
+As 1934-638 is comparatively week at 12-mm wavelength, it is not an
+good bandpass calibrator. If you require a bandpass
+calibration, you should take observations of a strong source such as
+1921-293 or 1253-055.
+
+<P>
+Because atmospheric opacity affects the amplitude gain calibration step, it is
+important to consider it when high precision flux calibration is required.
+In the flux bootstrapping step,
+<A NAME="tex2html1027"
+  HREF="../doc/gpboot.html">gpboot</A>
+determines the boot factor to be applied to the gains of
+the secondary calibrator to make them the same as the primary. As the opacity
+correction 
+done by <A NAME="tex2html1028"
+  HREF="../doc/atlod.html">atlod</A>
+is only correct to first order,
+ideally the comparison between primary and secondary gains would be made
+<EM>at the same elevation and under the same weather conditions</EM>.
+Selecting the range of times that the gains
+should be compared is a more important issue at 12mm than at lower frequencies.
+To select the time range of the secondary to compare, use <code>time</code> selection
+in the <code>select</code> keyword.
+
+<P>
+Some judgement will need to be made about the set of amplitude gains of
+the secondary to use in the comparison.  In stable weather conditions,
+it is probably best to select the time range of the secondary where its
+elevation corresponds most closely to the elevation during the primary's
+observation.  When the weather changes significantly during the
+observation, it is probably best to use a time range of the secondary
+which is close to the primary's observation.  Tasks <A NAME="tex2html1029"
+  HREF="../doc/uvplt.html">uvplt</A>
+and
+<A NAME="tex2html1030"
+  HREF="../doc/varplt.html">varplt</A>
+can plot source elevation as a function of time. 
+
+<P>
+Typical inputs to <A NAME="tex2html1031"
+  HREF="../doc/gpboot.html">gpboot</A>
+are:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPBOOT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Input visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=time(1:00,2:00)</TD>
+<TD ALIGN="LEFT">Select a time range in the ``vela.uv''</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">dataset where the amplitude gains should be</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">comparable to those in the primary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cal=1934-638.18001</TD>
+<TD ALIGN="LEFT">Primary flux calibrator.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3764"
+  HREF="node189.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3760"
+  HREF="node186.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3756"
+  HREF="node187.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3762"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3765"
+  HREF="node189.html">Reducing 3-mm ATCA observations</A>
+<B>Up:</B> <A NAME="tex2html3761"
+  HREF="node186.html">Reducing 12-mm ATCA observations</A>
+<B> Previous:</B> <A NAME="tex2html3757"
+  HREF="node187.html">Loading data into Miriad:</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

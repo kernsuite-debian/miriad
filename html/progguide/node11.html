@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Task Parameters</TITLE>
+<META NAME="description" CONTENT="Task Parameters">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node12.html">
+<LINK REL="previous" HREF="node10.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node12.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html328"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html322"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html316"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html324"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html326"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html329"
+  HREF="node12.html">Error Handling</A>
+<B>Up:</B> <A NAME="tex2html323"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html317"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00410000000000000000"></A><A NAME="110"></A><A NAME="111"></A>
+<BR>
+Task Parameters
+</H1>
+<PRE>
+     subroutine keyini
+     subroutine keyr(keyword,value,default)
+     subroutine keyd(keyword,value,default)
+     subroutine keyi(keyword,value,default)
+     subroutine keyl(keyword,value,default)
+     subroutine keya(keyword,value,default)
+     subroutine keyf(keyword,value,default)
+     subroutine mkeyr(keyword,values,nmax,n)
+     subroutine mkeyi(keyword,values,nmax,n)
+     subroutine mkeya(keyword,values,nmax,n)
+     subroutine mkeyf(keyword,values,nmax,n)
+     logical function keyprsnt(keyword)
+     subroutine keyfin
+</PRE>
+The <TT>key</TT> routines are used to get task parameters, which describe the
+processing that is to be performed.
+Typically the <TT>key</TT> routines
+will be called in the first few lines of the task, and never called
+again. All checking for the validity of the parameters should be
+carried out at this time.
+
+<P>
+<TT>Keyini</TT> initializes the <TT>key</TT> routines, and must be the first
+routine called. Similarly <TT>keyfin</TT> tidies up, and closes down.
+<TT>Keyr, keyd, keyi, keyl</TT> and <TT>keya</TT> return the value of a task parameter
+from the user. Their inputs are <TT>keyword</TT> (a character string) and
+<TT>default</TT>, the default value for the parameter. <EM>The
+keyword must be in lower case.</EM> The task
+parameter is returned in <TT>value</TT>.
+ <TT>Keyi</TT>, <TT>keyr</TT>, <TT>keyl</TT>, <TT>keyd</TT> and <TT>keya</TT> are used
+for integer, real, logical, double precision  and character values respectively.
+Only one value is returned at a time.
+The <TT>keyf</TT> routine is like <TT>keya</TT>, except that the string entered
+by the user is treated as a file name, and wildcard expansion is performed.
+The <TT>key</TT> routines can be called several times, giving the same
+keyword, and each successive call will get the next value associated
+with the keyword.
+
+<P>
+For example, if TRC is defined by the user as:
+<PRE>
+      % TRC = 45,50
+</PRE>
+then the code:
+<PRE>
+     call keyi('trc',n1,1)
+     call keyi('trc',n2,1)
+</PRE>
+will return the values 45 and 50 to <TT>n1</TT> and <TT>n2</TT> respectively.
+
+<P>
+These routines always return a value, even if it is only the default
+value. To determine if a parameter was actually set by the use, the
+<TT>keyprsnt</TT> routine can be called. This returns <TT>.true.</TT> if a value for
+the keyword still remains. An alternate way to test if a value is still
+present is to use a default which is 
+clearly illegal (e.g. a blank string for a file name, or 0 for a
+pixel index).
+
+<P>
+The <TT>mkey</TT> routine return all values entered by the user for that
+particular keyword where all the values of the keyword are of the same
+data type. For these routines <TT>values</TT> is an array of <TT>nmax</TT>
+elements. The number of values returned (which may be zero) is given
+by <TT>n</TT>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html328"
+  HREF="node12.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html322"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html316"
+  HREF="node10.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html324"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html326"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html329"
+  HREF="node12.html">Error Handling</A>
+<B>Up:</B> <A NAME="tex2html323"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html317"
+  HREF="node10.html">Miriad Subroutine Library</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

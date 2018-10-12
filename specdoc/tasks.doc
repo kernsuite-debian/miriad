@@ -1,0 +1,58 @@
+%D A list of Miriad tasks
+%: miscellaneous
+%B
+	Available Miriad tasks are given below.
+	Type
+	  help <taskname>
+	to get extra help.
+
+addhis	    antconv	antpol	    arrayplt	arrfix	    atfix
+atlod	    atmerge	atmos	    atrecal	atrtfix	    atscfix
+atsum	    attsys	atwvr	    atxy	avmaths	    blcal
+blflag	    boxspec	calc	    calplot	calred	    cclean
+cgcurs	    cgdisp	cginit	    cgrego	cgslice	    cgspec
+clean	    clfind	closure	    clplot	clstats	    colden
+conterr	    contsen	contsub	    convol	copyhd	    cotra
+csdi	    delhd	demos	    deproject	detab	    doc
+doc2man	    docfmt	early	    ellint	ellplt	    ercmd
+fakeotf	    fft		fgflag	    fits	flint	    gaufit
+gethd	    gpaver	gpboot	    gpbreak	gpcal	    gpcomb
+gpcopy	    gpdof	gpedit	    gperror	gplist	    gpnorm
+gpplt	    gpscal	gpshift	    hanning	hermes	    histo
+im2uv	    imbin	imblr	    imcat	imcfn	    imcmp
+imcomb	    imdiff	imfit	    imframe	imgen	    imheq
+imhist	    imhol	imlist	    imload	immask	    immerge
+imom	    impol	impoly	    impos	imrm	    imsad
+imsharp	    imspec	imspect	    imstat	imstore	    imsub
+imtab	    intf2c	invert	    itemize	lagflg	    linmos
+mathd	    maths	maxen	    maxfit	mbspect	    mfboot
+mfcal	    mfclean	mfflat	    mfplan	mfspin	    minmax
+mirbug	    mirhelp	miriad	    mirmax	mirversion  moment
+mopfix	    moscsdi	mosgen	    moslst	mosmem	    mospsf
+mossdi	    mossen	mostess	    obsrms	odnh3	    offaxis
+offpol	    opplt	paraplot    pbplot	pcsub	    pgflag
+planets	    plboot	plgeom	    plplt	pmosmem	    pops
+ppmtomir    prthd	prthis	    psrbl	psrfix	    psrplt
+puthd	    qvack	ratty	    regrid	reorder	    restor
+rmclean	    rpfread	rpgen	    selfcal	sfind	    shifty
+sigest	    smooth	specshift   telepar	tmcal	    tmcvt
+tmgen	    tpcp	tpgains	    tract	transfix    trim
+tvall	    tvclip	tvcycle	    tvdisp	tvflag	    tvinit
+tvset	    uvacflag	uvaflag	    uvamp	uvaver	    uvcat
+uvclip	    uvdflag	uvdiff	    uvdump	uvedit	    uvfft
+uvfit	    uvflag	uvflux	    uvfmeas	uvfstats    uvgains
+uvgen	    uvglue	uvimage	    uvindex	uvlin	    uvlist
+uvmodel	    uvpflag	uvpit	    uvplanet	uvplt	    uvputhd
+uvratio	    uvredo	uvrms	    uvrot	uvsector    uvsfit
+uvspec	    uvsplit	uvstat	    uvsub	uvswap	    uvtcor
+uvtplt	    uvwide	uvzflag	    varlist	varmerge    varplt
+varsizes    vblank	velcolor    velfit	velimage    velmodel
+velplot	    velsw	wblod	    wbplt	xmtv	    xyphase
+zapchan	    zeeeta	zeefake	    zeemap	zeesim	    zeestat
+
+	Other help topics available are
+
+bbcal	    changes	cheat	    confighist	device	    help
+in	    line	motd	    offset	oldflux	    options
+out	    region	select	    server	stokes	    tasks
+telescop    uv2ms	vis	    weatherdata window

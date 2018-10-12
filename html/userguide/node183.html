@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Linear Method - IMMERGE</TITLE>
+<META NAME="description" CONTENT="The Linear Method - IMMERGE">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node184.html">
+<LINK REL="previous" HREF="node182.html">
+<LINK REL="up" HREF="node181.html">
+<LINK REL="next" HREF="node184.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3706"
+  HREF="node184.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3702"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3696"
+  HREF="node182.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3704"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3707"
+  HREF="node184.html">The Non-Linear Method -</A>
+<B>Up:</B> <A NAME="tex2html3703"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3697"
+  HREF="node182.html">Some Theory and Preparing</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002182000000000000000">
+The Linear Method - IMMERGE</A>
+</H2>
+The linear method, sometimes known as feathering, can be thought of in terms 
+of operations in the
+Fourier (spatial frequency) domain of the images. If the single-dish 
+image  is a good representation of the object at low spatial frequencies,
+and if the mosaic
+image is a good representation at mid to high spatial frequencies, then the
+two sorts of data can be merged in the Fourier plane to form an image
+accurate up to the resolution of the mosaic image. This is exactly what
+<A NAME="tex2html958"
+  HREF="../doc/immerge.html">immerge</A>
+does.
+
+<P>
+The way that <A NAME="tex2html959"
+  HREF="../doc/immerge.html">immerge</A>
+normally combines the data is to give unit 
+weight to the single-dish data
+at all spatial frequencies, and to taper the low spatial frequencies of
+the mosaic data. This tapering is such that the sum of single dish and tapered
+mosaic data produces a gaussian beam equal to the
+mosaic gaussian beam. Figure&nbsp;<A HREF="#fig:immerge">21.1</A> shows this process
+for a point source. The Parkes data plus the tapered ATCA data neatly
+add to give an overall response of a gaussian form.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:immerge"></A><A NAME="14482"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 21.1:</STRONG>
+Spatial frequencies sampled by Parkes and the ATCA</CAPTION>
+<TR><TD><IMG
+ WIDTH="565" HEIGHT="388" BORDER="0"
+ SRC="img117.png"
+ ALT="\begin{figure}\begin{center}
+\leavevmode\epsffile{immerge.ps}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+The inputs to <A NAME="tex2html960"
+  HREF="../doc/immerge.html">immerge</A>
+are moderately straightforward:
+the <TT>in</TT> parameter
+gives the name of the input mosaic and single-dish image (in that
+order), whereas the <TT>out</TT> parameter gives the
+name of the output dataset.
+Because <A NAME="tex2html961"
+  HREF="../doc/immerge.html">immerge</A>
+assumes that the beams of both the single-dish and
+mosaic images are gaussian forms,
+you will want to use images which approximate this.
+Whereas single-dish images usually approximate this reasonably, a dirty
+mosaic does not. Instead, 
+<EM>you will want to use a deconvolved/restored mosaic</EM>
+in the <A NAME="tex2html962"
+  HREF="../doc/immerge.html">immerge</A>
+process.
+
+<P>
+Task <A NAME="tex2html963"
+  HREF="../doc/immerge.html">immerge</A>
+allows you to set a parameter giving the flux
+calibration factor,
+<TT>factor</TT>: <A NAME="tex2html964"
+  HREF="../doc/immerge.html">immerge</A>
+multiplies the single-dish image by
+this factor before further processing. If you believe your calibration,
+you should set this parameter to 1 (or whatever number you believe the
+calibration factor to be). Note that if the parameter is unset,
+<A NAME="tex2html965"
+  HREF="../doc/immerge.html">immerge</A>
+attempts to deduce this factor (i.e. the default is not
+simply to use a value of 1). It does this
+by comparing data in the overlap annulus in the spatial frequency coverage
+of the mosaic and single-dish images. In doing this <A NAME="tex2html966"
+  HREF="../doc/immerge.html">immerge</A>
+first
+convolves the mosaic image to the same resolution as the single dish data
+(including scaling fiddles to
+account for the inputs being in Jy/beam in differing resolutions),
+and it then performs a robust (L1) fit between the two sets of pixel
+data. If you use <A NAME="tex2html967"
+  HREF="../doc/immerge.html">immerge</A>
+to determine the flux calibration factor,
+you will want to consider setting the following parameters:
+
+<UL>
+<LI><TT>uvrange</TT> giving the range in the Fourier domain
+where there is overlap. This parameter can take two or three values,
+the first two being the numbers giving the inner and outer radius of
+the overlap region, and the third parameter giving the units of the first two
+values. The most useful units are <TT>meters</TT> and <TT>klambda</TT>
+(kilowavelengths - which is the default). For example, typically the overlap
+between a Parkes and ATCA observation (assuming the shortest ATCA
+spacing is included in the observation) would be
+<PRE>
+   uvrange=25,40,meters
+</PRE>
+The default is to use all spatial frequencies.
+</LI>
+<LI><TT>region</TT> parameter allows you to select those planes
+used in determining the flux calibration factor. Unlike the normal behaviour
+of <TT>region</TT> parameter, <EM>only plane selection</EM> is allowed, with the
+<TT>image</TT> sub-command being the only really useful command.
+Generally you would choose
+planes with appreciable structure which is well represented
+in both single-dish and mosaic data. The default is to include all planes.
+</LI>
+<LI><TT>device</TT> sets the PGPLOT plotting device where plots are make of 
+a comparison between the data in the overlap region. Two plots are produced.
+For the first plot, the axes gives the 
+value of a pixel (both real or imaginary values are included) in the mosaic
+(<I>x</I> axis) and single-dish data (<I>y</I> axis). These pixel values are after
+tapering, scale factor fiddles, and after applying the calibration scale factor that
+has just be deduced. The data should follow a ``<I>y=x</I>'' form (which is
+also plotted in red). The second plot gives the residual difference
+between the mosaic and single-dish data (i.e. the difference from <I>y=x</I>) as 
+a function of spatial frequency. A trend in these residuals might suggest 
+that the single-dish beam parameters are grossly wrong.
+Although the default is not to create a plot, there seems little reason
+why you would not want to inspect it.
+</LI>
+</UL>
+
+<P>
+The gaussian parameters of the mosaic and single-dish beams are important
+parameters in the processing that <A NAME="tex2html968"
+  HREF="../doc/immerge.html">immerge</A>
+performs. Task <A NAME="tex2html969"
+  HREF="../doc/immerge.html">immerge</A>
+tries to determine these by first looking for the relevant gaussian beam
+parameters within the image datasets. If it cannot find these, it will
+attempt to estimate the beams, based on its knowledge of the telescope and
+the observing
+frequency. These estimates, however, are far from perfect - <EM>it is
+far better to ensure that the beam parameters are within the dataset
+before using <A NAME="tex2html957"
+  HREF="../doc/immerge.html">immerge</A></EM>. If you are unsure whether the beam
+parameters have been set for a dataset, <A NAME="tex2html970"
+  HREF="../doc/prthd.html">prthd</A>
+includes these
+(if found) in amongst the information it prints out.
+For the  mosaic, normally <A NAME="tex2html971"
+  HREF="../doc/restor.html">restor</A>
+will have
+saved the beam parameters in the dataset. However it is likely that you
+will need to add the single-dish beam parameters to the single-dish dataset.
+The items you want to set are <TT>bmaj</TT>, <TT>bmin</TT> and possible <TT>bpa</TT>
+(beam major, minor axis size and position angle respectively), which are 
+set using <A NAME="tex2html972"
+  HREF="../doc/puthd.html">puthd</A>.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.sd/bmaj</TD>
+<TD ALIGN="LEFT">Set beam major axis.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=18.8,arcmin</TD>
+<TD ALIGN="LEFT">Width is 18.8 arcminutes.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.sd/bmin</TD>
+<TD ALIGN="LEFT">Set beam minor axis.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=18.8,arcmin</TD>
+<TD ALIGN="LEFT">Width is 18.8 arcminutes.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+When emission continues to the edge of the image (or near the edge),
+algorithms such as that used by <A NAME="tex2html973"
+  HREF="../doc/immerge.html">immerge</A>
+can suffer edge artifacts.
+If these are problematic, 
+<A NAME="tex2html974"
+  HREF="../doc/immerge.html">immerge</A>
+has a some parameters which you might like to try to reduce
+the problem.
+Task <A NAME="tex2html975"
+  HREF="../doc/immerge.html">immerge</A>
+pads images with
+a guard band before doing a Fourier transform. Edge effects may be lessened
+by increasing this from the default value by setting the <TT>guard</TT> parameter.
+Task <A NAME="tex2html976"
+  HREF="../doc/immerge.html">immerge</A>
+also tries to avoid edge discontinuities by padding the
+guard band with a mirror image of some of the data. If the image is mostly
+zero, then zero padding (rather than than a reflection) might be better.
+In this case use <TT>options=zero</TT>.
+
+<P>
+Typical inputs for <A NAME="tex2html977"
+  HREF="../doc/immerge.html">immerge</A>
+are
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMMERGE</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.mosaic,lmc.sd</TD>
+<TD ALIGN="LEFT">Give the mosaic and single-dish inputs</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.combo</TD>
+<TD ALIGN="LEFT">Give output combination dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">factor=1</TD>
+<TD ALIGN="LEFT">Set to the correct flux scales, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">factor</TD>
+<TD ALIGN="LEFT">leave blank and</TD>
+</TR>
+<TR><TD ALIGN="LEFT">uvrange=25,40,meters</TD>
+<TD ALIGN="LEFT">specify the spatial frequency overlap annulus,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=image(10,20)</TD>
+<TD ALIGN="LEFT">and use planes 10 to 20 inclusive,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">and let it plot the comparison.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3706"
+  HREF="node184.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3702"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3696"
+  HREF="node182.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3704"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3707"
+  HREF="node184.html">The Non-Linear Method -</A>
+<B>Up:</B> <A NAME="tex2html3703"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3697"
+  HREF="node182.html">Some Theory and Preparing</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

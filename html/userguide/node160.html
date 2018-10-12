@@ -1,0 +1,569 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Velplot</TITLE>
+<META NAME="description" CONTENT="Velplot">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node161.html">
+<LINK REL="previous" HREF="node159.html">
+<LINK REL="up" HREF="node156.html">
+<LINK REL="next" HREF="node161.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3406"
+  HREF="node161.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3402"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3396"
+  HREF="node159.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3404"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3407"
+  HREF="node161.html">Modelling galactic disks</A>
+<B>Up:</B> <A NAME="tex2html3403"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3397"
+  HREF="node159.html">Smoothing the Velocity Axis</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002040000000000000000">
+Velplot</A>
+</H1>
+<A NAME="tex2html765"
+  HREF="../doc/velplot.html">velplot</A>
+is a many faceted task for display and analysis of
+velocity fields - read the <I>Miriad</I> help file for <A NAME="tex2html766"
+  HREF="../doc/velplot.html">velplot</A>.
+<A NAME="tex2html767"
+  HREF="../doc/velplot.html">velplot</A>
+differs in its
+mode of operation from most other <I>Miriad</I> tasks in that a small portion only
+of the inputs are given in the usual <I>Miriad</I> form. The main body of the inputs
+are given by the user interactively after selection from an initial menu.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VELPLOT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=data.cube</TD>
+<TD ALIGN="LEFT">Input data cube to be examined.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xw</TD>
+<TD ALIGN="LEFT">Screen is the initial plot device</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=box(32,32,96,96)(5,60)</TD>
+<TD ALIGN="LEFT">Examine the centre of planes 5 to 60</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=data.log</TD>
+<TD ALIGN="LEFT">Text output where appropriate will go here</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Now run <A NAME="tex2html768"
+  HREF="../doc/velplot.html">velplot</A>
+and the following main menu will appear:
+
+<P>
+<PRE>
+         MAIN MENU
+   Comment   Write comment into log
+   List      List header and velocity information
+   Integral  Integrated flux and statistics
+   Options   Select plot parameters
+   Pos-Vel   Plot versus position &amp; velocity
+   Spectra   Plot spectra
+   Vel-map   Plot integrated velocity maps
+   File      Write spectra &amp; position-velocity file
+   Read      Read spectra &amp; position-velocity file
+   Write     Write Miriad Image to disk file
+   Exit      Exit from program
+
+  Select option (type 1st character) :
+</PRE>
+
+<P>
+This selection is not case sensitive, and only the first character
+is used. This is what the options are :
+<DL>
+<DT><STRONG>Comment</STRONG></DT>
+<DD>A comment will be written into the ASCII file. It goes
+like this:
+<PRE>
+   Select option (type 1st character) : c
+   Enter comment &gt; It's time I got to work
+         comment &gt; I had cereal for breakfast
+         comment &gt;
+</PRE>
+You need to get used to the <A NAME="tex2html769"
+  HREF="../doc/velplot.html">velplot</A>
+input style. You entered 2 lines
+of comment in response to the <code>&gt;</code> prompt. A carriage return on the third
+line returned you to the <A NAME="tex2html770"
+  HREF="../doc/velplot.html">velplot</A>
+main menu. If you exit now and examine
+the file data.log you will find it contains header information from
+<code>data.cube</code> plus those two comment lines.
+
+<P>
+Also be aware that for many <A NAME="tex2html771"
+  HREF="../doc/velplot.html">velplot</A>
+inputs gives
+a carriage return/line feed after the question and you are faced
+with entering answers on a blank line. This can be quite disconcerting
+if you do not anticipate it.
+</DD>
+<DT><STRONG>List</STRONG></DT>
+<DD>List header and velocity information. The information is written
+into <code>data.log</code> a 4 line summary about <code>data.cube</code>
+</DD>
+<DT><STRONG>Integral</STRONG></DT>
+<DD>Integrated flux and statistics. This lists statistics for each
+data plane specified in the <code>region</code> originally selected.
+The headings are: plane (number), Velocity, Total Flux, Maximum, Minimum,
+Average
+and rms. Unfortunately this list is not written in to the log file.
+</DD>
+<DT><STRONG>Options</STRONG></DT>
+<DD>Select plot parameters. This is what happens:
+<PRE>
+   Selection (type 1st character) :o
+ 
+      OPTIONS MENU
+   Select alternative options [1/2] for the following
+
+   Units for display [J/K]..... J
+   Negative contours [Y/N]..... Y
+   Plot header [Y/N]........... Y
+   Write map to file [Y/N]..... N
+   Absolute coordinates [Y/N].. N
+   Integer plot [Y/N].......... N
+   Spectra positions [Y/N]..... Y
+   Fit Gaussians [Y/N]......... N
+   Overlay Gauss Fits [Y/N].... Y
+   Gray Scale [Y/N]............ N
+   Exit from options menu
+   Contour levels:  percent
+    level( 1) =    15.000
+    level( 2) =    30.000
+    level( 3) =    45.000
+    level( 4) =    60.000
+    level( 5) =    75.000
+    level( 6) =    90.000
+
+  Select option (type 1st character,&lt;cr&gt; for options) :u
+  -plot units are now Janskys
+
+  Select option (type 1st character, &lt;cr&gt; for options) :e
+</PRE>
+<EM>Now the main menu will reappear</EM>. It is easy to get confused here between
+the main menu and this options menu that selects plot parameters.
+
+<P>
+The contour setting option is of particular interest in making 
+contour plots. This is the equivalent of the <code>levs</code> input to <I>Miriad</I> 
+<A NAME="tex2html772"
+  HREF="../doc/cgdisp.html">cgdisp</A>.
+</DD>
+<DT><STRONG>Pos-Vel</STRONG></DT>
+<DD>Plots a position velocity map. This is best described by walking
+through an example. We want a position velocity map made along the major axis
+of the galactic disk in data.cube. The position angle of the major
+axis is 40 degrees (measured north to east).
+
+<P>
+Run <A NAME="tex2html773"
+  HREF="../doc/velplot.html">velplot</A>
+and the main menu appears.
+Editorial comments below are in italics
+
+<P>
+<PRE>
+   Select option (type 1st character) :p
+   Plot intensity versus position &amp; velocity along selected cuts
+   &gt;Type H for help, &lt;cr&gt; to continue :&lt;cr&gt;
+   --- no current selection of cuts ---
+
+   &gt;List of cuts, RA-vel or DEC-vel ? [L]/X/Y):&lt;cr&gt;
+</PRE>
+Here, <A NAME="tex2html774"
+  HREF="../doc/velplot.html">velplot</A>
+in its usual cryptic style is giving us a choice of
+three options with the default option - which we chose by just hitting
+carriage return, is in square brackets.
+<PRE>
+   --- Enter list of pos-vel cuts to plot ---
+   angles measured from north to east (0 to 180).
+   &gt;Type -n to delete cut n
+         -99 to delete all
+         L to list         (ie list the already chosen cuts)
+         &lt;cr&gt; to use the current list.
+   &gt;Enter cut number, position and angle (n,x,y,pa):1,0,-60,40
+</PRE>
+We think the galactic centre is at 0,-60 arcsec with respect to
+the plot centre.
+<BLOCKQUOTE>
+<code>&gt;Enter cut number, position and angle (n,x,y,pa):&lt;cr&gt;</code>
+<EM>No more cuts wanted</EM>
+<BR><code>&gt;Enter convolving beam (major("),Minor("),pa(deg):&lt;cr&gt;</code><EM>No convolution requested</EM>
+<BR><code>Gaussian falls to 6% at edge of array</code>
+<BR><code>	size of convolution array:  3 pixels,  90.000 arsecs</code>
+<BR><code>Contour or Intensity plots ? [C]/I:&lt;cr&gt;</code>
+<BR>
+</BLOCKQUOTE>
+Here is where <A NAME="tex2html775"
+  HREF="../doc/velplot.html">velplot</A>
+can get very confusing. <code>C</code> and <code>I</code>
+are options for
+quite different functions, not like grey scale or contour options for
+the same plot. The function we want corresponds to the C option -
+hence the carriage return.
+<PRE>
+   &gt;Enter number of windows in x and y: [1,1]: 
+   &lt;cr&gt;
+</PRE>
+Notice a couple of things here. <A NAME="tex2html776"
+  HREF="../doc/velplot.html">velplot</A>
+inserted the carriage
+return after the prompting
+message and left us dangling there(slap on wrist to the programmer) but it
+is waiting for input so we enter return to choose the <code>[1,1]</code> option,
+i.e. single plot to the page (like <code>nxy</code> option in much of the
+rest of <I>Miriad</I>) so something will happen. Something does happen,
+the pgplot window with the position-velocity map appears on the screen.
+After dismissing the pgplot window we see some text about the plot on the screen
+and velplot continues as follows:
+<BLOCKQUOTE>
+<code>Another PGPLOT device ? (Y/[N])Y      </code><EM>The last Y is our response</EM>
+<BR><code>&gt;Enter new PGPLOT device:pvplot.ps/ps </code><EM>Usual convention for a postscript plot</EM>
+<BR><code>&gt;Enter line width [1]:&lt;cr&gt;            </code><EM>Single width lines</EM>
+<BR> 
+<BR><code>&gt;Enter number of windows in x and y: [1,1]:&lt;cr&gt;</code>
+<BR>
+</BLOCKQUOTE>
+Now some <A NAME="tex2html777"
+  HREF="../doc/velplot.html">velplot</A>
+output about the plot appears on the screen. If
+you want several
+position-velocity cuts plotted on the one page you keep answering the
+``Enter cut number etc'' question giving each successive cut a higher number
+and <A NAME="tex2html778"
+  HREF="../doc/velplot.html">velplot</A>
+will make a sensible choice of page layout.
+<BLOCKQUOTE>
+<code>Another PGPLOT device? (Y/[N])&lt;cr&gt;</code> <EM>We do not want any more</EM>
+
+</BLOCKQUOTE>
+
+<P>
+Now we are finished and the main menu appears again. On exit we find the
+postscript file <code>pvplot.ps</code> in our directory.
+
+<P>
+Still in the position-velocity option, let us 
+go back to the question
+<PRE>
+   Contour or Intensity plots ?[C]/I:
+</PRE>
+and answer <code>I</code>. Instead of the standard position-velocity plot we are now
+requesting plots of intensity versus position at position angles
+<EM>in certain <I>(x,y)</I> image planes that will be requested</EM>.
+This is a very different
+function from the standard position-velocity plot that comes from a 3-dimensional
+slice through the cube. So suppose we have entered 4 cuts:
+<PRE>
+   1,0,0,40
+   2,100,100,30
+   3,-100,-100,80
+   4,500,-500,70
+</PRE>
+(to nominate an arbitrary set), the dialogue with <A NAME="tex2html779"
+  HREF="../doc/velplot.html">velplot</A>
+would be
+<BLOCKQUOTE>
+<code>Contour or Intensity plots ? [C]/I: I</code>
+<BR><code>How many channels ? (5 max) :3       </code><EM>Data from 3 channels to be plotted</EM>
+<BR><code>Enter the channel numbers : 25,30,35 </code><EM>Channel numbers 25,30,35 only</EM>
+<BR><code>Fix the scales ? Y/[N] : &lt;cr&gt;        </code><EM>As before</EM>
+<BR><code>&gt;Enter number of windows in x and y: [2,2]:</code>
+<code>&lt;cr&gt;</code>
+
+</BLOCKQUOTE>
+We asked for 4 cuts but the cuts are now in the x,y planes of the
+specified channels. There will be 4 subplots and each subplot will have
+3 lines plotted, one for each specified channel number. And now here is where it
+gets confusing. The PGPLOT window appears but only one of the 4 subplots.The
+PGPLOT window is hiding a question being asked by <A NAME="tex2html780"
+  HREF="../doc/velplot.html">velplot</A>
+of the form:
+<PRE>
+   &gt;Enter name for ASCII file(&lt;cr&gt; to continue):
+</PRE>
+So give a carriage return and keep answering with carriage returns
+to the text window and watch successive subplots appear on the screen.
+<A NAME="tex2html781"
+  HREF="../doc/velplot.html">velplot</A>
+will offer the chance to make a postscript file as before and you
+will have to go through answering the question about the ASCII file
+for each subplot. Cumbersome but that is the way it is.
+The ASCII file would
+be a text list of the values in the plots , if you wanted such.
+
+<P>
+</DD>
+<DT><STRONG>Spectra</STRONG></DT>
+<DD>Plot spectra. A spectrum is a plot of intensity vs position
+along a line parallel to the <I>z</I> (velocity) axis. This is an extremely useful
+function of <A NAME="tex2html782"
+  HREF="../doc/velplot.html">velplot</A>
+but quite complicated. We will explain via an
+example:
+<PRE>
+   Select option (type 1st character) :s
+
+   Plot spectra at selected positions.
+   (x,y) positions are in (HA,DEC) directions.
+   &gt;Type H for Help, E to Exit, &lt;cr&gt; to continue :&lt;cr&gt;
+   --- no current selection of spectra ---
+
+   &gt;Enter G to enter a grid of positions,
+          &lt;cr&gt; to edit or enter a list of positions :g
+</PRE>
+So we have chosen to define a grid, the most complicated option.
+Had we given just a carriage return we would have been offered the opportunity
+to make a list of positions similar to what is done for Position-Velocity plots.
+<PRE>
+   &gt;Enter tlc (x,y), and PA of grid:
+   100,200,0
+</PRE>
+So we are saying that the top left corner of the rectangular grid of
+positions at which we want spectra is at HA=100arcsec and DEC=200arcsec
+wrt to the centre of the plot. Our choice of PA=0 here means the grid has axes
+parallel to the x,y axes. If we had chosen PA=45 the whole grid would have
+been rotated through 45 degrees.
+<PRE>
+           (Grid PA is measured from N through E)
+   &gt;Enter interval(arcsec), nrows(along PA) and ncols:
+   100,2,2
+</PRE>
+So we are asking for a 2 X 2 grid with 100arcsec spacing between elements.
+<PRE>
+   --- current selection of spectra ---
+    spectra(1) (x,y) arcsecs: (  100.000,  200.000)
+    spectra(2) (x,y) arcsecs: (  200.000,  200.000)
+    spectra(3) (x,y) arcsecs: (  100.000,  100.000)
+    spectra(4) (x,y) arcsecs: (  200.000,  100.000)
+</PRE><BLOCKQUOTE>
+<code>selection OK? ([Y]/N):&lt;cr&gt;            </code><EM>Accept default- that is our list</EM>
+<BR><code>GAUSSIAN FITS TO SPECTRA</code>
+<BR><code>&gt;Enter convolving beam etc etc :&lt;cr&gt;  </code><EM>We do not want a convolving beam</EM>
+<BR><EM>Another 5 lines of text are output</EM>
+<BR><code>&gt;Smooth spectra (H=Hanning, B=Boxcar, [None]) :&lt;cr&gt; </code><EM>No smoothing thanks</EM>
+<BR><code>&gt;Omit plots and Gaussian fits ? (Y/[N]) :&lt;cr&gt; </code><EM>We want the plots</EM>
+<BR><code>&gt;Fix scale for spectra ? (Y/[N] :&lt;cr&gt;</code>
+<BR>
+</BLOCKQUOTE>
+Had we said <code>Y</code> here we would have been offered the opportunity
+to set the vertical scale in Jy - like the <code>range</code> in <A NAME="tex2html783"
+  HREF="../doc/cgdisp.html">cgdisp</A>
+<PRE>
+   &gt;Enter number of windows in x and y: [2,2]:
+   &lt;cr&gt;
+</PRE>
+So <A NAME="tex2html784"
+  HREF="../doc/velplot.html">velplot</A>
+sensibly offers a 2 by 2 format for the 4 spectra we
+have specified.
+What follows next can be very confusing. The PGPLOT window appears and the
+first spectrum is plotted in the top left corner as expected but nothing
+more. Depending on your screen setup, the PGPLOT window is probably obscuring
+your text output and you do not see that <A NAME="tex2html785"
+  HREF="../doc/velplot.html">velplot</A>
+has asked
+<PRE>
+   &gt;Continue with gaussian fit ([Y]/N) :n
+</PRE>
+and we say No because we do not want
+a gaussian fit. We told it that before but still we have to go through this to
+get all the spectral plots on the screen. The same question is asked repeatedly
+by <A NAME="tex2html786"
+  HREF="../doc/velplot.html">velplot</A>
+and we answer No each time as we watch successive subplots
+appear on the PGPLOT screen. Finally, after all the subplots have appeared the
+same question is asked yet again and when we say No the PGPLOT screen disappears
+and velplot continues as follows:
+<BLOCKQUOTE>
+<code>Another PGPLOT device? (Y/[N])Y    </code><EM>Yes, lets get a postscript file</EM>
+<BR><code>&gt;Enter filename for spectra (&lt;cr&gt; to continue):</code>
+<BR><code>spectra.ps/ps                      </code><EM>Call the file spectra.ps</EM>
+<BR>
+</BLOCKQUOTE>
+So now we are finished this spectrum plotting exercise. You may get the main
+menu again or you may be returned to <I>Miriad</I> and have to restart <A NAME="tex2html787"
+  HREF="../doc/velplot.html">velplot</A>
+if you want. <code>spectrum.ps</code> can now be plotted.
+
+<P>
+Another example of plotting spectra:
+Suppose you have a galactic disk data cube and you want to plot
+spectra at positions along the major axis. Then the grid needs to be collapsed
+into a line and rotated to the PA of the disk major axis (say 40 degrees).
+You think the position x,y=-1200,1000 is on the major axis toward the top-left
+corner 
+of the x,y plane. You want 20 plots at 100arcsec intervals along the major
+axis. So the inputs to <A NAME="tex2html788"
+  HREF="../doc/velplot.html">velplot</A>/<code>spectra</code> would be:
+<PRE>
+   choose grid- g
+   &gt;Enter tlc (x,y), and PA of grid :
+   -1200,1000,40
+   &gt;Enter interval(arcsec), nrows(along PA) and ncols:
+   100,20,1
+</PRE>
+
+<P>
+<A NAME="tex2html789"
+  HREF="../doc/velplot.html">velplot</A>
+would offer a 5 by 5 plot format but use only the top four rows
+(for the 20 plots actually 5 by 4)
+
+<P>
+</DD>
+<DT><STRONG>Vel-map</STRONG></DT>
+<DD>Make plots of various moments of velocity averaged over
+specified velocity ranges. This works like the position-velocity option
+above. Type H for additional documentation. The most useful feature here
+is that the cursor can be used to change the plot parameters, or to plot
+the positions for spectra, or for position-velocity maps. These CURSOR OPTIONS
+are only available if a single velocity interval is selected in Vel-map.
+Here is what happens. The cursor appears in the PGPLOT window, and the CURSOR OPTIONS
+must be entered by typing a single character in the PGPLOT window. The results, or
+additional questions appear in the main window. It is easy to get confused here.
+<PRE>
+   &gt;CURSOR OPTIONS: Type L to list options :
+</PRE>
+
+<P>
+so we type L in the PGPLOT window, and in the main window we see:
+<PRE>
+    Cursor options:
+    A - absolute coordinates
+    C - change contour interval
+    D - clear spec/pos-vel stacks
+    E - exit from plot
+    X - exit from plot
+    G - change grayscale
+    H - header label
+    J - Jy contours
+    K - Kelvin contours
+    N - negative contours
+    P - define pos-vel cut
+    Q - Plot spec/pos-vel positions
+    I - integral and rms in box
+    B - blc for integral
+    T - trc for integral
+    R - replot maps
+    S - Spectra position
+    V - value and cursor position
+    W - write out this map
+   (x,y) positions are in (HA,DEC) directions.
+   (Position angle is measured from N through E)
+   &gt;CURSOR OPTIONS: Type L to list options :
+</PRE>
+
+<P>
+We can enter a spectra position with the cursor by typing S, and position-velocity cuts
+by typing P at any two positions along the desired cut. The lists of spectral positions
+and position-velocity cuts are stored and can be plotted after you return to the main
+menu.
+
+<P>
+Typing Cursor option B and T to define a box, followed by I, prints out the
+Total Flux, Maximum, Minimum, Average, and rms in the box in both Jy and Kelvin units.
+
+<P>
+Type E or X to exit from the cursor options.
+
+<P>
+</DD>
+<DT><STRONG>Write</STRONG></DT>
+<DD>Write <I>Miriad</I> image to disk file. It does just this after
+prompting for a new name ie it gives you a copy of the region (or all) the
+input data.
+
+<P>
+</DD>
+<DT><STRONG>File</STRONG></DT>
+<DD>Write file of spectra and position-velocity cuts.
+Suppose you have been doing pos-vel and or spectra then there will exist
+lists of cuts. This option enables you to save the lists to a named
+file so you could refer to them on a subsequent running of <A NAME="tex2html790"
+  HREF="../doc/velplot.html">velplot</A>.
+
+<P>
+</DD>
+<DT><STRONG>Read</STRONG></DT>
+<DD>Read file of spectra and position-velocity cuts
+You saved the lists in a previous WA and now you can retrieve them.
+
+<P>
+The File and Read options allow you to have several lists of cuts and
+access them alternately without leaving <A NAME="tex2html791"
+  HREF="../doc/velplot.html">velplot</A>.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3406"
+  HREF="node161.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3402"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3396"
+  HREF="node159.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3404"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3407"
+  HREF="node161.html">Modelling galactic disks</A>
+<B>Up:</B> <A NAME="tex2html3403"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3397"
+  HREF="node159.html">Smoothing the Velocity Axis</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Writing Visibility FITS Files</TITLE>
+<META NAME="description" CONTENT="Writing Visibility FITS Files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node53.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node45.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2024"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2020"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2014"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2022"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2025"
+  HREF="node53.html">Reading and Writing FITS</A>
+<B>Up:</B> <A NAME="tex2html2021"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html2015"
+  HREF="node51.html">Time and FITS Files</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00840000000000000000">
+Writing Visibility FITS Files</A>
+</H1>
+
+<P>
+Task <A NAME="tex2html123"
+  HREF="../doc/fits.html">fits</A>
+can also be used to write a visibility FITS file. In addition
+to the keywords used when reading visibility datasets, <A NAME="tex2html124"
+  HREF="../doc/fits.html">fits</A>
+uses
+keywords <code>select</code>, <code>stokes</code> and <code>options</code> to control
+extra processing performed on the visibilities.
+
+<P>
+Unfortunately <A NAME="tex2html125"
+  HREF="../doc/fits.html">fits</A>
+is more sophisticated at reading FITS files
+than writing - note the following caveats carefully.
+
+<P>
+
+<UL>
+<LI><A NAME="tex2html126"
+  HREF="../doc/fits.html">fits</A>
+can cope with only a single pointing of a single
+source, with a single frequency setup and single antenna array
+configuration (note that, unlike earlier versions, <A NAME="tex2html127"
+  HREF="../doc/fits.html">fits</A>
+writes an
+antenna table).
+<A NAME="tex2html128"
+  HREF="../doc/fits.html">fits</A>
+does quite limited checks to see
+if these conditions are met, and quite happily will
+use the relevant parameters of the first record.
+
+<P>
+</LI>
+<LI><A NAME="tex2html129"
+  HREF="../doc/fits.html">fits</A>
+assumes that the data are a single IF
+band, with a constant frequency increment between channels. If presented
+with multiple spectral windows (multiple IFs), an average frequency and
+increment will be used. This is <EM>very</EM> undesirable. If you do
+this, <A NAME="tex2html130"
+  HREF="../doc/fits.html">fits</A>
+will issue warnings about frequencies deviating from
+linearity. These warnings should be taken seriously. To avoid this, use
+the <TT>select</TT> or <TT>line</TT> parameters to force <A NAME="tex2html131"
+  HREF="../doc/fits.html">fits</A>
+to write
+out a single spectral window.
+
+<P>
+</LI>
+<LI><A NAME="tex2html132"
+  HREF="../doc/fits.html">fits</A>
+does not save <I>Miriad</I> calibration tables. However
+<A NAME="tex2html133"
+  HREF="../doc/fits.html">fits</A>
+does give you the option of applying the calibration, as
+it writes out the data (see the <code>options</code> keyword).
+
+<P>
+</LI>
+<LI><I>Miriad</I> allows you flexibility in the choice of polarization
+correlations that you can write out. On-the-fly polarization
+conversion can be performed. However AIPS will refuse to read in a
+number of the possibilities that <I>Miriad</I> allows. In particular, AIPS <TT>UVLOD</TT> refuses to load visibility data where there are
+three different sorts of polarization correlations (rather than the
+more usual 1, 2 or 4 sorts).
+
+<P>
+</LI>
+</UL>
+
+<P>
+Typical inputs follow:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FITS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=0823.uv</TD>
+<TD ALIGN="LEFT">Name of input <I>Miriad</I> dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">op=uvout</TD>
+<TD ALIGN="LEFT">Write out a visibility FITS file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=0823.FITS</TD>
+<TD ALIGN="LEFT">Output FITS file - probably upper case for AIPS.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Select appropriate data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,q,u,v</TD>
+<TD ALIGN="LEFT">Select appropriate polarizations.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">option</TD>
+<TD ALIGN="LEFT">Leave unset to apply calibration,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nopol,nocal,nopass</TD>
+<TD ALIGN="LEFT">or turn off all calibration.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2024"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2020"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2014"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2022"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2025"
+  HREF="node53.html">Reading and Writing FITS</A>
+<B>Up:</B> <A NAME="tex2html2021"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html2015"
+  HREF="node51.html">Time and FITS Files</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

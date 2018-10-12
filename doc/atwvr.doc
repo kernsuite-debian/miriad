@@ -1,0 +1,23 @@
+%N atwvr
+%D Correct phases using WVR data
+%P rjs
+%: uv analysis
+%B
+        ATWVR applies phase corrections derived from WVR measurements
+%A vis
+        The input visibility file to correct. No default.
+%A out
+        The output corrected file. No default.
+%A wvrphase
+        A text file containing the phase corrections.
+        Format : time (yymmmdd:hh:mm:ss), phase (6x).
+        Prepending a '-' to the file name will negate the phases.
+%A offset
+        Offset of phase correction time stamps vs data time stamps.
+%A uvrange
+        Range of uv distance to apply the corrections over in meters(!).
+        Defaults to all data. First value defaults to zero,
+        second value defaults to infinity.
+%A log
+        Name of log file. If specified it will list the phases
+        applied to each baseline

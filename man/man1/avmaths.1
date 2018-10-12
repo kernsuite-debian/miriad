@@ -1,0 +1,55 @@
+.TH avmaths 1
+.SH NAME
+avmaths - Operate on cube with averaged plane from cube
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+analysis
+.SH DESCRIPTION
+AVMATHS averages designated planes from a cube, and then
+performs some mathematical operation on the cube with the
+averaged plane.  Subtraction, optical depth, replacement,
+and multiplication operations have been coded.  Undefined
+output pixels are blanked.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image. Wild card expansion is supported. No default.
+.TP
+\fIout\fP
+The output image. No default.
+.TP
+\fIregion\fP
+Specify the channels to average with a REGION=IMAGE
+command such as
+.nf
+  region=image(1,5),image(120,128)
+.fi
+This would average channels 1:5 and 120:128 from the
+cube.  No other region commands are accepted for example
+spatial sub-regions will be ignored.
+.TP
+\fIoptions\fP
+Task enrichment options.  Minimum match is active.
+.sp
+"subtract"  OUT(i,j,k) = IN(i,j,k) - AV(i,j)
+"odepth"    OUT(i,j,k) = ln(AV(i,j) / IN(i,j,k))
+"replace"   OUT(i,j)   = AV(i,j)
+"multiply"  OUT(i,j,k) = IN(i,j,k) * AV(i,j)
+.sp
+"noreduce" causes the output image to be of the same dimensions
+.nf
+    as the input image when REPLACEMENT is invoked.  By default,
+    the REPLACED output image is reduced to two dimensions as
+    there is probably no point to replicating one plane N times.
+    In this case, the output third axis descriptors reflect the
+    size of the bounding box of the selected region on the third
+    axis
+.fi
+.sp
+Pixels are blanked if the input pixel is blanked, the averaged
+channel pixel is blanked, or the output is undefined.
+.sp
+.SH REVISION
+1.7, 2013/08/30 01:49:21 UTC

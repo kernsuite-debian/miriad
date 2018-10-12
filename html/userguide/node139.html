@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Common Keywords</TITLE>
+<META NAME="description" CONTENT="Common Keywords">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node140.html">
+<LINK REL="previous" HREF="node138.html">
+<LINK REL="up" HREF="node138.html">
+<LINK REL="next" HREF="node140.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3139"
+  HREF="node140.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3135"
+  HREF="node138.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3129"
+  HREF="node138.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3137"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3140"
+  HREF="node140.html">Examples</A>
+<B>Up:</B> <A NAME="tex2html3136"
+  HREF="node138.html">PGPLOT Device Tasks</A>
+<B> Previous:</B> <A NAME="tex2html3130"
+  HREF="node138.html">PGPLOT Device Tasks</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001731000000000000000"></A>
+<A NAME="s:cg_common"></A>
+<BR>
+Common Keywords
+</H2> 
+
+<P>
+This suite has many common keywords and much common functionality.  We
+describe briefly now some of the common keywords, although not all the
+tasks in the suite use them in all possible ways.  Refer to the
+individual help files to see what each task offers.  Specific uses by
+<A NAME="tex2html617"
+  HREF="../doc/cgspec.html">cgspec</A>
+will be described in Chapter&nbsp;<A HREF="node151.html#c:spectra">19</A>.  Note that
+minimum match is usually accepted for the value of keywords.  Each
+keyword usually defaults to the same value in all tasks, but you
+should again refer to the help files for details. 
+
+<P>
+
+<UL>
+<LI>The keyword <TT>in</TT> takes a list of input images as its arguments.
+These images are displayed or used in the display in some way indicated
+by the keyword <TT>type</TT>.
+
+<P>
+</LI>
+<LI>The keyword <TT>type</TT> indicates how the images given in the <TT>in</TT> keyword will be displayed.  These two keywords are in one to one
+correspondence with each other.  Possible values are <TT>pixel</TT>
+(display image as a pixel map representation, formerly called a grey
+scale, but now full colour is available), <TT>contour</TT> (display image
+as a contour map), <TT>box</TT> (display image as little boxes, where the
+size of the box is proportional to the value of the pixel, and it is
+hollow for positive and solid for negative values), <TT>amplitude</TT> and
+<TT>angle</TT> (display these two images as line vectors).  In addition,
+<TT>type</TT> can take on the value <TT>mask</TT>.  In this case, the relevant
+image given in the keyword <TT>in</TT> is not displayed, but its pixel
+blanking mask is applied to all the other images which are being
+displayed.
+
+<P>
+</LI>
+<LI>The standard <I>Miriad</I> keyword <TT>region</TT> is used to select the
+region of the images for display.  It interacts with the keyword <TT>chan</TT> (see below) which allows you to group planes (or channels)
+together onto separate subplots.  The region selected applies to all the
+input images and they must all have the same size on the first 2 axes. 
+However, you can input a mix of 3-D and 2-D images.  If you input more
+than one 3-D image, they must all have the same size on the third axis. 
+Any 3-D region selection indicated with the <TT>region</TT> keyword is
+applied only to the 3-D images that you input.  An example of this usage
+would be overlaying a continuum image on each channel of a spectral line
+cube. 
+
+<P>
+</LI>
+<LI>The keyword <TT>xybin</TT> allows you to spatially bin up (average)
+pixels, or to pick out pixels at regular increments.  This can be very
+handy for displaying large images, especially if you are making a hard
+copy on a postscript printer where the printer resolution does not merit
+retaining the individual pixels.  Using this keyword can make the
+postscript file much smaller and print much faster.    
+
+<P>
+
+<P>
+<BR>
+You can bin up the two spatial axes of an image independently, and
+you can enter up to 4 values, 2 for each axis specifying the increment
+and binning size.  As an example, <TT>xybin=4,4,3,1</TT> would bin up the
+image by 4 pixels in the <I>x</I> direction and pick out every third pixel
+in the <I>y</I> direction.  If the binning size is not unity, it must
+equal the increment. 
+
+<P>
+</LI>
+<LI>The keyword <TT>chan</TT> is used to allow you to group the planes
+(or channels) that you selected with the keyword <TT>region</TT> onto
+separate subplots of the plotting page.  The first value you give is the
+channel increment to step through the image in.  The second value is the
+number of channels to average, for each sub-plot.  For example, <TT>chan=5,3</TT> would average groups of 3 planes together, starting 5 channels
+apart such as 1-3, 6-8, 11-13 and so on. 
+
+<P>
+
+<P>
+<BR>
+The channels available are those designated by the <TT>region</TT>
+keyword.  A new group of channels (sub-plot) is started if there is a
+discontinuity in the <TT>region</TT> selected channels (such as <TT>region=image(10,20),image(22,30)</TT>.  The combination of the <TT>region</TT>
+and <TT>chan</TT> determines how many sub-plots there will be. 
+
+<P>
+</LI>
+<LI>The keywords <TT>slev</TT> and <TT>levs</TT> (or <TT>levs1, levs2, levs3</TT>
+in <A NAME="tex2html618"
+  HREF="../doc/cgdisp.html">cgdisp</A>
+- it can draw up to 3 contour maps at once) indicate at
+what values the contours should be drawn.  The first value of <TT>slev</TT>
+can be <TT>p</TT> or <TT>a</TT>, indicating percentage or absolute levels. 
+The second value of <TT>slev</TT> is a scale factor to multiply the contour
+levels given in <TT>levs</TT> by.  For example, <TT>slev=p,1</TT> and <TT>levs=-1,1,2,4,8,16</TT> would draw contours at -1%, 1%, 2%, 4%,
+8% and 16% of the peak value in the image.  On the other hand, <TT>slev=a,0.001</TT>, <TT>levs=3,5,10</TT> would draw contours at values of
+0.003, 0.005, 0.01. 
+
+<P>
+</LI>
+<LI>The keyword <TT>range</TT> is used to control the way in which pixel
+intensities are mapped onto the colour lookup table of the device for
+pixel map representations (<TT>type=pixel</TT>).  Its use varies somewhat
+from task to task, but the basic functionality is the same; see the
+individual help files for details.   See also <TT>options=fiddle</TT>
+which provides an interactive way to alter the lookup tables.
+
+<P>
+
+<P>
+<BR>
+The first two values indicate the range of pixel values
+(intensities) to map onto the lookup table.  Pixels with values outside
+this range will be represented with the colour of the nearest extremum. 
+Thus, if the image was being displayed with a simple linear black and
+white transfer function on an interactive device, <TT>range=<I>-0.2</I>,
+<I>2.0</I></TT> would cause all pixels with values below <I>-0.2</I> to come out
+black, all pixels with values greater than <I>2.0</I> to come out white, and
+all pixels in between that range to have shades of grey from black to
+white. 
+
+<P>
+
+<P>
+<BR>
+The third argument of <TT>range</TT> allows you to specify a
+transfer function so that the pixel values can be mapped onto the lookup
+table in some way other than linearly.  Allowed values are <TT>lin,sqr,log,heq</TT> for linear, square root, logarithmic and histogram
+equalisation transfer functions respectively.  Histogram equalisation can be very
+handy for images which have a large dynamic range.  What this does is
+use the device colour levels for pixel values which occur the most
+often. 
+
+<P>
+
+<P>
+<BR>
+The fourth argument of <TT>range</TT> is an integer between 1 and
+9 specifying the type of lookup table.  The available tables are 1
+(b&amp;w), 2 (spectrum colours), 3 (linear pseudo colour), 4 (floating zero
+colour contours), 5 (fixed zero colour contours), 6 (rgb), 7
+(background), 8 (heat) and 9 (absolute b&amp;w) .  If you enter a negative
+integer, then the reversed lookup table is displayed.   
+
+<P>
+
+<P>
+<BR>
+Fixed zero colour contours fix a colour boundary (blue-green)
+at 0 intensity, with 4 colour pairs ([light blue, light green], [dark
+blue, dark green], [purple,yellow], [black,orange]) distributed positive and
+negative of 0.  There are then two more colours (red and white) for the
+remaining positive intensity values.  Once you have arranged the colour
+pairs so that they define the noise level, the red and white colours
+quickly show you the true signal.  You need to use <TT>options=fiddle</TT>
+to get the scaling to the noise level right. 
+
+<P>
+
+<P>
+<BR>
+Note that in <A NAME="tex2html619"
+  HREF="../doc/cgdisp.html">cgdisp</A>, you can enter a group of 4 values
+for each subplot that is drawn.  This is useful for hardcopy output, as
+you can have an individual scaling and lookup table for each
+subplot.  For example, you may have made a ``cube'' with unlike
+quantities in different planes (total intensity, polarised intensity,
+fractional polarisation, rotation measure etc) and it would be
+impossible to display them all with just one set of 4 values for the
+<TT>range</TT> keyword. 
+
+<P>
+
+<P>
+<BR>
+The following figure shows the possible colour table types for
+a simple image.  The colour bars or wedges show the differences most
+clearly. 
+
+<P>
+
+<P><IMG ALIGN=BOTTOM ALT="" SRC="colours.gif"><P>
+
+<P>
+</LI>
+<LI>The keyword <TT>device</TT> indicates the PGPLOT device upon
+which the plot will be drawn.  
+
+<P>
+</LI>
+<LI>The keyword <TT>nxy</TT> takes two values, which are the number
+of subplots in the <I>x</I> and <I>y</I> directions on the page (dictated
+by the <TT>chan</TT> keyword).
+
+<P>
+</LI>
+<LI>The keyword <TT>labtyp</TT> specifies what units the axes will
+be labelled in.    It can take two values and they can be different.
+
+<P>
+Possible values are:
+
+<P>
+
+<UL>
+<LI><TT>hms</TT> for a label in H M S.S (e.g. for RA)
+
+<P>
+</LI>
+<LI><TT>dms</TT> for a label in D M S.S (e.g. for DEC)
+
+<P>
+</LI>
+<LI><TT>arcsec</TT> for a label in arcsecond offsets
+
+<P>
+</LI>
+<LI><TT>arcmin</TT> for a label in arcminute offsets
+
+<P>
+</LI>
+<LI><TT>absdeg</TT> for a label in degrees
+
+<P>
+</LI>
+<LI><TT>reldeg</TT> for a label in degree offsets
+
+<P>
+</LI>
+<LI><TT>abspix</TT> for a label in pixels
+
+<P>
+</LI>
+<LI><TT>relpix</TT> for a label in pixel offsets
+
+<P>
+</LI>
+<LI><TT>abskms</TT> for a label in km/s
+
+<P>
+</LI>
+<LI><TT>relkms</TT> for a label in km/s offsets
+
+<P>
+</LI>
+<LI><TT>absghz</TT> for a label in GHz
+
+<P>
+</LI>
+<LI><TT>relghz</TT> for a label in GHz offsets
+
+<P>
+</LI>
+<LI><TT>absnat</TT> for a label in natural units as given
+by the axis label.  
+
+<P>
+</LI>
+<LI><TT>relnat</TT> for a label in offset natural coordinates
+
+<P>
+</LI>
+<LI><TT>none</TT> for no label and no numbers or ticks on the axis
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<P>
+<BR>
+All the offsets are with respect to the reference pixel.  Note
+that you are expected to match your values with the order of the axes. 
+For example, if you asked for <TT>labtyp=abskms,dms</TT>, it is expected
+that the first two axes of the image are velocity and declination.  You
+will get rude messages if this is not the case. 
+
+<P>
+</LI>
+<LI>The keyword <TT>csize</TT> gives you control over the size of
+characters on the plot such as axis labels, or annotation text.
+These are given as factors of the default PGPLOT character
+size <TT>csize=1.0</TT>, which gives a character about 1/40 of the
+maximum dimension of the view surface.  See the help files for
+details on what you can control in which task.
+
+<P>
+</LI>
+<LI>The keyword <TT>options</TT> offers a variety of enrichment options
+for each task.  There are a few that are common to most
+of the tasks in this suite. 
+
+<P>
+
+<UL>
+<LI>Option <TT>wedge</TT> causes a labelled colour bar or wedge to be
+drawn, showing the mapping between pixel intensity and colour. 
+
+<P>
+</LI>
+<LI>Option <TT>fiddle</TT> invokes the interactive lookup table fiddler. 
+This is mouse (or keyboard) driven, and
+instructions are given the in the window from which you invoked the
+task.  Basically, it is tree structured, with one branch to select
+different colour lookup tables, and one branch to modify the transfer
+function.  You can swap between these branches. 
+
+<P>
+
+<P>
+<BR>
+This option allows you to cycle through all of the same colour
+tables offered by keyword <TT>range</TT> (see above), and reverse them if
+desired.  You can cycle through all of the same pre-defined transfer
+functions that are available with keyword <TT>range</TT> (see above). 
+
+<P>
+
+<P>
+<BR>
+In addition, there is an interactive linear transfer function
+fiddle mode, where you can change the slope and offset of the linear
+transfer function.  When you invoke the different transfer function
+modes, you get a little plot in the bottom right corner showing you what
+the transfer function is doing. 
+
+<P>
+
+<P>
+<BR>
+Note that if you are plotting on a hard-copy device such as a
+postscript file, this option is then activated with keyboard inputs. 
+You have the usual ability to cycle through lookup tables and transfer
+functions, but you do not get the interactive linear transfer function
+fiddler for obvious reasons.  This gives you the same functionality as
+you could have obtained with the keyword <TT>range</TT>. 
+
+<P>
+</LI>
+<LI>Option <TT>grid</TT> extends the coordinate ticks into a 
+full grid.  Minor ticks are excluded with this option. 
+
+<P>
+</LI>
+<LI>The option <TT>unequal</TT> instructs the software to fill the
+plotting page maximally.  By default, is tries to make the scales of the
+<I>x</I> and <I>y</I> axes the same.  It is important that you use this
+option when you are displaying unlike quantities such as a velocity-DEC
+diagram, as the efforts to make equal scales will go wrong here.
+
+<P>
+</LI>
+<LI>Option <TT>relax</TT> instructs these tasks not to be concerned
+if the axis descriptors for the input images are different.  The axis
+sizes still have to be the same though.  Use this option with great
+care, and it's only useful if you are labelling the axes with
+<TT>abspix</TT> or <TT>relpix</TT> types.
+
+<P>
+</LI>
+<LI>When you are displaying multiple subplots, with each
+subplot being a different channel or plane from a 3-D image,
+the options <TT>3value</TT> and <TT>3pixel</TT> instruct the software
+to write the coordinate value and pixel value of the displayed
+subplot in its top left hand corner.  You can use either or both
+of these.
+
+<P>
+</LI>
+<LI>The option <TT>full</TT> will cause a full set of plot
+annotation to be written at the bottom of each page of the plot.
+This includes things like coordinate information, contour levels,
+pixel map representation intensity ranges and so on.
+
+<P>
+</LI>
+</UL>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3139"
+  HREF="node140.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3135"
+  HREF="node138.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3129"
+  HREF="node138.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3137"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3140"
+  HREF="node140.html">Examples</A>
+<B>Up:</B> <A NAME="tex2html3136"
+  HREF="node138.html">PGPLOT Device Tasks</A>
+<B> Previous:</B> <A NAME="tex2html3130"
+  HREF="node138.html">PGPLOT Device Tasks</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

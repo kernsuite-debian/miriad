@@ -1,0 +1,7 @@
+%N mirmax
+%D Print Miriad's built in size limits
+%P mhw
+%B
+        Simple program to return maximum sizes used on your platform.
+ 
+%R 1.3, 2013/08/30 01:49:21 UTC

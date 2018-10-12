@@ -1,0 +1,74 @@
+%N gpedit
+%D Edit the gain table.
+%P mchw
+%: calibration
+%B
+        Gpedit is a MIRIAD task which modifies calibration tables.
+%A vis
+        The input visibility file, containing the gain file to modify.
+        No default.
+%A select
+        Normal uv data selection commands. See the help on "select" for
+        more information. Currently only antenna, time, and amplitude
+        selection is supported. The amplitude selection applies to the
+        gains, not the uv-data, and can be used to flag or replace bad
+        gain amplitudes. The default is to select everything.
+%A feeds
+        The polarisation feeds affected (e.g. R, L, X or Y). Default is
+        all feeds.
+%A gain
+        This gives the complex-valued gain used in the `multiply' and
+        `replace' options (see below). It is given as an amplitude
+        and phase (in degrees). For example gain=2,90 produces a gain
+        with a amplitude of 2 and phase of 90 degrees.
+        The first two values specify the continuum solution, if there is
+        a gain table with n binned solutions, another n*2 values can be
+        specified. The default is 1,0 for all gains.
+%A options
+        This gives extra processing options. Several values can be given,
+        separated by commas. Option values can be abbreviated to
+        uniqueness.
+ 
+        The following options operate on the gains:
+          replace   The existing gains are replaced by the value
+                    given by the `gain' keyword. NOTE: If no other
+                    options are given, the replace option is performed.
+          multiply  The existing gains are multiplied by the gain
+                    given by the `gain' keyword.
+          flag      The existing gains are flagged as bad.
+          amplitude The phases of the existing gains are set to 0.
+          phase     The amplitudes of the existing gains are set to 1.
+          scale     The phase of the gains is multiplied by the factor
+                    given by the `gain' keyword.
+          dup       Convert a single-polarization gain table into a dual
+                    polarization table.
+          invert    The existing gains are inverted (1/gain, phase
+                    negated) to allow undoing calibration that has been
+                    applied to the uvdata with uvaver.
+ 
+        The following option operates on the polarization leakages:
+          reflect   The existing leakages are made to possess a
+                    symmetry: For each antenna, we make
+                    DX = -conjg(DY).
+          zmean     Subtract an offset, so that the mean leakage is 0.
+ 
+        The following option operates on the bandpass table:
+          extend    Extend the bandpass table to cover the full range of
+                    channels in the data. Use gain=0 to extend the
+                    range by replicating the edge value and gain=1 to use
+                    linear extrapolation of the edge values.
+          hanning   Hanning smooth the bandpass. (Miriad actually uses
+                    binomial smoothing when it claims to use hanning)
+          boxcar    Boxcar smooth the bandpass (i.e., running average)
+%A width
+        The smoothing width for hanning or boxcar smoothing of the
+        bandpass. Width will be increased to next odd number if even.
+        Default and minimum value is 3. Maximum is 33 for hanning,
+        and 257 for boxcar smoothing.
+        An optional second width parameter can be used to specify blocks
+        of channels to smooth, with no smoothing across block boundaries.
+        Default 0, is no blocks.
+ 
+        Example:
+          gpedit vis=cyga gain=14.4,90 select=ant(1,2) feeds=X
+          gpedit vis=cyga options=boxcar width=15

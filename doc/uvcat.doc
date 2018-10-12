@@ -1,0 +1,36 @@
+%N uvcat
+%D Catenate and copy uv datasets; Apply gains file, Select windows.
+%P rjs mchw
+%: uv analysis
+%B
+        UVCAT is a MIRIAD task which copies and catenates multiple MIRIAD
+        uv data sets. By default, UVCAT applies the gains file in copying the
+        data. The spectral windows copied to the output file can be selected.
+%A vis
+        The names of the input uv data sets. Multiple names can be given,
+        separated by commas. At least one name must be given.
+%A select
+        The normal uv selection commands. One unusual aspect of this is that
+        the "window" subcommand can be used to select which windows are
+        copied to the output file (normally the "window" only has an
+        effect for velocity line type). The default is to copy everything.
+%A stokes
+        If a value is given, uvcat converts the input into the required
+        polarizations before writing to the output. Default is to copy
+        across the polarizations present in the input files.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreivated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           'nocal'       Do not apply the gains file. By default, UVCAT
+                         applies the gains file in copying the data.
+           'nopass'      Do not apply bandpass corrections. By default, UVCAT
+                         applies bandpass corrections if possible.
+           'nopol'       Do not apply polarization correction. By
+                         default UVCAT corrects polarizations, if possible.
+           'nowide'      Do not copy across wide-band channels.
+           'nochannel'   Do not copy across spectral channels.
+           'unflagged'   Copy only those records where there are some
+                         unflagged visibilites.
+%A out
+        The name of the output uv data set. No default.

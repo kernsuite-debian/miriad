@@ -1,0 +1,40 @@
+%N psrbl
+%D Subtract off-pulse uv baseline
+%P dpr
+%: uv analysis
+%B
+        PSRBL subtracts the off-pulse bins (the baseline) of visibilities
+        from the on-pulse bins of the visibilities, to remove continuum
+        sources.
+ 
+        Note: Although PSRBL does an excellent job of removing continuum
+        sources, it has the side-effect of scattering noise OUT OF the
+        off-pulse bins and INTO the on-pulse bins. For weak sources,
+        this can make plots made with PSRPLT, mode=amplitude look
+        artifically significant (or just plain strange). To moderate
+        this effect, always set the binsl key to cover all the available
+        off-pulse bins.
+%A vis
+        The name of the input uv data sets. Several can be given. No default.
+%A select
+        The normal uv selection commands. The default is copy everything.
+        See the help on "select" for more information.
+%A binsl
+        Bin selection to use for the baseline. This should consist
+        of comma-separated start/stop pairs, eg.
+          binsl = 1,14,17,32
+        In this example, the pulsar is detected in bins 15 and 16,
+        so all other bins (1-14 and 17-32) are used for the baseline.
+ 
+        To select a single bin, use eg. 1,1
+%A out
+        The name of the output uv data set. No default.
+%A options
+        Extra processing options. Several can be given, separated by
+        commas. Minimum match is supported.
+          nocal   This option suppresses antenna gain calibration. The
+                  default behaviour is to apply antenna calibration.
+          nopol   This option suppresses polarisation calibration. The
+                  default behaviour is to apply polarisation calibration.
+          nopass  This option suppresses bandpass calibration. The
+                  default behaviour is to apply bandpass calibration.

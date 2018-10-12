@@ -1,0 +1,43 @@
+.TH uvclip 1
+.SH NAME
+uvclip - determine data to flag from channel-0 uv dataset
+.SH PERSON RESPONSIBLE
+njt
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVCLIP flags UV channel 0 data set by statistical clipping
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input UV dataset name. No default.
+.sp
+.TP
+\fIselect\fP
+This selects the data to be processed, using the standard uvselect
+format. Default is all data.
+.sp
+.TP
+\fIoptions\fP
+noamp .... no visbility amplitude clipping
+notrip ... no triple visibility phase closure clipping
+doall .... include all data (flagged and unflagged)
+noapply .. do not apply flagging
+.sp
+.TP
+\fIinterval\fP
+Data clipping interval in minutes. The maximum interval between
+data points for continuous clipping.  Must be greater than the
+integration time.  The default is infinite.
+.sp
+.TP
+\fIclip\fP
+Clipping level.  Number of rms beyond which data is flagged.
+Default is 3.
+.sp
+.TP
+\fIlog\fP
+The list output file name. The default is the terminal.
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Spectral Line Processing and FITS files</TITLE>
+<META NAME="description" CONTENT="Spectral Line Processing and FITS files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node128.html">
+<LINK REL="previous" HREF="node126.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node128.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2993"
+  HREF="node128.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2989"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2983"
+  HREF="node126.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2991"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2994"
+  HREF="node128.html">Listing and Plotting Velocity</A>
+<B>Up:</B> <A NAME="tex2html2990"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2984"
+  HREF="node126.html">Spectral Line Processing and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001640000000000000000"></A>
+<A NAME="4233"></A>
+<BR>
+Spectral Line Processing and FITS files
+</H1>
+When <A NAME="tex2html554"
+  HREF="../doc/fits.html">fits</A>
+reads a visibility FITS file, it can use one
+of two schemes for computing the observatory's radial velocity.
+Possible schemes are:
+
+<OL>
+<LI><A NAME="tex2html555"
+  HREF="../doc/fits.html">fits</A>
+assumes that a velocity of a given channel remains constant.
+This means that one of the following three conditions is satisfied:
+
+<UL>
+<LI>Correcting shifts have been performed on the spectra by offline
+software to account for the Earth's motion (e.g. by AIPS task <A NAME="tex2html556"
+  HREF="../doc/CVEL.html">CVEL</A>
+or various tasks in <I>Miriad</I>).
+</LI>
+<LI>The velocity resolution is sufficiently coarse that Doppler tracking is
+not required.
+</LI>
+<LI>Doppler tracking has been performed during the observation (not ATCA data).
+</LI>
+</UL>
+If any one of these is satisfied, then given the velocity of a particular
+channel, <A NAME="tex2html557"
+  HREF="../doc/fits.html">fits</A>
+can determine the corresponding
+observatory radial velocity that this would imply.
+
+<P>
+You can either allow <A NAME="tex2html558"
+  HREF="../doc/fits.html">fits</A>
+to retrieve the needed velocity information from the FITS file, or you
+can give this
+information explicitly using the <code>velocity</code> keyword. The default
+behaviour (if you do not set the <code>velocity</code> keyword at all) is to
+use the information in the FITS file. You will need to explicitly enter the
+velocity information to <A NAME="tex2html559"
+  HREF="../doc/fits.html">fits</A>
+if the information in the FITS file
+is incorrect.
+
+<P>
+The <code>velocity</code>
+keyword gives three values: the velocity definition and rest frame,
+the velocity of a particular channel, and the channel velocity in km/s. Possible
+values for the velocity definition and rest frame are <TT>lsr</TT> (LSR
+velocity, radio definition), <TT>bary</TT> (barycentric velocity, radio
+definition), <TT>optlsr</TT> (LSR velocity, optical definition),
+<TT>optbary</TT> (barycentric velocity, optical definition) and <TT>obs</TT> (velocity
+relative to the observatory - not of much use). For example, to indicate
+that channel 257 has an LSR velocity (radio definition) of 4310 km/s, use
+<PRE>
+    velocity=lsr,4310,257
+</PRE>
+Specifying the velocity of a channel for a multi-source FITS file is not
+a particular meaningful thing to do (unless you are interested in only
+one source).
+
+<P>
+</LI>
+<LI><A NAME="tex2html560"
+  HREF="../doc/fits.html">fits</A>
+assumes that the velocity of a particular channel varies
+as a result of the Earth's motion. This will be the case for ATCA observations
+and so should generally be used
+(unless <A NAME="tex2html561"
+  HREF="../doc/CVEL.html">CVEL</A>
+has been used in AIPS, or similar corrections
+performed in <I>Miriad</I>). In this case, <A NAME="tex2html562"
+  HREF="../doc/fits.html">fits</A>
+will compute the Earth's
+radial velocity as a function of time. The model of the Earth's motion
+used by <A NAME="tex2html563"
+  HREF="../doc/fits.html">fits</A>
+is accurate to better than 0.005 km/s- which is adequate
+for most radio-astronomical applications. <A NAME="tex2html564"
+  HREF="../doc/fits.html">fits</A>
+will compute
+the radial velocity from its Earth model if a velocity frame
+and definition is given in the
+<code>velocity</code> keyword (either <TT>lsr, bary, optlsr, optbary</TT> or
+<TT>obs</TT>, as before), but the velocity and reference channel are omitted. For
+example, <A NAME="tex2html565"
+  HREF="../doc/fits.html">fits</A>
+will use its Earth model to determine the observatory's
+radial velocity with respect to the LSR if given:
+<PRE>
+    velocity=lsr
+</PRE>
+</LI>
+</OL>
+It is recommended that the second approach is used for ATCA data that has not
+already been corrected for Earth motion. This is especially so if the velocity
+information in the FITS file is incorrect.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2993"
+  HREF="node128.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2989"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2983"
+  HREF="node126.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2991"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2994"
+  HREF="node128.html">Listing and Plotting Velocity</A>
+<B>Up:</B> <A NAME="tex2html2990"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2984"
+  HREF="node126.html">Spectral Line Processing and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

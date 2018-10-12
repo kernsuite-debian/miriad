@@ -1,0 +1,127 @@
+<title> Documentation on gpscal </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on gpscal</h1>
+<pre>
+
+Task: gpscal
+Purpose: Self-calibration for arrays with linear feeds
+Categories: calibration, map making
+
+        GPSCAL is a MIRIAD task to perform self-calibration of visibility data,
+        where the visibility data is produced by linear feeds, and the source
+        is moderately or strongly polarised. Either phase only or amplitude
+        and phase calibration can be performed. The inputs to GPSCAL include a
+        visibility data file, and model images. The models should be of
+        differing polarisations of the same pointing and frequencies.
+        GPSCAL then calculates the visibilities corresponding to the model,
+        accumulates the statistics needed to determine the antennae solutions,
+        and then calculates the self-cal solutions.
+ 
+        Note that while GPSCAL can be used for self-calibrating with a point
+        source model, task GPCAL is more flexible (and efficient) at doing
+        this. For a point source model, GPSCAL is preferable only if the
+        data-set is not in time order (GPCAL insists that it is) or the point
+        source is not at the observing center.
+
+Key: <a name="vis"><a href="vis.html">vis</a>
+        Name of input visibility data file. No default.
+
+Key: <a name="select"><a href="select.html">select</a>
+        Standard uv data selection criteria. The default is all data.
+
+Key: <a name="model">model
+        Name of the input models. Several models can be given, which differ
+        in polarisation type. Polarisation types can be I,Q,U or V. Any
+        polarisation types that are not given are assumed to be zero.
+        The different models should correspond to the same pointing
+        and range of channels. Generally the model should be derived (by
+        mapping and deconvolution) from the input visibility file, so that
+        the channels in the model correspond to channels in the visibility
+        file. Though the maps can be made using any linetype, generally
+        "channel" linetype will give best results (??). The units of the
+        model MUST be JY/PIXEL, rather than JY/BEAM. It should be weighted
+        by the primary beam. The task DEMOS can be used to extract primary
+        beam weighted models from a mosaiced image. If no models are given,
+        a point source model is assumed (see FLUX keyword).
+
+Key: <a name="clip">clip
+        Clip level. For models of intensity, any pixels below the clip level
+        are set to zero. For models of Stokes Q,U,V, or MFS I*alpha models,
+        any pixels whose absolute value is below the clip level are set
+        to zero. Default is 0.
+
+Key: <a name="flux">flux
+        If no model is given, then a point source model is assumed. This
+        keyword gives the flux of the point source model. Four values can be
+        given, corresponding to I,Q,U and V respectively. <B>NOTE:</B> The flux
+        of the model is not adjusted to match the flux of the data, so if
+        amplitude selfcalibration is being performed, the fluxes given should
+        accurately portray the fluxes of the source. The default is 1,0,0,0.
+
+Key: <a name="spec">spec
+        The reference frequency (GHz), spectral index and up to two
+        higher order terms. The spectral index terms default to zero.
+
+Key: <a name="offset"><a href="offset.html">offset</a>
+        This gives the offset in arcseconds of a point source model (the
+        offset is positive to the north and to the east). This parameter is
+        used if the MODEL parameter is blank. The default is 0,0. The
+        amplitude of the point source is chosen so that flux in the model
+        is the same as the visibility flux.
+
+Key: <a name="interval">interval
+        The length of time, in minutes, of a gain solution. Default is 5,
+        but use a larger value in cases of poor signal to noise, or
+        if the atmosphere and instrument is fairly stable.
+
+Key: <a name="options"><a href="options.html">options</a>
+        This gives several processing options. Possible values are:
+          amplitude  Perform amplitude and phase self-cal.
+          phase      Perform phase only self-cal.
+          noxy       Do not attempt to solve for the XY phase difference.
+                     Normally GPSCAL attempts to solve for the XY phase
+                     on all antennae except for the reference antenna.
+                     The XY phase difference is assumed to be constant
+                     throughout the observation.
+          xyvary     Allow the XY phase difference to vary from integration
+                     to integration. If not specified, the XY phase is
+                     constrained to be constant throughout the data-set.
+          xyref      Solve for the XY phase of the reference antenna. To
+                     do this, the source should be strongly polarized (at
+                     least 5%) and Q or U models should be provided. This
+                     option cannot be used with ``noxy''.
+          mfs        This is used if there is a single plane in the input
+                     model, which is assumed to represent the image at all
+                     frequencies. This should also be used if the model has
+                     been derived from MFCLEAN. You should specify the
+                     LINE keyword if you use the mfs option.
+          noscale    Do not scale the gains. By default the gains are scaled
+                     so that the rms gain amplitude is 1. Generally this
+                     should be used if the model is believed to have the
+                     correct flux density scale.
+        Note that "amplitude" and "phase" are mutually exclusive.
+        The default is options=phase.
+
+Key: <a name="minants">minants
+        Data at a given solution interval is deleted  if there are fewer than
+        MinAnts antennae operative during the solution interval. The default
+        is 3 for options=phase and 4 for options=amplitude.
+
+Key: <a name="refant">refant
+        This sets the reference antenna, which is given a phase angle of zero.
+        The default is antenna 3.
+
+Key: <a name="line"><a href="line.html">line</a>
+        The visibility linetype to use, in the standard form, viz:
+          type,nchan,start,width,step
+        Generally if there is an input model, this parameter defaults to the
+        linetype parameters used to construct the map. If you wish to override
+        this, or if the info is not in the header, or if you are using
+        a point source model, this parameter can be useful.
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

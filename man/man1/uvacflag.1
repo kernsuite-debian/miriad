@@ -1,0 +1,31 @@
+.TH uvacflag 1
+.SH NAME
+uvacflag - Flag cross-correlations with flagged auto-correlations.
+.SH PERSON RESPONSIBLE
+mhw
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVACFLAG will flag all cross-correlations corresponding to flagged
+auto-correlations.  This can be useful, for example, if you run
+TVFLAG, and flag data based upon the auto-correlations.  You then
+use UVACFLAG and flag all other correlations at the same time when
+the auto-correlations are flagged.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+.nf
+  Input visibility file. No default.
+.TP
+\fIoptions\fP
+  Task enrichment options.  Minimum match is active.
+.fi
+.sp
+.nf
+  full    Instructs UVACFLAG to tell you about every record
+          it flags.  The default is a summary at the end.
+.fi
+.sp
+.SH REVISION
+1.7, 2013/08/30 01:49:21 UTC

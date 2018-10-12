@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Combination</TITLE>
+<META NAME="description" CONTENT="Image Combination">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node180.html">
+<LINK REL="previous" HREF="node178.html">
+<LINK REL="up" HREF="node176.html">
+<LINK REL="next" HREF="node180.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3658"
+  HREF="node180.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3654"
+  HREF="node176.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3648"
+  HREF="node178.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3656"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3659"
+  HREF="node180.html">Miscellaneous</A>
+<B>Up:</B> <A NAME="tex2html3655"
+  HREF="node176.html">The Individual Approach</A>
+<B> Previous:</B> <A NAME="tex2html3649"
+  HREF="node178.html">Deconvolution, Restoration and Self-Calibration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002173000000000000000"></A><A NAME="14414"></A>
+<BR>
+Image Combination
+</H2>
+When you are satisfied
+with the deconvolution, restoration and self-calibration of
+all the individual images, task <A NAME="tex2html937"
+  HREF="../doc/linmos.html">linmos</A>
+can be
+used to combine them in a linear mosaic. Usually you will just combine the
+restored images (if you are going to do quantitative analysis on the
+composite image, it may be best to do a deep CLEAN and use the same
+restoring beam for all pointings). Although <A NAME="tex2html938"
+  HREF="../doc/linmos.html">linmos</A>
+can interpolate
+input images to align them, its algorithm, particularly for geometric
+correction, is very poor, and so this
+is <EM>strongly</EM>
+discouraged. You should use <A NAME="tex2html939"
+  HREF="../doc/invert.html">invert</A>
+to make all the input images on the
+same grid, by setting a common tangent point (<code>offset</code> keyword).
+
+<P>
+Task <A NAME="tex2html940"
+  HREF="../doc/linmos.html">linmos</A>
+uses the same weighted sum of the input pointings as
+the `joint approach' software (see Section&nbsp;<A HREF="node171.html#s:mosjoint">21.6</A>). Normally
+the expected rms noise in the image is determined from the images
+themselves (image item <code>rms</code>). However if this item is missing,
+or if you wish to override it to get a different weighting, you may enter
+the expected rms noise via keyword <code>rms</code>. Also note that <A NAME="tex2html941"
+  HREF="../doc/linmos.html">linmos</A>,
+by default, <EM>fully corrects for the primary beam attenuation</EM> even
+when this excessively amplifies the noise. The <code>taper</code> option
+can be used to reduce the correction at the edge of the field, and thus
+avoid excessive noise amplification.
+
+<P>
+Typical inputs to <A NAME="tex2html942"
+  HREF="../doc/linmos.html">linmos</A>
+are:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>LINMOS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc_*.cln</TD>
+<TD ALIGN="LEFT">Use wildcards to select all images.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.mos</TD>
+<TD ALIGN="LEFT">The output linearly mosaiced image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rms</TD>
+<TD ALIGN="LEFT">Generally left unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave blank to fully correct primary beam,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=taper</TD>
+<TD ALIGN="LEFT">or set to taper at the edge of the mosaic.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3658"
+  HREF="node180.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3654"
+  HREF="node176.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3648"
+  HREF="node178.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3656"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3659"
+  HREF="node180.html">Miscellaneous</A>
+<B>Up:</B> <A NAME="tex2html3655"
+  HREF="node176.html">The Individual Approach</A>
+<B> Previous:</B> <A NAME="tex2html3649"
+  HREF="node178.html">Deconvolution, Restoration and Self-Calibration</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

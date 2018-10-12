@@ -1,0 +1,32 @@
+.TH calplot 1
+.SH NAME
+calplot - Plot flux of primary calibrators
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+CALPLOT plots the flux of primary calibrators as a function
+of frequency.
+.SH PARAMETERS
+.TP
+\fIsource\fP
+The source to be plotted. No default.
+.TP
+\fIxrange\fP
+This gives two numbers, being the frequency range to plot, in GHz.
+The default is 4.7,4.9.
+.TP
+\fIstokes\fP
+The Stokes parameters to be plotted. The default is to plot
+only I.
+.TP
+\fIoptions\fP
+"cursor"   This activates the cursor, and returns the flux density
+.nf
+  for each Stokes at the frequency specified by the x-location
+  of the cursor. Use right button (or 'X') to exit.
+.TP
+\fIdevice\fP
+.fi
+PGPLOT device. No default.

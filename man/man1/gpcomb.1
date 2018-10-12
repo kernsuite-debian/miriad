@@ -1,0 +1,107 @@
+.TH gpcomb 1
+.SH NAME
+gpcomb - Combine multiple polarization calibration solutions.
+.SH PERSON RESPONSIBLE
+dpr
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+.sp
+.nf
+       GPCOMB combines the leakage tables and xyphase solutions from
+       multiple calibrators. The routine is intended to be used when
+       attempting high-precision circular polarization observations at
+       the ATCA. Because leakages and xyphases are treated as invariant
+       during circular polarization calibration, a more accurate
+       calibration may be obtained by averaging several solutions from
+       several "leakage calibrators".
+.fi
+.sp
+.nf
+       Notes:
+.fi
+.sp
+.nf
+       GPCOMB will probably be less useful for linear polarization
+       observations, because linear polarization observations are
+       usually limited by the xygain amplitudes, not the leakages
+       or xyphases.
+.fi
+.sp
+.nf
+       If the calibration solutions you are comparing had the circular
+       polarization zero-point determined from different observations
+       of 1934-638 (eg. on different days), then there may be an
+       xy-phase offset hidden in the bandpass, and so averaging the
+       leakages and xyphases would probably be a bad idea. Maybe
+       try using the same bandpass for both...
+.fi
+.sp
+.nf
+       And finally, if you have consistent systematic errors in your
+       solutions (eg. you haven't used xyref,polref in gpcal), then no
+       amount of averaging is going to help.
+.fi
+.sp
+.nf
+       References:
+.fi
+.sp
+.nf
+       For an overview of high-precision circular polarization
+       calibration with the ATCA, see
+.fi
+.sp
+.nf
+       Rayner, "Circular Polarization User's Guide", ATNF Technical
+       Document Series, 2000, 39.3/102,
+       http://www.atnf.csiro.au/people/drayner/Publications/
+       index.html#Circular_Polarization_Users_Guide
+.fi
+.sp
+.nf
+       For thorough treatment of the issues, see
+.fi
+.sp
+.nf
+       Sault, Hamaker and Bregman, "Understanding radio polarimetry
+       II. Instrumental calibration of an interferometer array", A&AS,
+       1996, v117, pp149-159.
+       ftp://ftp.atnf.csiro.au/pub/people/rsault/papers/polar2.ps.gz
+.fi
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+.nf
+       The visibility data-set to which the average leakages and
+       xyphases will be written. If omitted, the averaged
+       leakage values are still reported to screen.
+.fi
+.sp
+.nf
+       Existing calibration tables are not applied to vis ie. the
+       resultant calibration and leakage tables in vis are REPLACED by
+       those from the cals. This is what you would usually want to
+       do. If not, apply the appropriate calibration first with uvaver.
+.fi
+.sp
+.nf
+       The corrected dataset does retain the original gain
+       amplitude and the antenna-based component of the gain phase.
+.TP
+\fIcal\fP
+       The data-sets containing the nominally correct polarization
+       calibration. No default. May include vis.
+.TP
+\fIselect\fP
+       Normal uv selection. Only antenna-based selection is supported.
+       If an existing leakage/xyphase solution exists for a de-selected
+       antenna in vis, the value will be preserved. Otherwise,
+       it will be set to zero.
+.TP
+\fIoptions\fP
+       Task enrichment parameters. Several can be given,
+       separated by commas. Minimum match is used.
+         "noxy"     Do not solve for, or apply, the average XY phase.
+         "nopol"    Do not solve for, or apply, average leakages.

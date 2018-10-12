@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Inside Datasets</TITLE>
+<META NAME="description" CONTENT="Inside Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node26.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1721"
+  HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1717"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1711"
+  HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1719"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1722"
+  HREF="node29.html">Scratch Files</A>
+<B>Up:</B> <A NAME="tex2html1718"
+  HREF="node26.html">Miriad Datasets</A>
+<B> Previous:</B> <A NAME="tex2html1712"
+  HREF="node27.html">Listing Datasets - PRTHD</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00420000000000000000">
+Inside Datasets</A>
+</H1>
+Generally the user does not need to understand much about the internal
+structure of a dataset. A dataset contains several kinds of data, called
+`items', <A NAME="1292"></A>.
+Items can be quite small (e.g. a single number), intermediate in size
+(e.g. the <TT>history</TT> item, use to store history information), or very
+large (e.g. the <TT>image</TT> item in an image dataset, which is used to
+store the pixel data, or the <TT>visdata</TT> item in a visibility dataset,
+which contains the correlations).
+Large items are stored as a host system file, whereas all small items are
+stored in a common file which is rather inappropriately called <TT>header</TT>.
+Indeed, there are a number of instances where the word ``header'' is used
+where ``item'' or ``small item'' would be a more appropriate description.
+
+<P>
+The implementation of datasets as directories does complicate
+some manipulations of your datasets, since your favourite image, etc, is not
+just a file anymore.
+On the other hand, as the host system sees a <I>Miriad</I> dataset as a normal
+directory, all the
+usual host commands to manipulate directories can be used. On UNIX a <code>-r</code>
+switch often has to be used with the command, to indicate that the operation
+is to be applied `recursively' (i.e. to all files in the directory). For
+example, to delete a dataset, use
+<BLOCKQUOTE>
+<TT>% rm -r </TT><I>dataset</I>
+
+</BLOCKQUOTE><A NAME="1301"></A>
+If you have aliased <A NAME="tex2html30"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=rm">rm</A>
+to prompt you before deleting a file (as is common
+in a number of the standard login scripts at Epping), you will be prompted
+before deleting each individual file within a dataset. This can become
+somewhat tedious, so you might want to make another alias to delete without
+prompting. For example, insert
+<PRE>
+     alias rrm 'rm'
+</PRE>
+in your <TT>.cshrc</TT> file.
+Similarly to copy a dataset, you would use
+<BLOCKQUOTE>
+<TT>% cp -r </TT><I>dataset1 dataset2</I>
+
+</BLOCKQUOTE>
+
+<P>
+Generally the user is insulated from this internal organisation of a dataset
+and can always think of them as a whole. However there are a few
+<I>Miriad</I> utilities to manipulate at the item level. These tasks
+do not contain any astronomical knowledge. Consequently they may seem
+somewhat crude. These tasks include:
+
+<UL>
+<LI><A NAME="tex2html31"
+  HREF="../doc/itemize.html">itemize</A>: List the items in a dataset.
+</LI>
+<LI><A NAME="tex2html32"
+  HREF="../doc/delhd.html">delhd</A>: Delete an item from a dataset.
+</LI>
+<LI><A NAME="tex2html33"
+  HREF="../doc/puthd.html">puthd</A>: Add an item which consists of a  single-value to a dataset.
+</LI>
+<LI><A NAME="tex2html34"
+  HREF="../doc/copyhd.html">copyhd</A>: Copy an item from one dataset to another.
+</LI>
+<LI><A NAME="tex2html35"
+  HREF="../doc/gethd.html">gethd</A>: Print the value of an item. This is most useful in scripts.
+</LI>
+</UL>
+Note the rather inappropriate use of `hd' in the preceding names, where
+something suggesting items (rather than header) would have been more
+appropriate.
+
+<P>
+As an example, consider the <A NAME="tex2html36"
+  HREF="../doc/itemize.html">itemize</A>
+task, which lists the items
+in a dataset. For the test image dataset, <TT>gauss</TT>
+(created with <A NAME="tex2html37"
+  HREF="../doc/imgen.html">imgen</A>
+<A NAME="1320"></A> in Chapter&nbsp;<A HREF="node4.html#c:iface">2</A>)
+<A NAME="tex2html38"
+  HREF="../doc/itemize.html">itemize</A>
+will tell us of the following items:
+<PRE>
+   % itemize in=gauss
+   Itemize: version 1.1 4-mar-91
+   naxis    = 2
+   naxis1   = 256
+   naxis2   = 256
+   crpix1   = 129
+   crpix2   = 129
+   cdelt1   = -4.848137e-06
+   cdelt2   = 4.848137e-06
+   crval1   = 0
+   crval2   = 0
+   history    (text data, 38 elements)
+   image      (real data, 65536 elements)
+</PRE>
+Here the item <TT>naxis</TT> consists of a single integer, having the value
+of 2. The item <TT>image</TT> is a larger item (being the pixel data) consisting
+of 65536 (256 by 256) real numbers.
+
+<P>
+Note for images that many items have FITS-like names (although they are lower
+case, and the units can be different from the FITS standard). A list of
+the items in an image and visibility dataset are given in Appendices&nbsp;<A HREF="node213.html#app:image">B</A> and <A HREF="node214.html#app:uvvars">C</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1721"
+  HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1717"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1711"
+  HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1719"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1722"
+  HREF="node29.html">Scratch Files</A>
+<B>Up:</B> <A NAME="tex2html1718"
+  HREF="node26.html">Miriad Datasets</A>
+<B> Previous:</B> <A NAME="tex2html1712"
+  HREF="node27.html">Listing Datasets - PRTHD</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

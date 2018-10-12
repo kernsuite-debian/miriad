@@ -1,0 +1,73 @@
+.TH uvputhd 1
+.SH NAME
+uvputhd - Allows user to alter values of header variables in uv dataset
+.SH PERSON RESPONSIBLE
+lgm
+.SH CATEGORIES
+vis,uv,header
+.SH DESCRIPTION
+UVPUTHD allows the user to change the values of uv variables in a
+uv dataset. All occurances of the variable are changed to the
+new value. If the variable is an array, all new values must be
+entered in sequential order. If the user desires to set all members
+of an array to a single value, only one value need be entered.
+Values can also be inserted from a time ordered table.
+Note: PUTHD must be used to use the uv override principle, but
+can only be used for single items, i.e. uv variables which are
+not an array.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Name of the input MIRIAD dataset. Only one dataset is allowed.
+No default.
+.TP
+\fIhdvar\fP
+Name of header variable to be changed. Refer to user manual or
+run VARLIST to see the selection of allowed variable names.
+No default.
+.TP
+\fItype\fP
+Type of variable, either integer (i),real (r), double precision (d),
+or ascii (a). Unused if variable already exists in the data file.
+CAVEAT: Tables do not support ascii types yet.
+No Default.
+.TP
+\fIlength\fP
+Length of array of variable values. Unused if variable already
+exists in data file or table is specified, else set to 1.
+.TP
+\fIvarval\fP
+New values of header variable - if the variable is an array
+all values must be specified or will assume one value for all.
+If you want values that change with time, you must use the
+table= keyword instead.
+No default.
+.TP
+\fItable\fP
+Name of the table that lists time (fractional days since time0) in
+column 1, and the values of the array in columns 2 through LENGTH+1.
+Values are simply inserted as soon as the time has passed, no
+interpolation is performed (unless options=inter and the variable is
+real or double precision)
+CAVEAT: do not use array variables with tables, and type=ascii cannot
+be used either.
+No default.
+.TP
+\fItime0\fP
+Offset time as applied to the times in column 1 of the table for
+tabular input. Legal formats as defined in subroutine DAYJUL,
+of which the ISO standard "ccyy-mm-dd[Thh[:mm[:ss.s]]]" is to
+be preferred.
+Default: not used, in which case the offset is 0, in which case
+fractional days are really Julian Days.
+.TP
+\fIoptions\fP
+There is a single option
+.nf
+  inter - interpolate real and double precision values linearly
+.TP
+\fIout\fP
+.fi
+Name of the output dataset. No default.
+.SH REVISION
+1.6, 2018/07/06 06:18:42 UTC

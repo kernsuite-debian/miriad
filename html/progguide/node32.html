@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Data Sets</TITLE>
+<META NAME="description" CONTENT="Image Data Sets">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node33.html">
+<LINK REL="previous" HREF="node31.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node33.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html634"
+  HREF="node33.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html628"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html622"
+  HREF="node31.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html630"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html632"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html635"
+  HREF="node33.html">Image Coordinate System</A>
+<B>Up:</B> <A NAME="tex2html629"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html623"
+  HREF="node31.html">The UVDAT routines</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00480000000000000000"></A><A NAME="575"></A>
+<BR>
+Image Data Sets
+</H1>
+These routines access image data sets.
+<PRE>
+      subroutine xyopen(tno,dataname,status,naxis,nsize)
+      subroutine xyclose(tno)
+      subroutine xyread(tno,index,array)
+      subroutine xywrite(tno,index,array)
+      subroutine xysetpl(tno,naxis,nsize)
+</PRE>
+Here <TT>xyopen</TT> opens the image data set, and readies it for reading or
+writing. <TT>Dataname</TT> is the name of the data set, <TT>status</TT> is either
+<TT>`old'</TT> or <TT>`new'</TT>, depending on whether an old data set is being opened
+to be read, or a new data set is being created. <TT>Naxis</TT> gives the dimension
+of the <TT>nsize</TT> array. <TT>Naxis</TT> is always an input parameter.
+<TT>Nsize</TT> gives the size, along each axis of the
+image. When opening an old data set, <TT>nsize</TT> is filled in by <TT>xyopen</TT>,
+and passed back to the caller. For a new data set, <TT>nsize</TT> must be set to the
+size of the desired image before the open routine is called. The argument
+<TT>tno</TT> is the handle passed back by the open routine, and is used
+in all subsequent calls to identify the data set.
+
+<P>
+<TT>Xyclose</TT> closes the data set.
+
+<P>
+<TT>Xyread</TT> and <TT>xywrite</TT> read or write a single row of the image. 
+The row number is given by <TT>index</TT>, and the pixel data is stored in
+<TT>array</TT> (a real array). By default, <TT>xyread</TT> and <TT>xywrite</TT> access
+a row in the first image of a multi-image data set. The routine <TT>xysetpl</TT>
+is used to change this default to another image. In this <TT>naxis</TT> gives the
+dimension of the <TT>nsize</TT> array, and <TT>nsize</TT> is an integer array
+giving the indices along the third, fourth, etc, dimension of access. For
+example, to access the n'th image in a cube, use:
+<PRE>
+      call xysetpl(tno,1,n)
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html634"
+  HREF="node33.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html628"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html622"
+  HREF="node31.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html630"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html632"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html635"
+  HREF="node33.html">Image Coordinate System</A>
+<B>Up:</B> <A NAME="tex2html629"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html623"
+  HREF="node31.html">The UVDAT routines</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

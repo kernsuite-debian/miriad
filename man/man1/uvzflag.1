@@ -1,0 +1,36 @@
+.TH uvzflag 1
+.SH NAME
+uvzflag - Flags a visibility dataset where data are zero or fixed.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVZFLAG is a MIRIAD task which flags correlations in a
+visibility dataset when either the data are identically zero
+or where the data remain absolutely unchanged between the different
+channels of a spectral window.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility datasets to be flagged. No default. Several
+datasets can be given. Wildcards are supported.
+.TP
+\fIselect\fP
+Normal visibility selection, which is applied to the template
+dataset. See the help on "select" for more information.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by commas.
+Minimum match is supported. Possible values are:
+.nf
+  zero    By default, uvzflag flags data when the good (unflagged)
+          corrlations in a spectral window are all identical. The `zero'
+          flag causes uvzflag to flag when the data are identically
+          zero.
+  noapply Do not apply the flagging, just report the statistics
+          about what would be flagged.
+.fi
+.sp
+.SH REVISION
+1.1, 2010/05/24 16:40:57 UTC

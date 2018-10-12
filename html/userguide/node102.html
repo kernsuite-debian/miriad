@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Clark CLEAN</TITLE>
+<META NAME="description" CONTENT="The Clark CLEAN">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node103.html">
+<LINK REL="previous" HREF="node101.html">
+<LINK REL="up" HREF="node101.html">
+<LINK REL="next" HREF="node103.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2674"
+  HREF="node103.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2670"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2664"
+  HREF="node101.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2672"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2675"
+  HREF="node103.html">The SDI CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2671"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2665"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001421000000000000000"></A><A NAME="3703"></A>
+<BR>
+The Clark CLEAN
+</H2>
+The Clark CLEAN algorithm <A NAME="tex2html397"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1980A%26A....89..377C">(Clark 1980)</A>
+(A&amp;A 26, 89)
+is a variant of the H&#246;gbom CLEAN,
+and aims at improved speed for large images. The original H&#246;gbom algorithm
+spends a lot of time searching residuals which are negligible, and
+shifting and scaling the dirty beam. The Clark algorithm avoids these by
+searching a list of only the largest residuals, working with only a sub-region
+of the beam for much of the time, and by using FFTs to perform convolutions
+when it has to resort to using the full beam. This leads to an algorithm which
+is more efficient for large images (although a good deal more complicated).
+For small images though, the H&#246;gbom CLEAN may
+still be faster.
+
+<P>
+The Clark CLEAN plays a few tricks which you should know about.  It has
+what are termed major and minor cycles.  In the minor cycle, CLEAN
+components are searched for, and subtracted from the image, in a fashion
+very similar to that of the H&#246;gbom CLEAN.  The difference is that only
+the central portion of the dirty beam is used for the subtraction, and a
+list of the largest residuals are searched (not the full region being CLEANed).
+The rationale is that for dirty beams that have a fairly good sidelobe
+pattern, this will be good enough to find the CLEAN components.  At some
+designated time, this minor cycle is terminated and a major cycle
+computed.  This means that the list of CLEAN components from the current
+cycle are `FFTed', and subtracted from the FFT of the residual image
+that resulted from the <EM>previous</EM> major cycle.  In this way, errors
+that might have accumulated in the subtraction phase of the minor cycle
+with only a part of the beam are largely set to rights. It is also at this
+stage that the list of the largest residuals is re-determined.
+
+<P>
+This use of a small beam patch in the Clark CLEAN is a potential danger
+if the beam is poor.   Images made from ATCA snapshot data, even if there are
+a few cuts, often have a beam in which the first sidelobe response is
+quite strong and outside of the beam patch that the Clark CLEAN typically
+uses.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2674"
+  HREF="node103.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2670"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2664"
+  HREF="node101.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2672"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2675"
+  HREF="node103.html">The SDI CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2671"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2665"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

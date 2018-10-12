@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Command-Line Editing and ER</TITLE>
+<META NAME="description" CONTENT="Command-Line Editing and ER">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node9.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1503"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1499"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1493"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1501"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1504"
+  HREF="node11.html">Interrupting a Task</A>
+<B>Up:</B> <A NAME="tex2html1500"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1494"
+  HREF="node9.html">EXIT and QUIT</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00224000000000000000">
+Command-Line Editing and ER</A>
+</H2>
+<TT>Miriad</TT> includes a reasonably sophisticated command-line editor.
+The up- and down-arrow keys allow scrolling
+through the history of previous commands, and the left- and right-arrow keys
+allow cursor motion within a line. Pressing the TAB key causes an attempt
+to perform file-name completion. Various control keys allow extra editing.
+A summary is given in Table&nbsp;<A HREF="#t:lineedit">2.1</A>. For copious
+information, see the GNU Readline library manual.
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="t:lineedit"></A>
+<P>
+<DIV ALIGN="CENTER">
+<A NAME="422"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table 2.1:</STRONG>
+<TT>miriad</TT> Command Line Editing Commands</CAPTION>
+<TR><TD ALIGN="LEFT">Key</TD>
+<TD ALIGN="LEFT">Description</TD>
+</TR>
+<TR><TD ALIGN="LEFT">UpArrow</TD>
+<TD ALIGN="LEFT">Previous command</TD>
+</TR>
+<TR><TD ALIGN="LEFT">DownArrow</TD>
+<TD ALIGN="LEFT">Next command</TD>
+</TR>
+<TR><TD ALIGN="LEFT">LeftArrow</TD>
+<TD ALIGN="LEFT">Move cursor left</TD>
+</TR>
+<TR><TD ALIGN="LEFT">RightArrow</TD>
+<TD ALIGN="LEFT">Move cursor right</TD>
+</TR>
+<TR><TD ALIGN="LEFT">DEL</TD>
+<TD ALIGN="LEFT">Delete character to left of cursor</TD>
+</TR>
+<TR><TD ALIGN="LEFT">TAB</TD>
+<TD ALIGN="LEFT">File name completion</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>^</code>TAB</TD>
+<TD ALIGN="LEFT">List possible completions</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>^A</code></TD>
+<TD ALIGN="LEFT">Move to beginning of line</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>^D</code></TD>
+<TD ALIGN="LEFT">Delete character underneath cursor</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>^E</code></TD>
+<TD ALIGN="LEFT">Move to end of line</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>^U</code></TD>
+<TD ALIGN="LEFT">Delete to beginning of line</TD>
+</TR>
+</TABLE>
+</DIV>
+</DIV>
+<BR>
+
+<P>
+The <TT>er</TT> command can be used to perform command-line editing on the
+current value of a parameter. It also obeys the left- and right-arrow keys,
+the DEL key etc. For example, to edit the current value of the parameter
+<TT>select</TT>, use:
+<PRE>
+   miriad% er select
+</PRE>
+The <TT>er</TT> command is not as sophisticated as the normal command-line
+editor.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1503"
+  HREF="node11.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1499"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1493"
+  HREF="node9.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1501"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1504"
+  HREF="node11.html">Interrupting a Task</A>
+<B>Up:</B> <A NAME="tex2html1500"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1494"
+  HREF="node9.html">EXIT and QUIT</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

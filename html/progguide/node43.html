@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>FFT Routines</TITLE>
+<META NAME="description" CONTENT="FFT Routines">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node44.html">
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node42.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html791"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html785"
+  HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html779"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html787"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html789"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html792"
+  HREF="node44.html">Min and Max Value</A>
+<B>Up:</B> <A NAME="tex2html786"
+  HREF="node42.html">Numeric Routines</A>
+<B> Previous:</B> <A NAME="tex2html780"
+  HREF="node42.html">Numeric Routines</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004151000000000000000"></A>
+<A NAME="847"></A><A NAME="848"></A>
+<BR>
+FFT Routines
+</H2>
+There are three FFT routines, namely:
+<PRE>
+      subroutine fftrc(in,out,sign,n)
+      subroutine fftcr(in,out,sign,n)
+      subroutine fftcc(in,out,sign,n)
+</PRE>
+These perform one-dimensional FFTs. In all cases, <TT>sign</TT> is the sign
+of the exponent in the transform (i.e. a <TT>sign</TT> of -1 is conventionally
+viewed as a forward transform), and <TT>n</TT> is a power of 2 giving the
+length of the (full) sequence. <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="35" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.png"
+ ALT="${1\over N}$"></SPAN> scaling is never performed
+(it is up to you to scale at the best time). <TT>In</TT> is the input
+array, and <TT>out</TT> is the output array. These routines
+evaluate:
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+Out(l)=\sum_{k=1}^N In(k)\exp(\pm j {2\pi\over N} (k-1)(l-1))
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="303" HEIGHT="56" BORDER="0"
+ SRC="img34.png"
+ ALT="\begin{displaymath}
+Out(l)=\sum_{k=1}^N In(k)\exp(\pm j {2\pi\over N} (k-1)(l-1))
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img35.png"
+ ALT="$k$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="9" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img36.png"
+ ALT="$l$"></SPAN> vary from <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img37.png"
+ ALT="$1$"></SPAN> to <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN>.
+<TT>Fftrc</TT> transforms a real
+sequence (i.e. <TT>in</TT> is a real array) and outputs only the first <SPAN CLASS="MATH"><IMG
+ WIDTH="60" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img38.png"
+ ALT="$N/2 + 1$"></SPAN>
+complex values. No information is lost because of the conjugate
+symmetry of FFTs of real sequences. Conversely <TT>fftcr</TT> takes a
+complex sequence of length <SPAN CLASS="MATH"><IMG
+ WIDTH="60" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img38.png"
+ ALT="$N/2 + 1$"></SPAN> and produces a real sequence of length <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN>.
+Finally <TT>fftcc</TT> performs a complex to complex transform, with
+both input and output being of length <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html791"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html785"
+  HREF="node42.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html779"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html787"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html789"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html792"
+  HREF="node44.html">Min and Max Value</A>
+<B>Up:</B> <A NAME="tex2html786"
+  HREF="node42.html">Numeric Routines</A>
+<B> Previous:</B> <A NAME="tex2html780"
+  HREF="node42.html">Numeric Routines</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

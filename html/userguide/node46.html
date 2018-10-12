@@ -1,0 +1,483 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>ATLOD: Reading RPFITS Files</TITLE>
+<META NAME="description" CONTENT="ATLOD: Reading RPFITS Files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node47.html">
+<LINK REL="previous" HREF="node45.html">
+<LINK REL="up" HREF="node45.html">
+<LINK REL="next" HREF="node47.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1951"
+  HREF="node47.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1947"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1941"
+  HREF="node45.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1949"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1952"
+  HREF="node47.html">FITS Tapes and Miriad</A>
+<B>Up:</B> <A NAME="tex2html1948"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1942"
+  HREF="node45.html">Getting Data In and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00810000000000000000"></A><A NAME="1882"></A><A NAME="1883"></A>
+<A NAME="s:atlod"></A>
+<BR>
+<TT>ATLOD:</TT> Reading RPFITS Files
+</H1>
+
+<P>
+ATCA data will be initially in RPFITS format.  This needs to be converted to
+<I>Miriad</I>'s format, by task <A NAME="tex2html63"
+  HREF="../doc/atlod.html">atlod</A>, before any further processing
+can be done.
+We will discuss the various input parameters to <I>Miriad</I> <A NAME="tex2html64"
+  HREF="../doc/atlod.html">atlod</A>.
+
+<P>
+
+<UL>
+<LI>The <TT>in</TT> parameter gives the name of the input UNIX file, or files,
+to load. Many files can be given, and wildcards are supported.
+
+<P>
+RPFITS files are commonly archived on CDROMs: a CDROM appears much like
+a disk to the operating system, and <A NAME="tex2html65"
+  HREF="../doc/atlod.html">atlod</A>
+can load RPFITS files
+directly off these. To use a CDROM drive,
+first check that the drive is not in use (an orange light flashing). On Solaris
+to load a CDROM, press the Open/Close on the front of the drive, place
+the CDROM in
+and again press the Open/Close button. After about 10 seconds, the operating
+system will mount the CDROM, and it can be accessed.
+CDROMs written at the ATCA will have the RPFITS data in the
+directory
+<BLOCKQUOTE>
+<TT>/cdrom/cdrom<I>x</I>/DATA</TT>
+
+</BLOCKQUOTE>
+where <I>x</I> is 0 for the first drive of a machine, 1 for the second, etc
+(you can do a directory listing to see what you have - its like a normal
+file system!).
+You can set the <TT>in</TT> parameter to the RPFITS files in this directory.
+For example, to select all files belonging to project C561 (assuming you are
+using the first CDROM drive), use
+<PRE>
+  in=/cdrom/cdrom0/DATA/*.C561
+</PRE>
+When you are done with a CDROM drive you eject it with the Solaris UNIX command
+<PRE>
+   eject cdrom
+</PRE>
+(the Open/Close button will not work).
+
+<P>
+RPFITS files are (or at least were once) commonly written to exabyte
+tapes. Unlike other <I>Miriad</I> tasks, <A NAME="tex2html66"
+  HREF="../doc/atlod.html">atlod</A>
+can read exabytes
+directly. In this case you should use the physical device name as the
+input name. This is usually
+displayed on the exabyte drive. On the Epping Solaris systems, the device
+name is usually <code>/dev/rmt/0lbn</code> or similar
+(this is the so-called non-rewinding, raw, BSD compatibility interface).
+On older Solaris systems, it may be <code>/dev/nrst4</code> or something similar
+(non-rewinding, raw interface).
+
+<P>
+An alternative to directly reading from exabyte is to load the data to
+disk with the Unix commands <A NAME="tex2html67"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=ansiread">ansiread</A>
+or <A NAME="tex2html68"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=ansitape">ansitape</A>, which are
+available on a number of the ATNF systems.  See the
+UNIX <A NAME="tex2html69"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=man">man</A>
+pages for more information.
+
+<P>
+</LI>
+<LI>The <TT>out</TT> parameter gives the name of the output <I>Miriad</I> visibility
+dataset. There is no default.
+
+<P>
+</LI>
+<LI>The <TT>options</TT> parameter gives miscellaneous processing options.
+thatfairly It is important to
+Several values can be given, separated by commas.
+As loading RPFITS data can be time-consuming (particularly when loading
+from exabyte), and as the right options for <A NAME="tex2html70"
+  HREF="../doc/atlod.html">atlod</A>
+can save
+considerable disk space, it is sensible to spend a few moments thinking
+about the correct options to use.
+A few sets of permutations of the options will be appropriate with most
+observations. These include:
+
+<UL>
+<LI>For continuum: <code>options=birdie,xycorr</code> or
+<code>options=birdie,reweight,xycorr</code>. See below for a discussion on
+whether to use <code>reweight</code> or not.
+</LI>
+<LI>For non-polarimetric line: <code>options=birdie</code> or
+<code>options=birdie,compress</code> or <code>options=birdie,hanning</code>
+or <code>options=birdie,compress,hanning</code>. See Section&nbsp;<A HREF="node126.html#s:specrpfits">16.3</A>
+for more on using <A NAME="tex2html71"
+  HREF="../doc/atlod.html">atlod</A>
+with spectral line data and
+Section&nbsp;<A HREF="node209.html#s:hires">24.2</A> for high time resolution bin-mode data.
+</LI>
+</UL>
+
+<P>
+Possibilities options are:
+
+<P>
+<DL>
+<DT><STRONG><TT>birdie</TT>:</STRONG></DT>
+<DD>The ATCA suffers from self-interference at frequencies
+which are a multiple of 128 MHz. The birdie option flags out the channels
+affected by this self-interference. This option is strongly recommended.
+
+<P>
+Additionally, in the 33 channel/128 MHz mode, the birdie option
+also discards some edge channels and every other channel. This operation
+does not incur a sensitivity penalty, as correlator channels are not
+independent in this mode. The net result is that
+the output consists of either 13 or 14 good channels.
+</DD>
+<DT><STRONG><TT>xycorr</TT>:</STRONG></DT>
+<DD>In polarimetric correlator configurations, the
+ATCA makes an on-line measurement of the phase difference between the
+<I>X</I> and <I>Y</I> channels. Although it is generally only a few
+degrees (assuming the observation was correctly set-up), this
+phase difference should be corrected when doing polarimetric work.
+Since a hardware upgrade in November 1992, the recommendation has
+been that the on-line measurements should
+be applied, without averaging, using the <code>xycorr</code> option in <A NAME="tex2html72"
+  HREF="../doc/atlod.html">atlod</A>.
+For data prior to November 1992 - seek expert advise.
+
+<P>
+</DD>
+<DT><STRONG><TT>reweight</TT>:</STRONG></DT>
+<DD>In the 33 channel/128 MHz mode, a Gibbs
+phenomena (see Albert Bos in the <I>Indirect Imaging</I> proceedings)
+affects the
+ATCA. This introduces a non-closing error into the data.
+The effect is moderately subtle, and is not significant for
+dynamic ranges of less than about 500. The `reweight' option reweights
+the visibility spectrum in the lag domain to eliminate this problem.
+
+<P>
+This option is recommended for high dynamic range work (more than
+about 500). However, the option also reduces the effectiveness of the birdie
+option to reject self-interference. This can be a significant effect for
+20cm continuum observations, where the usual observing band straddles
+the 1408 MHz birdie. Particularly at 20cm, the reweight option is <EM>not
+recommended</EM> where dynamic ranges of less than 500 are expected.
+
+<P>
+</DD>
+<DT><STRONG><TT>compress</TT>:</STRONG></DT>
+<DD>Normally the correlation data are stored as
+32-bit floating point numbers.
+Alternatively, the <TT>compress</TT> switch can be used to instruct
+<A NAME="tex2html73"
+  HREF="../doc/atlod.html">atlod</A>
+to store the correlations as 16-bit integers,
+with a scale factor associated with each spectrum. This approximately
+halves the disk space occupied by a dataset, and so may be very
+advantageous for large spectral-line observations.
+</DD>
+<DT><STRONG><TT>hanning</TT>:</STRONG></DT>
+<DD>Hanning<A NAME="1924"></A> smooth the data, and
+discard every second
+channel. This can be useful for spectral line experiments. Task <A NAME="tex2html74"
+  HREF="../doc/atlod.html">atlod</A>
+will refuse to Hanning smooth data with 33 channels or less.
+</DD>
+<DT><STRONG><TT>bary</TT>:</STRONG></DT>
+<DD>Use the barycentre (often called heliocentre
+and usually used for extra-galactic work) as the rest frame when calculating
+velocity information. The default is to compute velocity information
+relative to the LSR frame (which is usually used for Galactic work).
+
+<P>
+</DD>
+<DT><STRONG><TT>hires</TT></STRONG></DT>
+<DD>This option may be appropriate for observations
+using the ATCA's high time resolution bin mode. See Chapter&nbsp;<A HREF="node207.html#c:pulsar">24</A>
+for more information.
+
+<P>
+</DD>
+<DT><STRONG><TT>opcorr</TT>:</STRONG></DT>
+<DD>This option corrects the visibility data for
+atmospheric opacity. It is since October 2003 that there is sufficient
+information in the visibility dataset to allow this.
+This options <EM>should not</EM> be used for 3mm data. Generally it is relevant
+for 12mm observations only. See Sections&nbsp;<A HREF="node187.html#s:atlod12mm">22.1</A> and <A HREF="node198.html#s:atfix">23.2.2</A>
+for more information.
+</DD>
+<DT><STRONG><TT>samcorr</TT>:</STRONG></DT>
+<DD>Correct the measured visibilities for bad
+sampler statistics. Normally the samplers adjust their various threshold
+levels to ensure optimal operation. However various transients can cause
+the sampler levels to be wrong. All is not lost - you can correct the
+data for the imperfect sampler levels after the fact. Use the <TT>samcorr</TT>
+(sampler-correct) option for this, and is the recommended
+approach for data observed before December 1993. Since December 1993,
+sampler correction
+has been done automatically on-line. For this data, the <code>samcorr</code> option
+is (quietly) ignored.
+</DD>
+<DT><STRONG><TT>relax</TT>:</STRONG></DT>
+<DD>This option is generally not recommended.
+Normally <A NAME="tex2html75"
+  HREF="../doc/atlod.html">atlod</A>
+flags data if it has not
+previously read the appropriate calibration record or if the information
+in the calibration record suggest the data are bad.  Although calibration
+records generally precede the data, there are some instances when this
+is not the case, and the data are still good.  In this case, the
+<TT>relax</TT> option causes <A NAME="tex2html76"
+  HREF="../doc/atlod.html">atlod</A>
+to be more lenient, and not flag
+the data.
+</DD>
+<DT><STRONG><TT>unflag</TT>:</STRONG></DT>
+<DD>Normally <A NAME="tex2html77"
+  HREF="../doc/atlod.html">atlod</A>
+will discard a visibility record
+(i.e. not write it to disk) if all the data in it are flagged bad.
+Flagging usually indicates that there was
+significant reason to suspect the data -  for example the telescope was not on
+source or was off-line, etc. The <TT>unflag</TT> option causes all data to
+be saved to disk, although flagged
+data is still marked as such. This option is generally not recommended,
+although the disk-space penalty for using it is often modest.
+</DD>
+<DT><STRONG><TT>noauto</TT></STRONG></DT>
+<DD>and <TT>nocross</TT> cause <A NAME="tex2html78"
+  HREF="../doc/atlod.html">atlod</A>
+to discard
+any autocorrelation or cross-correlation data respectively. Its
+fairly unlikely that you will want to discard the cross-correlation data!
+</DD>
+<DT><STRONG><TT>noif</TT>:</STRONG></DT>
+<DD>When there are multiple frequency bands being
+observed simultaneously, <I>Miriad</I> normally maps the frequency bands
+to its spectral windows (IF axis in AIPS terminology), and writes
+them out in a single record. Alternatively,
+using the <TT>noif</TT> switch causes <A NAME="tex2html79"
+  HREF="../doc/atlod.html">atlod</A>
+to write the
+simultaneous frequencies as sequential records, making it appear
+somewhat like a frequency-switch. You will need to use the <code>noif</code>
+option if you have two spectral windows which sample different
+polarization parameters.
+</DD>
+<DT><STRONG><TT>nopflag</TT>:</STRONG></DT>
+<DD>If at least one polarization of a set of 2 or 4 polarimetric
+spectra are bad, <A NAME="tex2html80"
+  HREF="../doc/atlod.html">atlod</A>
+normally flags all of the
+polarizations. With this option only
+the nominally bad spectrum is flagged.
+</DD>
+</DL>
+
+<P>
+</LI>
+<LI><TT>nscans</TT> gives two numbers which are the number of scans to skip
+over (before processing), and the number of scans to save. The default is
+to save all scans.
+
+<P>
+</LI>
+<LI><TT>nfiles</TT>, like <TT>nscans</TT>, gives two numbers, which are the
+number of files to skip and process. This parameter is only really
+useful when reading from exabyte. The default is to process the first file
+only.
+Note, however, that the mechanism used to skip files is rather
+inefficient.  If you wish to skip a large number of files, you should
+do this with the Unix command <A NAME="tex2html81"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A>.  A
+complication is that every RPFITS file appears as three files to <A NAME="tex2html82"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A> - so you will want to skip three times as many tape files as RPFITS
+files.  For example, to skip 10 RPFITS files, you would use the Unix
+command
+
+<P>
+<PRE>
+   mt -f /dev/nrst4 fsf 30
+</PRE>
+
+<P>
+See the Unix <A NAME="tex2html83"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=man">man</A>
+page on <A NAME="tex2html84"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A>
+for more information.
+
+<P>
+</LI>
+</UL>
+
+<P>
+Typical inputs for <A NAME="tex2html85"
+  HREF="../doc/atlod.html">atlod</A>
+are given below.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=/dev/nrst0</TD>
+<TD ALIGN="LEFT">Input is either exabyte name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=92-06-10_2110.C159</TD>
+<TD ALIGN="LEFT">or RPFIT file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=0823.uv</TD>
+<TD ALIGN="LEFT">Output visibility data set.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=birdie,reweight,xycorr</TD>
+<TD ALIGN="LEFT">Normal continuum mode options, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=birdie,hanning,compress</TD>
+<TD ALIGN="LEFT">possible spectral line options.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nfiles=0,3</TD>
+<TD ALIGN="LEFT">Skip 0, then read 3 files.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nscans</TD>
+<TD ALIGN="LEFT">Unset to save all scans</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<I>Miriad</I>'s <A NAME="tex2html86"
+  HREF="../doc/atlod.html">atlod</A>
+saves a number of
+on-line measurements as visibility variables.  These measurements may by
+helpful in analysing and flagging the data.  They can be plotted and
+listed with task <A NAME="tex2html87"
+  HREF="../doc/varplt.html">varplt</A>
+(see Section&nbsp;<A HREF="node71.html#s:exavis">10.6</A>).  These
+on-line parameter, and its <I>Miriad</I> variable name, are described below.
+
+<P>
+<DL>
+<DT><STRONG><TT>xyphase</TT>:</STRONG></DT>
+<DD>This is the on-line measurement of the <I>XY</I> phase.
+It is important to examine this measurement if you are doing polarimetry.
+
+<P>
+</DD>
+<DT><STRONG><TT>xyamp</TT>:</STRONG></DT>
+<DD>This is the amplitude of the correlation between the
+<I>X</I> and <I>Y</I> polarization channel of a given antenna.
+
+<P>
+</DD>
+<DT><STRONG><TT>xsampler, ysampler</TT>:</STRONG></DT>
+<DD>These variables give the sampler statistics for
+the 
+<BR>
+MMX and <I>Y</I> polarization channels.  There are three numbers per
+antenna per IF, which reflect the sampler levels.  They should have values of
+<I>17.3</I>, <I>50</I> and <I>17.3</I>.  Thus for six antennas, the <TT>xsampler</TT> variable
+will consist of 18 numbers per IF.
+
+<P>
+</DD>
+<DT><STRONG><TT>xtsys, ytsys</TT>:</STRONG></DT>
+<DD>These give the system temperature, in Kelvin, for the
+<I>X</I> and <I>Y</I> polarization channels. Unfortunately <I>Miriad</I> tasks were
+originally developed around a single polarization model of a telescope, and so
+most tasks that concern themselves with system temperature do not handle
+dual polarization systems. The partial workaround used in <I>Miriad</I> has been
+to store the geometric mean of the <I>X</I> and <I>Y</I> system temperatures in the
+variable <TT>systemp</TT>.
+It is this variable that <I>Miriad</I> tasks use when they need to use the
+system temperature value.
+
+<P>
+</DD>
+<DT><STRONG><TT>axisrms, axismax</TT>:</STRONG></DT>
+<DD>These give the antenna rms and maximum tracking
+errors in a particular cycle. The units are arcseconds.
+
+<P>
+</DD>
+<DT><STRONG><TT>airtemp,pressmb,relhumid,wind,winddir</TT>:</STRONG></DT>
+<DD>These give various
+meterological measurements at the observatory as a function of time.
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1951"
+  HREF="node47.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1947"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1941"
+  HREF="node45.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1949"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1952"
+  HREF="node47.html">FITS Tapes and Miriad</A>
+<B>Up:</B> <A NAME="tex2html1948"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1942"
+  HREF="node45.html">Getting Data In and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

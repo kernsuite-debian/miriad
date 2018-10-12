@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Modifying Visibility Datasets</TITLE>
+<META NAME="description" CONTENT="Modifying Visibility Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node71.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node73.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2277"
+  HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2273"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2269"
+  HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2275"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2278"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B>Up:</B> <A NAME="tex2html2274"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2270"
+  HREF="node71.html">Examining Visibility Variables</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001070000000000000000"></A><A NAME="2809"></A>
+<BR>
+Modifying Visibility Datasets
+</H1>
+The task <A NAME="tex2html246"
+  HREF="../doc/uvedit.html">uvedit</A><A NAME="2811"></A>
+allows you to apply some specific sorts of
+corrections or modifications to your visibility dataset.  For
+example, there may be a clock error that needs fixing, or the antenna
+coordinates were wrong so that <I>u</I> and <I>v</I> need to be recomputed, or the
+phase centre was wrong requiring a phase rotation and <I>u</I> and <I>v</I>
+recomputation.  Note that any data not selected are copied to the output
+dataset unchanged.
+
+<P>
+The following example changes the RA phase centre by 10&nbsp;seconds of time
+and also corrects a delay error of -3&nbsp;ns on antenna 2 (by adding a
+phase gradient across the band).  <A NAME="tex2html247"
+  HREF="../doc/uvedit.html">uvedit</A>
+has the option to
+turn off the recomputation of <I>u</I> and <I>v</I> which might otherwise be done
+(<TT>options=nouv</TT>).  This can be useful for say, entering a delay
+change (which does not need <I>u</I> and <I>v</I> to be recomputed) because
+<I>Miriad</I> does not compute <I>u</I> and <I>v</I> as accurately as the on-line
+ephemeris routines.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVEDIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">Input visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">source=0823-500</TD>
+<TD ALIGN="LEFT">Specify source; unset means all</TD>
+</TR>
+<TR><TD ALIGN="LEFT">antpos</TD>
+<TD ALIGN="LEFT">No change to antenna coordinates</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dantpos</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ra=10</TD>
+<TD ALIGN="LEFT">Move RA phase centre</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dec</TD>
+<TD ALIGN="LEFT">No change to DEC</TD>
+</TR>
+<TR><TD ALIGN="LEFT">time</TD>
+<TD ALIGN="LEFT">No clock offset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">delay=0,-3,0,0,0,0</TD>
+<TD ALIGN="LEFT">Delay error on antenna 2</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=multi_corr.uv</TD>
+<TD ALIGN="LEFT">Output visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Do the works</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The task <A NAME="tex2html248"
+  HREF="../doc/uvredo.html">uvredo</A><A NAME="2833"></A> also `edits' a visibility dataset. Unlike
+<A NAME="tex2html249"
+  HREF="../doc/uvedit.html">uvedit</A>, however, it only modifies ancillary data in the
+dataset that are derivate from other information. For example, it
+can recompute the sky feed angle (``chi'') and velocity
+information.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2277"
+  HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2273"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2269"
+  HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2275"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2278"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B>Up:</B> <A NAME="tex2html2274"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2270"
+  HREF="node71.html">Examining Visibility Variables</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

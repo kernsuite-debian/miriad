@@ -1,0 +1,30 @@
+%N uvfstats
+%D Print flagging statistics.
+%P rjs
+%: calibration
+%B
+        UVFSTATS prints statistics about flagged visibilities.
+ 
+%A vis
+        Input visibility file. Several can be given. Wildcards are
+        supported. No default.
+%A line
+        Normal line parameter. The default is all channels.
+%A select
+        Normal visibility selection parameter. The default is to select
+        all visibilities.
+%A mode
+        This determines what the flagging statitics are determined as
+        a function of. Possible values are:
+          stokes    Determine statistics by Stokes/pol'n parameter.
+                    This is the default.
+          overall   Give a single overall statistic.
+          baseline  Determine statistics by baseline number.
+          antenna   Determine statistics by antenna number.
+          channel   Determine statistics by channel number.
+%A options
+        Task enrichment parameters. Possible values are
+          absolute  Give flagged correlations as an absolute number
+                    rather than a percentage.
+          unflagged Give statistics about the unflagged (rather than
+                    flagged) correlations.

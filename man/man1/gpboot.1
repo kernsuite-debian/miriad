@@ -1,0 +1,36 @@
+.TH gpboot 1
+.SH NAME
+gpboot - Correct the gains table of a visibility data-set.
+.SH PERSON RESPONSIBLE
+rjs nebk
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+GpBoot is a MIRIAD program which corrects a visibility data-set's
+gain table.
+.sp
+GpBoot works by comparing the amplitudes in the gain table of one
+data-set with those of another. The gains are assumed to differ
+by a constant factor. It is assumed that the
+instrumental gain and atmospheric attenuation of the two datasets
+were the same, and so the difference in gain is due to an
+arbitrary or incorrect flux being specified when initially
+determining the gains.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file, containing the gain file to correct.
+The gains are assumed to be out by a constant factor.
+.TP
+\fIcal\fP
+This is a visibility data-set, which is assumed to contain a
+gain table which scales the data to absolute flux units.
+.TP
+\fIselect\fP
+Normal uv-selection parameter. This selects the gains in the
+``vis'' that are compared against the ``cal'' gains (note that
+all the ``cal'' gains are involved in the comparison). Currently
+ONLY time and antenna selection are permitted. You will use
+this parameter to select which data the instrumental/atmospheric
+amplitude gains for ``vis'' are comparable to the observation in
+``cal''.

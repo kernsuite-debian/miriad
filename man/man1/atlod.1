@@ -1,0 +1,199 @@
+.TH atlod 1
+.SH NAME
+atlod - Convert an RPFITS file into Miriad uv format.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+data transfer
+.SH DESCRIPTION
+ATLOD is a MIRIAD task, which converts a uv data-set from the
+RPFITS format to Miriad format.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Name of the input RPFITS files.  Several names can be given --
+wildcard expansion is supported.  If a single name is given it
+can be a raw tape device name (e.g. /dev/nrst0 in UNIX)
+containing several files.  In this case, see the NFILES keyword
+below.  There is no default.
+.TP
+\fIout\fP
+Name of the output Miriad uv data-set.  No default.
+.TP
+\fIifsel\fP
+IF number(s) to select.  Default is all IFs.  For example,
+if you observed with 5 GHz (frequency 1) and 8 GHz (frequency 2)
+simultaneously, IF 1 would be the 5 GHz data and IF 2 would
+be the 8 GHz data.  This now also lets you select zoom bands
+using values greater than 2.  The freq 1 zoom bands come before
+the freq 2 ones.
+.TP
+\fIrestfreq\fP
+The rest frequency, in GHz, for line observations.  By default,
+the value in the RPFITS file is used.  Giving a value for the
+"restfreq" parameter overrides the RPFITS file value.  If you do
+set this parameter, you MUST give the same number of values as
+the number of IFs written out.  A value of 0 is used for a
+continuum observation.  For example, if you have two IFs, the
+first of which is HI, and the second is continuum, use
+.nf
+    restfreq=1.420405752,0
+.TP
+\fIoptions\fP
+.fi
+This gives extra processing options.  Several can be given,
+separated by comas.
+.nf
+  'birdie'  For CABB data:
+            CABB generates self-interference in a number of
+            channels across the spectrum due to 640 MHz clock
+            harmonics.  These birdies are fixed in channel
+            number for each CABB configuration.  The birdie
+            option currently knows about the 2048x1MHz continuum
+            mode and flags the affected channels, 100 band edge
+            channels on each side, and, at 20 and 13cm, the
+            unusable parts of the spectrum.
+.fi
+.sp
+.nf
+            For pre-CABB data:
+            ATCA self-interference can corrupt channels at
+            integral multiples of 128 MHz.  The birdie option
+            flags these channels.  Additionally, in continuum
+            (33 channels/128MHz) mode, the birdie option dicards
+            every second channel, plus some edge channels.  The
+            channels discarded are those most likely affected by
+            the self-interference.  Discarding these channels
+            does not have a sensitivity penalty, because the
+            effective channel bandwidth is twice the channel
+            separation.
+  'reweight' For pre-CABB data: re-weight the lag spectrum to
+            eliminate the "Gibbs" phenomena in continuum data
+            (33 ch/128 MHz); ignored for all other data.
+  'compress' Write output data in compressed format.
+  'noauto'  Discard autocorrelation data.  The default is to
+            copy the autocorrelation data.
+  'nocross' Discard cross-correlation data.  The default is to
+            copy the cross correlation data.
+  'relax'   Do not flag visibilities based on SYSCAL
+            information.  The default is to flag visibilities if
+            they have not been preceded by a valid SYSCAL
+            record, or if the the values in the SYSCAL record
+            look bad.  SYSCAL values are checked for sampler
+            statistics being within 3% of 17.3%, or 0.5% of
+            50.0%, that the XY phase is within 10 degrees of its
+            running median, and that the XY amplitudes are
+            within 1 Jy or 10% of its running median.  The tests
+            for xy phase and amplitude are skipped for 3mm data
+            (as there is no noise calibration signal).
+  'mmrelax' This option is ignored, it is only present for
+            historical reasons.
+  'unflag'  Save any data that is flagged and also keep it's
+            syscal info.  By default ATLOD discards most data
+            that is flagged.
+  'opcorr'  Correct for atmospheric opacity.  This option is
+            possible for data measured after October 2003.
+            Because of the way system temperature is measured at
+            3mm (an "above atmosphere" measurement), it is not
+            appropriate for 3mm data.  This option is silently
+            ignored for 3mm data.  Generally it is only relevant
+            for 7mm and 12mm observations.  It does no harm (and
+            negligible good) for longer wavelengths.
+  'samcorr' Correct the pre-Dec93 data for incorrect sampler
+            statistics.  Since December 1993, sampler
+            corrections are performed online.  This option is
+            silently ignored for data measured after December
+            1993.
+  'xycorr'  Apply the on-line measurements of the XY phase.
+            This option is silently ignored for 3mm data
+            measured before October 2007.
+  'hanning' Hanning smooth spectra and drop every other channel
+            This option is ignored for 128-MHz, 33-channel data.
+  'bary'    Use the barycentre as the velocity rest frame.  The
+            default is to use the LSR frame.
+  'noif'    Do not map the simultaneous IFs to the IF axis.
+            By default ATLOD attempts to map the simultaneous
+            frequencies to the IF axis.  This will not be
+            possible if there are a different number of
+            polarisations in the different IFs.
+  'nopflag' If at least one polarisation of a set of 2 or 4
+            polarimetric spectra are bad, ATLOD normally flags
+            all of the polarisations.  Option nopflag changes
+            this so that only the nominally bad spectrum is
+            flagged.
+  'hires'   Treat bin data as measurements in the high time
+            resolution mode.  The output dataset contains no
+            bins, but instead appears as data measured with
+            small cycle times.
+  'pmps'    Undo `poor man's phase switching'.  This is an
+            obscure option that you should not generally use.
+  'single'  Assume input is a single dish RPFITS file (from
+            Parkes or Mopra).  This is usually used together
+            with option 'relax'.
+  'caldata' Save visibilities associated with certain system
+            calibrations.  Currently this consists of reference
+            pointing calibration and "paddle" measurements.
+  'nocacal' Flag data that atlod suspects is taken during a
+            CACAL scan.  There is potential for error in atlod
+            determining which data are and are not part of a
+            cacal scan.  Use this with caution.
+  'nopol'   Discard data that is not "parallel hand" Stokes
+            type.
+  'rfiflag' Flag channels at frequencies that are known to be
+            bad.  This uses the file rfiflag.txt in the current
+            directory or the default version in MIRCAT.  The
+            file should contain 2 frequencies per line, the
+            lower and upper end of the rfi in MHz.  Precede
+            comments with a '#'.
+   'notsys' Undo the online Tsys correction. Useful if RFI in
+            the tvchannel range has caused the corrections
+            to be very noisy. The resulting data will be in raw
+            counts scaled down by 10^6.
+   'nopack' Don't pack the two CABB autocorrelation bins into
+            one bin. The autocorrelation bin 1 and 2 will
+            contain noise cal OFF and ON data.
+            The default is to repack the info into bin 1:
+            XX and YY will contain GTP and SDO data in the real
+            and imaginary part; XY will contain the OFF data and
+            YX will contain the ON-OFF data (for XY). This will
+            allow recalculation of the Tsys and xyphase later.
+.TP
+\fInfiles\fP
+.fi
+This gives one or two numbers, being the number of files to
+skip, followed by the number of files to process.  This is only
+useful when the input is a tape device containing multiple
+files.  The default is 0,1 (i.e. skip none, process 1 file).
+.sp
+NOTE: Using this feature to skip many files on a tape is VERY
+inefficient.  It is far faster to skip using operating system
+commands.  When doing this, however, you should be aware is that
+every RPFITS files consists of 3 tape files.  Thus you will want
+to skip three times as many tape files as RPFITS files.  For
+example, in UNIX, to skip 10 RPFITS files, use
+.nf
+            mt -f /dev/nrst0 fsf 30
+.TP
+\fInscans\fP
+.fi
+This gives one or two numbers, being the number of scans to
+skip, followed by the number of scans to process.  NOTE: This
+applies to all files read.  The default is to skip none and
+process all scans.
+.TP
+\fInopcorr\fP
+This gives the number of frequencies to use per IF for opacity
+correction. The default (2) is to use linear interpolation
+across the spectrum. Maximum value is 32.
+.TP
+\fIedge\fP
+Specify the percentage of edge channels the birdie option will
+flag out. The default is 9.8 which will flag about 100 channels
+from the bottom and top of a 2049 channel spectrum. This
+parameter is only used if the birdie option is specified.
+For concatenated spectra the width of a single zoom is used.
+Note that noise and artefacts go up quickly towards the band
+edge so making this much smaller will not gain you much.
+.sp
+.SH REVISION
+1.53, 2016/08/25 23:02:21 UTC

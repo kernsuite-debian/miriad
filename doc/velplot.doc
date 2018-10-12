@@ -1,0 +1,59 @@
+%N velplot
+%D Interactively plot spectra and slices from Miriad Images.
+%P mchw
+%: image analysis
+%B
+        VELPLOT is an interactive task to analyse spectra, position-
+        velocity slices, and integrated velocity maps from Miriad
+        images.  There are three basic display options:
+ 
+         - Velocity-averaged (x,y) images over selected velocity
+                intervals.  Also makes velocity and velocity dispersion
+                images.
+         - Spectra at selected (x,y) positions.  The data can be
+                convolved in x, y or velocity.  Gaussian fitting
+                routine.
+         - Position-velocity maps along user selected position angles,
+                or plots of intensity versus position for selected
+                velocity channels.  The data can be convolved in the
+                (x,y) plane.
+ 
+        (x,y) positions are (HA,DEC) in arcsec relative to map center.
+        Position angles are measured from the north towards the east.
+ 
+        The output from each option can be plotted, printed, or written
+        out as Miriad images of velocity-averaged maps, position-
+        velocity maps, or ascii spectra respectively.  Gaussian fits are
+        written into the log.
+ 
+        The task keeps user-defined lists of velocity-averaged maps,
+        position-velocity cuts, and spectra positions.  These lists can
+        be created and edited within the task, and can be passed between
+        the three displays.  For example, a list of spectra or position-
+        velocity cuts can be created with the cursor whilst displaying a
+        velocity-averaged map.  The lists are used to display the
+        spectra and position-velocity cuts, and can be written out and
+        read in as ascii files.
+ 
+        An options menu provides a choice of display style, contour
+        levels, and units.  Further interactive help is available within
+        the task.
+ 
+        For an interactive X windows interface, see VELPLOTC
+        (limited distribution)
+%A in
+        Input image name. No default.
+%A device
+        The PGPLOT plotting device.
+%A region
+        Region of image to be plotted, e.g.
+          region=relpix,box(-30,-30,20,90)(16,57)
+        reads in 51 x 121 pixels of image planes 16 to 57.  See help on
+        'region' for more details.  The default is the whole image.  The
+        maximum array size is set by MAXDIM in 'velplot.h' If the array
+        is larger than memory, then VELPLOT may run slowly.
+%A log
+        The output log file. The default filename is velplot.log
+        Results from image analysis are written into the log file.
+ 
+%R 1.11, 2011/10/27 04:18:03 UTC

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>FLINT</TITLE>
+<META NAME="description" CONTENT="FLINT">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node54.html">
+<LINK REL="previous" HREF="node47.html">
+<LINK REL="up" HREF="node47.html">
+<LINK REL="next" HREF="node49.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html870"
+  HREF="node49.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html864"
+  HREF="node47.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html858"
+  HREF="node47.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html866"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html868"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html871"
+  HREF="node49.html">Making Flint Quieter</A>
+<B>Up:</B> <A NAME="tex2html865"
+  HREF="node47.html">Utility Programs</A>
+<B> Previous:</B> <A NAME="tex2html859"
+  HREF="node47.html">Utility Programs</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00510000000000000000"></A><A NAME="883"></A>
+<BR>
+FLINT
+</H1>
+Flint is a FORTRAN program checker. It aims at uncovering programming
+bugs and bad programming practises. Given FORTRAN source as input, Flint
+produces warnings on the terminal and in a listing file (flint.log).
+Flint checks for variables which are unused, uninitialized or
+undeclared. It also checks that the number, type and intent of arguments
+passed to a subroutine remains consistent amongst all calls (an arguments
+intent is whether its  value is input to, or output from a routine).
+<PRE>
+     flint [-acdfhjkrsux2?] [-I incdir] [-o file] [-l] file ...
+</PRE>
+There are many command line switches (though the defaults are usually adequate).
+Invoking Flint with the ``?'' switch causes it to print out brief information
+about Flint, and all the command line switches. For example:
+<PRE>
+     flint -?
+</PRE>
+will give some help information.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html872"
+  HREF="node49.html">Making Flint Quieter</A>
+<LI><A NAME="tex2html873"
+  HREF="node50.html">Other Flags and Arguments</A>
+<LI><A NAME="tex2html874"
+  HREF="node51.html">Bugs and Shortcomings</A>
+<LI><A NAME="tex2html875"
+  HREF="node52.html">Determining the Intent of Subroutine Arguments</A>
+<LI><A NAME="tex2html876"
+  HREF="node53.html">Interface Definition Libraries</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

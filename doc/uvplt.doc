@@ -1,0 +1,241 @@
+%N uvplt
+%D Make plots from a UV-data base on a PGPLOT device.
+%P nebk
+%: uv analysis, plotting
+%B
+        UVPLT plots a variety of quantities from visibility data bases.
+        Options are available to time average data (plot with optional
+        error bars) and to plot different baselines on separate
+        sub-plots on each page plus many others.
+ 
+%A vis
+        The input visibility file(s). Multiple input files and wild card
+        card expansion are supported.
+        No default
+%A line
+        This is the normal linetype specification. See the help on
+        "line" for more information.  The default is all channels.
+%A select
+        This selects which visibilities to be used. Default is all
+        visibilities. See the Users Guide for information about how
+        to specify uv data selection.
+        Default is all data
+%A stokes
+        Select Stokes parameter(s) or polarization(s) from:
+          xx, yy, xy, yx,  i, q, u, v,
+          rr, ll, rl, lr
+        Default is all polarizations or Stokes parameters present
+%A axis
+        Two values (minimum match active), one for each of the x
+        and y axes chosen from:
+          time                     [time in DD HH MM SS.S format]
+          dtime                    [time in decimal days format]
+          ytime                    [time in decimal years format]
+          amplitude, real, imag    [natural units; Jy]
+          phase                    [degrees]
+          uu, vv                   [u & v in klambda]
+          uc, vc                   [u,& v, -u & -v in klambda]
+          uvdistance               [sqrt(u**2+v**2)]
+          uvangle                  [uv pos'n angle clockwise from v
+                                    axis]
+          hangle                   [hour angle in HH MM SS.S]
+          dhangle                  [hour angle in decimal hours]
+          lst                      [local sidereal time in decimal hr]
+          az                       [azimuth in degrees]
+          el                       [elevation in degrees]
+          airmass                  [airmass=1/sin(el)]
+          jyperk                   [system gain, in Jy/K]
+          rms                      [theoretical visibility noise rms, in
+                                    flux units]
+          freq                     [frequency, in GHz]
+          parang                   [parallactic angle in degrees]
+ 
+        NOTE: parang is the true parallactic angle of the source, which
+        can be quite different from the angle between source and antenna
+        feed (Miriad variable chi).
+ 
+        Defaults are axis=time,amp  (x and y axes).
+%A xrange
+        Plot range in the x-direction
+          If axis = uu, vv, or uvdistance [kilo-lambda;   2 values]
+                  unless OPTIONS=NANOSEC;     then   nanoseconds]
+          If axis = uvangle               [degrees;       2 values]
+          If axis = time                  [dd,hh,mm,ss.s; 8 values]
+          If axis = dtime                 [decimal days;  2 values]
+          If axis = amplitude, real, imag [natural units; 2 values]
+          If axis = phase                 [degrees;       2 values]
+          If axis = hangle                [hh,mm,ss.s;    6 values]
+          If axis = dhangle               [decimal hours; 2 values]
+          If axis = parang                [degrees;       2 values]
+          If axis = az or el              [degrees;       2 values]
+          If axis = airmass               [natural units; 2 values]
+          If axis = jyperk                [Jy/K;          2 values]
+          If axis = rms                   [flux units;    2 values]
+          If axis = lst                   [decimal hours; 2 values]
+          If axis = freq                  [GHz;           2 values]
+ 
+        For axis types other than 'time' or 'hangle', one or other of
+        the limits may be set with the other self-scaled by specifying
+        the lower limit as 'min' and the upper as 'max' (or simply
+        omitting it).  For example,
+ 
+          xrange=min,0
+ 
+        self-scales the lower limit while pinning the upper limit to
+        zero, whereas either of the following
+ 
+          xrange=0,max
+          xrange=0
+ 
+        set the lower limit to zero while self-scaling the upper limit.
+ 
+        Default is to self-scale both limits (see also OPTIONS=XIND).
+%A yrange
+        Plot range for the y-axis as for the x-axis.  The default is to
+        self-scale (see also OPTIONS=YIND).
+%A average
+        The averaging time in min (unless OPTIONS=DAYS,HOURS,SECONDS).
+        Averaging is reset at frequency, source, or pointing centre
+        changes.  Individual baselines and polarizations are averaged
+        separately (unless OPTIONS=AVALL).  If you have selected
+        multiple channels and you also ask for time averaging, then all
+        the selected channels are averaged together in the time
+        interval.  If you wish to use OPTIONS=AVALL to average
+        everything on the one subplot (e.g. polarizations) but don't
+        want temporal averaging, set AVERAGE to less than one
+        integration.
+        Default is no averaging.
+%A hann
+        Hanning smoothing length (an odd integer < 15).   Is applied
+        after any time averaging and INC selection. Useful for amplitude
+        or phase, say, plotted against time.  Error bars remain
+        unaffected by Hanning smoothing.  Currently, the Hanning
+        smoothing is unaware of source or frequency changes.  Use SELECT
+        if you have boundary problems.
+        Default is no smoothing (hann = 1).
+%A inc
+        Plot every INCth point (on each sub-plot) that would normally
+        have been selected.   Useful if you don't want to average, but
+        want to cut down on the number of plotted points.  Beware of
+        increments that divide exactly into the number of baselines
+        in time ordered data.
+        Default is 1.
+%A options
+        Task enrichment options. Minimum match is effective.
+         nocal   Do not apply the gain corrections
+         nopol   Do not apply the polarization leakage corrections
+         nopass  Do not apply the bandpass corrections
+ 
+         nofqav  By default, uvplt averages together all channels from
+                 a visibility record before plotting. The nofqav option
+                 disables this, and causes individual channels to be
+                 plotted.  Note that this option is not active when time
+                 averaging is invoked (frequency averaging is always
+                 done then).
+ 
+         nobase  Plot all baselines on the same plot, otherwise
+                 each baseline is plotted on a separate sub-plot.
+ 
+         notitle Do not write any title on the plot.  Probably most
+                 useful if plotting all baselines on the same plot
+                 (using the "nobase" option).
+ 
+         2pass   Normally uvplt makes assumptions about what it is
+                 expecting to find in the data regarding polarizations
+                 and baselines.   Under some conditions, uvplt may
+                 report that it has not allocated sufficient buffer
+                 space.  This option instructs uvplt to make two passes
+                 through the data, the first to accumulate precise
+                 information on the contents of the selected data so
+                 that buffer space is optimally allocated.
+ 
+         scalar  Do scalar (average amplitudes or phases) rather than
+                 vector (average real and imaginary) averaging.
+                 This is useful if the visibilities are uncalibrated &
+                 the phase is winding over the averaging interval & you
+                 would like an averaged amplitude. Scalar averaged phase
+                 is not very meaningful in general.
+         avall   If you are averaging in time, then average all data
+                 selected on each sub-plot together.  E.g. all selected
+                 polarizations, and, if OPTIONS=NOBASE, all baselines
+                 as well.  If you wish to average all the things on one
+                 subplot together but without temporal averaging, just
+                 set the averaging time to less than one integration.
+         unwrap  When plotting phase, try to unwrap it so that
+                 say, if one point is 179 deg and the next -179,
+                 they will be plotted as 179 and 181 deg.  NOTE:
+                 Unwrapping noise can be VERY misleading.
+ 
+         rms     Draw error bars (+/- 1 standard deviation) on the plot
+                 if averaging is invoked.
+         mrms    Draw error bars (+/- 1 standard deviation in the mean)
+                 on the plot if averaging is invoked.
+         noerr   The automatically worked out min and max plot limits
+                 will NOT include the ends of the error bars.
+ 
+         all     Plot flagged and unflagged visibilties
+         flagged Plot only flagged visibilities.  The default is to plot
+                 only unflagged (good) visibilities.
+                 ALL overrides FLAGGED.
+ 
+         nanosec u and v are plotted in nano-seconds rather than
+                 k-lambda
+         days    The averaging interval is in days rather than minutes
+         hours   The averaging interval is in hours rather than minutes
+         seconds The averaging time is in seconds rather than minutes
+ 
+         xind    If the x-axis is self-scaled, then unless
+                 OPTIONS=NOBASE, setting XIND will cause each sub-plot
+                 to have the x-axis self-scaled independently.  The
+                 default is that the x-range used is that which
+                 encompasses the ranges from all sub-plots.
+         yind    The equivalent for the y-axis
+ 
+         equal   Plot x and y with equal scales.  Useful only for plots
+                 like AXIS=UU,VV.  Does not mean the plot will
+                 necessarily be square
+         zero    Plot the x=0 and y=0 lines
+ 
+         symbols Each file is plotted with a different plot symbol
+         nocolour
+                 Each file is plotted with the same colour (white). By
+                 default and when there is only one polarization, each
+                 file has a separate colour.
+         dots    If time averaging is invoked, plot the data with dots
+                 rather than filled in circles.  These plot much faster
+                 on hardcopy devices.
+ 
+         source  Put the source name rather than the file name in the
+                 plot title
+         inter   After the plot is drawn, you get a chance to redraw
+                 the plot with a different x- and y-range, and also
+                 on a different device.  In this way you can make a
+                 hard-copy without re-running the program. In this case,
+                 points outside of the user specified x,y-range ARE
+                 included in the plot buffer, so that if you redefine
+                 the ranges, those points are available for plotting.
+ 
+         log     Write the values and errors (if averaging) that are
+                 plotted into the log file.  No attempt to separate
+                 baselines is made, except that automatically obtained
+                 by not setting OPTIONS=NOBASE
+%A subtitle
+        Second line of title for plot (the first line is generated
+        automatically).  Default is no sub-title.
+%A device
+        PGPLOT plot device/type.  No default.
+%A nxy
+        Number of plots in the x and y directions for when plotting
+        each baseline separately. Defaults try to choose something
+        sensible.
+%A size
+        PGPLOT character sizes, in units of the default size (i.e., 1)
+        First value is for the labels, the second is for the symbol size
+        Defaults depend upon the number of sub-plots. The second value
+        defaults to the first.
+%A log
+        The output logfile name. The default is the terminal.
+%A comment
+        A one line comment which is written into the logfile.
+ 
+%R 1.19, 2018/06/12 04:53:25 UTC

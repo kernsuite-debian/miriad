@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Determining the Intent of Subroutine Arguments</TITLE>
+<META NAME="description" CONTENT="Determining the Intent of Subroutine Arguments">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node53.html">
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html931"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html925"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html919"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html927"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html929"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html932"
+  HREF="node53.html">Interface Definition Libraries</A>
+<B>Up:</B> <A NAME="tex2html926"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html920"
+  HREF="node51.html">Bugs and Shortcomings</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00514000000000000000">
+Determining the Intent of Subroutine Arguments</A>
+</H2>
+Whenever Flint finds a call to a subroutine, or the source of a subroutine,
+it attempts to determine whether a subroutine argument is either input or
+output (this is called an arguments intent). Usually Flint will build up its
+knowledge of a particular routines arguments by analyzing many uses of the
+subroutine, and generate a warning whenever inconsistent use is noted.
+
+<P>
+Note that Flint expects an argument's intent to be either input or output
+or input/output. Some routines use an argument as input in some situations
+and output in others. Such routines may confuse Flint, and it
+may well generate spurious messages about the variable in the subroutine
+call being uninitialized or redundant, or that the arguments intent is
+inconsistent.
+
+<P>
+Normally Flint performs a single pass, analyzing files in the order that they
+are given on the command line. When analyzing the early part of the
+input source, Flints knowledge of argument intent is very poor. Thus some
+problems (uninitialized and redundant variables) may be missed. There are
+two recipes to partially avoid this. Firstly files on the command line
+should be ordered with the files containing low level subroutines first,
+and high level programs and application code last (generally interface
+definition libraries should go first). Additionally inside files, the lower
+level routines should be first, and higher level routines last. Secondly,
+the user can ask Flint to perform two passes of the input files, by using
+the <TT>-2</TT> flag. Two passes will not necessarily correctly
+determine the intent of all arguments  (in general <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN> passes will always
+be enough for program with subroutine calls to a depth of <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN>).
+
+<P>
+The following contrived example shows the worst case sort of behavior,
+where Flint builts up its knowledge of argument intent quite slowly.
+<PRE>
+     subroutine a(x)
+     real x
+     call b(x)
+     end
+     subroutine b(x)
+     real x
+     call c(x)
+     end
+     subroutine c(x)
+     real x
+     write(*,*)x
+     end
+</PRE>
+It would require three passes for Flint to determine that the
+intent of argument <TT>x</TT> in subroutine <TT>a</TT> was input
+(the first pass would determine the intent of <TT>x</TT> in <TT>c</TT>, the
+second would determine the intent of <TT>x</TT> in <TT>b</TT>). Usually
+Flint determines argument intents by other means than just allowing information
+to bubble up from the lowest level to the higher level routines. But in the
+above example, none of these could be applied. One of the techniques is
+derived from initialization checking (described under the <TT>-i</TT> flag).
+When determining intent accurately is important, and if the initialization
+checking algorithm is failing (i.e. producing spurious messages), then
+initialization checking should be disabled.
+
+<P>
+Small changes can significantly change the number of passes needed to uncover
+all intent information. For instance, in the example above, if
+the ordering of the routines was reversed (i.e. <TT>c</TT> first and <TT>a</TT>
+last), or if a piece of code such as
+<PRE>
+      call a(1.0)
+</PRE>
+appeared before subroutine <TT>a</TT>, then Flint would require only one pass.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html931"
+  HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html925"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html919"
+  HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html927"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html929"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html932"
+  HREF="node53.html">Interface Definition Libraries</A>
+<B>Up:</B> <A NAME="tex2html926"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html920"
+  HREF="node51.html">Bugs and Shortcomings</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

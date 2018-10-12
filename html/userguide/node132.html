@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Continuum Subtraction</TITLE>
+<META NAME="description" CONTENT="Continuum Subtraction">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node134.html">
+<LINK REL="previous" HREF="node131.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node133.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3053"
+  HREF="node133.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3049"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3043"
+  HREF="node131.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3051"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3054"
+  HREF="node133.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html3050"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3044"
+  HREF="node131.html">Velocity Linetype</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001690000000000000000"></A><A NAME="4340"></A>
+<A NAME="4341"></A>
+<BR>
+Continuum Subtraction
+</H1>
+
+<P>
+Spectral line observations will always be ``corrupted'' by some
+continuum emission.  If this is stronger or comparable with the spectral
+line, then the final spectral images may be dominated by the continuum
+and its artifacts (sidelobes, deconvolution errors, calibration errors,
+etc).  If the final dynamic range of your image is dominated by
+continuum errors, then weak spectral features will be completely
+obscured.  It is possible to remove the continuum so that
+the final dynamic range of the spectral image is dependent on thermal
+noise and artifacts resulting from the spectral line (and <EM>not</EM>
+artifacts from the continuum).  Consequently it is usually best to
+subtract the continuum from the data.  A good description of the
+algorithms to do this is given by
+<A NAME="tex2html576"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1992A%26A...258..583C">Cornwell, Uson and Haddad (1992)</A>.
+(A&amp;A 258, 583).
+Neil Killeen's
+<A NAME="tex2html577"
+  HREF="http://www.atnf.csiro.au/computing/software/atca_aips/atcal_html.html">``Analysis of Australia Telescope Compact Array Data''</A>
+also gives a good summary as well as describing the AIPS possibilities.  The paper <A NAME="tex2html578"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1994A%26AS..107...55S">Sault (1994)</A>
+(A&amp;AS 107, 55)
+describes one of the algorithms in detail.
+Yet another summary is given below.
+
+<P>
+Although three approaches to continuum subtraction are possible in <I>Miriad</I>,
+we recommend only one of these - the <TT>UVLIN</TT> approach. The other
+two are briefly mentioned for completeness:
+<DL COMPACT>
+<DT><TT>UVSUB</TT>:</DT>
+<DD>This is the most time consuming of the techniques, which
+involves forming a continuum image from the line-free channels, deconvolving
+this and subtracting it from the visibility data-set. In addition to the
+normal imaging and deconvolution tasks, <A NAME="tex2html579"
+  HREF="../doc/uvmodel.html">uvmodel</A>
+will be used to perform
+the actual subtraction of the continuum model from the visibility data.
+The <TT>options=mfs</TT> switch will be useful in this context.
+No more details to this approach will be given here.
+
+<P>
+</DD>
+<DT><TT>IMLIN</TT>:</DT>
+<DD>This is an image-based technique, where a polynomial fit
+of the continuum is done along the spectral axis at each pixel in the dirty
+image. Although <I>Miriad</I> tasks <A NAME="tex2html580"
+  HREF="../doc/contsub.html">contsub</A>
+and <A NAME="tex2html581"
+  HREF="../doc/avmaths.html">avmaths</A>
+can be used to
+perform this, no more details will be given here.
+
+<P>
+</DD>
+<DT><TT>UVLIN</TT>:</DT>
+<DD>This is the recommended approach in <I>Miriad</I> to
+perform continuum subtraction. It is implemented with the task called
+(surprisingly) <A NAME="tex2html582"
+  HREF="../doc/uvlin.html">uvlin</A>.
+
+<P>
+In this scheme, each visibility spectrum is fitted by a polynomial.
+Only the line-free channels of the spectrum are used to determine the fit
+The polynomial can be taken to represent the continuum emission, and so
+can be subtracted from the spectrum. Because bandwidths in spectral
+line experiments are often narrow, the continuum emission is
+usually well modelled by a fairly low order polynomial
+(zeroth, first or second order).
+The fit is performed to the real and imaginary parts of the data separately.
+In general, this is better than fitting to the amplitude and phase, as the
+whole process remains a linear one. A non-linear fit to amplitude and phase
+couples together the errors on all sources, and produces an amplitude
+bias at low signal-to-noise ratios.
+
+<P>
+</DD>
+</DL>
+
+<P>
+The main advantage of <TT>UVLIN</TT> over the other two approaches is that
+it is generally the most robust to a large variety of systematic errors
+(such as antenna gain errors). <TT>IMLIN</TT> is also moderately robust to these
+errors, whereas <TT>UVSUB</TT> is not particularly robust at all. <TT>UVLIN</TT>,
+along with <TT>IMLIN</TT>, is substantially less expensive computationally
+than <TT>UVSUB</TT>,
+and they generally requires less care and intervention on the part of
+the user.
+
+<P>
+<TT>UVLIN</TT>, however, is not perfect. There will be some residual continuum
+left behind, and the noise level in the output will be amplified in those
+channels that were excluded from the fitting process. These drawbacks
+are not unique to <TT>UVLIN</TT> - they will be a characteristic of any
+continuum subtraction technique.
+There are three parameters to control <TT>UVLIN</TT> -
+the set of channels to be
+used in the fitting process (i.e. the set of channels that are assumed
+to be line-free), the order of the polynomial to fit and an offset to be
+applied to the data before the fit
+is performed. The combination of these three parameters will determine
+the residual continuum. They also determine the factor by which the noise
+level increases in the data. We clearly want to keep this noise amplification
+to an acceptable level.
+
+<P>
+Usually we have little direct control over the channels that
+are line-free. Obviously, though, the more line-free channels we have,
+the better the fitting process will be. <EM>Do not discard any
+line-free channels until after continuum subtraction.</EM>
+
+<P>
+If there are line-free channels on only one side of the spectrum (i.e.
+you have to extrapolate the continuum fit), then generally it is unwise
+to use anything but a 0th order fit. This is because the residual continuum
+is not greatly affected by the fit order, whereas noise amplification can
+become extreme.
+
+<P>
+On the other hand, if there are line-free channels on both sides of the
+spectrum, and provided the fraction of channels involved in the fitting
+process is appreciable (at least 25%), then higher order fits are quite
+useful. The residual continuum depends on the continuum source flux
+density and the parameter <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img79.png"
+ ALT="$\eta$"></SPAN>. For a source
+at location <SPAN CLASS="MATH"><IMG
+ WIDTH="58" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img80.png"
+ ALT="$(\ell_0,m_0)$"></SPAN> (with respect to the phase centre),
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\eta = \frac{1}{2}\frac{\Delta\nu}{\nu}\frac{\sqrt{\ell_0^2+m_0^2}}{\theta}.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="144" HEIGHT="43" BORDER="0"
+ SRC="img81.png"
+ ALT="\begin{displaymath}
+\eta = \frac{1}{2}\frac{\Delta\nu}{\nu}\frac{\sqrt{\ell_0^2+m_0^2}}{\theta}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Here <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img77.png"
+ ALT="$\Delta\nu$"></SPAN> is the total bandwidth and <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.png"
+ ALT="$\nu$"></SPAN> is the observing
+frequency. For a point source <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img82.png"
+ ALT="$\theta$"></SPAN> is the resultant image resolution. For
+resolved sources, <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img82.png"
+ ALT="$\theta$"></SPAN> is the angular extent of typical image features.
+Unfortunately you cannot really determine <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img79.png"
+ ALT="$\eta$"></SPAN> without having formed
+a continuum image.
+The maximum residual continuum is approximately as given in Table&nbsp;<A HREF="#table:contsub">16.1</A>.
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="4395"></A>
+<TABLE>
+<CAPTION><STRONG>Table 16.1:</STRONG>
+Approximate residual error for visibility-based continuum subtraction.</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1" ALIGN="CENTER">
+<TR><TD ALIGN="CENTER">Fit Order</TD>
+<TD ALIGN="CENTER">Maximum Residual Continuum Error</TD>
+</TR>
+<TR><TD ALIGN="CENTER">0</TD>
+<TD ALIGN="CENTER"><!-- MATH
+ $\displaystyle S\frac{\pi^2}{6}\eta$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="44" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img83.png"
+ ALT="$\displaystyle S\frac{\pi^2}{6}\eta$"></SPAN>
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER">1</TD>
+<TD ALIGN="CENTER"><!-- MATH
+ $\displaystyle S\frac{\pi^2}{9}\eta^2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="51" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img84.png"
+ ALT="$\displaystyle S\frac{\pi^2}{9}\eta^2$"></SPAN>
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER">2</TD>
+<TD ALIGN="CENTER"><!-- MATH
+ $\displaystyle S\frac{\pi^4}{150}\eta^3$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="58" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img85.png"
+ ALT="$\displaystyle S\frac{\pi^4}{150}\eta^3$"></SPAN>
+<BR></TD>
+</TR>
+<TR><TD ALIGN="CENTER">3</TD>
+<TD ALIGN="CENTER"><!-- MATH
+ $\displaystyle S\frac{\pi^4}{525}\eta^4$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="58" HEIGHT="57" ALIGN="MIDDLE" BORDER="0"
+ SRC="img86.png"
+ ALT="$\displaystyle S\frac{\pi^4}{525}\eta^4$"></SPAN>
+<BR></TD>
+</TR>
+</TABLE>
+</DIV>
+
+<A NAME="table:contsub"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+Because of the narrow bandwidth of most spectral line experiments,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="42" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img87.png"
+ ALT="$\eta &lt; 1$"></SPAN>, and so the residual continuum decreases rapidly as the fit
+order is increased. A zeroth or first order fit will be quite adequate for many
+spectral line experiments. Given a continuum image, the task <A NAME="tex2html583"
+  HREF="../doc/conterr.html">conterr</A>
+can determine images which should be indicative of the residual. There should
+<EM>not</EM> be viewed as strict error images. Rather they indicate the magnitude
+and location of the residual errors.
+
+<P>
+As the fit order is increased, noise amplification also increases.
+Generally, provided we have a significant
+number of line-free channels (and you are not extrapolating) the noise
+amplification is modest. You should be cautious of noise amplification
+for fourth order fits if fewer than 50% of the channels are
+line-free, or for third order fits when fewer than 25% of the channels are
+line-free. <I>Miriad</I> task <A NAME="tex2html584"
+  HREF="../doc/contsen.html">contsen</A>
+can be used to determine the noise
+amplification given the fitting order and the channels included in the
+fitting process.
+
+<P>
+The fact that the residual continuum is a function of the distance of
+the point source from the phase centre should not be a surprise.  As
+<I>u-v</I> coordinate is proportional to frequency, the channels in a
+visibility spectrum are sampling slightly different locations in the
+<I>u-v</I> plane.  For a point source (which we assume to have a spectral
+index of zero, for simplicity) will have a visibility function whose
+real and imaginary parts are sinusoids.  The fraction of a period of
+this sinusoid contained within the <I>u-v</I> coordinates spanned by a
+visibility spectrum will be directly proportional to the distance of the
+point source from the phase centre.  The further the point source is
+from the phase centre, the greater proportion of a sinusoid period is
+present in the visibility spectrum, and the poorer the approximation of
+the visibility spectrum by a low order polynomial.
+
+<P>
+This leads us to another way of reducing the residual continuum - we
+can shift the phase centre to the location of the continuum source.
+The amount of benefit derived from such a shift will depend strongly
+on the skewness of the distribution of the continuum, and its distance
+from the phase centre. The task <A NAME="tex2html585"
+  HREF="../doc/conterr.html">conterr</A>
+can suggest shifts
+which will minimise the error (see <TT>options=shift</TT>).
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3055"
+  HREF="node133.html">Computation</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3053"
+  HREF="node133.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3049"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3043"
+  HREF="node131.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3051"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3054"
+  HREF="node133.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html3050"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3044"
+  HREF="node131.html">Velocity Linetype</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

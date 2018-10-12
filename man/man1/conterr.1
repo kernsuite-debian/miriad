@@ -1,0 +1,62 @@
+.TH conterr 1
+.SH NAME
+conterr - Continuum subtraction error estimate, when using UVLIN.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+Given an image of the continuum in a spectral line experiment,
+CONTERR estimates the residual continuum artifacts that will
+be present after continuum subtraction using UVLIN. The results
+are intended to be indicative, rather than rigorously accurate.
+The peak value and location of the errors are approximately
+correct, but the actual error pattern will differ significantly
+from that presented here.
+.sp
+This task essentially just evaluates the expressions given in
+Table 1 of "An analysis of visibility-based continuum
+subtraction" by Bob Sault.  CONTSEN makes plots of noise
+amplification factor of tasks such as UVLIN, AVMATHS, and
+CONTSUB.
+.SH PARAMETERS
+.TP
+\fIin\fP
+An estimate of the continuum.  It should be either a dirty image
+or a deconvolved/restored image.  No default.
+.TP
+\fIorder\fP
+The order of the polynomial fit in UVLIN, either one or two
+numbers can be given.  If two, then CONTSEN determines the error
+for order(1) to order(2) inclusive.  The default is to determine
+the noise sensitivity for first order only.
+.TP
+\fIbw\fP
+Total spectral bandwidth, in GHz. Default is 0.008 (i.e. 8 MHz).
+.TP
+\fIfwhm\fP
+The image resolution, given as the FWHM of the corresponding
+gaussian, in arcsec.  This is the same as the FWHM that RESTOR
+would determine.  The default is to get the information from
+the input image.  Two values can be given, being the FWHM in
+x and y respectively (i.e. the position angle is assumed to
+be along one of these axes).  If only one value is given, the
+gaussian is assumed to be circularly symmetric.
+.sp
+Note that high order fits are very sensitive to this parmeter.
+.TP
+\fIout\fP
+An output image containing the error images. The default is
+no output image.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is used. Possible values are:
+.nf
+  shift  Determine an optimum shift of the phase centre to
+         be applied before the error is evaluated. This
+         shift will minimise the error in some sense.
+.fi
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

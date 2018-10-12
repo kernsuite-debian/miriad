@@ -1,0 +1,14 @@
+%N copyhd
+%D Copy items from one data-set to another.
+%P rjs
+%: utility
+%B
+        COPYHD is a Miriad task which copies items from one Miriad data-set
+        to another. There is no interpretation of the items at all.
+%A in
+        Name of the input data set. No default.
+%A out
+        Name of the output data set. This must already exist. No default.
+%A items
+        A list of items to be copied across. At least one value must be
+        given.

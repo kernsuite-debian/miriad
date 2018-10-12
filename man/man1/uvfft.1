@@ -1,0 +1,48 @@
+.TH uvfft 1
+.SH NAME
+uvfft - Fourier transform a sequence of selected uv-data.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVFFT takes a 1-D Fourier transform of a uv-data sequence.
+If the sequence is a time series, then the FFT is a fringe
+rate spectrum. If the sequence steps the delay center, then
+the FFT is a bandpass.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input UV dataset name. No default.
+.TP
+\fIselect\fP
+This selects the data to be processed, using the standard uvselect
+format. Default is all data. Selecting more than one baseline
+does not make much sense.
+.TP
+\fIline\fP
+Standard linetype of data to be tranformed, in the form:
+.nf
+  type,nchan,start,width,step
+.fi
+where type can be `channel'  `wide' or `velocity'.
+The default is wide,2,1,1,1. The maximum number of channels
+which can be processed is 8.
+.TP
+\fIsize\fP
+The length of the sequence for the Fourier transform.
+uv-data points in excess of the size of the transform are omitted.
+Must be a power of 2. The default is 128.
+.TP
+\fIlog\fP
+The list output file name. The default is the terminal.
+.TP
+\fIdevice\fP
+standard PGPLOT device, e.g. /xw
+.TP
+\fIdelay\fP
+Step size for stepped delay center. FFT is bandpass function.
+Default=0  Delay center not stepped. FFT is fringe frequency spectrum.
+processing options:
+.nf
+  test - substitute test functions for data into Fourier transform.

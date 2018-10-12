@@ -1,0 +1,61 @@
+%N psrplt
+%D Plot pulsar visibility data as a function of bin.
+%P rjs
+%: uv analysis
+%B
+        PSRPLT plots pulsar visibility data as a function of bin number.
+        The normal display is a pulse profile (bin vs real part of the
+        average visibility), but it can also produce a plot against
+        frequency.
+%A vis
+        Name of the input uv data sets.  Several can be given.
+        No default.
+%A stokes
+        Stokes/polarisation parameters to plot.  Default is total
+        intensity (Stokes=i).
+%A line
+        Line-type specification.  default is all channels.
+        See the help on "line" for more information.
+%A select
+        uv selection commands.  Default is to copy everything.
+        See the help on "select" for more information.
+%A device
+        PGPLOT plotting device specification.  No default.
+%A offset
+        Offset (in arcsec) to shift the uv data.  The sign convention
+        is the same as the rest of Miriad.  Default is no shift.
+        See the help on "offset" for more information.
+%A axis
+        This determines the x- and y-axes of the plot.  At the moment,
+        the only possibility for the x-axis is:
+          bin        Bin number.
+        Whereas the y-axis can be
+          flux       Plot the flux value.  This is the default.
+          frequency  Produce a bin vs frequency greyscale display.
+          channel    Produce a bin vs channel greyscale display.
+%A range
+        The minimum and maximum range used for display. Defaults
+        to the range of values in the data.
+%A mode
+        This determines what "flux" quantity is plotted.  Possible
+        values are:
+          real      Plot the real part of the data.  Default.
+          imaginary Plot the imaginary part of the data.
+          amplitude Plot the amplitude of the data.
+          phase     Plot the phase of the data.
+%A title
+        Specify a title for the plot, default is the first file read
+%A options
+        Extra processing options.  Several can be given, separated by
+        commas.  Minimum match is supported.
+          nocal     This option suppresses antenna gain calibration.
+                    Default is to apply antenna calibration.
+          nopol     This option suppresses polarisation calibration.
+                    Default is to apply polarisation calibration.
+          nopass    This option suppresses bandpass calibration.  The
+                    default behaviour is to apply bandpass calibration.
+%A log
+        File in which to write the data, if y-axis is amplitude.
+        The default is no logfile.
+ 
+%R 1.7, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>UV Selection - SelInput and SelApply</TITLE>
+<META NAME="description" CONTENT="UV Selection - SelInput and SelApply">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html606"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html600"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html594"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html602"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html604"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html607"
+  HREF="node31.html">The UVDAT routines</A>
+<B>Up:</B> <A NAME="tex2html601"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html595"
+  HREF="node29.html">Getting Information After UVREAD</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00460000000000000000"></A><A NAME="486"></A>
+<A NAME="sect:select"></A>
+<BR>
+UV Selection - SelInput and SelApply
+</H1>
+<PRE>
+     subroutine SelInput(key,sels,maxsels)
+     logical function SelProbe(sels,object,value)
+     subroutine SelApply(tno,sels,flag)
+</PRE>
+These routines are the usual programmer interface to the uv selection
+routines. They perform the parsing and checking of the user input, and
+the calling of the <TT>uvselect</TT> routine to actually implement the
+selection process. For
+more information see uv selection in the Users Manual, and the <TT>uvselect</TT>
+routine in this Programmers Manual.
+
+<P>
+<TT>SelInput</TT> calls the <TT>keya</TT> routine to get the user-specified
+selection criteria. This criteria is then broken into an intermediate form.
+The argument <TT>key</TT> is the keyword to be used. Generally it should be
+<TT>'select'</TT>. The real array <TT>sels</TT> (of size <TT>maxsels</TT> elements)
+is used to hold the intermediate form of the selection.
+
+<P>
+<TT>SelApply</TT> takes a selection criteria, in its intermediate form, and
+calls the <TT>uvselect</TT> routine to apply it. The argument <TT>flag</TT> determines
+whether criteria is actually to be used for selection (<TT>flag=.true.</TT>), or
+rejection (<TT>flag=.false.</TT>).
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="507"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.6:</STRONG>
+Arguments to SelProbe</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Object	</B></TH>
+<TH ALIGN="LEFT"><B>Units				</B></TH>
+</TR>
+<TR><TD ALIGN="LEFT">time</TD>
+<TD ALIGN="LEFT">Julian day.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">antennae</TD>
+<TD ALIGN="LEFT">Baseline number = 256*ant1 + ant2.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">One of ant1 or ant2 can be zero.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">uvrange</TD>
+<TD ALIGN="LEFT">Wavelengths.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">uvnrange</TD>
+<TD ALIGN="LEFT">Nanoseconds.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">visibility</TD>
+<TD ALIGN="LEFT">Visibility number (1 relative).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dra</TD>
+<TD ALIGN="LEFT">Radians.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ddec</TD>
+<TD ALIGN="LEFT">Radians.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pointing</TD>
+<TD ALIGN="LEFT">Arcseconds.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">amplitude</TD>
+<TD ALIGN="LEFT">Same as correlation data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">window</TD>
+<TD ALIGN="LEFT">Window Number.</TD>
+</TR>
+</TABLE>
+
+<A NAME="t:selprobe"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+<TT>SelProbe</TT> returns information about whether uv data with a particular
+parameter value may have been selected.
+It does not guarantee that such data might exist
+in any particular data file. It also has the limitation that
+information is not present to convert ``uvrange'' and ``uvnrange''
+calls into each other. These should be treated with caution. The <TT>sels</TT>
+array is the intermediate form returned by <TT>SelInput</TT>, and <TT>value</TT>
+is a double precision value, giving the parameter value that is of interest.
+The <TT>object</TT> argument determines the meaning (and the units) of this
+value. Possible values are given in Table&nbsp;<A HREF="#t:selprobe">2.6</A>.
+
+<P>
+Note that this does not support all objects to <TT>uvselect</TT>.
+The name must be given in full (no abbreviations and case is significant).
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html606"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html600"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html594"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html602"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html604"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html607"
+  HREF="node31.html">The UVDAT routines</A>
+<B>Up:</B> <A NAME="tex2html601"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html595"
+  HREF="node29.html">Getting Information After UVREAD</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

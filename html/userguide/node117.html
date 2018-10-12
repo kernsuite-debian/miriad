@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Polarisation Handling</TITLE>
+<META NAME="description" CONTENT="Polarisation Handling">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node118.html">
+<LINK REL="previous" HREF="node116.html">
+<LINK REL="up" HREF="node114.html">
+<LINK REL="next" HREF="node118.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2864"
+  HREF="node118.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2860"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2854"
+  HREF="node116.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2862"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2865"
+  HREF="node118.html">Frequency Handling</A>
+<B>Up:</B> <A NAME="tex2html2861"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2855"
+  HREF="node116.html">Self-Calibrating with Multiple Models</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001513000000000000000">
+Polarisation Handling</A>
+</H2>
+The biggest difference between <A NAME="tex2html508"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html509"
+  HREF="../doc/gpscal.html">gpscal</A>
+is in the
+handling of polarisation
+and dual feeds.
+
+<P>
+Though <A NAME="tex2html510"
+  HREF="../doc/selfcal.html">selfcal</A>
+can handle multiple pointings and frequency ranges,
+it assumes that the antenna gain is independent of feed (i.e. the <I>X</I>
+and <I>Y</I> gains are the same). It also only handles Stokes-I models
+(and ignores visibilities that are unrelated to determining Stokes-I).
+
+<P>
+Task <A NAME="tex2html511"
+  HREF="../doc/gpscal.html">gpscal</A>
+is intended for telescopes with dual feeds (either linear
+or circular), such as the ATCA. Indeed, it will fail for other sorts of data.
+
+<UL>
+<LI><A NAME="tex2html512"
+  HREF="../doc/gpscal.html">gpscal</A>
+solves for the two feeds either totally independently, or
+with the constraint that the <I>XY</I> (or <I>RL</I>) phase of an antenna must
+be constant with time.
+</LI>
+<LI><A NAME="tex2html513"
+  HREF="../doc/gpscal.html">gpscal</A>
+converts between Stokes parameters and raw polarisations.
+It can take multiple input models for different Stokes parameters. However,
+if a model of a particular Stokes parameter is not given, it is assumed to
+be zero. For example, if you give it models of I, Q and U, but not V, then
+the source is assumed to have no circular polarisation.
+</LI>
+<LI><A NAME="tex2html514"
+  HREF="../doc/gpscal.html">gpscal</A>
+uses the antenna polarisation leakage table
+if this information is present. If it is not present, leakages are assumed
+to be zero.
+</LI>
+<LI>Unlike <A NAME="tex2html515"
+  HREF="../doc/selfcal.html">selfcal</A>, <A NAME="tex2html516"
+  HREF="../doc/gpscal.html">gpscal</A>
+cannot take models from
+multiple pointings or from different frequency ranges. All
+models must correspond to the same pointing and same frequency range.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2864"
+  HREF="node118.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2860"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2854"
+  HREF="node116.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2862"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2865"
+  HREF="node118.html">Frequency Handling</A>
+<B>Up:</B> <A NAME="tex2html2861"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2855"
+  HREF="node116.html">Self-Calibrating with Multiple Models</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

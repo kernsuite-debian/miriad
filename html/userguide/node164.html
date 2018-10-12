@@ -1,0 +1,397 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Zeeman Analysis</TITLE>
+<META NAME="description" CONTENT="Zeeman Analysis">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node161.html">
+<LINK REL="up" HREF="node156.html">
+<LINK REL="next" HREF="node165.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3452"
+  HREF="node165.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3448"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3444"
+  HREF="node163.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3450"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3453"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B>Up:</B> <A NAME="tex2html3449"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3445"
+  HREF="node163.html">Fitting a tilted ring</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002060000000000000000"></A><A NAME="13450"></A><A NAME="13451"></A><A NAME="13452"></A>
+<BR>
+Zeeman Analysis
+</H1>
+
+<P>
+There is a suite of tasks to help analyse Zeeman data.  These tasks
+implement the techniques discussed in gruesome detail
+by <A NAME="tex2html805"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1990ApJS...74..437S">Sault, Killeen, Zmuidzinas &amp; Loushin (1990)</A>
+(ApJS 74, 437) and by 
+<A NAME="tex2html806"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1992ApJ...385..585K">Killeen, Lo &amp; Crutcher (1992)</A>
+(ApJ 385, 585). 
+
+<P>
+
+<UL>
+<LI><A NAME="tex2html807"
+  HREF="../doc/zeestat.html">zeestat</A>:
+In the small-splitting Zeeman analysis, our goal is generally 
+to look for the characteristic ``S'' Zeeman signature
+in the Stokes <I>V</I> spectrum.  It can be shown that this
+spectral signature is more accurately expected to follow the
+equation
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+V(\nu) = k B \cos \theta {dI(\nu) \over {d\nu}}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="150" HEIGHT="40" BORDER="0"
+ SRC="img103.png"
+ ALT="\begin{displaymath}
+V(\nu) = k B \cos \theta {dI(\nu) \over {d\nu}}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+where <I>k</I> is a constant depending upon the particular spectral line,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img104.png"
+ ALT="$B \cos \theta$"></SPAN> is the line-of-sight component of the magnetic field, and
+<SPAN CLASS="MATH"><IMG
+ WIDTH="34" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img105.png"
+ ALT="$I(\nu)$"></SPAN> is the total intensity spectrum.  The procedure is then to fit
+the derivative of the <I>I</I> spectrum to the <I>V</I> spectrum thus giving
+<SPAN CLASS="MATH"><IMG
+ WIDTH="52" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img104.png"
+ ALT="$B \cos \theta$"></SPAN>. 
+
+<P>
+Zeeman work can be very complicated, especially if the signal is weak
+(and the signal-to-noise ratio parameter <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img79.png"
+ ALT="$\eta$"></SPAN> - see Sault et al. - is close
+to the noise value), and a description of all the pros and cons of the
+fitting techniques is beyond this guide.  We suggest you read the above
+papers, and if you are still awake at the end, then run the software. 
+
+<P>
+Generally, the fit is done over some spatial and spectral region in
+which it is assumed the splitting is constant.  In the spatial averaging
+technique, all the spectra in the spatial region are averaged. 
+However, if the spectra are not all similar in shape, this will average
+down the signal as well as the noise.  Thus, the spatial summing
+technique is also offered.  Here, all the spectra in the spatial area
+are fit simultaneously so that the signal is not averaged down. 
+However, one has to be concerned with the spatial correlation of the data
+when predicting the errors in this case.  This is a very big concern
+indeed (see <A NAME="tex2html808"
+  HREF="../doc/Zeesim.html">Zeesim</A>
+below).
+
+<P>
+The fitting procedure is implemented in the task <A NAME="tex2html809"
+  HREF="../doc/zeestat.html">zeestat</A>.  This
+task expects the <I>I</I> (keyword <TT>iin</TT>) and <I>V</I> (keyword <TT>vin</TT>) input cubes to be ordered such that the first axis is the spectral
+axis (frequency or velocity [radio or optical definition]) and the
+second and third axes are the spatial axes (RA and DEC).  Use the
+<A NAME="tex2html810"
+  HREF="../doc/reorder.html">reorder</A>
+if they are not.  The beam image (keyword <TT>beam</TT>) is
+used to determine the spatial correlation when using the spatial summing
+technique in order to get a good estimate of the error in the result (it
+does not affect the result itself much).  However, generally, this does
+not work well and accurate errors for spatially summed data should be
+obtained with a monte carlo technique implemented in the task
+<A NAME="tex2html811"
+  HREF="../doc/zeesim.html">zeesim</A>
+described below.  The beam is not needed when spatially
+averaging. 
+
+<P>
+If the spectra are spectrally correlated, this information can be
+transmitted to <A NAME="tex2html812"
+  HREF="../doc/zeestat.html">zeestat</A>
+via the spectral correlation coefficient
+assigned to the keyword <TT>rho</TT>.  For Hanning smoothed spectra in
+which every other channel has been dropped, this should be <I>1/6</I>.  You
+must specify with <TT>freq</TT>, to the nearest MHz, the rest frequency
+of the spectral line.  This is used to determine the conversion from
+splitting in channels to a magnetic field.  <A NAME="tex2html813"
+  HREF="../doc/zeestat.html">zeestat</A>
+only knows
+about a few particular transitions.  If it does not know about yours,
+come and tell us, and we will add it in for you. 
+
+<P>
+You can read endlessly in the above papers about the pros and cons of
+least squares and maximum likelihood fitting techniques.  All the
+fitting techniques are biased, in the sense that they give a splitting
+biased towards zero in cases of poor signal-to-noise ratios.  The
+maximum likelihood technique is the least biased, so we suggest you use
+that (<TT>mode=m</TT>).  It is also common to fit for a leakage term
+allowing for a fraction of the <I>I</I> spectrum in the <I>V</I> spectrum (<TT>mode=l</TT>).  Because, in poor signal-to-noise ratio cases, there can be
+spurious minima, we suggest you set <TT>mode=x</TT> to perform extra checks
+in finding the global minimum.  Generally, sharp edges in spectra
+increase your chances of detection (because this gives a large
+derivative).  If you set <TT>mode=2</TT>, <A NAME="tex2html814"
+  HREF="../doc/zeestat.html">zeestat</A>
+will work out a
+two-sided derivative of the <I>I</I> spectrum.  Otherwise it uses a one-sided
+derivative.  The former gives a lower noise derivative but performs less
+well for sharp spectral features.  In summary, we suggest you set <TT>mode=mxl</TT> or maybe <TT>mode=mxl2</TT>. 
+
+<P>
+Set keyword <TT>aveop=s</TT> for spatial summing and and <TT>aveop=a</TT> for
+spatial averaging.  <A NAME="tex2html815"
+  HREF="../doc/zeestat.html">zeestat</A>
+is rather an elderly task coded at
+the dawn of time.  It does not know about the <TT>region</TT> keyword. 
+Thus you input the spectral range to fit with the <TT>chan</TT> keyword,
+and the spatial area via the <TT>blc</TT> (bottom left corner) and <TT>trc</TT> (top right corner) keywords.  These are all in absolute pixels. 
+You can write the results to an ascii file with the <TT>out</TT> keyword. 
+
+<P>
+Here is a simple example of a spatially summed fit of spectrally
+uncorrelated OH main line spectra over channels 200 to 300 (only include
+channels that have strong <I>I</I> signal) and over some small
+spatial region.  
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ZEESTAT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">iin=sgra.Ivxy</TD>
+<TD ALIGN="LEFT">Input <I>I</I> cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vin=sgra.Vvxy</TD>
+<TD ALIGN="LEFT">Input <I>V</I> cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam</TD>
+<TD ALIGN="LEFT">Unset as technique does not work</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rho</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">freq=1.667</TD>
+<TD ALIGN="LEFT">Rest frequency in GHz</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode=mxl</TD>
+<TD ALIGN="LEFT">Select mode</TD>
+</TR>
+<TR><TD ALIGN="LEFT">aveop=s</TD>
+<TD ALIGN="LEFT">Sum in spatial region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">chan=200,300</TD>
+<TD ALIGN="LEFT">Channel range to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">blc=240,255</TD>
+<TD ALIGN="LEFT">Spatial BLC to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">trc=260,278</TD>
+<TD ALIGN="LEFT">Spatial TRC to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=log.out</TD>
+<TD ALIGN="LEFT">Write results to this file</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The task <A NAME="tex2html816"
+  HREF="../doc/zeesim.html">zeesim</A>
+is used to get reliable estimates of the
+error in the fitted magnetic field derived by <A NAME="tex2html817"
+  HREF="../doc/zeestat.html">zeestat</A>.  See
+<A NAME="tex2html818"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1992ApJ...385..585K">Killeen, Lo &amp; Crutcher (1992)</A>
+(ApJ, 385, 585) for gruesome details.  It is used when
+you have invoked spatial averaging, or when the signal-to-noise ratio
+is very poor for spatial averaging.  The technique involves taking the
+actual spectra and fitting them, thus producing an estimate of the noise
+free true spectra.  Then <A NAME="tex2html819"
+  HREF="../doc/zeesim.html">zeesim</A>
+adds noise (correlated by the beam if
+simulating spatial summing) back into the spectra and refits them to
+get the splitting.  The noise addition and refitting is performed as
+many times as is necessary to get a good histogram of the splitting. 
+The width of that histogram gives a good error estimate. 
+
+<P>
+<A NAME="tex2html820"
+  HREF="../doc/zeesim.html">zeesim</A>
+can work out the fiddle factor to apply to the error
+estimates of <A NAME="tex2html821"
+  HREF="../doc/zeestat.html">zeestat</A>
+for may spatial regions at once.  It is much
+more efficient for spatial summing to use <A NAME="tex2html822"
+  HREF="../doc/zeesim.html">zeesim</A>
+like this than
+to do one run per spatial region.  This is because the step of producing
+noise correlated by the beam is very expensive.  Multiple spatial
+regions can be input via a text file assigned to the keyword <TT>infile</TT>.  A single spatial region can be entered through the usual <TT>blc</TT> and <TT>trc</TT> keywords. 
+
+<P>
+In this example, we run the simulation appropriate to the example of
+<A NAME="tex2html823"
+  HREF="../doc/zeestat.html">zeestat</A>
+above.  You should do as many simulations as is necessary
+to get a decent histogram or until your computer tires. 
+
+<P>
+It is important to use the <TT>nran</TT> keyword if you restart the
+simulations and want to use the results in conjunction with a previous
+run.  Computers only generate semi-random numbers.  If you give the
+generator the same seed you get the same random numbers.  <TT>nran</TT>
+allows you to throw some random numbers before beginning the simulation
+procedure so you can get different noise to last time you ran the
+program. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ZEESIM</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">iin=sgra.Ivxy</TD>
+<TD ALIGN="LEFT">Input <I>I</I> cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vin=sgra.Vvxy</TD>
+<TD ALIGN="LEFT">Input <I>V</I> cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=sgra.ivbem</TD>
+<TD ALIGN="LEFT">Give the beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode=mxl</TD>
+<TD ALIGN="LEFT">Select fitting mode</TD>
+</TR>
+<TR><TD ALIGN="LEFT">aveop=s</TD>
+<TD ALIGN="LEFT">Sum in spatial region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">freq=1.667</TD>
+<TD ALIGN="LEFT">Rest frequency in GHz</TD>
+</TR>
+<TR><TD ALIGN="LEFT">chan=200,300</TD>
+<TD ALIGN="LEFT">Channel range to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">blc=240,255</TD>
+<TD ALIGN="LEFT">Spatial BLC to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">trc=260,278</TD>
+<TD ALIGN="LEFT">Spatial TRC to fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bin</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">split</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nruns=500</TD>
+<TD ALIGN="LEFT">Number of simulations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">How big is your computer</TD>
+</TR>
+<TR><TD ALIGN="LEFT">infile</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=res,summ</TD>
+<TD ALIGN="LEFT">Log files for results</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nran=#</TD>
+<TD ALIGN="LEFT">Throw away random numbers before simulating</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<A NAME="tex2html824"
+  HREF="../doc/zeesim.html">zeesim</A>
+gives you what it calls a ``fiddle factor''.  You
+should multiply the error estimate from <A NAME="tex2html825"
+  HREF="../doc/zeestat.html">zeestat</A>
+by this
+factor to get the true error estimate.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3452"
+  HREF="node165.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3448"
+  HREF="node156.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3444"
+  HREF="node163.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3450"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3453"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B>Up:</B> <A NAME="tex2html3449"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3445"
+  HREF="node163.html">Fitting a tilted ring</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Deconvolution, Restoration and Self-Calibration</TITLE>
+<META NAME="description" CONTENT="Deconvolution, Restoration and Self-Calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node179.html">
+<LINK REL="previous" HREF="node177.html">
+<LINK REL="up" HREF="node176.html">
+<LINK REL="next" HREF="node179.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3646"
+  HREF="node179.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3642"
+  HREF="node176.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3636"
+  HREF="node177.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3644"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3647"
+  HREF="node179.html">Image Combination</A>
+<B>Up:</B> <A NAME="tex2html3643"
+  HREF="node176.html">The Individual Approach</A>
+<B> Previous:</B> <A NAME="tex2html3637"
+  HREF="node177.html">Splitting and Imaging</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002172000000000000000">
+Deconvolution, Restoration and Self-Calibration</A>
+</H2>
+Deconvolution is no different to conventional
+observing. When restoring, 
+you may wish to use the same restoring beam size
+for all fields. Otherwise treat each pointing as a separate observation.
+
+<P>
+Much of the discussion in
+the self-calibration section of the `joint approach' applies equally
+well here. The major difference is, of course, that because the
+deconvolution step has been performed on the individual fields, the 
+<A NAME="tex2html935"
+  HREF="../doc/demos.html">demos</A>
+step is not required. If you have split the visibility
+data into separate single-pointing datasets, you will not need to
+use <code>options=mosaic</code> (although it will not hurt). Also for single-pointing
+datasets, if you wish to use
+just one or a few of the stronger fields for self-calibration, you
+will need to copy the resultant antenna gain tables across to the
+other datasets, using <A NAME="tex2html936"
+  HREF="../doc/gpcopy.html">gpcopy</A>.
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

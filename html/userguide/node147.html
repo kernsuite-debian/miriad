@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Smoothing Images</TITLE>
+<META NAME="description" CONTENT="Smoothing Images">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node148.html">
+<LINK REL="previous" HREF="node146.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node148.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3242"
+  HREF="node148.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3238"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3232"
+  HREF="node146.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3240"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3243"
+  HREF="node148.html">Modifying Images by Models</A>
+<B>Up:</B> <A NAME="tex2html3239"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3233"
+  HREF="node146.html">Image Arithmetic - MATHS</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001860000000000000000"></A><A NAME="11870"></A><A NAME="11871"></A><A NAME="11872"></A>
+<BR>
+Smoothing Images
+</H1>
+
+<P>
+<I>Miriad</I> offers tasks to convolve images by Gaussians (<A NAME="tex2html693"
+  HREF="../doc/convol.html">convol</A>
+and
+<A NAME="tex2html694"
+  HREF="../doc/smooth.html">smooth</A>) and also to convolve images by other images
+(<A NAME="tex2html695"
+  HREF="../doc/convol.html">convol</A>).  It can also bin up (or block) an image (<A NAME="tex2html696"
+  HREF="../doc/imbin.html">imbin</A>).
+
+<P>
+
+<UL>
+<LI>The fastest way to convolve an image by a Gaussian is with an FFT-based
+algorithm.  This is implemented in task <A NAME="tex2html697"
+  HREF="../doc/convol.html">convol</A>.  In
+the example below we convolve an image by an elliptical Gaussian.
+
+<P>
+Note that FFT based algorithms cannot correctly deal with blanked pixels.
+If your image has a blanked pixels, <A NAME="tex2html698"
+  HREF="../doc/convol.html">convol</A>
+pretends that
+they are zero when it does the convolution. However, the corresponding
+pixels are blanked in the output image.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CONVOL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=1331-09.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm=10,20</TD>
+<TD ALIGN="LEFT">FWHM of Gaussian</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa=45</TD>
+<TD ALIGN="LEFT">Position angle of Gaussian</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=1331-09.icln2</TD>
+<TD ALIGN="LEFT">Convolved image</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Task generally <A NAME="tex2html699"
+  HREF="../doc/convol.html">convol</A>
+does its best to scale the output pixels so
+that the output image units are Jy/beam.  If you are convolving an image
+which is already in Jy/beam by Gaussian, then <A NAME="tex2html700"
+  HREF="../doc/convol.html">convol</A>
+needs the
+beam parameters (<TT>bmaj, bmin, bpa</TT>) to be in the dataset header to
+correctly determine the scale factor, and the output effective beam
+parameters.  It will give you messages about what it thinks its doing as
+far as scaling factors go.  If you know better than <A NAME="tex2html701"
+  HREF="../doc/convol.html">convol</A>, you
+can give your own scale factor, via the <code>scale</code> keyword. 
+
+<P>
+Often you know the output resolution that you want, rather than the resolution
+of the Gaussian that you want to convolve with. In this case using
+<code>options=final</code> causes <A NAME="tex2html702"
+  HREF="../doc/convol.html">convol</A>
+to treat the parameters given by the <code>fwhm</code>
+and <code>pa</code> keywords as the desired final resolution, and to work backwards
+to determine the Gaussian that it needs to convolve with to achieve this
+result. Again, <A NAME="tex2html703"
+  HREF="../doc/convol.html">convol</A>
+needs to know the beam parameters (<TT>bmaj, bmin, bpa</TT>),
+and does its best to maintain the intensity units in Jy/beam.
+
+<P>
+</LI>
+<LI>If your image does in fact contain a blanking mask and it is
+important that they do not take part in the convolution, then you could
+convolve your image by a Gaussian (or a boxcar if you so desired) with
+task <A NAME="tex2html704"
+  HREF="../doc/smooth.html">smooth</A>.  This task will be significantly slower than
+<A NAME="tex2html705"
+  HREF="../doc/convol.html">convol</A>
+for any but the smallest images because it operates
+entirely in the image domain.
+
+<P>
+As with <A NAME="tex2html706"
+  HREF="../doc/convol.html">convol</A>, the scale of the output image is adjusted so that
+it is in units of Jy/beam - and you can override this by setting <code>scale</code>
+yourself.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>SMOOTH</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=1331-09.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=1331-09.icln2</TD>
+<TD ALIGN="LEFT">Convolved image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm=10,20</TD>
+<TD ALIGN="LEFT">FWHM of Gaussian</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa=45</TD>
+<TD ALIGN="LEFT">Position angle of Gaussian</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">scale</TD>
+<TD ALIGN="LEFT">Unset for auto scaling</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>If you wish to convolve one image by another, you should
+use task <A NAME="tex2html707"
+  HREF="../doc/convol.html">convol</A>. Again scaling is as with the above two descriptions.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CONVOL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=1331-09.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=1331-09.icln2</TD>
+<TD ALIGN="LEFT">Convolving image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Unset for full image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=1331-09.convol</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sigma</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Finally, there is <A NAME="tex2html708"
+  HREF="../doc/imbin.html">imbin</A>; it doesn't smooth an image,
+rather, it bins up (averages) an image (like the keyword <TT>xybin</TT> in
+the <A NAME="tex2html709"
+  HREF="../doc/cg.html">cg</A>
+suite of programs.  You can bin up pixels, and/or pick out
+every Nth pixel along any of the first three axes; this is controlled
+by the keyword <TT>bin</TT>. 
+
+<P>
+In the first example, we bin up the first three dimensions of an image by
+a factor of 2 along the x axis, a factor of 4 along the y axis
+and a factor of 3 along the z axis.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMBIN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=gc.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Unset for full image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bin=2,2,4,4,3,3</TD>
+<TD ALIGN="LEFT">Bin and increments for each axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=gc.icln-rebin</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+In the second example, we pick out every 4th pixel along
+the z axis.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMBIN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=gc.xyv</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=quarter</TD>
+<TD ALIGN="LEFT">Only write out inner quarter</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bin=1,1,1,1,1,4</TD>
+<TD ALIGN="LEFT">Pick out every 4th pixel along third axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=gc-2.xyv</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3242"
+  HREF="node148.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3238"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3232"
+  HREF="node146.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3240"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3243"
+  HREF="node148.html">Modifying Images by Models</A>
+<B>Up:</B> <A NAME="tex2html3239"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3233"
+  HREF="node146.html">Image Arithmetic - MATHS</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

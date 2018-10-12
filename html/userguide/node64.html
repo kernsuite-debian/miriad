@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>AIPS Flagging and Miriad- FGFLAG</TITLE>
+<META NAME="description" CONTENT="AIPS Flagging and Miriad- FGFLAG">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node65.html">
+<LINK REL="previous" HREF="node63.html">
+<LINK REL="up" HREF="node63.html">
+<LINK REL="next" HREF="node65.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2185"
+  HREF="node65.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2181"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2175"
+  HREF="node63.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2183"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2186"
+  HREF="node65.html">Flagging Near a Set-Up</A>
+<B>Up:</B> <A NAME="tex2html2182"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2176"
+  HREF="node63.html">Other Flagging Tasks</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001021000000000000000"></A><A NAME="s:fgflag"></A><A NAME="2489"></A>
+<A NAME="2490"></A>
+<BR>
+AIPS Flagging and <I>Miriad</I>- FGFLAG
+</H2>
+If you flag in AIPS, the flagging information will enter <I>Miriad</I>, via
+FITS files, in two possible forms:
+
+<UL>
+<LI>As flagging (FG) tables (generally only multi-source files).
+</LI>
+<LI>As negated visibility weights (both single- and multi-source files).
+</LI>
+</UL>
+While <I>Miriad</I>'s <A NAME="tex2html197"
+  HREF="../doc/fits.html">fits</A>
+task flags correlations which have negative weights,
+it <EM>does not</EM> apply any flagging tables. Instead
+it copies across the flagging tables, and includes them within the
+<I>Miriad</I> dataset. If you wish to use this flagging information, it is
+essential that you then apply the appropriate flagging tables. The task
+to do this job is <A NAME="tex2html198"
+  HREF="../doc/fgflag.html">fgflag</A>. Its inputs are pretty simple - typical
+inputs are:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FGFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Extra selection - normally unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fgflag</TD>
+<TD ALIGN="LEFT">Table version. Default is highest version.</TD>
+</TR>
+</TABLE>
+</DIV>
+Note some caveats:
+
+<UL>
+<LI>The flagging tables written by <A NAME="tex2html199"
+  HREF="../doc/fits.html">fits</A>
+cannot be copied to
+another <I>Miriad</I> dataset. Additionally they are ignored by all <I>Miriad</I> tasks,
+save <A NAME="tex2html200"
+  HREF="../doc/fgflag.html">fgflag</A>.
+</LI>
+<LI>Task <A NAME="tex2html201"
+  HREF="../doc/fits.html">fits</A>
+does not copy across information which distinguishes
+correlations by polarisation. If one polarisation is flagged in the FG table,
+all polarisations will be flagged by <A NAME="tex2html202"
+  HREF="../doc/fgflag.html">fgflag</A>.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2185"
+  HREF="node65.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2181"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2175"
+  HREF="node63.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2183"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2186"
+  HREF="node65.html">Flagging Near a Set-Up</A>
+<B>Up:</B> <A NAME="tex2html2182"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2176"
+  HREF="node63.html">Other Flagging Tasks</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

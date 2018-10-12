@@ -1,0 +1,21 @@
+%N calplot
+%D Plot flux of primary calibrators
+%P rjs
+%: utility
+%B
+        CALPLOT plots the flux of primary calibrators as a function
+        of frequency.
+%A source
+        The source to be plotted. No default.
+%A xrange
+        This gives two numbers, being the frequency range to plot, in GHz.
+        The default is 4.7,4.9.
+%A stokes
+        The Stokes parameters to be plotted. The default is to plot
+        only I.
+%A options
+        "cursor"   This activates the cursor, and returns the flux density
+          for each Stokes at the frequency specified by the x-location
+          of the cursor. Use right button (or 'X') to exit.
+%A device
+        PGPLOT device. No default.

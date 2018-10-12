@@ -1,0 +1,14 @@
+%N varmerge
+%D Merge in a new visibility variable.
+%P rjs
+%: uv analysis
+%B
+%A vis
+        The input visibility data set
+%A out
+        The output visibility data set, with the new variable added
+%A var
+        The name of the variable to be merged in.
+%A data
+        A text file containing the variable. It is in the form
+        of a time stamp followed by the variable.

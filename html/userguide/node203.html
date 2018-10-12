@@ -1,0 +1,277 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Bandpass and antenna gain calibration</TITLE>
+<META NAME="description" CONTENT="Bandpass and antenna gain calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node204.html">
+<LINK REL="previous" HREF="node199.html">
+<LINK REL="up" HREF="node196.html">
+<LINK REL="next" HREF="node204.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3974"
+  HREF="node204.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3970"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3964"
+  HREF="node202.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3972"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3975"
+  HREF="node204.html">Flux density bootstrapping</A>
+<B>Up:</B> <A NAME="tex2html3971"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3965"
+  HREF="node202.html">Tracking accuracy</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002324000000000000000">
+Bandpass and antenna gain calibration</A>
+</H2>
+When calibrating 3-mm data, it is possible to use a similar
+approach as with lower frequency data  - see
+Chapter&nbsp;<A HREF="node73.html#c:cal">11</A>. In this case, because polarimetry is not currently
+possible with the 3-mm system, only task <A NAME="tex2html1051"
+  HREF="../doc/mfcal.html">mfcal</A>
+is needed
+to perform bandpass and antenna calibration. Flux density bootstrapping
+can be accomplished using <A NAME="tex2html1052"
+  HREF="../doc/mfboot.html">mfboot</A>
+described below.
+
+<P>
+However, the recommended approach at 3mm is different from this.
+As noted in Section&nbsp;<A HREF="node194.html#s:weakcal">23.1.4</A>, calibration at 3mm is more
+difficult because of weak calibrators, poorer system sensitivity and
+more challenging atmospheric conditions. This section outlines an
+alternative calibration approach exploiting the dual frequency bands of the
+ATCA. The steps are as follows:
+
+<P>
+
+<OL>
+<LI>The first step is not a step at all! Unlike the approach of
+Chapter&nbsp;<A HREF="node73.html#c:cal">11</A>, the approach described here <I>does not</I> split the 
+data into separate single source, single frequency files before
+calibration. Rather the 
+current approach assumes that you have a single <I>Miriad</I> dataset containing
+bandpass calibrator, secondary calibrator, flux density calibrator and 
+target source. We focus on data having two simultaneous frequency bands
+here, but the approach works equally well for one or many simultaneous
+frequency bands within the dataset.
+
+<P>
+</LI>
+<LI>The first real step is akin to a bandpass calibration step. When
+dealing with two frequency bands, each with two polarisation products
+(XX and YY), it is
+generally appropriate to
+assume that the bandpasses of the bands and the phase offsets between
+bands and polarisations are constant with time. 
+
+<P>
+To determine the bandpasses and the phase offsets, you need
+to use <A NAME="tex2html1053"
+  HREF="../doc/mfcal.html">mfcal</A>
+on an observation of a strong continuum source.
+Typically this would be 
+1253-055, 1921-293 or 0537-441. 
+Typical inputs are as follows:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.fixed.uv</TD>
+<TD ALIGN="LEFT">Input multi-source, dual-band dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(1921-293)</TD>
+<TD ALIGN="LEFT">Select the strong continuum ``bandpass'' calibrator.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The important output of this step is a bandpass calibration table which
+will contain the relevant phase offsets. The output also contains
+antenna gain calibration tables, but this will be overwritten below.
+
+<P>
+In doing this step, you may well want to avoid using some edge
+channels in the bandpass calibration process. To achieve this, you
+can use the <TT>edge</TT> parameter of <A NAME="tex2html1054"
+  HREF="../doc/mfcal.html">mfcal</A>. The <TT>edge</TT> parameter
+sets the number of channels to drop for all bands equally. It does not
+allow you to set different number of channels to drop in the different bands.
+If the channels and bandwidth characteristics of the different bands differ
+significantly, the <TT>edge</TT> parameter probably does not give you
+sufficient flexibility. In this case, you could use <A NAME="tex2html1055"
+  HREF="../doc/uvflag.html">uvflag</A>
+to
+explicitly flag edge channels.
+
+<P>
+</LI>
+<LI>The next step is to determine the antenna gain calibration, again
+using <A NAME="tex2html1056"
+  HREF="../doc/mfcal.html">mfcal</A>. To do this,
+you will want to select those data for the secondary calibrator which
+will give the best overall sensitivity appropriate to your observation.
+
+<UL>
+<LI>If the calibrator is a continuum source, you need only select this
+source and use both bands. Task <A NAME="tex2html1057"
+  HREF="../doc/mfcal.html">mfcal</A>
+will weight the two bands
+according to their relative bandwidth. Consequently if one of the bands
+is quite narrow relative to the other, then it will contribute little to
+the overall gain solution.
+</LI>
+<LI>If the calibrator is an SiO maser, you will want to select only those
+channels that contain strong SiO signal. 
+</LI>
+<LI>With either a continuum calibrator or an SiO maser, it is possible to
+either determine antenna gain calibrations for the two polarisation products 
+independently, or to determine a
+single joint solution for the two polarisations. The latter will give
+a <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img32.png"
+ ALT="$\sqrt{2}$"></SPAN> improvement in sensitivity in the solution process.
+The latter is also the
+desirable approach if the calibrator is strongly polarised (some SiO 
+masers are more than 50% polarised). Doing a joint solution is
+generally a reasonable approximation given that the antenna gains
+are dominated by changes common to both polarisations: in amplitude, it is
+from the physical antenna 
+gain change, and in phase it is from the atmosphere and instrumental 
+contributions common to both polarisations.
+</LI>
+</UL>
+
+<P>
+Note in this calibration scheme, it is implicitly assumed that the antenna 
+gain changes are common to both frequency bands. This is a reasonable
+approximation given that the frequency separation between the bands is
+at most 2.7 GHz and potentially much less. Consequently the fractional
+frequency separation in at most a few percent, and so the calibration change
+between bands can be assumed to be minimal.
+</LI>
+</OL>
+
+<P>
+Typical inputs for <A NAME="tex2html1058"
+  HREF="../doc/mfcal.html">mfcal</A>
+follow. This assumes a continuum
+source as the secondary calibrator and does a joiubt solution for the
+two polarisations:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.fixed.uv</TD>
+<TD ALIGN="LEFT">Input multi-source, dual-band dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(1622-297)</TD>
+<TD ALIGN="LEFT">Select secondary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nopassol</TD>
+<TD ALIGN="LEFT"><I>Do not</I> solve for bandpass.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i</TD>
+<TD ALIGN="LEFT">Do a joint solution for both polarisations.</TD>
+</TR>
+</TABLE>
+</DIV>
+To derive a separate solution for the two polarisation products, the
+<TT>stokes</TT> keyword would be left unset. Note the use of <code>options=nopassol</code>.
+This causes <A NAME="tex2html1059"
+  HREF="../doc/mfcal.html">mfcal</A>
+to not attempt to solve for the
+bandpass and phase offsets again, but rather to apply the previously 
+determined bandpass and phase offset solutions.
+
+<P>
+Typical inputs when using an SiO maser would be as follows:
+Typical inputs to <A NAME="tex2html1060"
+  HREF="../doc/mfcal.html">mfcal</A>
+are as follows:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.fixed.uv</TD>
+<TD ALIGN="LEFT">Input multi-source, dual-band dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(oceti)</TD>
+<TD ALIGN="LEFT">Select SiO secondary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nopassol</TD>
+<TD ALIGN="LEFT"><I>Do not</I> solve for bandpass.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i</TD>
+<TD ALIGN="LEFT">Do a joint solution for both polarisations.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=chan,20,45</TD>
+<TD ALIGN="LEFT">Select the range of channels where the SiO</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">signal is strong.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3974"
+  HREF="node204.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3970"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3964"
+  HREF="node202.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3972"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3975"
+  HREF="node204.html">Flux density bootstrapping</A>
+<B>Up:</B> <A NAME="tex2html3971"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3965"
+  HREF="node202.html">Tracking accuracy</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

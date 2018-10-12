@@ -1,0 +1,45 @@
+%N uvsector
+%D Flag a sector of UV data.
+%P rjs
+%: calibration
+%B
+        UVSECTOR flags visibility data with a specific sector.
+        The sector can be specified either by position angle, or as
+        an hour angle (East-West array assumed) or by way of a stripe
+        direction in an image. The latter form
+        will be useful when a stripe is seen in an image (implying
+        bad visibility data), and you wish to flag out the visibility
+        data that could have produced this stripe.
+%A vis
+        The visibility file to flag. Several files can be given.
+        Wildcard expansion is supported. The default is no file.
+%A select
+        Extra selection criteria. In addition to being in the appropriate
+        sector, the data must satisfy the selection criteria before
+        it is flagged.
+%A angle
+        This defines the angle of the axis of the sector, if the sector is
+        given by a position angle or hour angle (for an EW array). It
+        consists of two values, the first being either the string "uvangle"
+        or "hangle" (for position angle and hour angle, respectively). The
+        second gives the angle in degrees or hours (for position angle
+        and hour angle respectively). Position angle is defined as degrees
+        clockwise from the v axis (which is consistent with the uvplt
+        definition).
+%A in
+        If the sectors position angle is given by a stripe direction,
+        this gives the name of the image to associate with the stripe.
+%A region
+        A long, thin, region of the image given above, running in the
+        direction of a stripe. This parameter must be given if you
+        are defining an hour angle by a stripe direction. Normally
+        you will generate this region using CGCURS's region option,
+        and generate a region along the ridge of a stripe.
+%A width
+        The full width of the sector, in degrees. This must be in the
+        range (0,180). The default is 5 degrees.
+%A options
+        Extra processing options. Several can be given, separated by commas.
+        Minimum match is used. There is currently only one option.
+          noapply    Report on what would be done, but do not apply the
+                     flags.

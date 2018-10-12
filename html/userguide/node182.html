@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Some Theory and Preparing the Single-Dish Data</TITLE>
+<META NAME="description" CONTENT="Some Theory and Preparing the Single-Dish Data">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node183.html">
+<LINK REL="previous" HREF="node181.html">
+<LINK REL="up" HREF="node181.html">
+<LINK REL="next" HREF="node183.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3694"
+  HREF="node183.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3690"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3684"
+  HREF="node181.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3692"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3695"
+  HREF="node183.html">The Linear Method -</A>
+<B>Up:</B> <A NAME="tex2html3691"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3685"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002181000000000000000">
+Some Theory and Preparing the Single-Dish Data</A>
+</H2>
+Both the linear and non-linear methods require a mosaic and a single-dish
+image as inputs. <I>Miriad</I> has not tasks to form images from
+single-dish data. Thus you must use another package to generate the
+single-dish image, which you will then import into <I>Miriad</I> (presumably
+via FITS - see Section&nbsp;<A HREF="node47.html#s:fits">8.2</A>). Further massaging might then be
+needed within <I>Miriad</I> to prepare the single-dish image for the combination
+process. The steps needed are as follows:
+
+<OL>
+<LI>Coordinate grids: The coordinate systems of the single-dish and
+mosaic image <EM>must be identical</EM>. That is the image size, pixel
+increment, equinox, projection geometry, etc, must be the same.
+Often, the <A NAME="tex2html953"
+  HREF="../doc/regrid.html">regrid</A>
+task can achieve this reasonably painlessly. Given an input image and a
+template image, <A NAME="tex2html954"
+  HREF="../doc/regrid.html">regrid</A>
+resamples (by interpolation)
+the input onto the grid of the template.
+In doing so, it correctly handles different projection geometries,
+equatorial/galactic coordinate conversion, equinox conversion and different
+velocity definitions.
+
+<P>
+Note you should not regrid the mosaiced image. In regridding, the information
+that describes the mosaicing process is lost, which will make life difficult
+for you.
+
+<P>
+Typical inputs to <A NAME="tex2html955"
+  HREF="../doc/regrid.html">regrid</A>
+would be
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>REGRID</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.sd</TD>
+<TD ALIGN="LEFT">Input single dish image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">tin=lmc.mosaic</TD>
+<TD ALIGN="LEFT">The mosaic giving the coordinate system</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">that we want to regrid to.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.sd_regrid</TD>
+<TD ALIGN="LEFT">The output, regridded, single-dish image.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+For interpolation to produce a faithful output, the grid of the
+input cannot be too coarse - the number of pixels across the single-dish
+beam should be at least 3. Although this is usually readily satisfied on the
+spatial axes, spectral line users should be more wary: the number of channels
+across the spectral axis response function is usually very small. In addition,
+whereas the spatial resolution of the single dish will be poorer than the
+mosaic, this is not necessarily true for the spectral axis. So, in addition
+to regridding, some spectral smearing might need to be performed to reduce
+the spectral resolution of the single-dish image to that of the mosaic.
+Unfortunately, <I>Miriad</I> is poorly equipped to solve these problems; these
+issues are left as a difficult exercise for the user.
+
+<P>
+</LI>
+<LI>Flux scale calibration:
+The single-dish and mosaic images both should have flux units of Jy/beam. 
+Although appropriate calibration during the observations is obviously the 
+best method to ensuring that the flux scales of the mosaic and 
+single-dish images are the same, this is not always
+achieved. The flux scales of two images, that are nominally in the same units,
+can differ by a modest, but appreciable, amount. 
+
+<P>
+A common approach to estimating flux calibration factor is to compare the
+single-dish and mosaic images in that annulus of spatial frequencies where both
+are sensitive. For example, a Parkes observation will sample spatial frequencies
+from 0 to near 64&nbsp;meters, and a ATCA mosaic (assuming the shortest ATCA
+spacing is observed) will be sensitive from about 20&nbsp;meters upwards. As the
+reliability of the data near the extremes is suspect,
+spatial frequencies from 25 to 40&nbsp;meters should be modestly reliably represented
+in both an ATCA mosaic and a Parkes image. Comparing in the overlap
+annulus works very well when there is a simple source which is
+well represented in this region (e.g. a dominant point source).
+
+<P>
+The tasks to perform the linear and non-linear combination both have parameters
+for setting <EM>and</EM> deducing the flux calibration factor.
+
+<P>
+</LI>
+<LI>Point-spread function: In principle, knowing the point-spread function
+(the ``beam'') of the single-dish image is just as important as it is for 
+the mosaic.
+It is best to `map' this at the time of the single-dish observations and to
+account for any change in the beam that is caused by the single-dish imaging
+process.
+
+<P>
+While it is possible to imagine algorithms that could deduce the
+beamwidth based on the spatial frequency overlap between the single-dish
+and mosaic data, in practise this is not possible (the overlap region
+is not wide nor is the data reliable enough). In estimating beamwidth
+parameters, the beamwidth and flux calibration factor are highly
+coupled; an error in the beamwidth has much the same effect in the overlap region as
+an error in the flux scale. Thus you cannot determine the beamwidth and flux
+scale simultaneously.
+
+<P>
+The linear combination method assumes the single-dish point-spread
+function is a gaussian form, whereas the non-linear method
+takes a image dataset as the point-spread function (the point-spread
+function need not be symmetric). If a point-spread function is not
+readily available for the non-linear method, a gaussian dataset can be
+produced.
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3694"
+  HREF="node183.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3690"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3684"
+  HREF="node181.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3692"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3695"
+  HREF="node183.html">The Linear Method -</A>
+<B>Up:</B> <A NAME="tex2html3691"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3685"
+  HREF="node181.html">Combining Mosaics and Single</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

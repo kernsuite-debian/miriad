@@ -1,0 +1,32 @@
+%N vblank
+%D mask outlier pixels on the spectral axis
+%P thw
+%: image-analysis
+%B
+        VBLANK takes a cube that has already been masked and masks it
+        further so that unmasked pixels that are surrounded by only
+        masked pixels along axis 1 will be masked.  The default is to
+        mask if both adjacent pixels are masked; one can increase the
+        window size with keyword 'tol'.
+ 
+        This can be useful for reducing noise in a datacube that has
+        already been masked with a smoothed cube and where the velocity
+        field is assumed to be smooth.  In this case axis 1 would be the
+        velocity axis and spikes far from the channels of actual
+        emission are masked.
+ 
+        NOTE: Because flagging is only implemented for planes, the
+        spectral axis must be axis 1.  Use REORDER first to make this
+        so:
+          reorder in=file1 out=file2 mode='312'
+          vblank  in=file2
+          reorder in=file2 out=file3 mode='231'
+ 
+%A in
+          Standard keyword in. See the help on "in" for more information.
+ 
+%A tol
+        How far (in pixels) the nearest unmasked pixel can be for the
+        given pixel to stay unmasked.  Default is 1.
+ 
+%R 1.3, 2011/04/04 05:56:01 UTC

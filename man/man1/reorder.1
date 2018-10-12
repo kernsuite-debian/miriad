@@ -1,0 +1,26 @@
+.TH reorder 1
+.SH NAME
+reorder - Interchange the axes of a cube
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+map manipulation
+.SH DESCRIPTION
+REORDER is a MIRIAD task to reorder and reverse axes within an
+image.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image.  No default.
+.TP
+\fIout\fP
+The output image.  No default.
+.TP
+\fImode\fP
+The new axis ordering in terms of the old axis ordering: i.e.
+"312" make input axis 3 the first output axis, input axis 1
+the second output axis, etc.  Use "-" to reverse the pixel
+order on an axis.  Do not include dummy axes in mode.
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,15 @@
+%N mathd
+%D Perform mathematical operations on items.
+%P rjs
+%: utility
+%B
+        MATHD is a MIRIAD task which performs mathematical operations on
+        items in a Miriad data-set. The items can be either a single value,
+        or a ``vector'' of values.
+%A in
+        Name of the input data-set. No default.
+%A item
+        Name of the output item, in the data set. No default.
+%A exp
+        The expression to compute. This is an expression in FORTRAN-like
+        syntax (like MATHS),

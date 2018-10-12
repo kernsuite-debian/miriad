@@ -1,0 +1,125 @@
+.TH uvfmeas 1
+.SH NAME
+uvfmeas - Calculate the fluxes of a point source at the phase
+.SH PERSON RESPONSIBLE
+jbs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVFMEAS plots averaged spectra of a visibility dataset. It is
+used to measure the spectral behaviour of a continuum source,
+and can perform high order polynomial fits to the data. In this
+way, a flux density at a particular frequency can be more
+accurately determined. Multiple sets at different frequencies
+can be simultaneously plotted, allowing you to make a global
+fit over a wider range of frequencies, which may be more accurate.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input uv data sets. Several can be given (wild
+cards are supported). No default.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is plot everything.
+.TP
+\fIline\fP
+The normal uv linetype in the form:
+.nf
+  line,nchan,start,width,step
+.fi
+The default is all channels (or all wide channels if there are no
+spectral channels).
+.TP
+\fIstokes\fP
+The Stokes/polarization types to be plotted. The default is to
+plot those polarizations present in the input files. Stokes
+parameters will not however be overplot on each other; only one
+polarization will be plotted at a time.
+.TP
+\fIhann\fP
+Hanning smoothing width (an odd integer).  Smoothing is
+applied after averaging. Default is 1 (no Hanning smoothing).
+.TP
+\fIoffset\fP
+An offset (in arcsec) to shift the data. Positive values result in
+the data center being shifted to the North and East. Two values
+should be given, being the shift in the RA and DEC directions.
+The default is 0,0 (i.e. no shift).
+.TP
+\fIorder\fP
+The order of the highest term in the polynomial fit this task
+should make to the spectrum it plots.
+.TP
+\fIoptions\fP
+This gives extra processing options. Several options can be given,
+each separated by commas. They may be abbreviated to the minimum
+needed to avoid ambiguity. Possible options are:
+.nf
+   'nocal'       Do not apply the gains file. By default, UVSPEC
+                 applies the gains file in copying the data.
+   'nopass'      Do not apply bandpass corrections. By default,
+                 UVSPEC corrects for the bandpass shape if the
+                 required information is available.
+   'nopol'       Do not apply polarization corrections. By default
+                 UVSPEC corrects for polarization cross-talk.
+   'log'         Do the spectral fitting in log space. By default
+                 the fitting is done with the raw values. The plots
+                 will still show the raw values when this option
+                 is used. This option will be overridden, and a
+                 warning displayed, if there are negative raw
+                 values that make it impossible to do a log fit.
+   'plotvec'     Use the vector average values for the plot and
+                 the fit. By default, the scalar average values
+                 are used.
+   'uvhist'      Plot the uvdistance vs spectrally-corrected
+                 amplitudes after plotting the spectrum and fit.
+                 This will also show the histogram fit to the
+                 data used to estimate the usability of the source
+                 as a calibrator.
+   'plotfit'     Plot a user-specified fit over the spectrum. The
+                 coefficients of the fit are given with the fitp
+                 parameter.
+   'machine'     Output the fit coefficients on a single line,
+                 separated by spaces, suitable for parsing by
+                 another program.
+   'mfflux'      Output the fit coefficients in a way that can be
+                 input as the flux parameter in mfcal. Only really
+                 works for order=1 (linear fit).
+   'malpha'      Output the alpha coefficients on a single line,
+                 separated by spaces, suitable for parsing by
+                 another program.
+   'reshist'     Plot a histogram of the normalised residuals
+                 from the fit.
+   'nolines'     Do not plot the vector and scalar average lines.
+.TP
+\fIyrange\fP
+.fi
+The min and max range along the y axis of the plots. The default
+is to autoscale.
+.TP
+\fIdevice\fP
+PGPLOT plot device/type. No default.
+.TP
+\fInxy\fP
+Number of plots in the x and y directions. The default is
+determined from the number of plots that are requested.
+.TP
+\fIlog\fP
+Log file into which the averaged data are dumped. If the option
+'uvhist' is specified, the log file will contain the bin values:
+uvdist val Np
+Otherwise, the log file will contain the spectral values and fit:
+freq fluxdensity fluxfit
+.TP
+\fIfitp\fP
+The coefficients of a fit that you would like this task to
+overplot onto the spectrum. The coefficients must relate to the
+same type of fit (ie. log space or raw values) as the main fit
+would use.
+.TP
+\fIfeval\fP
+A frequency (in GHz) at which to evaluate the fit, and output
+the flux density in Jy.
+.sp
+.SH REVISION
+1.21, 2014/09/22 01:33:27 UTC

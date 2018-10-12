@@ -1,0 +1,80 @@
+%N convol
+%D Convolve a cube with a "beam function"
+%P rjs mchw
+%: map manipulation, map analysis
+%B
+        CONVOL is a MIRIAD task which convolves a map or model with a
+        "beam".  WARNING: Convol does not do a very good job with masked
+        images.
+ 
+%A map
+        The input image. This can be two or three dimensional.
+        No default.
+%A beam
+        The input beam.  This cannot be 3-dimensional.  The beam is
+        generally assumed to be symmetrical about its reference pixel,
+        but see the "asymmetric" option if this is not so.  If this is
+        not given, then a Gaussian beam must be specified by the fwhm
+        and pa parameters.
+%A fwhm
+        This parameter is ignored if the "beam" keyword is given.
+        Otherwise, it specifies the width of the Gaussian convolving
+        function unless options=final, in which case it specifies the
+        required resolution of the output image.  The size, in arcsec,
+        will normally be two numbers giving the full-width at half-
+        maximum of the major and minor axes of the Gaussian.  At least
+        one number must be given.  If only one is given, the Gaussian
+        will have equal axes.
+%A pa
+        This parameter is ignored if the "beam" keyword is given.
+        Otherwise, it specifies the position angle of the Gaussian
+        convolving function, unless options=final, in which case it
+        specifies the required position angle of the effective beam of
+        the output image.  It is measured north through towards east, in
+        degrees.  Default 0.
+%A region
+        The region of the input map to convolve.  See the Users Manual
+        for instructions on how to specify this.  The default is the
+        entire input image.
+%A out
+        The output image. No default.
+%A options
+        Some extra processing options. Several can be given, separated
+        by commas. Minimum match is used.
+          "final"    When parameters are given by the FWHM and PA
+                     keywords, the "final" option causes CONVOL to
+                     interpret these as the resolution required for the
+                     final output image.
+          "divide"   Divide, rather than multiply, the transform of the
+                     map by the transform of the beam.  That is, perform
+                     deconvolution, rather than convolution.
+          "asymmetric" Normally the beam is assumed to be symmetric (as
+                     it normally is in radio astronomy).  This options
+                     causes CONVOL to go through the extra steps to
+                     handle a possibly asymmetric beam.  If the beam is
+                     asymmetric, and you do not give this option, CONVOL
+                     symmetrises the beam (i.e. discards the anti-
+                     symmetric component).
+          "correlate" Correlate rather than convolve with the beam.  The
+                     difference between correlation and convolution are
+                     only apparent for asymmetric beams.
+          "cube"     Like final, but calculate required convolution for
+                     each plane separately. This option implies final.
+                     Use this to get the same beamsize in arcsec in all
+                     planes rather than the same beamsize in pixels.
+                     Warning: analysis tasks are likely to get source
+                     size and total flux wrong for the resulting cube.
+      @ scale
+        The scale factor to multiply the output by.  The default is for
+        CONVOL to determine the appropriate scale factor to make the
+        output in JY/BEAM.
+        NOTE: If the input image is in units of JY/BEAM, then to
+        determine the appropriate scale factor, CONVOL must know the
+        beam parameters (bmaj, bmin and bpa items) of both the input map
+        and the beam.  If these items are not present, CONVOL issues a
+        warning and uses a scale factor of 1.
+%A sigma
+        When doing devonvolution (options=divide), this gives a noise
+        parameter. Default is 0.
+ 
+%R 1.11, 2017/04/10 05:36:06 UTC

@@ -1,0 +1,118 @@
+<title> Documentation on immerge </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on immerge</h1>
+<pre>
+
+Task: immerge
+Purpose: Linear merging of images.
+Categories: map combination
+
+        IMMERGE is a Miriad task to merge linearly two images with
+        different resolutions.  The two images must be of the same field
+        and use the same coordinate system.
+ 
+        In combining the data, it is assumed that the low resolution
+        image better represents the short spacing data, whereas the
+        high resolution best represents the fine structure. Commonly,
+        the low resolution image will be a single-dish observation,
+        and the high resolution will be a mosaiced interferometric
+        observation.
+
+Key: <a name="in"><a href="in.html">in</a>
+        This gives the two images to be merged. The first input must be
+        the high resolution image, and the second the low. There is
+        no default. The two images must be on the same coordinate grid.
+        If necessary, use REGRID to achieve this.
+
+Key: <a name="out"><a href="out.html">out</a>
+        The output image. No default.
+
+Key: <a name="factor">factor
+        The flux calibration factor. Ideally the two inputs will have
+        correctly calibrated flux scales, in units like Jy/beam. In this
+        case, the flux calibration factor would be 1. In practise, the
+        calibration may not be perfect, and an extra calibration factor
+        will be required to align the flux scales.  "factor" gives the
+        factor to scale the low resolution image to put it on the same
+        flux scale as the high resolution image.  Note that this factor
+        is in addition to the scaling needed to convert Jy/beam at a low
+        resolution to Jy/beam at the high resolution.
+ 
+        If no value is given for "factor", IMMERGE determines this by
+        comparing the values in the Fourier plane, of data within an
+        particular annulus (after accounting for the differing
+        resolutions of the two inputs).  IMMERGE finds the scale factor
+        that minimises differences between the data of the two (in a
+        robust/L1 sense) in the annulus.
+
+Key: <a name="uvrange">uvrange
+        This specifies an annulus, in the Fourier domain, where the
+        high and low resolution images should agree (after allowing
+        for resolution differences). This is the annulus of data used to
+        deduce the flux calibration factor, and with options=feather.
+ 
+        Two or three values can be given.  The first two give the inner
+        and outer radius of the annulus in the Fourier domain.  The
+        third argument gives the units. Possible units are "klambda"
+        (kilo-wavelengths), "meters", "feet" and "nanoseconds".  The
+        default is "klambda".
+ 
+        Values for "uvrange" must be given either if "options=feather"
+        is used or if the flux calibration factor is being deduced.
+
+Key: <a name="region"><a href="region.html">region</a>
+        Region-of-interest parameter.  See the help on <a href="region.html">region</a>
+        for more information.  <B>NOTE:</B> This parameter is ONLY used for
+        determining the flux calibration factor.  Only plane selection
+        (e.g. via the "image" command) is allowed.  Typically you
+        would want to select a range of planes which contains
+        significant signal in the overlap region.
+
+Key: <a name="device"><a href="device.html">device</a>
+        PGPLOT device for a plot.  When determining the flux calibration
+        factor, IMMERGE can produce a plot showing the correspondence
+        between the high and low resolution data points in the annulus
+        (after correcting for resolution effects and the deduced flux
+        calibration factor).  Ideally it will show a line with "y=x".
+        The default is not to produce a plot.  It also plots the
+        difference from this "y=x" line as a function of spatial
+        frequency.
+
+Key: <a name="guard">guard
+        Before Fourier transforming, the images are padded with a guard
+        band.  "guard" gives one or two values, being the minimum width
+        of this guard band in pixels, in the x and y directions.  The
+        actual guard band used is such that the size of the image plus
+        guard band is a power of 2.
+
+Key: <a name="options"><a href="options.html">options</a>
+        Task enrichment parameters.  Several can be given, separated by
+        commas.  Minimum match is used.
+          normalize  Rather than the output being the merged images, the
+                     output is the low resolution image corrected by
+                     the flux calibration factor.
+          zero       By default, IMMERGE pads the guard band with data
+                     that minimizes FFT edge effects.  If the input
+                     images are really zero beyond the edges of the two
+                     input images, then padding with zeros might be
+                     preferable.  This is particularly so if IMMERGE is
+                     deducing the flux calibration scale factor.
+          feather    This merges the two images in a fashion similar to
+                     AIPS IMERG.  This method is generally less
+                     desirable than the default scheme used by IMMERGE.
+          shift      Determine the optimum shift to apply to the low
+                     resolution image to make it align with the high
+                     resolution one.
+          notaper    Normally the low-resolution image is tapered to
+                     match any residual primary beam response in the
+                     high-resolution image.  This option causes this
+                     step to be skipped.
+ 
+Revision: 1.7, 2013/08/30 01:49:21 UTC
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

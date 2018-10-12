@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Information Missing or Incorrect in FITS Files</TITLE>
+<META NAME="description" CONTENT="Information Missing or Incorrect in FITS Files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1990"
+  HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1986"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1980"
+  HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1988"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1991"
+  HREF="node50.html">AIPS Frequency Bugs</A>
+<B>Up:</B> <A NAME="tex2html1987"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<B> Previous:</B> <A NAME="tex2html1981"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00831000000000000000">
+Information Missing or Incorrect in FITS Files</A>
+</H2>
+<A NAME="tex2html103"
+  HREF="../doc/fits.html">fits</A>
+knows enough about the ATCA and a select group of other
+telescopes to provide some nominal values
+for parameters that FITS does not store - for example a system
+temperature of 50 K and a system gain of 13 Jy/K are stored with ATCA
+data.
+<A NAME="tex2html104"
+  HREF="../doc/fits.html">fits</A>
+also attempts to estimate the integration time.
+Unfortunately given the information present in a FITS file, this
+integration time estimate is little better than an educated guess.  Task
+<A NAME="tex2html105"
+  HREF="../doc/fits.html">fits</A>
+gives a message informing you of the values it is using.  If
+you know better values for system temperature, integration time, etc, than
+those guessed by <A NAME="tex2html106"
+  HREF="../doc/fits.html">fits</A>, you may wish to correct the stored values.
+This is largely so that any noise estimates produced by later tasks are in more
+meaningful units.  You can correct these with the task <A NAME="tex2html107"
+  HREF="../doc/puthd.html">puthd</A><A NAME="2100"></A>.
+Task <A NAME="tex2html108"
+  HREF="../doc/puthd.html">puthd</A>
+writes an item into the visibility dataset, which
+overrides the value of a visibility variable with the same name.  The
+following three parameter boxes show the inputs to <A NAME="tex2html109"
+  HREF="../doc/puthd.html">puthd</A>
+to
+correct the system temperature to 80&nbsp;K, the system gain to 11&nbsp;Jy/K and
+the integration time to 15&nbsp;seconds.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=0823.uv/systemp</TD>
+<TD ALIGN="LEFT">Parameter is dataset name followed by `systemp'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=80.0</TD>
+<TD ALIGN="LEFT">Set to 80 K. Express it as a real number.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=0823.uv/jyperk</TD>
+<TD ALIGN="LEFT">Parameter is dataset name followed by `jyperk'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=11.0</TD>
+<TD ALIGN="LEFT">Set to 11 Jy/K. Express it as a real number.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=0823.uv/inttime</TD>
+<TD ALIGN="LEFT">Parameter is dataset name followed by `inttime'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=15.0</TD>
+<TD ALIGN="LEFT">Set to 15 sec. Express it as a real number.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+AIPS FITS files from the ATCA sometimes contain other flaws which <I>Miriad</I> issues warnings about - these can usually be safely ignored. These flaws
+include visibilities with zero weight, incorrect apparent RA and DEC and
+circular polarizations from the ATCA.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1990"
+  HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1986"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1980"
+  HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1988"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1991"
+  HREF="node50.html">AIPS Frequency Bugs</A>
+<B>Up:</B> <A NAME="tex2html1987"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<B> Previous:</B> <A NAME="tex2html1981"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

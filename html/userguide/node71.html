@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Examining Visibility Variables</TITLE>
+<META NAME="description" CONTENT="Examining Visibility Variables">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node72.html">
+<LINK REL="previous" HREF="node70.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node72.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2267"
+  HREF="node72.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2263"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2257"
+  HREF="node70.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2265"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2268"
+  HREF="node72.html">Modifying Visibility Datasets</A>
+<B>Up:</B> <A NAME="tex2html2264"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2258"
+  HREF="node70.html">Plotting Visibilities</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001060000000000000000"></A><A NAME="2786"></A>
+<A NAME="s:exavis"></A>
+<BR>
+Examining Visibility Variables
+</H1>
+
+<P>
+There are a variety of variables associated with the dataset that you
+may like to examine.  For example, you may like to plot the system
+temperature as a function of time; it is usually stored as a variable
+(the visibilities are variables too).  A list of standard visibility variables
+is given in Appendix&nbsp;<A HREF="node214.html#app:uvvars">C</A>. Some of these variables are specific to
+the BIMA interferometer (Hat Creek), and so may be absent, or have no
+relevance to ATCA data.
+
+<P>
+The task <A NAME="tex2html242"
+  HREF="../doc/varlist.html">varlist</A><A NAME="2790"></A> will tell you the names of the variables in your
+dataset.  It will also tell you their data types (ascii, double
+precision, single precision and integer) and lengths.
+
+<P>
+After finding out the name of the variable of interest, you can plot it
+with <A NAME="tex2html243"
+  HREF="../doc/varplt.html">varplt</A><A NAME="2792"></A>.
+The following example plots the on-line <I>XY</I> phase differences, stored
+in the variable <TT>xyphase</TT> (which will be present if you used
+<A NAME="tex2html244"
+  HREF="../doc/atlod.html">atlod</A>
+in <I>Miriad</I>).  You can also use
+<A NAME="tex2html245"
+  HREF="../doc/varplt.html">varplt</A>
+to write the variable's values to a text file with the
+standard <TT>log</TT> keyword.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VARPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on local X-window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=var.txt</TD>
+<TD ALIGN="LEFT">Write values to text file</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xaxis=time</TD>
+<TD ALIGN="LEFT">Put variable <TT>time</TT> on x-axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yaxis=xyphase</TD>
+<TD ALIGN="LEFT">Put variable <TT>xyphase</TT> on y-axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=3,2</TD>
+<TD ALIGN="LEFT">One sub-plot per antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xrange</TD>
+<TD ALIGN="LEFT">Unset for auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Unset for auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2267"
+  HREF="node72.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2263"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2257"
+  HREF="node70.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2265"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2268"
+  HREF="node72.html">Modifying Visibility Datasets</A>
+<B>Up:</B> <A NAME="tex2html2264"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2258"
+  HREF="node70.html">Plotting Visibilities</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

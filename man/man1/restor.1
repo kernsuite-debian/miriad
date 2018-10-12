@@ -1,0 +1,89 @@
+.TH restor 1
+.SH NAME
+restor - Restore clean components to make the CLEAN map
+.SH PERSON RESPONSIBLE
+rjs mchw
+.SH CATEGORIES
+deconvolution
+.SH DESCRIPTION
+RESTOR is a MIRIAD task that performs a number of functions
+typically performed after the deconvolution step.  These include
+generating a "CLEAN" map, calculating residuals and convolving
+a model by a Gaussian beam.
+.sp
+RESTOR can also handle multi-frequency synthesis data.  In this
+case the input dirty map should consist of just one plane.  The
+input beam may contain several planes, and the input model may
+have no more planes (but possibly fewer) than the beam.  To get
+the residuals, each plane in the model is convolved with the
+corresponding plane in the beam, and subtracted from the dirty
+map.
+.SH PARAMETERS
+.TP
+\fImodel\fP
+The model of the deconvolved cube, typically produced by CLEAN
+or MAXEN.  The units of this image should be Jy/pixel.
+No default.
+.TP
+\fIbeam\fP
+The input dirty beam.  No default.
+.TP
+\fImap\fP
+The input dirty cube which should have units of Jy/beam.  May be
+omitted when mode=convolve.  Otherwise, no default.
+.TP
+\fImode\fP
+This can be one of the values:
+.nf
+  "clean"     This is the normal use, and the default, where the
+              output is the map, less the model convolved by the
+              dirty beam, plus the model convolved by the
+              Gaussian.
+  "residual"  The output is the map, less the model convolved by
+              the dirty beam.
+  "convolve"  The output is the model convolved by the Gaussian.
+              The beam is needed only if the Gaussian fwhm and
+              pa is not specified.  The map is ignored.
+  "dirty"     The output is the map convolved with the beam.
+.TP
+\fIfwhm\fP
+.fi
+The size, in arcsec, of the Gaussian beam to use in the
+restoration.  This will normally be two numbers, giving the
+full-width at half-maximum of the major and minor axes of the
+Gaussian.  If only one number is given, the Gaussian will have
+equal major and minor axes.  If no values are given, they are
+either retrieved from the beam header, or computed by fitting a
+Gaussian to the given dirty beam.
+.sp
+Note that the model image is convolved with this Gaussian beam,
+and then added to the residuals.  These residuals are not
+affected by the choice of this Gaussian beam size.  So if you
+want the residuals and convolved image to have approximately the
+same beam size, then the Gaussian beam size chosen should be the
+same size as the dirty beam.  If you want coarser resolution
+than that provided by this, you should use task CONVOL to smooth
+the restored image afterwards.
+.TP
+\fIpa\fP
+The position angle, in degrees, of the Gaussian restoring beam,
+measured east from north.  Ignored if no value is given for
+FWHM.  The default is determined from the dirty beam fit.
+.TP
+\fIoptions\fP
+There is only a single option at present:
+.nf
+  "mfs"  If the input model was produced by mfclean and contains
+         a 2nd plane with alpha*I components, using "mfs" will
+         cause restor to write a second plane in the output image
+         containing the alpha*I model convolved with the
+         Gaussian beam. Linmos will use this plane to do
+         wideband primary beam correction if the bw parameter
+         is used.
+.TP
+\fIout\fP
+.fi
+The output restored image.  No default.
+.sp
+.SH REVISION
+1.14, 2016/10/06 01:22:40 UTC

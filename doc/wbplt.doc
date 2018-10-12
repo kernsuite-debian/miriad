@@ -1,0 +1,79 @@
+%N wbplt
+%D WBPLT is a program used to analyse wbcorr data.
+%P lss
+%: uv analysis, plotting
+%B
+        WBPLT is a program used to analyse wbcorr data.
+%A vis
+        The input visibility datasets. Several datasets can be given.
+%A select
+        Standard visibility selection. See help on "select" for more
+        information.
+%A stokes
+        Normal Stokes/polarization selection. The default is to process all
+        parallel-hand polarisation.
+%A inc
+        Visibility increment (default is 1)
+%A chans
+        A pair of values giving the range of channels to be plotted.
+%A calfile
+        wbcorr lag-based calibration file.
+%A bpfile
+        wbcorr frequency-based calibration file.
+%A calfac
+        Factor to convert flux scale to Jy. Applied in addition to any
+        calibration tables. Default = 1.0
+%A xrange
+        X-axis range for plot. The default is to self-scale. The units
+        are Jy for flux density, hrs for time ,and RA and degrees for DEC
+        and phase.
+%A yrange
+        Y-axis range for plot. The default is to self-scale. The units
+        are Jy for flux density, hrs for time, and RA and degrees for DEC
+        and phase.
+%A axis
+        For plotting. Two values (minimum match active), one for each
+        of the x and y axes chosen from:
+         time                     [DD HH MM SS.S format]
+         amplitude, real, imag    [natural units; Jy]
+         phase                    [degrees]
+         closure                  [degrees] - needs 3 baselines
+         triple                   [natural units; Jy] - needs 3 baselines
+         ra                       [HH MM SS.S format]
+         dec                      [DD MM SS.S format]
+         lst                      [HH MM SS.S format]
+         hangle                   [HH MM SS.S format]
+         systemp1 (geometric mean systemp - IF1 all antennas) [Jy]
+         systemp2 (geometric mean systemp - IF2 all antennas) [Jy]
+        Defaults are axis=time,amp  (x and y axes).
+%A device
+        Standard PGPLOT device. See the help on "device" for more information.
+%A log
+        Write ascii data to this log file. Format is specified in comment
+        line. Maximum 9 channels. Default is no output file.
+%A lags
+        A pair of values giving the range of lags to be plotted if
+        options=dofft. There are 2n-2 lag channels starting at 0 and
+        ending at 2n-3.
+%A mask
+        Don't plot a value if the amplitude (not necessarly the yaxis) is
+        within this pair of values.
+%A options
+        nocal     Do not perform gain calibration.
+        nopol     Do not perform polarisation calibration on the data.
+        nopass    Do not perform bandpass calibration on the data.
+        relax     Plots flagged data (only works if data not averaged in
+                  frequency with the line parameter) or data without
+                  valid positions.
+        stats     Calculate some rudimentary statistics on y-values
+        dtrack    Switch on delay tracking for beam centre (i.e. non-
+                  meridian scans). wbcorr only!
+        dofft     Transform frequency channels into lag channels before
+                  plotting. All frequency channels should be read in
+                  (NB. lag spectrum is a real quantity)
+        lagwt     For options=dofft or if calfile is set, this applies
+                  a triangular weight function to the lag domain
+        flag0     Filter on channel 0 for wbcorr data
+        avall     Average all frequency channels
+ 
+%R 1.3, 2010/04/30 08:23:28 UTC

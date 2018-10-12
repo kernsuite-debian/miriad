@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Bugs and Shortcomings</TITLE>
+<META NAME="description" CONTENT="Bugs and Shortcomings">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node52.html">
+<LINK REL="previous" HREF="node50.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node52.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html917"
+  HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html911"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html905"
+  HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html913"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html915"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html918"
+  HREF="node52.html">Determining the Intent of</A>
+<B>Up:</B> <A NAME="tex2html912"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html906"
+  HREF="node50.html">Other Flags and Arguments</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00513000000000000000">
+Bugs and Shortcomings</A>
+</H2>
+Flint has a number of bugs and shortcomings, in addition to those described
+above. Flint is intended to be run on a FORTRAN that a compiler would
+accept. During the early stages of program development, a good FORTRAN compiler
+is a far better tool to find programming problems. Flint bugs and
+shortcomings include:
+
+<UL>
+<LI>IMPLICIT statements are ignored.
+</LI>
+<LI>EQUIVALENCE statements are rcudely treated.
+</LI>
+<LI>A number of archaic, poor or non-standard FORTRAN features are not
+recognized. These include the ASSIGN statement and assigned GOTO, alternate
+return statements, PAUSE, ENTRY, DECODE, ENCODE, many
+archaic forms of i/o statements, NAMELIST and many VMS extensions.
+</LI>
+<LI>While BYTE, INTEGER*2, INTEGER*4, REAL*4, REAL*8, etc statements are
+recognized, a warning message is generated, Flint otherwise treats these
+variables as either standard INTEGERs or REALs.
+</LI>
+<LI>Columns 72 to 80 of an input line (if they are present) are assumed
+to be part of the FORTRAN statement, rather than a comment field. Flint
+generates a warning if a line contains more than 72 characters.
+</LI>
+</UL>
+Flint recognizes the following extensions, and digests them without
+complaint:
+
+<UL>
+<LI>DO/ENDDO and DOWHILE/ENDDO constructs.
+</LI>
+<LI>INCLUDE statements.
+</LI>
+<LI>Lower case characters are considered equivalent to upper case. Tabs
+are treated as if they were the equivalent number of spaces. The full
+printable ascii character set can appear in character strings.
+</LI>
+<LI>A comment line starting with the hash character (#).
+</LI>
+<LI>The INTENT statement (see the section on Interface Definition Libraries).
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html917"
+  HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html911"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html905"
+  HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html913"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html915"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html918"
+  HREF="node52.html">Determining the Intent of</A>
+<B>Up:</B> <A NAME="tex2html912"
+  HREF="node48.html">FLINT</A>
+<B> Previous:</B> <A NAME="tex2html906"
+  HREF="node50.html">Other Flags and Arguments</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

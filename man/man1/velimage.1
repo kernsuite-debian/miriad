@@ -1,0 +1,65 @@
+.TH velimage 1
+.SH NAME
+velimage - Make (x,y,z) image from an (x,y) image and model z-values.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+VELIMAGE is a MIRIAD task to make an (x,y,z) image from an (x,y)
+image and a model for the z-values and dispersion.  The
+z-values, for example the mean velocity, are input as an (x,y)
+image, whilst the dispersion can be input as either an (x,y)
+image or a fixed value.  The output image is formed as
+.sp
+.nf
+   out(x,y,z) = in1(x,y) * exp(-(z-in2(x,y))**2/(2*sigma**2)))
+.fi
+.sp
+VELIMAGE can be used to compare models with the data.  For
+example one can generate a model image corresponding to a
+rotating galaxy, convolve it with the actual beam and subtract
+the model from the data to determine if there is residual
+emission which deviates from the model rotation curve.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image names, separated by commas.  The first image is
+the (x,y) intensity distribution integrated over the z-axis,
+e.g. velocity-integrated image.  The second image is an (x,y)
+model for the z-values, e.g. a mean velocity image.  No default
+for either.
+A 3rd input image gives the z-dispersion at each point, e.g. a
+velocity dispersion image.  If the 3rd image is not specified
+then fixed dispersion, sigma must be specified.
+.TP
+\fIregion\fP
+Region of image to be used.  See documentation on region for
+details.  All pixels within the bounding box are used; pixel
+masking is not used.  Default is the entire image.
+.TP
+\fIsigma\fP
+Fixed value for z-dispersion if not specified by 3rd input
+image.
+.TP
+\fInchan\fP
+Number of channels for z-axis of output image.  Default=1.
+.TP
+\fIstart\fP
+Starting value for z-axis of output image.  No default.
+.TP
+\fIstep\fP
+Interval for z-axis of output image.  No default.
+.TP
+\fIout\fP
+The output (x,y,z) image.  No default.
+.TP
+\fIoptions\fP
+Options.  Minimum match is active.
+.nf
+  relax  ignore axis descriptor mismatches
+         (e.g. pixel increments etc).  Use with care.
+.fi
+.sp
+.SH REVISION
+1.7, 2017/12/11 22:26:28 UTC

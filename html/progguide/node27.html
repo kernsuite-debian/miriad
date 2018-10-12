@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Setting Up UVWRITE - UVSET</TITLE>
+<META NAME="description" CONTENT="Setting Up UVWRITE - UVSET">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html566"
+  HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html560"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html554"
+  HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html562"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html564"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html567"
+  HREF="node28.html">Selection Steps Performed by</A>
+<B>Up:</B> <A NAME="tex2html561"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html555"
+  HREF="node26.html">Massaging Steps Performed by</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004512000000000000000">
+Setting Up UVWRITE - UVSET</A>
+</H2>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="395"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.3:</STRONG>
+Arguments to UVSET, for STATUS=NEW</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Object	</B></TH>
+<TH ALIGN="LEFT"><B>Type	</B></TH>
+<TH ALIGN="LEFT"><B>N,P1,P2,P3		</B></TH>
+</TR>
+<TR><TD ALIGN="LEFT">corr</TD>
+<TD ALIGN="LEFT">c</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">j</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">data</TD>
+<TD ALIGN="LEFT">channel</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">wide</TD>
+<TD ALIGN="LEFT">--, --, --, --</TD>
+</TR>
+</TABLE>
+
+<A NAME="t:uvset-new"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+<DL>
+<DT><STRONG><code>object='corr'</code></STRONG></DT>
+<DD>The uv routines allow the correlation data to be stored on disk, either
+as floating point numbers, or as 16 bit integers with an associated scale
+factor. The 16 bit format roughly halves the disk space required, but slows
+the read and write operation, and can cause precision problems. On the
+first call to <TT>uvwrite</TT>, the uv routines decide on the format to
+use, using a simple rule. The <TT>uvset</TT> call
+can be used to override this rule. To be of use, it must be called before
+the first call to <TT>uvwrite</TT>. The <TT>type</TT> argument is a single
+character, being <TT>`r'</TT> or <TT>`j'</TT>, which instructs floating
+point or scaled integers, respectively, to be used.
+</DD>
+<DT><STRONG><code>object='data'</code></STRONG></DT>
+<DD>This conrtols whether <TT>UVWRITE</TT> writes the
+data to the <TT>corr</TT> or <TT>wcorr</TT> variable. The default is to write it
+to the <TT>corr</TT> item (i.e. it assumes that the data is spectral, rather
+than continuum data).
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html566"
+  HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html560"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html554"
+  HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html562"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html564"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html567"
+  HREF="node28.html">Selection Steps Performed by</A>
+<B>Up:</B> <A NAME="tex2html561"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html555"
+  HREF="node26.html">Massaging Steps Performed by</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

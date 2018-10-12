@@ -1,0 +1,38 @@
+.TH uvglue 1
+.SH NAME
+uvglue - glue channels together
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVGLUE glues together individual multi-channel files into
+one mega-multi-channel file.
+.sp
+The individual multi-channel files must be IDENTICAL except for
+the values and flags of the correlations.  I.e. they must have
+the same number of channels and the same preambles.
+.sp
+For example, if we have 3 files names "vis_1", "vis_2" and
+"vis_3", where each file contains N  channels, then the output
+file will contain 3*N channels glued together in the order
+vis_1(1:N), vis_2(1:N), vis_3(1:N)
+.sp
+The output contains only one spectral window with NFILES*N channels
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+.nf
+  Root name of input visibility files.   Files must be named
+  vis_i for the ith file.  No default. NOTE: any calibration
+  tables present in the input datasets are NOT applied in
+  forming the output.
+.TP
+\fInfiles\fP
+  Number of file to read.
+.TP
+\fIout\fP
+  Output file name. No default
+.fi
+.sp

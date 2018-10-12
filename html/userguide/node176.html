@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Individual Approach</TITLE>
+<META NAME="description" CONTENT="The Individual Approach">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node181.html">
+<LINK REL="previous" HREF="node171.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node177.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3618"
+  HREF="node177.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3614"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3608"
+  HREF="node175.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3616"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3619"
+  HREF="node177.html">Splitting and Imaging</A>
+<B>Up:</B> <A NAME="tex2html3615"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3609"
+  HREF="node175.html">Some Additional Tools</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002170000000000000000"></A><A NAME="14390"></A>
+<BR>
+The Individual Approach
+</H1>
+The individual approach images, deconvolves, self-calibrates and restores
+each pointing separately. It is only when you are happy with the individual
+images that you would combine them - using a linear mosaicing algorithm. 
+
+<P>
+As noted above, the individual approach is less automated and can produce
+fundamentally poorer deconvolutions. However in some high-dynamic range
+applications, it may be preferable.
+The reason for this is that
+the deconvolution process does not depend on the primary
+beam model (nor do some errors such as a constant pointing error affect
+the deconvolution). With the `individual approach', it is possible to
+deconvolve sources (and thus eliminate their sidelobes - which is the
+important issue) beyond the limit
+where <I>Miriad</I>'s primary beam model gives up. To do this, however, you
+must make images larger than the main primary beam lobe 
+(see Table&nbsp;<A HREF="node172.html#t:mossize">21.2</A> above).
+
+<P>
+In the following, we assume that the `joint approach' section has been
+read and understood.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3620"
+  HREF="node177.html">Splitting and Imaging</A>
+<LI><A NAME="tex2html3621"
+  HREF="node178.html">Deconvolution, Restoration and Self-Calibration</A>
+<LI><A NAME="tex2html3622"
+  HREF="node179.html">Image Combination</A>
+<LI><A NAME="tex2html3623"
+  HREF="node180.html">Miscellaneous</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+%N itemize
+%D List information about MIRIAD dataset(s)
+%P pjt
+%: utility
+%B
+        ITEMIZE is a MIRIAD task which dumps a dataset or an item within a
+        dataset. If the input name is an item, then the contents of the
+        item (element for element) are written to the screen. If the input
+        name represents a dataset, then a summary of the items within the
+        dataset are given.
+%A in
+        The name of either a dataset, or an item within a data set or a
+        wildcard. For example:
+          % itemize in=dataset
+        or
+          % itemize in=dataset/item
+        or
+          % itemize in='*'
+        For example, to show the history information of file ``cm'', use
+          % itemize in=cm/history
+        When a dataset name is given, itemize summarizes the contents
+        of the entire dataset. When an item name is also given, then
+        itemize dumps the entire contents of the item (in accordance
+        to the index and format keywords).
+ 
+        Note that in ITEMIZE an "item" is one of the files in a MIRIAD
+        data set directory, for example the 'history' item, shown above.
+        To access the values of individual header items, use 'gethd'.
+ 
+%A log
+        The name of the output listing file. The default is the users
+        terminal.
+%A index
+        When dumping an entire item, "index" specifies the range of elements
+        to dump. The default is the entire item. For example, to print out
+        lines 10 through 20 of the history item, use:
+          % itemize in=cm/history index=10,20
+%A format
+        When dumping an entire item, this gives the FORTRAN format specifier
+        to be used. For example, when dumping a real item, you may set:
+          format=8e15.7
+        The default varies according to the data type.
+%A options
+        Extra processing options. Several options can be given separated by
+        commas. Minimum match is honoured.
+          nocompact  Normally itemize does not print blocks of identical lines.
+                     Instead it gives a message indicating the number of repetitions
+                     of a line. The "nocompact" option causes it to print the
+                     repetitions. This is useful if the output is being parsed
+                     by other software.

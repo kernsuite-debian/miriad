@@ -1,0 +1,38 @@
+.TH uvrms 1
+.SH NAME
+uvrms - Measure the RMS value of a visibility dataset.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVRMS determines the RMS value of a Miriad visibility data.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. No default.
+.TP
+\fIstokes\fP
+The Stokes/polarisation visibilities to select. The default is to
+not perform any polarisation conversion, but to apply polarisation
+calibration (see below).
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is to select everything.
+.TP
+\fIline\fP
+The normal uv linetype in the form:
+.nf
+  line,nchan,start,width,step
+.fi
+The default is all channels.
+.TP
+\fIoptions\fP
+Extra processing options.
+.nf
+   nocal       Do not apply the gains table.
+   nopass      Do not apply bandpass corrections. It is unwise
+               to turn off bandpass correction, as the continuum
+               estimation process will be confused by a bandpass
+               which is not flat.
+   nopol       Do not apply polarization corrections.

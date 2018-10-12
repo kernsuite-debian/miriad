@@ -1,0 +1,62 @@
+.TH obsrms 1
+.SH NAME
+obsrms - Calculate theoretical rms for telescope array observations.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+OBSRMS - Calculate theoretical rms for telescope array observations.
+The MIRIAD task TELEPAR provides typical values for Tsys and Jy/K.
+for several observatories.
+.SH PARAMETERS
+.TP
+\fItsys\fP
+SSB system temperature (Kelvin). Default=300 K.
+Tsys includes the loss through the atmosphere.
+.TP
+\fIjyperk\fP
+Antenna gain in units Jy/K. Default=150 Jy/K.
+.TP
+\fIantdiam\fP
+Antenna diameter (m), and aperture efficiency can be used to calculate
+jyperk. If only one value is given then the aperture efficiency used
+is 0.6. Default=0,0.6 i.e. use jyperk value.
+.TP
+\fIlambda\fP
+wavelength in millimeters. Default=3 mm.
+.TP
+\fIfreq\fP
+freq (GHz) can be used to compute lambda. Default=0 GHz, uses lambda.
+.TP
+\fItheta\fP
+Beamsize in arcsec. Two values may be given for the beam FWHM.
+If only one value is given it is used for both axes. Default=1,1
+.TP
+\fInants\fP
+Number of antennas in array. Single antenna is OK too. Default=9.
+.TP
+\fIbw\fP
+Bandwidth in MHz used for continuum observations. Default=800 MHz.
+.TP
+\fIdeltav\fP
+Velocity resolution in km/s  can be used to compute bandwidth for
+spectral line observations. Default=0 km/s, i.e. use bandwidth value.
+.TP
+\fIinttime\fP
+Total Integration time on source in minutes. Default=1 minute.
+.TP
+\fIcoreta\fP
+Correlator efficiency factor. A perfect correlator has coreta=1.
+2-, 3-, and 4-level correlators have coreta=0.64, 0.81, and 0.88
+respectively. (see Thompson, Moran, and Swenson, p229).
+Default=0.88
+.TP
+\fIrmsphase\fP
+RMS phase noise (degrees). Phase noise reduces the signal, effectively
+increasing the observed RMS noise in the data by a factor
+.nf
+   exp(rmsphase(radians)**2/2.). For strong sources atmospheric
+.fi
+phase noise can be removed by selfcalibration.
+Default=0. degrees. i.e. perfect data.

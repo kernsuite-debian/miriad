@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reduction Strategies</TITLE>
+<META NAME="description" CONTENT="Reduction Strategies">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node45.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="userhtml.html">
+<LINK REL="next" HREF="node45.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1918"
+  HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1914"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1908"
+  HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1916"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1919"
+  HREF="node45.html">Getting Data In and</A>
+<B>Up:</B> <A NAME="tex2html1915"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html1909"
+  HREF="node43.html">Image Region of Interest</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00700000000000000000">
+Reduction Strategies</A>
+</H1>
+Here we give an overview of the reduction process, and review some of the
+basic decisions that you will have to make during the reduction of the data.
+We now consider some questions that you should ask yourself before the
+reduction process.
+
+<P>
+
+<UL>
+<LI><EM>Is this observation more than a single-pointing,
+continuum experiment?</EM> Hopefully the answer to this is obvious!
+This manual contains special chapters addressing the reduction
+of spectral line (Chapter&nbsp;<A HREF="node123.html#c:lineobs">16</A>), mosaic (Chapter&nbsp;<A HREF="node165.html#c:mosaicing">21</A>)
+and pulsar-bin mode (Chapter&nbsp;<A HREF="node207.html#c:pulsar">24</A>) observations. You are
+encouraged to review appropriate chapters <EM>before</EM> you start
+reducing your data.
+
+<P>
+</LI>
+<LI><EM>Will I want to deconvolve my images?</EM> Deconvolution is the process
+of removing artifacts due to the incomplete sampling in the <I>u-v</I> plane.
+You will want to deconvolve for observations where the source is stronger
+than a few times the noise limit. That is, unless you are doing a detection
+experiment, you are likely to want to deconvolve. Deconvolution is addressed
+in Chapter&nbsp;<A HREF="node99.html#c:decon">14</A>.
+
+<P>
+</LI>
+<LI><EM>Will I want to self-calibrate the data?</EM> Self-calibration is
+the process of determining the antenna-based gain function from the
+source itself.  For this to be possible, your signal needs to be about 5
+to 10 times stronger than the thermal noise when integrated over the
+self-calibration solution interval (typically 15 seconds to 5 minutes).
+For the ATCA in continuum mode, this means a source which contains at
+least 100 to 200 mJy in most baselines.  Self-calibration is discussed
+in Chapter&nbsp;<A HREF="node113.html#c:selfcal">15</A>.
+
+<P>
+</LI>
+<LI><EM>As I have a continuum experiment, do I want to use multi-frequency
+techniques?</EM> Even in continuum mode, the ATCA produces multiple channels
+of data. As the fractional bandwidth can be quite significant,
+you may be making a significant approximation if
+you average all these channels into a single channel (the so-called
+`channel-0' dataset). The result will be
+poorer <I>u-v</I> coverage and bandwidth smearing. If you are interested in
+high dynamic range imaging, or if a good beam is important, and you are
+observing at 21, 13 and possibly 6 cm,
+then it is best <EM>not</EM> to average your data into a single
+channel. Rather you can calibrate and form a single image directly using the
+multichannel data. This practise is known as multi-frequency synthesis.
+
+<P>
+Multi-frequency synthesis can be taken a few steps further with the ATCA.
+As two IFs can be measured simultaneously, these two IFs can be
+combined in the imaging stage to further enhance both sensitivity and
+<I>u-v</I> coverage. As the ATCA can frequency switch rapidly, it is
+possible to time share between different frequency settings. This involves a
+trade-off between tangential and radial <I>u-v</I> gaps.
+
+<P>
+</LI>
+<LI><EM>Should I average my data in time or frequency?</EM> The reason to
+average your data is to reduce you disk consumption and to increase the
+speed of the various processing programs. If these practical considerations
+are important, you may consider averaging your data in time and frequency.
+In this case, you probably want to do this as early as possible in the
+reduction process - after the initial flagging.
+
+<P>
+Frequency averaging is generally only applicable for continuum experiments
+and only if you are <EM>not</EM> going to be doing multi-frequency synthesis.
+You might also think twice about averaging if interference was a problem
+during the observation. You may have to go back and do some more flagging
+later.
+
+<P>
+Averaging in time can be performed when observing with short arrays (i.e.
+when the 6&nbsp;km antenna is not used). A conservative rule is that you should
+not average longer than <I>90/d</I> seconds, where <I>d</I> is the array length in km.
+If you observe with a short
+array and are not interested in long baselines for the program source, you
+probably still want to use antenna 6 when determining the initial calibration.
+Despite this, <I>d</I> is the array length of interest for the program source,
+not the calibrators.
+Nor should you average for longer than the antenna-gain solution interval
+(unless you have finished calibrating, and
+are not going to self-calibrate). If you have a strong source, and the phase
+stability is poor, you should not average in time.
+
+<P>
+Both averaging in frequency and time are performed by <A NAME="tex2html52"
+  HREF="../doc/uvaver.html">uvaver</A>
+(see Section&nbsp;<A HREF="node69.html#s:uvaver">10.4</A>).
+</LI>
+</UL>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:strategy"></A><A NAME="1856"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 7.1:</STRONG>
+ATCA Data Reduction Strategy</CAPTION>
+<TR><TD><IMG
+ WIDTH="385" HEIGHT="567" BORDER="0"
+ SRC="img6.png"
+ ALT="\begin{figure}\begin{center}\epsfxsize =12cm\leavevmode\epsffile{strategy.ps}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+Figure&nbsp;<A HREF="#fig:strategy">7.1</A> gives a flow chart of the normal steps involved
+in reduction of ATCA data. Note that this is somewhat abbreviated by
+necessity - additional flow-charts in subsequent chapters give more
+detail and describe some of the variations.
+
+<P>
+We will now consider each step in the flow-chart in turn.
+
+<P>
+
+<OL>
+<LI>Data from the ATCA is written in ``RPFITS'' format - an ATNF-specific
+format - and a special task (<A NAME="tex2html53"
+  HREF="../doc/atlod.html">atlod</A>) is needed to read it.
+Loading your data into <I>Miriad</I> is described in Chapter&nbsp;<A HREF="node45.html#c:inout">8</A>.
+
+<P>
+</LI>
+<LI>Data editing (flagging) can be very time consuming, especially if you do are
+affected by interference. The <I>Miriad</I> flagging tasks are
+described in Chapter&nbsp;<A HREF="node58.html#c:edit">10</A>.
+
+<P>
+</LI>
+<LI>The actual calibration steps can be the most confusing steps, as
+there are a large variety of paths that can be followed. Only
+the most frequently trodden paths are described in Chapter&nbsp;<A HREF="node84.html#c:polarimetry">12</A>.
+
+<P>
+</LI>
+<LI>The task  <A NAME="tex2html54"
+  HREF="../doc/invert.html">invert</A>
+takes a visibility dataset and forms either
+a single image or an image cube (for spectral-line observations). It also
+produces a point-spread function (dirty beam), ready for deconvolution.
+See Chapter&nbsp;<A HREF="node94.html#c:imaging">13</A>
+
+<P>
+</LI>
+<LI>The main deconvolution tasks are <A NAME="tex2html55"
+  HREF="../doc/clean.html">clean</A>, <A NAME="tex2html56"
+  HREF="../doc/maxen.html">maxen</A>
+and
+<A NAME="tex2html57"
+  HREF="../doc/mfclean.html">mfclean</A>. Task <A NAME="tex2html58"
+  HREF="../doc/clean.html">clean</A>, which is the most commonly used, attempts
+to decompose your image into a number of delta functions. It can be
+slow for images with a large amount of extended emission. An
+alternative to <A NAME="tex2html59"
+  HREF="../doc/clean.html">clean</A>
+is
+<A NAME="tex2html60"
+  HREF="../doc/maxen.html">maxen</A>, a maximum entropy-based deconvolution task. It tends to
+be less robust and more difficult to run correctly. A third alternative
+is <A NAME="tex2html61"
+  HREF="../doc/mfclean.html">mfclean</A>. This is a derivative of the CLEAN algorithm, and
+simultaneously determines a flux density and spectral index image. It is
+only appropriate for multi-frequency synthesis experiments when more than
+one observing band has been used.
+
+<P>
+The deconvolution tasks are described in Chapter&nbsp;<A HREF="node99.html#c:decon">14</A>.
+
+<P>
+</LI>
+<LI>As noted above, self-calibration is useful for determining
+antenna gains directly from a strong program source. It is described in
+Chapter&nbsp;<A HREF="node113.html#c:selfcal">15</A>.
+</LI>
+<LI>The deconvolution tasks produce an output image that is in units
+of flux density per pixel. That is, the outputs are CLEAN component images.
+Task <A NAME="tex2html62"
+  HREF="../doc/restor.html">restor</A>
+converts these to flux density per CLEAN beam, and adds
+back the residuals. This is covered in Chapter&nbsp;<A HREF="node99.html#c:decon">14</A>.
+</LI>
+<LI>At last, you are ready to display and think about your images!
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1918"
+  HREF="node45.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1914"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1908"
+  HREF="node43.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1916"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1919"
+  HREF="node45.html">Getting Data In and</A>
+<B>Up:</B> <A NAME="tex2html1915"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html1909"
+  HREF="node43.html">Image Region of Interest</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,59 @@
+.TH psrfix 1
+.SH NAME
+psrfix - Process and copy a pulsar dataset.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+PSRFIX performs de-dispersion, bin averaging/differencing and
+ephemeris correction on an ATCA dataset observed in pulsar
+bin mode.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input uv data sets. Several can be given. No default.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is copy everything.
+See the help on "select" for more information.
+.TP
+\fIdm\fP
+This gives up to three numbers, being the pulsar dispersion
+measure, the pulsar period (in seconds) and the frequency to
+de-disperse to (in GHz). The default is a dispersion
+measure of 0, and to de-disperse to the average
+frequency of the first record. If de-dispersing, a pulsar period
+must be given.
+De-dispersion is done including fractional bin shifts.
+.TP
+\fIbinsl\fP
+Bin selection input. It takes an input string of the form
+.nf
+               (1,2,4),(4,5,-6),(7,8)
+.fi
+The output will be three bins, the first will contain the
+sum of the bins 1,2 and 4, the next will contain the sum
+of 4 and 5 minus 6, and the last will contain the sum of
+7 and 8. It is possible to have any combinations of bins.
+However, the number of output bins must be less than or
+equal to the number of input bins.
+.sp
+NOTE: This simply adds and differences multiple bins. It does
+NOT perform any normalization of the result. For example, if
+you sum three bins of equal value, you will get three times the
+flux of each bin in the output
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is supported.
+.nf
+  nocal   This option suppresses antenna gain calibration. The
+          default behaviour is to apply antenna calibration.
+  nopol   This option suppresses polarisation calibration. The
+          default behaviour is to apply polarisation calibration.
+  nopass  This option suppresses bandpass calibration. The
+          default behaviour is to apply bandpass calibration.

@@ -1,0 +1,29 @@
+%N atmerge
+%D Merge ancillary information with an AT-observed uv file.
+%P rjs
+%: uv analysis
+%B
+        ATMERGE merges certain ancillary information of an AT observation
+        into the corresponding Miriad uv file.
+%A vis
+        The names of the input uv data sets. No default.
+%A tsys
+        Either one of two names, being the text files containing the
+        system temperatures for the various antennas. If one value is
+        given, then the Tsys for the X and Y channels are assumed to be the
+        same. If two values are given, the first is assumed to be X, then
+        second is Y. The default is no tsys file.
+%A xyphase
+        The name of a text file containing the XY phases. The default is
+        no xyphase file.
+%A chi
+        The name of a text file containing the RPFITS parallactic angle
+        data. This results in the variable ``errchi'', which gives
+        the difference between the Miriad value and the RPFITS value.
+        Default is no chi file.
+%A xyamp
+        The name of the text file containing the XY-amplitude data.
+        This results in the variable ``xyamp'' being written. Default is
+        no xy-amplitude file.
+%A out
+        The name of the output uv data set. No default.

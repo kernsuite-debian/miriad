@@ -1,0 +1,468 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Computation</TITLE>
+<META NAME="description" CONTENT="Computation">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node97.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node99.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2607"
+  HREF="node99.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2603"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2599"
+  HREF="node97.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2605"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2608"
+  HREF="node99.html">Image Deconvolution</A>
+<B>Up:</B> <A NAME="tex2html2604"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2600"
+  HREF="node97.html">Weighting</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001340000000000000000">
+Computation</A>
+</H1>
+
+<P>
+Task <A NAME="tex2html369"
+  HREF="../doc/invert.html">invert</A>
+is a fairly conventional imaging program, which
+produces a dirty image from a visibility dataset.  It normally does this
+using a grid-and-FFT approach, although there are switches to use a
+direct Fourier transform and a median algorithm.  Task <A NAME="tex2html370"
+  HREF="../doc/invert.html">invert</A>
+does not require the data to be sorted in any way.
+Normally any calibration tables are applied
+by <A NAME="tex2html371"
+  HREF="../doc/invert.html">invert</A>
+on-the-fly (although this can be turned off with the
+<code>nocal</code>, <code>nopol</code> and <code>nopass</code> options). Both
+continuum or spectral line observations are handled.
+
+<P>
+We describe the inputs to <A NAME="tex2html372"
+  HREF="../doc/invert.html">invert</A>. For MFS imaging, note
+<TT>options=mfs</TT> (and <TT>options=sdb</TT>) options.
+
+<P>
+
+<UL>
+<LI><TT>vis</TT> gives the name of the input visibility datasets.
+Several datasets can be given, as may be convenient when a source is
+observed with multiple configurations or multiple frequencies.
+The selected data are assumed to
+be of the same object, with the same pointing centre.  Additionally,
+when making spectral line cubes, the number of channels derived from each
+dataset must be the same (this restriction
+does not apply for MFS images).  Dataset names can include wildcards.
+
+<P>
+</LI>
+<LI><TT>map</TT> is the name of the output image dataset(s). When several Stokes
+parameters are being imaged, you need to give one name for each Stokes
+type. There is no default.
+
+<P>
+</LI>
+<LI><TT>beam</TT> is the name of the output beam dataset.  The default is not
+to create an output beam.  If you wish to deconvolve, then you must
+create an output beam. Note that <A NAME="tex2html373"
+  HREF="../doc/invert.html">invert</A>
+produces a single beam
+which corresponds to all image planes and Stokes parameters.
+
+<P>
+</LI>
+<LI><TT>cell</TT> gives the image pixel size in arcseconds.  Either one or two
+values can be given.  If only one value is given, the pixels are square. The
+default is to choose a pixel size which samples the synthesised beam by
+about a factor of 3 (i.e. the recommended sampling for deconvolution).
+
+<P>
+</LI>
+<LI><TT>imsize</TT> gives the size of the images in pixels. It need not
+be a power of two. Generally the beam is also this size, but see
+<TT>options=double</TT> below.
+
+<P>
+</LI>
+<LI><TT>line</TT> is the normal data linetype selection.  The default linetype
+is the first channel when performing normal imaging and all channels
+when doing multi-frequency synthesis. Generally you should set this
+parameter if you have more than one channel.
+
+<P>
+</LI>
+<LI><TT>select</TT> is the normal visibility data selection.  The default is
+to select all data.
+
+<P>
+</LI>
+<LI><TT>stokes</TT> gives the Stokes or polarisation types to be imaged.
+Several values can be given, separated by commas. For example
+<PRE>
+     stokes=i,q,u,v
+</PRE>
+
+<P>
+will cause images of Stokes <I>I</I>, <I>Q</I>, <I>U</I> and <I>V</I> to be formed.  Note
+that there needs to be a corresponding output file (see <code>map</code>
+above) for each Stokes parameter being imaged.  The default Stokes parameter
+to image is `ii', which images Stokes-I, and assumes that the source is
+otherwise unpolarised.
+
+<P>
+</LI>
+<LI><TT>offset</TT>: This gives an offset, in arcseconds on the sky, to shift the image
+centre away from phase centre. Positive values result in the
+image centre being to the north and east of the observing centre. If one value
+is given, both RA and DEC are shifted by this amount. If two values are given,
+then they are the RA and DEC shifts. The default is no shift.
+
+<P>
+</LI>
+<LI><TT>options</TT> gives extra processing options.  Several options can
+be given (abbreviated to uniqueness), separated by commas.  Possible
+values are:
+
+<P>
+<DL>
+<DT><STRONG><TT>mfs:</TT></STRONG></DT>
+<DD>This invokes multi-frequency synthesis imaging, as
+described above. All selected channels and frequencies will be gridded
+simultaneously to form a single output image.
+
+<P>
+</DD>
+<DT><STRONG><TT>sdb:</TT></STRONG></DT>
+<DD>This is used in MFS imaging to cause <A NAME="tex2html374"
+  HREF="../doc/invert.html">invert</A>
+to produce a spectral
+dirty beam (this is stored as a second plane of the beam data-set).
+The spectral dirty beam is used by the
+deconvolution task <A NAME="tex2html375"
+  HREF="../doc/mfclean.html">mfclean</A>
+in determining the spectral index of the
+image. Generally if you think you <EM>may</EM> use <A NAME="tex2html376"
+  HREF="../doc/mfclean.html">mfclean</A>
+to deconvolve
+your image, then you should set <TT>options=sdb</TT>.
+See the discussion of multi-frequency synthesis in Section&nbsp;<A HREF="node110.html#s:mfclean">14.4</A>
+for more information.
+
+<P>
+</DD>
+<DT><STRONG><TT>double:</TT></STRONG></DT>
+<DD>Normally <A NAME="tex2html377"
+  HREF="../doc/invert.html">invert</A>
+makes a beam which is the same
+size as the image. However <I>Miriad</I>'s deconvolution tasks generally require
+a beam which is four times the area than the region being deconvolved.
+The <TT>double</TT> option causes <A NAME="tex2html378"
+  HREF="../doc/invert.html">invert</A>
+to produce a beam which is
+twice the linear extent (four times the area) of the image. In this way,
+you can request <A NAME="tex2html379"
+  HREF="../doc/invert.html">invert</A>
+to map just the region containing real
+emission, plus a guard band (at least 5 pixels on each edge).
+
+<P>
+</DD>
+<DT><STRONG><TT>systemp:</TT></STRONG></DT>
+<DD>See the description in the weighting section above.
+
+<P>
+</DD>
+<DT><STRONG><TT>nocal:</TT></STRONG></DT>
+<DD>By default, <A NAME="tex2html380"
+  HREF="../doc/invert.html">invert</A>
+applies any gain
+calibration to the data before imaging.  The <TT>nocal</TT> option turns
+off this step.
+
+<P>
+</DD>
+<DT><STRONG><TT>nopass:</TT></STRONG></DT>
+<DD>By default, <A NAME="tex2html381"
+  HREF="../doc/invert.html">invert</A>
+applies any bandpass
+calibration to the data before imaging.  The <TT>nopass</TT> option turns
+off this step.
+
+<P>
+</DD>
+<DT><STRONG><TT>nopol:</TT></STRONG></DT>
+<DD>By default, <A NAME="tex2html382"
+  HREF="../doc/invert.html">invert</A>
+applies any polarisation
+leakage correction to the data before imaging.  The <TT>nopol</TT> option
+turns off this step.
+
+<P>
+</DD>
+<DT><STRONG><TT>mosaic:</TT></STRONG></DT>
+<DD>This invokes <A NAME="tex2html383"
+  HREF="../doc/invert.html">invert</A>'s mosaic mode. See
+Chapter&nbsp;<A HREF="node165.html#c:mosaicing">21</A> for more information.
+
+<P>
+</DD>
+<DT><STRONG><TT>imaginary:</TT></STRONG></DT>
+<DD>This makes the `imaginary' image. This is
+useful for non-Hermitian data (holography) or for investigating certain
+instrumental errors.
+
+<P>
+</DD>
+<DT><STRONG><TT>amplitude:</TT></STRONG></DT>
+<DD>Set the phase of each visibility to zero before
+imaging.
+
+<P>
+</DD>
+<DT><STRONG><TT>phase:</TT></STRONG></DT>
+<DD>Set the amplitude of each visibility to unity before imaging.
+</DD>
+</DL>
+
+<P>
+</LI>
+<LI><TT>mode:</TT> This determines the imaging algorithm to be used. Possible
+values are <TT>fft</TT> (a conventional grid and FFT imaging algorithm),
+<TT>dft</TT> (a direct Fourier transform approach) and <TT>median</TT> (a median
+Fourier transform). The <TT>dft</TT> approach produces fewer artifacts in the resultant
+images, but at substantial computational expense. The <TT>median</TT> approach is
+more robust to bad data and sidelobes, but at an even more substantial
+computational cost. The default mode is <TT>fft</TT> - this should be used
+on all but the smallest datasets and images.
+
+<P>
+</LI>
+<LI><TT>slop:</TT> The slop factor. This is used in spectral-line
+imaging. See Section&nbsp;<A HREF="node134.html#s:slinvert">16.10</A> for more information.
+</LI>
+</UL>
+
+<P>
+Typical inputs to <A NAME="tex2html384"
+  HREF="../doc/invert.html">invert</A>
+for a continuum experiment are given below.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>INVERT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv.1,vela.uv.2</TD>
+<TD ALIGN="LEFT">Name of input visibility datasets</TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=vela.imap,vela.vmap</TD>
+<TD ALIGN="LEFT">Name of the output images - one per Stokes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=vela.beam</TD>
+<TD ALIGN="LEFT">Name of the output beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=1</TD>
+<TD ALIGN="LEFT">Pixel size is 1 arcsec square</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=256,512</TD>
+<TD ALIGN="LEFT">Image size is 256 by 512 pixels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,v</TD>
+<TD ALIGN="LEFT">Image Stokes <I>I</I> and <I>V</I></TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup</TD>
+<TD ALIGN="LEFT">Leave unset to get uniform weighting,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup=0</TD>
+<TD ALIGN="LEFT">Set <code>sup</code> to zero for natural weighting</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm</TD>
+<TD ALIGN="LEFT">Specify desired resolution - unset gives the max</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">resolution</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mfs</TD>
+<TD ALIGN="LEFT">Use the MFS option for multi-frequency synthesis, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mfs,sdb</TD>
+<TD ALIGN="LEFT">use the sbd option as well if using <A NAME="tex2html368"
+  HREF="../doc/mfclean.html">mfclean</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Controls channel selection and averaging. Default</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">is all channels when <TT>options=mfs</TT>.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+For a spectral line observation, typical inputs would be
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>INVERT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv.1,vela.uv.2</TD>
+<TD ALIGN="LEFT">Name of input visibility datasets</TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=vela.imap</TD>
+<TD ALIGN="LEFT">Name of the output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=vela.beam</TD>
+<TD ALIGN="LEFT">Name of the output beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=1</TD>
+<TD ALIGN="LEFT">Pixel size is 1 arcsec square</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=256,512</TD>
+<TD ALIGN="LEFT">Image size is 256 by 512 pixels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i</TD>
+<TD ALIGN="LEFT">Image Stokes <I>I</I> only</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup</TD>
+<TD ALIGN="LEFT">Leave unset to get uniform weighting,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup=0</TD>
+<TD ALIGN="LEFT">Set <code>sup</code> to zero for natural weighting</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm</TD>
+<TD ALIGN="LEFT">Specify desired resolution - unset gives the max</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">resolution</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=velocity,10,1.5,1.0,3.0</TD>
+<TD ALIGN="LEFT">Map channels to velocities. Image 10</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">velocities centred at 1.5, 4.5, 7.5 etc km/s</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+In its computation <A NAME="tex2html385"
+  HREF="../doc/invert.html">invert</A>
+determines the theoretical rms noise.
+This noise is calculated assuming that the only source of
+error is the system temperature of the front-end receiver.  No account
+is made of calibration errors, sidelobes or any other `instrumental'
+effects.  The calculation correctly accounts for the weighting scheme
+used in the imaging process. This theoretical noise is the level you
+can expect in a detection experiment (assuming no interference or
+confusion), and it is the best one can hope for in high dynamic range
+work (usually instrumental effects will limit you before the noise
+in these sorts of experiments).
+
+<P>
+The noise calculation of <A NAME="tex2html386"
+  HREF="../doc/invert.html">invert</A>
+(and all other <I>Miriad</I> tasks that
+compute the variance of a correlation) is based on values of system
+temperature, system gain, integration time and bandwidth stored in a dataset.
+Unfortunately data loaded into <I>Miriad</I> using <A NAME="tex2html387"
+  HREF="../doc/fits.html">fits</A>
+will have only nominal
+system temperatures and system gains, and an educated guess is made for the
+integration time. Data loaded using <I>Miriad</I> <A NAME="tex2html388"
+  HREF="../doc/atlod.html">atlod</A>, the
+system temperatures are those measured on-line, and the integration time
+will be correct.
+See Chapter&nbsp;<A HREF="node45.html#c:inout">8</A> for a discussion of setting you dataset
+up so that noise estimates are correct. The system gain, however, is still
+a nominal figure. If system temperature, system gain or integration time
+are incorrect by some factor, then the
+theoretical rms noise will also be wrong by the same factor.
+
+<P>
+In continuum mode (i.e.  the 33 channel/128 MHz mode), when all 33
+channels are retained after <A NAME="tex2html389"
+  HREF="../doc/atlod.html">atlod</A>
+(i.e.  <code>options=birdie</code>
+was not used) there is another effect which will cause <A NAME="tex2html390"
+  HREF="../doc/invert.html">invert</A>'s
+noise estimate to be a factor of <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img36.png"
+ ALT="$\sqrt2$"></SPAN> too pessimistic (i.e.  the
+actual noise is a factor of <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img36.png"
+ ALT="$\sqrt2$"></SPAN> lower than the printed value).
+With the ATCA correlator in this mode mode, the channel bandwidth is
+twice as large as the separation between channels (<I>i.e.</I> the
+channels are oversampled).  Unfortunately <A NAME="tex2html391"
+  HREF="../doc/invert.html">invert</A>
+assumes that the
+bandwidth is the same as the separation.  This will only affect you if
+you are imaging individual correlator channels (i.e.  no frequency
+averaging) and if you keep all channels.  It will not affect ``channel 0''
+or multi-frequency synthesis imaging.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2607"
+  HREF="node99.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2603"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2599"
+  HREF="node97.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2605"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2608"
+  HREF="node99.html">Image Deconvolution</A>
+<B>Up:</B> <A NAME="tex2html2604"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2600"
+  HREF="node97.html">Weighting</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

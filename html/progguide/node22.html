@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>UVNEXT</TITLE>
+<META NAME="description" CONTENT="UVNEXT">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node23.html">
+<LINK REL="previous" HREF="node21.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html496"
+  HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html490"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html484"
+  HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html492"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html494"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html497"
+  HREF="node23.html">Determining UV Variables and</A>
+<B>Up:</B> <A NAME="tex2html491"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html485"
+  HREF="node21.html">Variable Override</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00457000000000000000"></A><A NAME="sect:uvnext"></A>
+<BR>
+UVNEXT
+</H2>
+The uv i/o routines need to know what variables change simultaneously.
+all variables that have changes simultaneously. Conversely routine
+<TT>uvwrite</TT> assumes that all variables that change simultaneously with
+the variables that it writes, have already been written with routine
+<TT>uvputvr</TT>. Hence if the programmer is using <TT>uvscan</TT>, <TT>uvread</TT> or
+<TT>uvwrite</TT>, then simultaneity is not a concern, as long as variables are
+read after <TT>uvscan/uvread</TT>, and written before <TT>uvwrite</TT>. The routine
+<TT>uvnext</TT> provides better control, where this is needed. For an input
+file, a call to <TT>uvnext</TT> causes the next set of variables (which
+change simultaneously) to be read. For an output file, <TT>uvnext</TT> causes
+a marker to be written into the data, to indicate that variables written
+after the call did not change simultaneously with variables written before
+the call.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

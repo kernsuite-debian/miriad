@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interactive Channel/Baseline Flagging - TVFLAG</TITLE>
+<META NAME="description" CONTENT="Interactive Channel/Baseline Flagging - TVFLAG">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node62.html">
+<LINK REL="previous" HREF="node60.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node62.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2147"
+  HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2143"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2137"
+  HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2145"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2148"
+  HREF="node62.html">General Miriad Flagging -</A>
+<B>Up:</B> <A NAME="tex2html2144"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2138"
+  HREF="node60.html">Interactive Flagging - BLFLAG</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001012000000000000000"></A><A NAME="2367"></A>
+<BR>
+Interactive Channel/Baseline Flagging - TVFLAG
+</H2>
+The task <A NAME="tex2html179"
+  HREF="../doc/tvflag.html">tvflag</A>
+is akin to the AIPS <TT>SPFLG</TT>: it
+displays, on a TV device, one baseline at a time, the amplitude or phase
+(or amplitude or phase difference from a running average computed over
+some time). Task <A NAME="tex2html180"
+  HREF="../doc/tvflag.html">tvflag</A>
+will cycle over the set of baselines
+present, displaying each one, and giving you the opportunity to flag each
+baseline.
+
+<P>
+Task <A NAME="tex2html181"
+  HREF="../doc/tvflag.html">tvflag</A>
+is the last useful remnant of the ``TV'' suite of software
+(an old package of display software within <I>Miriad</I>), which uses two X-windows based tools,
+<code>xmtv</code> and <code>xpanel</code>, for displaying. You will need to start up
+these tools before using <A NAME="tex2html182"
+  HREF="../doc/tvflag.html">tvflag</A>. To start these, use commands
+<PRE>
+     % xmtv &amp;
+     % xpanel &amp;
+</PRE>
+in a terminal window of your local workstation (which need not be the machine
+that you are running <A NAME="tex2html183"
+  HREF="../doc/tvflag.html">tvflag</A>
+on).
+To use these, you first have to ensure that you are correctly
+setup to use X-windows programs - see Chapter&nbsp;<A HREF="node21.html#c:pltvcon">3</A> for more
+information on using X-windows. Using <TT>xmtv</TT> and <TT>xpanel</TT> is simple
+enough when you can run them on your local workstation.
+If you have to run
+<TT>xmtv</TT> and <TT>xpanel</TT> from a compute server (e.g. the situation in
+Narrabri, when using kaputar via an NT workstation), then there can be problems
+arising from multiple users attempting to allocate a given TCP/IP port. See
+Appendix&nbsp;<A HREF="node216.html#app:xmtv">E</A> for more information.
+
+<P>
+The input parameters to <A NAME="tex2html184"
+  HREF="../doc/tvflag.html">tvflag</A>
+are pretty straightforward. We
+mention only the more useful ones:
+
+<UL>
+<LI><TT>vis:</TT> The name of the visibility data-set to be flagged.
+</LI>
+<LI><TT>server:</TT> The TV server parameter. This may seem a rather redundant
+parameter. It is a parameter of the form
+<BLOCKQUOTE>
+<code>xmtv@</code><I>host</I>
+
+</BLOCKQUOTE>
+Here <I>host</I> is
+the host name of the workstation running <TT>xmtv</TT> and <TT>xpanel</TT>
+For example
+<PRE>
+   server=xmtv@tucana
+</PRE>
+indicates that <TT>xmtv</TT> and <TT>xpanel</TT> are running on the machine <code>tucana</code>.
+There is no default to this parameter, however a value of <code>xmtv@localhost</code>
+will be adequate when you are running <A NAME="tex2html185"
+  HREF="../doc/tvflag.html">tvflag</A>, <TT>xmtv</TT> and <TT>xpanel</TT>
+all on the one machine.
+</LI>
+<LI><TT>select:</TT> The usual visibility data selection parameter. One of
+<A NAME="tex2html186"
+  HREF="../doc/tvflag.html">tvflag</A>'s odd characteristics is in its handling of different
+polarizations. Task <A NAME="tex2html187"
+  HREF="../doc/tvflag.html">tvflag</A>
+can deal with only a single polarization
+per run. If it finds that the input data-set contains several polarizations,
+it will average these together when forming its display. While unusual, this
+is moderately useful. Assuming the data-set contains all four linear
+polarizations,
+<PRE>
+       select=pol(xx,yy)
+</PRE>
+will produce a Stokes-I display. On the other hand, no selection (i.e.
+allowing <A NAME="tex2html188"
+  HREF="../doc/tvflag.html">tvflag</A>
+to average <I>XX</I>, <I>YY</I>, <I>XY</I> and <I>YX</I>)
+will produce a quantity which is not physically meaningful, but will still
+allow you to make a quick check for interference and outliers.
+</LI>
+<LI><TT>line:</TT> The normal visibility linetype parameter. Task <A NAME="tex2html189"
+  HREF="../doc/tvflag.html">tvflag</A>
+does not support spectral averaging.
+</LI>
+<LI><TT>mode:</TT> This determines the quantity to be displayed. Possibilities
+are <TT>amplitude</TT>, <TT>phase</TT>, <TT>real</TT> and <TT>imaginary</TT>.
+</LI>
+<LI><TT>taver:</TT> This gives a time interval used for the running mean
+calculation when displaying in ``DIFF'' mode (see below). This parameter
+takes two values, both in minutes. The first gives the maximum amount of time
+in an averaging interval, whereas the second gives the time gap between records
+which causes an averaging interval to be ended. The default is 5 minutes for
+both of these.
+</LI>
+</UL>
+
+<P>
+Typical inputs are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>TVFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">server=xmtv@lupus</TD>
+<TD ALIGN="LEFT">Specify TV server</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode=amp</TD>
+<TD ALIGN="LEFT">Display amplitude</TD>
+</TR>
+<TR><TD ALIGN="LEFT">tvchan</TD>
+<TD ALIGN="LEFT">Unset is channel 1 else specify</TD>
+</TR>
+<TR><TD ALIGN="LEFT">range</TD>
+<TD ALIGN="LEFT">Unset for intensity auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">tvcorn</TD>
+<TD ALIGN="LEFT">Unset to centre the image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Unset for all channels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">taver</TD>
+<TD ALIGN="LEFT">Controls the computation of the</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">running mean for the DIFF command.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+After invoking <A NAME="tex2html190"
+  HREF="../doc/tvflag.html">tvflag</A>, a control panel will pop up
+and a baseline of data will be
+displayed on the TV. The display shows channels along the x-direction and time
+along the y-direction. A gap in time in the data is shown by a dark gap.
+A wedge is displayed both above and to the right of the data. The top
+wedge is the data averaged over time, whereas the wedge to the right is
+the data averaged over the channels.
+
+<P>
+You now perform flagging operations by pressing ``buttons'' on the
+control panel. We review the meaning of some of the buttons:
+
+<UL>
+<LI><TT>SELECT, SLCT CHAN</TT> and <TT>SLCT TIME</TT>: The first thing that you
+will normally do is to select some set of data, with one of the three ``select''
+buttons. <TT>SELECT</TT> selects a rectangular region on the display (i.e. some
+range of times and channels), whereas <TT>SLCT CHAN</TT> selects all times
+for a particular range of channels, and <TT>SLCT TIME</TT> selects all channels
+for a particular range of times. After pressing the appropriate ``select''
+button,
+
+<UL>
+<LI>move the mouse so that the cursor is at one corner of the region to
+be selected,
+</LI>
+<LI>depress the left mouse button,
+</LI>
+<LI>drag the cursor to the other corner of the region to be selected,
+</LI>
+<LI>release the mouse button.
+</LI>
+</UL>
+</LI>
+<LI><TT>FLAGOOD</TT> and <TT>FLAGBAD</TT>: Having selected some set of data with
+the previous commands, this data can be either flagged as good or bad with
+the <TT>FLAGOOD</TT> and <TT>FLAGBAD</TT> buttons respectively.
+</LI>
+<LI><TT>UNDO:</TT> The undo button causes the last flagging command to be undone
+and discarded.
+</LI>
+<LI><TT>RESCALE:</TT> The rescale button changes the display scaling, so that
+the data occupies the full greyscale or colour range. If you have some bad data
+which has an extremely high amplitude, for example, you will want to flag
+this and then rescale the display range so that you can see the detail in the
+remaining  data.
+</LI>
+<LI><TT>DIFF:</TT> The ``diff'' button causes a running mean to be subtracted
+off the data.
+</LI>
+<LI><TT>EXIT, QUIT</TT> and <TT>ABORT:</TT> The ``exit'' button causes the next
+baseline to be loaded. The ``quit'' button also causes the next baseline
+to be loaded, but discards any flagging commands performed on the current
+baseline. Normally <A NAME="tex2html191"
+  HREF="../doc/tvflag.html">tvflag</A>
+will terminate when it has gone
+through all the baselines. It is only at this stage that it applies
+the flagging operations to the actual data-set. Alternately the
+``abort'' button causes <A NAME="tex2html192"
+  HREF="../doc/tvflag.html">tvflag</A>
+to terminate at any time, and not
+to apply any of the flagging operations to the data-set.
+</LI>
+<LI><TT>LIST:</TT> This button lists the flagging operations that have been
+performed to the current baseline.
+</LI>
+<LI><TT>VALUE:</TT> This button allows you to find the value of pixels
+on the display. It is somewhat cumbersome - after pressing the ``value''
+button, you move the mouse cursor to the pixel of interest, and press the
+<code>[F3]</code> function key. You continue to move the cursor and
+press <code>[F3]</code> until you have exhausted the pixels of interest. Then
+press <code>[F6]</code> to return back to <A NAME="tex2html193"
+  HREF="../doc/tvflag.html">tvflag</A>'s normal mode.
+</LI>
+</UL>
+
+<P>
+There are other buttons on the control panel - but we do not suggest that you
+use these. They reproduce (rather crudely) buttons on the TV display window.
+The useful buttons on the TV display are:
+
+<UL>
+<LI><TT>Panner</TT>: Pressing this pops up a window that allows you to pan around the
+displayed image, and to fiddle the colour lookup table. The panner window that it
+pops up has one of two states - <TT>pan</TT> and <TT>fiddle</TT>.
+</LI>
+<LI><TT>Luts</TT>: This allows you to select a colour lookup table from a small
+number of palettes.
+</LI>
+<LI><TT>+</TT> and <TT>-</TT>: These allow you to zoom in and out. For mysterious reasons,
+these buttons are disabled when the <TT>Panner</TT> window is in the <TT>fiddle</TT> state.
+</LI>
+<LI><TT>Reset</TT>: Reset the zooming, the lookup tables, etc.
+</LI>
+<LI><TT>Resize</TT>: This allows the size of the display window to be toggled between
+full-screen and a more modest size.
+</LI>
+<LI><TT>Quit</TT>: Hopefully its use is obvious enough!
+</LI>
+</UL>
+
+<P>
+One shortcoming of <A NAME="tex2html194"
+  HREF="../doc/tvflag.html">tvflag</A>
+is that it averages the data in time so that
+it will fit on the
+display. Unfortunately full time resolution display cannot be recovered.  To
+display the data at full time resolution, you may need to select the
+data in chunks (with <TT>select=time()</TT>).
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2147"
+  HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2143"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2137"
+  HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2145"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2148"
+  HREF="node62.html">General Miriad Flagging -</A>
+<B>Up:</B> <A NAME="tex2html2144"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2138"
+  HREF="node60.html">Interactive Flagging - BLFLAG</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

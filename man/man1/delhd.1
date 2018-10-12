@@ -1,0 +1,22 @@
+.TH delhd 1
+.SH NAME
+delhd - Delete a dataset item.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+DELHD is a MIRIAD task to delete an item from a MIRIAD dataset.
+.sp
+For image datasets items are not only header variables, such as
+``crpix1'', ``datamin'' etc., but also the ``mask'' and ``image''
+items.
+For visibility datasets examples of items are ``wflags'', ``gains''
+and ``pdata'', but NOT the uv variables. They cannot be deleted.
+See also copyhd, itemize, mathd and puthd.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The name of an item within a dataset. This is given in the form:
+.nf
+      % delhd in=dataset/item

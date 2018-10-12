@@ -1,0 +1,94 @@
+%N imdiff
+%D Shift and expand an image to make it match another.
+%P rjs
+%: image-analysis
+%B
+        IMDIFF is a MIRIAD task which finds optimum parameters (in a
+        maximum likelihood sense) for making one image approximate
+        another image.  The parameters are an amplitude scale factor, dc
+        offset, shifts in x and y direction and an expansion.
+        Alternately any of these parameters can be fixed at a given
+        value, and the others allowed to vary.  This task assumes that
+        the rms noise levels in both images are identical (If this is
+        not the case then one of the images should be scaled to make it
+        the case).  Also noise in the two images is assumed to be
+        uncorrelated.  If either of these conditions are violated, the
+        algorithm will not perform optimally when the signal to noise
+        ratio is poor.
+ 
+        This task is intended to find only small shifts and expansions.
+        It will probably fail if large shifts and expansions are
+        present.  The task SHIFTY can handle large, integral, shifts.
+        This task currently only handles a rectangular region of
+        interest.  It does not handle blanked pixels correctly.
+%A in1
+        The first input image. This is considered to be the "reference"
+        image. No default.
+%A in2
+        The second input image.  This is considered to be the image that
+        must be adjusted to make it look like IN1.  No default.
+%A adjust
+        This gives the name of an output image data-set, being a version
+        of second image after adjustment.  The default is not to output
+        an adjusted image.
+%A resid
+        An output image consisting of the difference between IN1 and the
+        adjusted form of IN2.  It is generally best to look at the
+        residuals, to check that they are noise-like.  The residuals are
+        defined as:
+ 
+          Resid(x,y) = In1(x,y)
+                        - Amp*In2(Expand*x+Xshift, Expand*y+YShift)
+                        - Offset
+ 
+        (Here X and Y are relative to IN2's reference pixel).
+        The default is not to create the residuals.
+%A region
+        The region of interest. Currently this must be a rectangular
+        region. The default is the entire image.
+%A guard
+        The task cannot work right to the edge of the image, because the
+        shifts and expansions might mean that there is no corresponding
+        point between images near the image edges.  Consequently a guard
+        band is needed.  GUARD gives the width of this band, in pixels.
+        In the output residuals, this band will be set to zero.
+        Default is 10.
+ 
+        The following five parameters give the initial estimates for the
+        various parameters that IMDIFF is trying to find.  If the
+        parameters are fixed, then IMDIFF will not change them from
+        their initial settings.
+%A xshift
+        This gives the initial value, in pixels, of the x-shift.
+        This should be only +/- a few pixels. Default is 0.
+%A yshift
+        This gives the initial value, in pixels, of the y-shift.
+        Default is 0.
+%A expand
+        This gives the initial expansion.  Only small expansions can be
+        handled (e.g. approximately in the range 0.95 to 1.05).  This
+        should be adequate for proper motion studies.  Give two values
+        if you are allowing the x- and y-expansions to vary
+        independently, one value otherwise.  Default is 1.
+%A amp
+        This gives the initial amplitude scale factor. Default is 1.
+%A offset
+        This gives the initial dc offset to apply to IN2. The default
+        is 0.
+%A options
+        Task enrichment options.  Minimum match is active.  These
+        determine what to solve for.  Possible values are:
+          noamplitude Do not adjust the amplitude of the second image.
+                      The default is to adjust the amplitude.
+          nooffset    Do not adjust the offset of the second image.
+                      The default is to adjust the offset.
+          noxshift    Do not shift the second image in x.
+                      The default is to optimise the shift in x.
+          noyshift    Do not shift the second image in y.
+                      The default is to optimise the shift in y.
+          noexpand    Do not apply an expansion factor to the second
+                      image.  The default is to apply an expansion
+                      factor in y.
+          expand      Expand the x and y axes independently.  The
+                      default is that the expansions for the two axes
+                      are the same.

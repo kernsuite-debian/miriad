@@ -1,0 +1,20 @@
+%N atrtfix
+%D Correct for misbehaving round trip system
+%P rjs
+%: uv analysis
+%B
+        ATRTFIX corrects data for errors in the round trip phase measurement.
+        This is only needed when the round trip measurement malfunctions.
+%A vis
+        The input visibility file to correct. No default.
+%A out
+        The output corrected file. No default.
+%A rtphase
+        A text file containing the round trip phase measurements.
+        No default.
+%A options
+        Extra processing options.
+          glitch  Only modify the phase to account for glitches (not
+                  the gradual variation).
+%A offset
+        Offset, in seconds, between the recorded values and the data

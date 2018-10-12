@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>UNSET</TITLE>
+<META NAME="description" CONTENT="UNSET">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1527"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1523"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1517"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1525"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1528"
+  HREF="node13.html">SAVE and LOAD</A>
+<B>Up:</B> <A NAME="tex2html1524"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1518"
+  HREF="node11.html">Interrupting a Task</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00226000000000000000">
+UNSET</A>
+</H2>
+
+<P>
+It is often convenient to assign
+the original default value to the parameter.  This<A NAME="245"></A>
+`assignment' is accomplished with the command <TT>unset</TT>.  
+For example, if the
+task <TT>histo</TT> had been run with inputs:
+<PRE>
+   in       = gauss
+   region   =  
+   range    = 0,1
+   nbin     = 10
+</PRE>
+but you wanted to run histo with the default for <TT>nbin</TT>, you would type:
+<PRE>
+   histo% unset nbin
+</PRE>
+Multiple parameters can be unset on the same line.  Thus, to assign both
+<TT>range</TT> and <TT>nbin</TT> to their default values, you would type:
+<PRE>
+   histo% unset range nbin
+</PRE>
+Then, typing:
+<PRE>
+   histo% inp
+</PRE>
+will result in <TT>miriad</TT> replying
+<PRE>
+   Task:   histo
+   in       = gauss
+   region   =  
+   range    =  
+   nbin     =
+</PRE>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

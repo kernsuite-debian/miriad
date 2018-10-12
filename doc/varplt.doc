@@ -1,0 +1,39 @@
+%N varplt
+%D Plot and list variables.
+%P rjs
+%: plotting
+%B
+        VarPlt is a MIRIAD task which plots and lists variables from a
+        uv file.
+%A vis
+        The name of the input data-set. No default.
+%A device
+        The PGPLOT plotting device to use. The default is no plot.
+%A log
+        The log to give a listing of the variables. The default is no log.
+%A xaxis
+        Variable to plot on the X axis. Default is "time".
+%A yaxis
+        Variable to plot on the Y axis. No default.
+%A nxy
+        Number of plots in the x and y directions. The default varies.
+%A xrange
+        The min and max range along the x axis of the plots. The default
+        is to autoscale. Note that for "time" should be given in normal Miriad
+        time format (either absolute time or time-of-day).
+%A yrange
+        The min and max range along the y axis of the plots. The default
+        is to autoscale. Note that for "time" should be given in normal Miriad
+        time format (either absolute time or time-of-day).
+%A options
+        Extra processing options. Several can be given, separated by
+        commas. Minimum match is used.
+          "dtime"    If the x-axis is "time", plot the time in fractions
+                     of a day. The default is to plot in hh:mm:ss.
+          "compress" If the variable is a 2D array of values, average
+                     the variables along the second dimension.
+          "overlay"  By default, when a variable takes on several values,
+                     each is plotted on a separate plot. The overlay
+                     option makes a single plot.
+          "unwrap"   Unwrap the phases on the yaxis variable. Cannot unwrap
+                     an xaxis variable. By default phases are not unwrapped.

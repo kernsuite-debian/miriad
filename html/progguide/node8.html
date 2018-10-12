@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Code History</TITLE>
+<META NAME="description" CONTENT="Code History">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html252"
+  HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html246"
+  HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html240"
+  HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html248"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html250"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html253"
+  HREF="node9.html">Task Version Identification</A>
+<B>Up:</B> <A NAME="tex2html247"
+  HREF="node3.html">Program Development</A>
+<B> Previous:</B> <A NAME="tex2html241"
+  HREF="node7.html">A Subroutine Example</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00330000000000000000">
+Code History</A>
+</H1>
+All source code files should contain comments (near the start of the file)
+describing the creation and modification history.  This is quite important
+in the <I>Miriad</I> development environment, where programs are spread
+across many computers and programmers are separated by many miles.
+
+<P>
+Below are typical history comments (taken from the ``key'' routines,
+subroutine key.for):
+<PRE>
+c************************************************************************
+c  The key routines provide keyword-oriented access to the command line.
+c
+c  History:
+c    rjs    6jun87    Original version.
+c    bs     7oct88    Converted it to use iargc and getarg. Added -f flag.
+c    rjs    8sep89    Improved documentation.
+c    nebk  10sep89    Added mkeyr.  I think rjs will not like it (Too right!).
+c    rjs   19oct89    Major rewrite to handle @ files.
+c    rjs   15nov89    Added keyf routine, and did the rework needed to support
+c                     this. Added mkeyf. Modified mkeyr.
+c    pjt   26mar90    Added mkeya. like mkeyr (again, bobs will not like this)
+c    pjt   10apr90    some more verbose bug calls.
+c    rjs   23apr90    Made pjt's last changes into standard FORTRAN (so the
+c                     Cray will accept it).
+c    pjt   10may90    Make it remember the programname in keyini (se key.h)
+c                     for bug calls - introduced progname
+c    rjs   22oct90    Check for buffer overflow in keyini.
+c    pjt   21jan90    Added mkeyi, variable index is now idx, exp is expd
+c************************************************************************
+</PRE>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

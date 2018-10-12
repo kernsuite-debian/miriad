@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Loading data into Miriad: ATLOD</TITLE>
+<META NAME="description" CONTENT="Loading data into Miriad: ATLOD">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node198.html">
+<LINK REL="previous" HREF="node196.html">
+<LINK REL="up" HREF="node196.html">
+<LINK REL="next" HREF="node198.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3901"
+  HREF="node198.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3897"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3891"
+  HREF="node196.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3899"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3902"
+  HREF="node198.html">Initial ``fixes'' to millimetre</A>
+<B>Up:</B> <A NAME="tex2html3898"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3892"
+  HREF="node196.html">Practical loading and calibration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002321000000000000000">
+Loading data into <I>Miriad</I>: ATLOD</A>
+</H2>
+ATCA millimetre observations are loaded into <I>Miriad</I> in much the same fashion
+as centimetre data: task <A NAME="tex2html1036"
+  HREF="../doc/atlod.html">atlod</A>
+is used.
+
+<P>
+One difference is that it is <I>generally desirable</I> to load both
+observing bands together, to allow joint calibration. A shortcoming of
+<I>Miriad</I> is that it is poor at handling multiple observing bands
+<I>when the polarisation products differ between the bands</I>. However
+the standard ATCA correlator configurations that combine narrowband
+and wideband observations generally do measure different polarisation
+products in the two bands. As polarimetry
+with the ATCA 3-mm system is not possible anyway, the simplest approach
+to ensuring the polarisation products of the two bands are the same is by
+discarding polarisation products that are not needed. The
+<A NAME="tex2html1037"
+  HREF="../doc/atlod.html">atlod</A>
+option <code>nopol</code> causes <A NAME="tex2html1038"
+  HREF="../doc/atlod.html">atlod</A>
+to discard any XY and YX
+products.
+
+<P>
+Typical inputs to <A NAME="tex2html1039"
+  HREF="../doc/atlod.html">atlod</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=2006-02-18_1234.C123</TD>
+<TD ALIGN="LEFT">Input RPFITS file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.uv</TD>
+<TD ALIGN="LEFT">Output <I>Miriad</I> dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nopol,birdie,reweight</TD>
+<TD ALIGN="LEFT">Typical options used.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The <code>birdie</code> option for continuum data is
+used to discard edge channels and every second channel:
+for the continuum ATCA correlator configuration, successive channels are
+not independent and so there is no sensitivity penalty in discarding
+every second channel.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3901"
+  HREF="node198.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3897"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3891"
+  HREF="node196.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3899"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3902"
+  HREF="node198.html">Initial ``fixes'' to millimetre</A>
+<B>Up:</B> <A NAME="tex2html3898"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3892"
+  HREF="node196.html">Practical loading and calibration</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

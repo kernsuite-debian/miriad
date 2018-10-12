@@ -1,0 +1,48 @@
+%N odnh3
+%D Ammonia analysis program
+%P pjt
+%: map combination, map manipulation
+%B
+        ODNH3 is a MIRIAD task that creates optical depth and rotational
+        temperature maps from ammonia maps.  Ammonia J,K=(1,1) emission
+        has five hyperfine components, one main hyperfine component, two
+        inner hyperfine components, and two outer hyperfine components.
+ 
+        Odnh3 takes a main hyperfine component map and either an inner
+        or outer hyperfine component map and combines the two maps to
+        make a single main hyperfine component optical depth map.
+ 
+        Odnh3 can also combine a J,K=(1,1) main hyperfine component
+        map, a J,K=(2,2) main hyperfine component map, and a J,K=(1,1)
+        main hyperfine component optical depth map to create a
+        rotational temperature map.
+ 
+        Any of the input maps can be masked to allow a signal-to-noise
+        cutoff.
+ 
+%A map1
+        Input map, main hyperfine component map of the J,K=(1,1) level.
+        No default.
+%A map2
+        Input map, depends on the option given (see "op" below).
+        No default.
+%A mapt
+        Input map required for op=temp.  mapt is the J,K=(1,1) main
+        hyperfine component optical depth map.  No default.
+%A mask
+        A mask expression using FORTRAN syntax.  The optical depth or
+        rotational temperature is only calculated at pixels where the
+        mask is TRUE.  Thus, this keyword can be used to enforce a
+        signal-to-noise cutoff on the input maps.  No default.
+%A region
+        Standard keyword region. See the help on "region" for more information.
+%A op
+        The odnh3 option used:
+          taui: inner hyperfine component map of the J,K=(1,1) level.
+          tauo: outer hyperfine component map of the J,K=(1,1) level.
+          temp: main  hyperfine component map of the J,K=(2,2) level.
+        No default.
+%A out
+        Name of the output image.  No default.
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

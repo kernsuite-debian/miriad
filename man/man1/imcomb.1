@@ -1,0 +1,58 @@
+.TH imcomb 1
+.SH NAME
+imcomb - Combine images
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+map combination
+.SH DESCRIPTION
+IMCOMB is a MIRIAD task that combines several images into one.
+The images are weighted in the region of overlap to minimise
+the rms noise.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Name of the input image datasets. Several can be given.
+Wildcards are supported. At least one must be given.
+.TP
+\fIout\fP
+The name of the output dataset.
+.TP
+\fIrms\fP
+The rms noise levels of each of the input images.  This is used
+in weighting the images when combining them (and thus minimising
+the noise level in any overlap region).  Only the relative
+magnitude of the noise values are important.
+.sp
+The images are weighted as 1/rms**2 -- so if you wish the images
+to have speific weights, compute them accordingly. For example
+if you wish to weight two images by the ratios 4 to 1, use
+.nf
+  rms = 0.5,1
+.fi
+where 0.5 is 1/sqrt(4)
+.sp
+The default is to use the theoretical rms of the input images
+found in the image header.  If this is missing, then the last
+valid rms noise level found is used.  If no values are given,
+and the first dataset does not contain the rms value in the
+header, equal weights are used for all images.
+.TP
+\fIoptions\fP
+Extra processing options.  Several values can be given,
+separated by a comma.  Minimum match of names is used.
+Possible values are:
+.nf
+  nonormalise  Do not renormalise the output.  Normally the
+               output is normalised to account for overlap
+               regions.
+  relax        Do not check that the coordinate systems are
+               consistent.
+  fqaver       If 3rd axis (assumed to be frequency) is a
+               single plane, average the input images in
+               frequency, instead of producing a cube
+               containing all planes.
+.fi
+.sp
+.SH REVISION
+1.11, 2013/08/30 01:49:21 UTC

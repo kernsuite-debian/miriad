@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reading and Writing Visibilities</TITLE>
+<META NAME="description" CONTENT="Reading and Writing Visibilities">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node19.html">
+<LINK REL="previous" HREF="node17.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html440"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html434"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html428"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html436"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html438"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html441"
+  HREF="node19.html">Reading and Writing Continuum</A>
+<B>Up:</B> <A NAME="tex2html435"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html429"
+  HREF="node17.html">Open, Close and Rewind</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00453000000000000000">
+Reading and Writing Visibilities</A>
+</H2>
+The routines <TT>uvread</TT> and <TT>uvwrite</TT> are routines used to read and
+write the correlation data (and the associated flagging information).
+Here <TT>preamble</TT> is an array of four double precision elements, <TT>data</TT>
+is an array of <TT>n</TT> 
+complex elements, whereas <TT>flags</TT> is an array of <TT>n</TT> logical values.
+<TT>Preamble</TT>, <TT>data</TT> and <TT>flags</TT> are output from <TT>uvread</TT>,
+whereas they are input to <TT>uvwrite</TT>. The four elements of
+<TT>preamble</TT> are the u coordinate, v coordinate (measured in nanoseconds),
+time (Julian date) and baseline number. The baseline number, <SPAN CLASS="MATH"><IMG
+ WIDTH="22" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img3.png"
+ ALT="$Bl$"></SPAN>, is
+calculated  as:
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+Bl = 256 A_1 + A_2
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="119" HEIGHT="26" BORDER="0"
+ SRC="img4.png"
+ ALT="\begin{displaymath}
+Bl = 256 A_1 + A_2
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$A_1$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img6.png"
+ ALT="$A_2$"></SPAN> are the numbers of the first and second antennae
+respectively (antenna numbers vary from 1 to <SPAN CLASS="MATH"><IMG
+ WIDTH="66" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img7.png"
+ ALT="$N_{antenna}$"></SPAN>). The array
+<TT>data</TT> is used to store the complex correlation data, whereas the logical
+values of the array
+<TT>flags</TT> indicate whether the corresponding correlation is
+deemed good or bad (true or false, respectively). For <TT>uvread</TT>, <TT>n</TT>
+limits the number of correlations that can be read; the actual number of
+correlations read is passed back as <TT>nread</TT>. <TT>Uvread</TT> can perform
+a number of additional processing steps - see the description of
+<TT>uvset</TT> (Section&nbsp;<A HREF="node26.html#sect:uvset">2.5.11</A>).
+
+<P>
+The flags of a data file can be modified using the <TT>uvflgwr</TT> subroutine.
+When called, the flags associated with the previous call to
+<TT>uvread</TT> and <TT>uvwrite</TT> are changed to those values given in the
+<TT>flags</TT> array. Using <TT>uvflgwr</TT> when reading a visibility file,
+is the method used to develop flagging tasks. Currently <TT>uvflgwr</TT>
+has the limitation that the linetype is either `channel' or `wide', and that
+the `start' and `width' linetype parameters are 1 (see
+Section&nbsp;<A HREF="node26.html#sect:uvset">2.5.11</A>). Also <TT>uvflgwr</TT>
+aborts if no flagging file exists
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html440"
+  HREF="node19.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html434"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html428"
+  HREF="node17.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html436"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html438"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html441"
+  HREF="node19.html">Reading and Writing Continuum</A>
+<B>Up:</B> <A NAME="tex2html435"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html429"
+  HREF="node17.html">Open, Close and Rewind</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

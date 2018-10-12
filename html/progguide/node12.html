@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Error Handling</TITLE>
+<META NAME="description" CONTENT="Error Handling">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node11.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html342"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html336"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html330"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html338"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html340"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html343"
+  HREF="node13.html">Text I/O</A>
+<B>Up:</B> <A NAME="tex2html337"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html331"
+  HREF="node11.html">Task Parameters</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00420000000000000000"></A><A NAME="146"></A>
+<BR>
+Error Handling
+</H1>
+Many <I>Miriad</I> routines perform error checking internally, and bomb out if an
+error is detected. Other <I>Miriad</I> routines pass back a status value (generally
+the last subroutine argument). A status value of zero indicates success,
+-1 indicates end-of-file, and a positive value indicates some other error
+(what the positive values indicate is system dependent). Two routines can
+be called to indicate an error:
+<PRE>
+      subroutine bug(severity,text)
+      subroutine bugno(severity,number)
+</PRE>
+Here <TT>severity</TT> is a single character, being either <TT>'w', 'e'</TT> or
+<TT>'f'</TT>, meaning warning, error and fatal respectively. When <TT>bug</TT>
+or <TT>bugno</TT>
+is called with a fatal error, it will not return. Rather it will
+cause the task to exit. For routine <TT>bug</TT>, <TT>text</TT> is a character
+string describing the error. For routine <TT>bugno</TT>, <TT>number</TT> is a
+status value, returned by a <I>Miriad</I> routine.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

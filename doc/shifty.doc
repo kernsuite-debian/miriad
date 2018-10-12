@@ -1,0 +1,18 @@
+%N shifty
+%D Align two images.
+%P rjs
+%: image analysis
+%B
+        SHIFTY is a MIRIAD task that shifts one image by an integral
+        number of pixels to align it as well as possible with another
+        image.
+%A in1
+        The first input image is considered to be the master.
+        No default.
+%A in2
+        The second input image is shifted to align it with the master.
+        No default.
+%A out
+        The output image.  No default.
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

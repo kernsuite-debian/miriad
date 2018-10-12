@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Imaging - INVERT</TITLE>
+<META NAME="description" CONTENT="Imaging - INVERT">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node173.html">
+<LINK REL="previous" HREF="node171.html">
+<LINK REL="up" HREF="node171.html">
+<LINK REL="next" HREF="node173.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3572"
+  HREF="node173.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3568"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3562"
+  HREF="node171.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3570"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3573"
+  HREF="node173.html">Deconvolution and Restoration</A>
+<B>Up:</B> <A NAME="tex2html3569"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3563"
+  HREF="node171.html">The Joint Approach</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002161000000000000000"></A><A NAME="14189"></A>
+<BR>
+Imaging - INVERT
+</H2>
+Most of the inputs to <A NAME="tex2html852"
+  HREF="../doc/invert.html">invert</A>
+are the same as with conventional
+imaging. Only mosaic-specific considerations will be mentioned here.
+See Chapter&nbsp;<A HREF="node94.html#c:imaging">13</A> for more information. Note that <A NAME="tex2html853"
+  HREF="../doc/invert.html">invert</A>
+supports multi-frequency synthesis, Stokes and spectral imaging.
+
+<UL>
+<LI><TT>options=mosaic</TT>: The most important thing to remember is
+to invoke <A NAME="tex2html854"
+  HREF="../doc/invert.html">invert</A>'s mosaic mode! This causes <A NAME="tex2html855"
+  HREF="../doc/invert.html">invert</A>
+to
+expect multiple pointings in the input visibility data, and to
+perform the linear mosaicing steps and geometric corrections.
+</LI>
+<LI><TT>options=double</TT>: If you intend to deconvolve, <TT>options=double</TT>
+should always be used. This is because the full field of the each
+individual pointing is potentially filled with emission.
+</LI>
+<LI><TT>vis</TT>: When mosaicing, <A NAME="tex2html856"
+  HREF="../doc/invert.html">invert</A>
+handles input datasets
+which contain multiple pointing centres.
+</LI>
+<LI><TT>imsize</TT>: In mosaic mode, this is interpreted as the image
+size, in pixels, of each subfield. There are two constraints that
+are important if you wish to deconvolve. These can be relaxed, with
+corresponding degradation in deconvolution.
+
+<UL>
+<LI>Ideally <code>imsize</code> should be large enough to contain all emission
+in the main lobe of the primary beam (as <I>Miriad</I> only models the main
+lobe, making it larger has no beneficial effect).
+Table&nbsp;<A HREF="#t:mossize">21.2</A> gives these
+sizes as a function of frequency for the ATCA. 
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="t:mossize"></A>
+<DIV ALIGN="CENTER">
+<A NAME="14205"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table 21.2:</STRONG>
+Size of Main Lobe of the Primary Beam for ATCA dishes</CAPTION>
+<TR><TD ALIGN="CENTER">Frequency</TD>
+<TD ALIGN="CENTER">Primary Beam Main Lobe Size</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.png"
+ ALT="$\nu$"></SPAN> (GHz)</TD>
+<TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img82.png"
+ ALT="$\theta$"></SPAN> (arcmin)</TD>
+</TR>
+<TR><TD ALIGN="CENTER">1.384</TD>
+<TD ALIGN="CENTER">70.0</TD>
+</TR>
+<TR><TD ALIGN="CENTER">2.496</TD>
+<TD ALIGN="CENTER">42.4</TD>
+</TR>
+<TR><TD ALIGN="CENTER">4.800</TD>
+<TD ALIGN="CENTER">20.6</TD>
+</TR>
+<TR><TD ALIGN="CENTER">8.640</TD>
+<TD ALIGN="CENTER">12.2</TD>
+</TR>
+</TABLE>
+</DIV>
+</DIV>
+<BR>
+
+<P>
+</LI>
+<LI>The image size <EM>should not</EM> be a power of 2, or
+a number within the range (approximately) <!-- MATH
+ $[0.9\times2^n,2^n]$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="93" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img116.png"
+ ALT="$[0.9\times2^n,2^n]$"></SPAN> (note that
+just 1 pixel more than a power of 2 is fine - and indeed good). This
+restriction is to help reduce the effects of the aliasing caused by
+a ``grid-and-FFT'' imaging algorithm which <A NAME="tex2html857"
+  HREF="../doc/invert.html">invert</A>
+uses.
+</LI>
+</UL>
+</LI>
+<LI><TT>sup</TT>: Recall that <code>sup</code> gives the sidelobe
+suppression region, and is a way of setting uniform, super-uniform and
+sub-uniform weights. In mosaic mode, <A NAME="tex2html858"
+  HREF="../doc/invert.html">invert</A>'s default is to suppress
+the sidelobes in a region the size of each sub-image. However suppressing
+sidelobes in an individual sub-images is not the same as suppressing them
+in the linear mosaic of the sub-images. This is because
+the linear mosaicing process weights down sidelobes
+some distance from the pointing centre.
+In mosaicing, minimum sidelobes
+will be achieved by setting <TT>sup</TT> equal to about twice the pointing
+separation (which should be about the side of the primary beam FWHM).
+
+<P>
+As always, best point-source sensitivity results by setting <TT>sup</TT>
+equal to 0.
+</LI>
+<LI><TT>offset</TT>: This has a different meaning in mosaic mode. It gives the
+position on the sky (the so-called tangent point), in RA and DEC, which is
+used for
+geometry calculations. The value is given in the form <I>hh:mm:ss,dd:mm:ss</I>,
+or as decimal hours and degrees. Normally you can allow this to default, and
+<A NAME="tex2html859"
+  HREF="../doc/invert.html">invert</A>
+will choose a central pointing centre as the tangent point.
+</LI>
+</UL>
+Typical inputs to <A NAME="tex2html860"
+  HREF="../doc/invert.html">invert</A>
+would be:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>INVERT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=lmc.uv</TD>
+<TD ALIGN="LEFT">The input multi-pointing dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mosaic,double</TD>
+<TD ALIGN="LEFT">Use mosaic mode and make large beam.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">offset</TD>
+<TD ALIGN="LEFT">Usually can leave blank.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc.map</TD>
+<TD ALIGN="LEFT">Output image name.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=lmc.beam</TD>
+<TD ALIGN="LEFT">Output beam name.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=</TD>
+<TD ALIGN="LEFT">Set cell size.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=</TD>
+<TD ALIGN="LEFT">Set output image size.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup=2000</TD>
+<TD ALIGN="LEFT">Set to approximately twice the pointing separation for</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">minimum sidelobes, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sup=0</TD>
+<TD ALIGN="LEFT">set to zero for best point-source sensitivity.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3572"
+  HREF="node173.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3568"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3562"
+  HREF="node171.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3570"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3573"
+  HREF="node173.html">Deconvolution and Restoration</A>
+<B>Up:</B> <A NAME="tex2html3569"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3563"
+  HREF="node171.html">The Joint Approach</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

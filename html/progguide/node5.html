@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>In-Line Documentation</TITLE>
+<META NAME="description" CONTENT="In-Line Documentation">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html210"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html204"
+  HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html198"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html206"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html208"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html211"
+  HREF="node6.html">A Program Example</A>
+<B>Up:</B> <A NAME="tex2html205"
+  HREF="node3.html">Program Development</A>
+<B> Previous:</B> <A NAME="tex2html199"
+  HREF="node4.html">General Programming Conventions</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00320000000000000000">
+In-Line Documentation</A>
+</H1>
+Documentation for <I>Miriad</I> tasks and subroutines is included as comments
+within the body of the code (delimited by special ``directives''). This
+documentation is stripped out by the <code>doc</code> program to produce a
+<code>.doc</code> file. This <code>.doc</code> file is then used by the on-line
+help facilities and the manual generation utilities.
+
+<P>
+This documentation should be at the head of the source code.  In FORTRAN
+notation, the documentation ``directives'' are:
+<PRE>
+c=  [routine name] [one-line description]   (for programs)
+c*  [routine name] [one-line description]   (for subroutines)
+c&amp;  programmer ID
+c:  comma-separated list of categories
+c+
+c   start of multi-line description block
+c@  keyword                                 (for tasks)
+c   multi-line keyword description          (for tasks)
+c&lt;  standard keyword                        (for tasks - deprecated form)
+c--
+</PRE>
+For FORTRAN, comment lines can begin with either an uppercase or a 
+lowercase <TT>c</TT>. In-line documentation in C is analogous, except that
+comment lines begin with a <TT>/*</TT>. Note also that once a
+<TT>/*</TT> is entered, everything until the next <TT>*/</TT> is considered
+a comment; it is the programmer's responsibility to determine where to
+place the <TT>*/</TT>.
+
+<P>
+The entries in the comma-separated list of categories should be:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT" COLSPAN=4><SPAN>For executables:</SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">General</TD>
+<TD ALIGN="LEFT">Utility</TD>
+<TD ALIGN="LEFT">Data Transfer</TD>
+<TD ALIGN="LEFT">Visual Display</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Calibration</TD>
+<TD ALIGN="LEFT">uv Analysis</TD>
+<TD ALIGN="LEFT">Map Making</TD>
+<TD ALIGN="LEFT">Deconvolution</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Plotting</TD>
+<TD ALIGN="LEFT">Map Manipulation</TD>
+<TD ALIGN="LEFT">Map Combination</TD>
+<TD ALIGN="LEFT">Map Analysis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Profile Analysis</TD>
+<TD ALIGN="LEFT">Model Fitting</TD>
+<TD ALIGN="LEFT">Tools</TD>
+<TD ALIGN="LEFT">Other</TD>
+</TR>
+<TR><TD></TD>
+</TR>
+<TR><TD></TD>
+</TR>
+<TR><TD ALIGN="LEFT" COLSPAN=4><SPAN>For subroutines:</SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">Baselines</TD>
+<TD ALIGN="LEFT">Calibration</TD>
+<TD ALIGN="LEFT">Convolution</TD>
+<TD ALIGN="LEFT">Coordinates</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Display</TD>
+<TD ALIGN="LEFT">Error-Handling</TD>
+<TD ALIGN="LEFT">Files</TD>
+<TD ALIGN="LEFT">Fits</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Fourier-Transform</TD>
+<TD ALIGN="LEFT">Gridding</TD>
+<TD ALIGN="LEFT">Header-I/O</TD>
+<TD ALIGN="LEFT">History</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Image-Analysis</TD>
+<TD ALIGN="LEFT">Image-I/O</TD>
+<TD ALIGN="LEFT">Interpolation</TD>
+<TD ALIGN="LEFT">Least-Squares</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Log-File</TD>
+<TD ALIGN="LEFT">Low-Level-I/O</TD>
+<TD ALIGN="LEFT">Mathematics</TD>
+<TD ALIGN="LEFT">Model</TD>
+</TR>
+<TR><TD ALIGN="LEFT">PGPLOT</TD>
+<TD ALIGN="LEFT">Plotting</TD>
+<TD ALIGN="LEFT">Polynomials</TD>
+<TD ALIGN="LEFT">Region-of-Interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">SCILIB</TD>
+<TD ALIGN="LEFT">Sorting</TD>
+<TD ALIGN="LEFT">Strings</TD>
+<TD ALIGN="LEFT">Terminal-I/O</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Text-I/O</TD>
+<TD ALIGN="LEFT">Transpose</TD>
+<TD ALIGN="LEFT">TV</TD>
+<TD ALIGN="LEFT">User-Input</TD>
+</TR>
+<TR><TD ALIGN="LEFT">User-Interaction</TD>
+<TD ALIGN="LEFT">Utilities</TD>
+<TD ALIGN="LEFT">uv-Data</TD>
+<TD ALIGN="LEFT">uv-I/O</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Zeeman</TD>
+<TD ALIGN="LEFT">Other</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html212"
+  HREF="node6.html">A Program Example</A>
+<LI><A NAME="tex2html213"
+  HREF="node7.html">A Subroutine Example</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html210"
+  HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html204"
+  HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html198"
+  HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html206"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html208"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html211"
+  HREF="node6.html">A Program Example</A>
+<B>Up:</B> <A NAME="tex2html205"
+  HREF="node3.html">Program Development</A>
+<B> Previous:</B> <A NAME="tex2html199"
+  HREF="node4.html">General Programming Conventions</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

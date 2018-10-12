@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Self-Calibration</TITLE>
+<META NAME="description" CONTENT="Self-Calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node175.html">
+<LINK REL="previous" HREF="node173.html">
+<LINK REL="up" HREF="node171.html">
+<LINK REL="next" HREF="node175.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3596"
+  HREF="node175.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3592"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3586"
+  HREF="node173.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3594"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3597"
+  HREF="node175.html">Some Additional Tools</A>
+<B>Up:</B> <A NAME="tex2html3593"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3587"
+  HREF="node173.html">Deconvolution and Restoration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002163000000000000000"></A><A NAME="14288"></A>
+<BR>
+Self-Calibration
+</H2>
+The software to perform self-calibration is workable and reasonable
+flexible, although it is rather inelegant. In part, this software has not
+been upgraded from the time before the `joint approach' suite was
+developed in <I>Miriad</I>.
+
+<P>
+The self-calibration process is performed in two main steps (there is a
+minor third step). First the
+task <A NAME="tex2html894"
+  HREF="../doc/demos.html">demos</A>
+(``de-mosaic'') is used to break the model produced
+by <A NAME="tex2html895"
+  HREF="../doc/mosmem.html">mosmem</A>
+into models for individual pointings. That is,
+<A NAME="tex2html896"
+  HREF="../doc/demos.html">demos</A>
+produces many models each one of which corresponds to
+the nominally true sky multiplied by the primary beam pattern at a
+pointing. The second step is performed by task <A NAME="tex2html897"
+  HREF="../doc/selfcal.html">selfcal</A>
+(<A NAME="tex2html898"
+  HREF="../doc/gpscal.html">gpscal</A>
+cannot cope with mosaiced observations). Task
+<A NAME="tex2html899"
+  HREF="../doc/selfcal.html">selfcal</A>
+takes all the models simultaneously and then, for
+each visibility in the input visibility
+dataset, it computes a model visibility using the model with
+the same pointing centre.
+The observed and model visibilities are then processed
+by a conventional antenna-gain solver, to produce a table of
+antenna gains vs time.
+
+<P>
+In reality, antenna gains will be a function of both time and pointing centre.
+However <A NAME="tex2html900"
+  HREF="../doc/selfcal.html">selfcal</A>
+assumes that the gains are purely a function of time - not
+pointing. In practice this should not be a great problem, as
+time and pointing change together, and 
+integrations that are close in time will also be close on the sky.
+Note that, short of setting a self-calibration solution interval to
+be smaller than the integration time, you cannot be sure that a
+solution interval will contain data from a single pointing.
+
+<P>
+In the above process, only a subset of all pointings need be
+used in the self-calibration process. If, for example, you have
+a strong source in one pointing and all the other pointings have only
+weak emission, it may well be appropriate to assume that the antenna gains
+are completely independent of pointing. In this case, the gains can
+be determined from the one strong field.
+
+<P>
+We now address the steps in more detail:
+
+<OL>
+<LI>The <A NAME="tex2html901"
+  HREF="../doc/demos.html">demos</A>
+step: This step consists of producing a
+number of models, one for each pointing. The inputs are described
+in turn.
+
+<UL>
+<LI><TT>map</TT>: This gives the name of the input model image (produced
+by <A NAME="tex2html902"
+  HREF="../doc/mosmem.html">mosmem</A>) to be de-mosaiced.
+</LI>
+<LI><TT>vis</TT> This will usually be the visibility dataset to be
+self-calibrated. This dataset is used to determine the pointings present
+and the primary beam to be used. 
+</LI>
+<LI><TT>select</TT>: This provides normal visibility selection. If only
+a subset of pointings are being processed, it is convenient to select them here.
+In this way, models are not generated for pointings that are not of
+interest. Typically, if you wish to self-calibrate with only a subset of
+pointings, you would use the <TT>ra</TT>, <TT>dec</TT> and/or <TT>source</TT>
+subcommands to select the appropriate ones.
+</LI>
+<LI><TT>out</TT>: This gives a template for the names of the output de-mosaiced
+models. Task <A NAME="tex2html903"
+  HREF="../doc/demos.html">demos</A>
+will generate an output name by appending a
+number to the template name. For example, the output template
+<code>lmc.dmos.</code> would produce names such as <code>lmc.dmos.1</code>,
+<code>lmc.dmos.2</code>, etc.
+</LI>
+<LI><TT>imsize</TT>: This gives the maximum size of the output models.
+Task <A NAME="tex2html904"
+  HREF="../doc/demos.html">demos</A>
+may make the outputs smaller where needed. The default
+used by <A NAME="tex2html905"
+  HREF="../doc/demos.html">demos</A>
+is derived from the primary beam size and the input
+model, and should be adequate (although if disk-space is tight, you might
+set a smaller number than that chosen by <A NAME="tex2html906"
+  HREF="../doc/demos.html">demos</A>).
+</LI>
+<LI><TT>pbtype</TT>: This gives the primary beam type to use in the de-mosaicing
+process. The default, which is determined from the <TT>vis</TT> dataset,
+should be adequate.
+</LI>
+<LI><TT>options</TT>: You <EM>must</EM> invoke the option <code>detaper</code>.
+This causes <A NAME="tex2html907"
+  HREF="../doc/demos.html">demos</A>
+to account for any residual primary beam
+attenuation that <A NAME="tex2html908"
+  HREF="../doc/mosmem.html">mosmem</A>
+has left.
+</LI>
+</UL>
+Typical inputs to <A NAME="tex2html909"
+  HREF="../doc/demos.html">demos</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>DEMOS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc.model</TD>
+<TD ALIGN="LEFT">Model produced by <A NAME="tex2html892"
+
+HREF="../doc/mosmem.html">mosmem</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=lmc.uv</TD>
+<TD ALIGN="LEFT">The visibility dataset to be self-calibrated.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset if self-calibrating with all pointings, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(lmc_123,lmc_124)</TD>
+<TD ALIGN="LEFT">select just the fields to be used in
+		the self-calibration process.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.dmos.</TD>
+<TD ALIGN="LEFT">Output name template.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=detaper</TD>
+<TD ALIGN="LEFT">Account for any residual primary beam attenuation.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pbtype</TD>
+<TD ALIGN="LEFT">Generally leave unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize</TD>
+<TD ALIGN="LEFT">Generally leave unset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The <A NAME="tex2html910"
+  HREF="../doc/selfcal.html">selfcal</A>
+step: In general, the inputs to <A NAME="tex2html911"
+  HREF="../doc/selfcal.html">selfcal</A>
+are fairly conventional - see Chapter&nbsp;<A HREF="node113.html#c:selfcal">15</A> for more
+information. There are, however, multiple input models (produced by
+<A NAME="tex2html912"
+  HREF="../doc/demos.html">demos</A>) corresponding to each
+of the pointings to be used in the self-calibration. Note that wildcards will
+generally make this easy. The other difference <EM>which you
+must remember</EM> is to use <code>options=mosaic</code> to invoke the
+mosaicing machinery. Note also that <A NAME="tex2html913"
+  HREF="../doc/selfcal.html">selfcal</A>
+will not use
+a visibility of a particular pointing if there is no model for this
+pointing. Thus, if you are self-calibrating using only a few of the stronger
+pointings, you do not have to explicitly select the data for these
+pointings.
+
+<P>
+Typical inputs are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>SELFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">model=lmc.dmos.*</TD>
+<TD ALIGN="LEFT">Models produced by <A NAME="tex2html893"
+  HREF="../doc/demos.html">demos</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=lmc.uv</TD>
+<TD ALIGN="LEFT">The vis dataset to be self-calibrated.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Set as with normal self-calibration.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mosaic,phase</TD>
+<TD ALIGN="LEFT">Use mosaic mode and phase self-calibration, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mosaic,amp</TD>
+<TD ALIGN="LEFT">amplitude/phase self-calibration.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Fixing the interpolation tolerance: As noted in Section&nbsp;<A HREF="node89.html#s:inttol">12.4</A>,
+a <I>Miriad</I> gain table has an associated interpolation tolerance (the time
+interval over which you can interpolate or extrapolate a gain). Task
+<A NAME="tex2html914"
+  HREF="../doc/selfcal.html">selfcal</A>
+will set this to the solution interval. If you are
+self-calibrating with only a few pointing centres, you will want the
+gains to apply to the entire cycle through the mosaic grid. In this
+case, you may well want to increase the interpolation tolerance from
+the default. See Section&nbsp;<A HREF="node89.html#s:inttol">12.4</A> for the details. In summary,
+you use <A NAME="tex2html915"
+  HREF="../doc/puthd.html">puthd</A>
+with inputs like:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.uv/interval</TD>
+<TD ALIGN="LEFT">Set the `interval' item of a vis dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=0.1</TD>
+<TD ALIGN="LEFT">Set the tolerance to 2.4 hours (0.1 days).</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3596"
+  HREF="node175.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3592"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3586"
+  HREF="node173.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3594"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3597"
+  HREF="node175.html">Some Additional Tools</A>
+<B>Up:</B> <A NAME="tex2html3593"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3587"
+  HREF="node173.html">Deconvolution and Restoration</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,124 @@
+.TH imfit 1
+.SH NAME
+imfit - Fit models to a given image dataset
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+IMFIT is a Miriad task that fits model components to an image.
+If several image planes are given, each each is fitted
+separately.  Optionally, the model or the residuals can be
+written out.
+.sp
+To get a good fit, it is important that you keep irrelevant
+pixels out of the fitting process, by using the region
+and/or the clip keywords. Also for multi-component fits,
+it is important to give reasonable estimates of the source
+parameters of the components (spar keyword).
+.SH PARAMETERS
+.TP
+\fIin\fP
+Name of the input image dataset. No default.
+.TP
+\fIregion\fP
+Normal region of interest. The fit is performed only in this
+region. This region should be modest in size. The default is
+the whole input image.
+.TP
+\fIclip\fP
+Clip level.  For input images of intensity, any pixels below the
+clip level are excluded from the fitting process.  For other
+sorts of images (e.g. Stokes Q, U or V) pixels whose absolute
+values are below the clip level are excluded from the fit.  The
+default is 0.
+.TP
+\fIobject\fP
+This gives the component types that IMFIT fits for.  Several
+components can be given (the components can be of the same type,
+or different), and minimum match is supported.  Possible objects
+are:
+.nf
+  level       An offset (DC) level
+  gaussian    An elliptical or circular gaussian.
+  disk        An elliptical or circular disk.
+  point       This is a short-hand for a gaussian with the
+              width of the point-spread-function.
+  beam        This is a short-hand for a gaussian with a
+              peak value of 1 and located at the image centre.
+              This would typically be used when fitting a beam
+              pattern.
+.fi
+For example, to fit for two gaussians, use:
+`object=gaussian,gaussian'. There is no default.
+.TP
+\fIspar\fP
+This gives initial estimates of source parameters.  For
+each object given by the `object' keyword, either 1 (for
+the level) or 6 (for disks and gaussians) values should be
+given. The initial estimates for each object a simply separated
+by a comma. The values are as follows:
+.nf
+  Object Type             SPAR values
+  -----------             -----------
+   level                   offset
+   gaussian                amp,x,y,bmaj,bmin,pa
+   disk                    amp,x,y,bmaj,bmin,pa
+   point                   amp,x,y
+   beam                    bmaj,bmin,pa
+.fi
+Here "offset" is the offset level, "amp" is the peak value of
+the object, "x" and "y" are the offset positions (in arcsec) of
+the object relative to the reference pixel, "bmaj" and "bmin"
+are the major and minor axes FWHM (in arcsec), and "pa" is the
+position angle of an ellitpical component (in degrees).  The
+position angle is measured from north through east.
+You should give initial estimates for all parameters for each
+object (this includes parameters that might seem redundant or
+meaningless, such as "bmin" and "pa" for components that are
+constrained to be circular).  However if (and only if) you are
+fitting for a single object, IMFIT can derive an initial
+estimate for itself.
+.TP
+\fIfix\fP
+This gives a set a flag parameters, one parameter per source.
+Each parameter consists of a set of letters, which indicate
+which source parameters of a component are to be held fixed.
+These source parameters are fixed by the initial estimates
+given by the `spar' parameter.
+The letters corresponding to each source parameter are:
+.nf
+  f   The amplitude (Flux) is fixed.
+  x   The offset in RA is fixed.
+  y   The offset in DEC is fixed.
+  a   The major axis parameter is fixed.
+  b   The minor axis parameter is fixed.
+  p   The position angle parameter is fixed.
+  c   The gaussian or disk is circular (not elliptical).
+.fi
+For a source where all source parameters vary, a dash (-)
+can be used for this parameter.
+.sp
+For example "fix=fx,fc" indicates that the amplitude and RA
+offset is to be fixed for the first source, whereas the second
+source, (which is presumably a gaussian or disk) has a fixed
+flux, and is circular.  The default is to assume that everything
+can vary.
+.TP
+\fIout\fP
+The optional output data-set.  This is a miriad image.  The
+default is not to create an output data-set.  If an output
+dataset name is given, then either the model or residual image
+can be saved.
+.TP
+\fIoptions\fP
+Extra processing options.  Several can be given, separated by
+commas.  Minimum match is used.  Possible values are:
+.nf
+  residual The output data-set is the residual image.
+           If an output is being created, the default is to make
+           this the fitted model.
+.fi
+.sp
+.SH REVISION
+1.13, 2015/08/07 00:18:50 UTC

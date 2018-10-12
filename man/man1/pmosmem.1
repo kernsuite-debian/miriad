@@ -1,0 +1,125 @@
+.TH pmosmem 1
+.SH NAME
+pmosmem - Maximum Entropy deconvolution for polarization mosaics
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+deconvolution
+.SH DESCRIPTION
+PMOSMEM is a MIRIAD task that performs a joint maximum entropy
+deconvolution of polarized mosaiced images. Optionally it can
+perform a joint deconvolution with a single dish image as well.
+.sp
+.SH PARAMETERS
+.TP
+\fImap\fP
+Two to five input images.  The first must be a Stokes-I mosaic,
+then one or more polarized mosaics (Stokes Q, U and V images),
+and then optionally a Stokes-I single dish image.  These should
+have units of Jy/beam.  The mosaics should be produced by
+INVERT's mosaic mode.  All the images must be on exactly the
+same pixel grid.  If necessary, use REGRID to make this so.
+.TP
+\fIbeam\fP
+One or perhaps two input dirty beams.  The first, corresponding
+to the mosaics, will be produced by INVERTs mosaic mode.  There
+is no default.  The second dirty beam (which must be given if
+there are two dirty map inputs) gives the point-spread function
+of the single dish dirty map.  This second dirty beam need not
+be the same image size as the input dirty maps, and may be
+appreciably smaller.  This single-dish beam is assumed to be
+position-independent, but it need not be symmetric.
+.TP
+\fIdefault\fP
+The default image.  This is the Stokes-I image that the final
+solution will tend towards.  The final result will be influenced
+by this default if the constrains that the data put on the
+solution are weak.  The default is a flat estimate, with the
+correct flux.
+.TP
+\fIout\fP
+The name of the output map.  The units of the output will be
+Jy/pixel.  It can be input to RESTOR to produce a restored
+image, or alternatively to PMOSMEM, as a model, to continue the
+deconvolution process.
+.TP
+\fIniters\fP
+The maximum number of iterations. The default is 30.
+.TP
+\fIregion\fP
+This specifies the region to be deconvolved.  See the User's
+Manual for instructions on how to specify this.  The default is
+the entire image.
+.TP
+\fItol\fP
+Tolerance of solution. There is no need to change this from the
+default of 0.01.
+.TP
+\fIq\fP
+One or two values (corresponding to the mosaic and single dish
+observations).  These give estimates of the number of points per
+beam.  PMOSMEM can usually come up with a good, image-dependent
+estimate.
+.TP
+\fIrmsfac\fP
+PMOSMEM must be able to the theoretical rms noise of the input
+dirty map(s), and will, by default, attempt to reduce the
+residuals to have the same rms as this.  If the true rms noise
+is different from the theoretical, you may give the factor to
+multiply by to convert from theoretical to true rms noise.
+.sp
+The theoretical rms will usually be an optimistic estimate of
+the true noise level.  The true noise will be increased by
+calibration errors, confusion, poorly understood distant
+sidelobes, etc.  The rmsfac factor gives some "fudge factor"
+(usually greater than 1) to scale the theoretical noise estimate
+by.  Either one or two values can be given, with the second
+value corresponding to the single dish input.
+.sp
+For a mosaic, the theoretical rms is position dependent, and is
+determined from information save by INVERT (the mostable table).
+For a single dish image, the rms is assumed to be constant
+across the field, and given by the "rms" item in the image.  If
+the single dish input does not contain this item, then this must
+be added before using PMOSMEM.  This is easily done: for image
+xxxx, use
+.nf
+  puthd in=xxxx/rms value=????
+.fi
+where "????" is the rms noise in Jy/beam.
+.TP
+\fIfactor\fP
+The flux calibration factor.  This is only relevant when doing a
+joint deconvolution of a mosaic and a single-dish image.  It
+gives the factor that the single-dish data should be multiplied
+by to convert it to the same flux units as the mosaic.  The
+default is 1.
+.TP
+\fIflux\fP
+An estimate of the integrated flux of the source.  This
+parameter cannot be used if there is an input single dish image.
+Giving PMOSMEM a good value for the integrated flux will help it
+find a good solution.  On the other hand, giving a poor value
+may do harm.  Normally PMOSMEM will NOT constrain the integrated
+flux to be this value, but see the "doflux" option below.  The
+default is image-dependent.
+.TP
+\fIoptions\fP
+Task enrichment parameters.  Several can be given, separated by
+commas.  Minimum match is used.  Possible values are:
+.nf
+  doflux     Constrain the solution to have the correct
+             integrated flux (normally the integrated flux is
+             not constrained).  The integrated flux is
+             determined from the "flux" parameter or (if no flux
+             parameter is given) from the default image.  This
+             option cannot be used if a single dish input map is
+             also given.
+  dofactor   Solve for the flux calibration factor.
+  verbose    Give lots of messages during the iterations.  The
+             default is to give a one line message at each
+             iteration.
+.fi
+.sp
+.SH REVISION
+1.7, 2016/03/18 03:25:44 UTC

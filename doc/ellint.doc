@@ -1,0 +1,87 @@
+%N ellint
+%D Integrate a Miriad image in elliptical annuli.
+%P mchw
+%: image analysis
+%B
+        ELLINT integrates a Miriad image in elliptical annuli in the
+        first two dimensions.  E.g. to find the radial brightness
+        distribution, or flux density as a function of distance in a
+        galaxy.  The integration is done separately for each image plane
+        in the region included.
+ 
+        The output consists of 6 columns. They are the
+ 
+        outer radius (arcsec) of the annulus;
+        number of pixels in the annulus;
+        the average (median) in the annulus;
+        the rms of the annulus;
+        the sum in the annulus normalized by the volume of the primary
+           beam (if there is one);
+        the cumulative sum for all annuli so far.
+ 
+%A in
+        Input image name. xyz images only. No default.
+%A out
+        Optional output image containing the residuals from the average
+        values in each annulus. By default this image is not created.
+        See also options=spline to get better results for noise free
+        images.
+%A region
+        Region of image to be integrated. E.g.
+          % ellint region=relpix,box(-4,-4,5,5)(1,2)
+        integrates the center 10 x 10 pixels for image planes 1 and 2.
+        Unmasked pixels within the bounding box are selected.
+        The default region is the entire image.
+%A center
+        The offset of the center of the annuli in arcsec from the
+        reference pixel, measured in the directions of RA and DEC.
+%A pa
+        Position angle of ellipse major axis in degrees. Default is 0
+        (north).  PA is measured in the usual sense, N through E
+        (counter clockwise).
+%A incline
+        The ellipse is assumed to be a circular structure that appears
+        elliptical because it is viewed at some inclination.  The
+        "incline" parameter gives this inclination angle in degrees.
+        Default=0. (face on)
+%A radius
+        Inner and outer radii and step size along major axis in arcsecs.
+        The default is the whole image in steps equal to the pixel size.
+%A telescop
+        If you request that the fluxes be corrected for the primary beam
+        (see OPTIONS), ELLINT will normally construct a primary beam
+        type using information from the dataset.  However you can
+        override this with a primary beam type of your own choosing.
+        The primary beam type can either be a telescope name whose
+        primary beam is known (e.g. Hatcreek, VLA, ATCA, etc) or you can
+        select a Gaussian form with "gaus(xxx)".  Here xxx is the
+        primary beam FWHM in arcseconds.  For example gaus(120) is a
+        telescope with a 120 arcsec primary beam.
+%A scale
+        Scale factor applied to the amplitudes before printing them.
+        Default=1.
+%A options
+        Task enrichment options.  Minimum match is active.
+          pbcorr    This causes the images to be corrected for primary
+                    beam attenutation before integrating.
+          median    Find the median of each annulus instead of the
+                    average.
+          mode      Find the mode of each annulus instead of the
+                    average.
+          natural   Assume keywords "center" and "radius" are in natural
+                    units rather than arcsec.
+          table     Output ring data in logfile. No fitting done.
+                    Logfile now contains coordinates w.r.t. the
+                    reference pixel (in arcsec), the image value, and
+                    the radius in the disk defined by PA and INCLINE.
+          spline    use a spline fit unstead of a step function to
+                    estimate the intensity at any radius for residual
+                    images
+%A medsmooth
+         Smoothing option of radial profile when option=median is used
+         in residual map computation. Default: 0
+ 
+%A log
+        The output log file. The default is the terminal.
+ 
+%R 1.7, 2013/08/30 01:49:21 UTC

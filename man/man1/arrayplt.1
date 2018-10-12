@@ -1,0 +1,34 @@
+.TH arrayplt 1
+.SH NAME
+arrayplt - Plot antenna layout of the array.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+plotting
+.SH DESCRIPTION
+Arrayplt is a MIRIAD task which plots the array layout of an
+interferometer array. Only the first antenna table in the
+file is plotted.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input data-set. No default.
+.TP
+\fIselect\fP
+Normal visibility selection, although only the antenna
+selection is honoured (no other selection is honoured!).
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, abbreviated to
+uniqueness. Possible options are:
+.nf
+  name   Label each antenna with its name rather than its number.
+.TP
+\fIdevice\fP
+.fi
+The PGPLOT plotting device to use. The default is no plot.
+.TP
+\fIlog\fP
+A log file where a KML file will be written to giving the antenna position.
+The default is no KML file. (KML files are read by Google Earth and many
+geographical information systems).

@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Direct Access to UV Variables</TITLE>
+<META NAME="description" CONTENT="Direct Access to UV Variables">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html468"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html462"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html456"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html464"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html466"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html469"
+  HREF="node21.html">Variable Override</A>
+<B>Up:</B> <A NAME="tex2html463"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html457"
+  HREF="node19.html">Reading and Writing Continuum</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00455000000000000000">
+Direct Access to UV Variables</A>
+</H2>
+The main routines to access the variables are the <TT>uvgetvr</TT> and
+<TT>uvputvr</TT> routines. These read or write (respectively) an array of
+variables of given name (<TT>varname</TT>). The data read or written are
+in the array <TT>data</TT> (which can be a character string or an integer, real
+or double precision
+array, depending on the routine called). Exactly <TT>n</TT> values are
+read or written. Except for character strings, it is a fatal error,
+when reading, if <TT>n</TT> does not
+agree with the actual number of values for the variable). For a character
+string, the string is blank padded on a read (no <TT>n</TT> parameter is
+needed).
+
+<P>
+When reading an old data set, the <TT>uvgetvr</TT> routines should not be called
+before the first call to <TT>uvread</TT>.
+When creating a data set, the initial values for all variables should be
+written, by calls to the <TT>uvputvr</TT> routines, before the first call
+to the <TT>uvwrite</TT> routine (see Section&nbsp;<A HREF="node22.html#sect:uvnext">2.5.7</A> for
+some enlightenment on this issue).
+
+<P>
+Often it occurs that we are interested in a variable which has a single
+value, but we are not sure if the variable is present in the dataset.
+It would be possible to handle this with <TT>uvprobvr</TT>
+(Section&nbsp;<A HREF="node23.html#sect:uvprobvr">2.5.8</A>) and <TT>uvgetvr</TT>.
+If the variable is not present, then we would want to use a default value.
+The <TT>uvrdvr</TT> routines package these three steps. It returns the
+value of the variable, <TT>data</TT>. If the variable is missing from the
+data stream, the default value, <TT>default</TT>, is returned. One disadvantage
+is that the <TT>uvrdvr</TT> routines only every return a single value (the first
+value in a multi-element variable).
+
+<P>
+The routine <TT>uvread</TT> functions by scanning through the variable streams,
+and returns with its results, when the ``correlation data'' (``corr'' or
+``wcorr'')
+is encountered. If you are not interested in reading the correlation data
+(i.e. if you do not intend calling <TT>uvread</TT>),
+then the <TT>uvscan</TT> routine can be used to scan through the variable stream
+until another variable is encountered. Actually <TT>uvscan</TT> may well read
+somewhat past the desired variable, until it has read
+all variables which changed simultaneously with the desired one.
+<TT>Uvscan</TT> returns 0 is the variable was
+successfully found, -1 if an end of file was encountered, or 1 if the
+variable was not found. Note that it may not make a great
+deal of sense to intermix calls to <TT>uvscan</TT> and <TT>uvread</TT>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html468"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html462"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html456"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html464"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html466"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html469"
+  HREF="node21.html">Variable Override</A>
+<B>Up:</B> <A NAME="tex2html463"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html457"
+  HREF="node19.html">Reading and Writing Continuum</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

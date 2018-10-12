@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Polarization/Stokes Handling (stokes and select)</TITLE>
+<META NAME="description" CONTENT="Polarization/Stokes Handling (stokes and select)">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node38.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1857"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1853"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1849"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1855"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1858"
+  HREF="node40.html">Image Data Concepts</A>
+<B>Up:</B> <A NAME="tex2html1854"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1850"
+  HREF="node38.html">Selection and Multi-Source/Multi-Frequency Datasets</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00580000000000000000"></A><A NAME="s:polar"></A>
+<BR>
+Polarization/Stokes Handling (stokes and select)
+</H1>
+The visibility datasets possibly contain correlations for different polarizations
+and Stokes parameters. There are two basic ways that polarization
+<A NAME="1677"></A>
+characteristics can be measured: firstly, two orthogonal feeds can be
+present on the <A NAME="1678"></A>
+antennas, and the four different polarization correlations from a baseline can
+be taken and recorded. Alternatively only one feed may be present, which can
+be rotated, or there are not enough correlators to calculate all four
+polarization correlations simultaneously. The first approach, used by the ATCA,
+allows all
+polarization parameters to be measured simultaneously. The second forces
+a `time-sharing' approach, where the feed or correlator must be switched
+between measuring one polarization to another. With the four simultaneous
+measurements, it is possible to convert a visibility from raw polarization
+parameter to a Stokes parameter. With the time-shared mode, this is not
+directly possible. These two different scenarios mean that two very different
+suites of software are needed to obtain Stokes parameters.
+
+<P>
+In <I>Miriad</I>, each different polarization/Stokes measurement is treated as a
+separate visibility (this differs from the AIPS approach - which does
+not really support the time-shared approach to polarization measurement).
+So if a baseline measures four simultaneous polarization correlations, then
+four `visibilities' will be produced for this baseline, per integration
+interval. In this case, each visibility will be tagged (with a <I>u-v</I> variable
+<TT>pol</TT>) to indicate the polarization type.
+
+<P>
+There are two ways the user can determine which polarizations he or she
+wants to process, either with the <TT>select</TT> parameter, or with the
+<TT>stokes</TT> parameter.
+
+<P>
+The <TT>select</TT> approach selects visibilities purely on the basis of their
+polarization or Stokes parameter.
+It is a normal part of the <I>u-v</I> selection process, as described in the
+previous section. The <TT>select</TT> mechanism cannot
+convert from raw polarization parameters to Stokes parameters. It just
+selects visibilities, in the file, based on their polarization.
+The general form is:
+<BLOCKQUOTE>
+<TT>select=polarization(</TT><I>a,b,c,...</I><TT>)</TT>
+
+</BLOCKQUOTE>
+where <I>a,b,c</I> etc can be one of the mnemonics
+
+<UL>
+<LI>For Stokes parameters: <TT>i, q, u, v</TT>
+</LI>
+<LI>For circular polarization parameters: <TT>rr, ll, rl, lr </TT>
+</LI>
+<LI>For linear polarization parameters: <TT>xx, yy, xy and yx</TT>
+</LI>
+</UL>
+
+<P>
+Using the <TT>stokes</TT> approach is superficially similar, in that it causes
+only certain polarization/Stokes parameters to be processed. However,
+with the <TT>stokes</TT> approach, the software can perform
+conversion between raw polarizations and Stokes parameters if required.
+It also insists that all the requested polarization/Stokes parameters are
+calculable, at a given time, before it will allow any of them to be
+processed.
+For example, if the user requests Stokes  I and V, and the
+dataset contains linear polarization data, then all four of
+<TT>xx, yy, xy</TT> and <TT>yx</TT>
+polarizations must be present for I and V to be returned.
+
+<P>
+The general form of the <TT>stokes</TT> approach is:
+<BLOCKQUOTE>
+<TT>stokes=</TT><I>a,b,c,...</I>
+
+</BLOCKQUOTE>
+where <I>a,b,c</I> etc, can be one of the mnemonics given above
+(<TT>i, q, u, v, rr, ll</TT> etc).
+
+<P>
+The <TT>stokes</TT> can also take the values <TT>ii, qq</TT> and
+<TT>uu</TT>:
+
+<UL>
+<LI>Mnemonic <TT>ii</TT> returns Stokes-I <EM>given the assumption that the
+source is unpolarised</EM>. For example <I>Miriad</I> would not return any data
+if you requested <code>stokes=i</code> and the dataset contains only, say, <TT>xx</TT> (<TT>xx</TT>
+is not Stokes-I for a polarised source). How if you requested <code>stokes=ii</code>
+in this situation, the <TT>xx</TT> data would be passed through, because
+you have told <I>Miriad</I> that the source is unpolarised. Many tasks use
+<code>stokes=ii</code> as their default.
+</LI>
+<LI>Mnemonic <TT>qq</TT> and <TT>uu</TT> returns Stokes-Q and Stokes-U <EM>given the assumption that the parallactic angle is 0</EM>. These quantities
+are rarely of astronomical interest, but they are useful to investigate some
+instrumental effects.
+</LI>
+</UL>
+
+<P>
+The <TT>select</TT> mechanism is usually used for time-shared polarization
+measurements, whereas the <TT>stokes</TT> mechanism is usually used where there are
+simultaneous measurements. However this is not a hard and fast rule.
+The two approaches generally cannot be used at the
+same time. Some tasks will prohibit the use of the <TT>select</TT>
+approach altogether (they will give error messages if you attempt to),
+whereas others are more lenient. The rules which determine whether you
+can or cannot use the <TT>select</TT> approach are quite arcane and can be
+file dependent. Check the documentation for each task,
+especially if both <TT>select</TT> and <TT>stokes</TT> parameters are present.
+If <TT>polarization</TT> selection is not allowed, then <TT>increment</TT>
+selection will also be prohibited (due to some arcane quirk).
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1857"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1853"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1849"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1855"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1858"
+  HREF="node40.html">Image Data Concepts</A>
+<B>Up:</B> <A NAME="tex2html1854"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1850"
+  HREF="node38.html">Selection and Multi-Source/Multi-Frequency Datasets</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,31 @@
+.TH gpbreak 1
+.SH NAME
+gpbreak - Insert a break point in the gain table.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+GpBreak is a MIRIAD task which modifies a gain table to include a
+break point. This prevents normal interpolation of gains across
+this point.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file, containing the gain file to modify.
+No default.
+.TP
+\fIbreak\fP
+The times, in the normal Miriad format, where to insert the
+break point. Several times can be given. No default.
+.TP
+\fIants\fP
+The antennas affected. The default is all antennas.
+.TP
+\fIfeeds\fP
+The polarisation feeds affected (e.g. R, L, X or Y). Default is
+all feeds.
+.sp
+Example:
+.nf
+  gpbreak vis=cyga times=20:30,21:15 ants=1,2 feeds=X

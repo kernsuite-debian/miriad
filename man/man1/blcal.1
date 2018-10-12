@@ -1,0 +1,66 @@
+.TH blcal 1
+.SH NAME
+blcal - Compute and apply baseline calibration.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+BLCAL computes and applies baseline-based calibration to a visibility
+dataset.
+.sp
+This reads two datasets. It uses the first dataset to determine
+baseline-based calibration, and applies these calibration corrections
+to the second dataset.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Normally, this gives the name of two visibility datasets, being
+the "reference" and the "source" datasets respectively. The
+reference dataset is used to determine the baseline calibration,
+whereas the source contains the data that is corrected and written
+out. If only a single dataset is given, then this is self-calibrated.
+Baseline-based self-calibration is a very dubious operation, and
+generally should not be performed.
+.sp
+Note: Both the reference and source datasets should be in time order.
+.TP
+\fIselect\fP
+The normal uv selection commands -- see the help on "select" for
+more information. This selection is applied to both the reference
+and source input datasets.
+.TP
+\fIline\fP
+The normal uv linetype in the form:
+.nf
+  line,nchan,start,width,step
+.fi
+See the help on "line" for more information.
+The default is all channels (or all wide channels if there are no
+spectral channels). The output will consist of only spectral or
+wideband data (but not both).
+.TP
+\fIstokes\fP
+Normal Stokes/polarisation processing. See the help on "stokes"
+for more information. The default is to use the Stokes/polarisations
+present in the dataset.
+.TP
+\fIinterval\fP
+Solution time interval, in minutes. The default is a single solution.
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.TP
+\fIoptions\fP
+Extra processing options. Possible values are:
+.nf
+  nopassol  Determine a solution which is independent of channel number.
+  nopolsol  Solve for parallel-hand polarisations only. When
+            applying corrections, cross-hand correlations get corrected
+            with a parallel-hand gain. In particular XY and YX are
+            corrected with the mean of the XX and YY gains; RL and LR
+            are corrected with the mean of RR and LL gains; Q,U, and V
+            are corrected with the I gain.
+  replace   Rather than writing the corrected dataset, write out a
+            dataset where the data are replaced with the model of a
+            unit point source with baseline errors.

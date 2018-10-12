@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Copying, Concatenating and Averaging Visibility Datasets</TITLE>
+<META NAME="description" CONTENT="Copying, Concatenating and Averaging Visibility Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node70.html">
+<LINK REL="previous" HREF="node68.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node70.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2243"
+  HREF="node70.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2239"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2233"
+  HREF="node68.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2241"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2244"
+  HREF="node70.html">Plotting Visibilities</A>
+<B>Up:</B> <A NAME="tex2html2240"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2234"
+  HREF="node68.html">Listing Visibilities</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001040000000000000000"></A><A NAME="s:uvaver"></A>
+<BR>
+Copying, Concatenating and Averaging Visibility Datasets
+</H1>
+<I>Miriad</I> contains a single task, <A NAME="tex2html221"
+  HREF="../doc/uvaver.html">uvaver</A><A NAME="2614"></A>, which
+copies, concatenates and averages data (both in frequency and in time).
+It can also apply calibration corrections and perform Stokes conversion.
+
+<P>
+The inputs are all fairly self-explanatory - see the help file for more
+information.  The default behaviour is to copy all the data, applying
+calibration corrections as it goes.  If some averaging is being
+performed, vector averaging is normally used both for time and
+frequency.  However an option (<TT>options=ampscalar</TT>) switches the
+behaviour so that amplitude-scalar averaging is used for time averaging.
+Vector averaging is always used when averaging in frequency.
+
+<P>
+A brief summary of the inputs are:
+
+<UL>
+<LI><TT>vis</TT>: a list of the input visibility datasets. Several
+can be given. Wildcards are supported.
+</LI>
+<LI><TT>out</TT>: The name of the output visibility dataset.
+The output will be the concatenation of all the selected
+input data. No default.
+</LI>
+<LI><TT>select</TT>: The standard visibility data selection parameter.
+See Section&nbsp;<A HREF="node36.html#s:select">5.5</A>. The default is to select all data.
+</LI>
+<LI><TT>stokes</TT>: The standard parameter to determine Stokes
+conversion. The default is to copy the polarizations or Stokes parameters
+as is (no conversion). See Section&nbsp;<A HREF="node39.html#s:polar">5.8</A>.
+</LI>
+<LI><TT>interval</TT>: Time averaging interval, in minutes. The default is
+to perform no time averaging.
+</LI>
+<LI><TT>line</TT>: The standard <TT>line</TT> parameter, which dictates
+channel selection and frequency averaging in multi-channel datasets. The default is
+to copy all channels unaveraged. See Section&nbsp;<A HREF="node35.html#s:line">5.4</A>.
+</LI>
+<LI><TT>options</TT>: Extra processing options. The <TT>nocal</TT>, <TT>nopass</TT>
+and <TT>nopol</TT> options are used to disable correcting for antenna gains,
+bandpass functions and polarization leakage (see Section&nbsp;<A HREF="node34.html#s:onthefly">5.3</A>).
+
+<P>
+There are also three options to determine the sort of averaging to be
+performed. Possible options are <TT>vector</TT>, <TT>scalar</TT> and <TT>scavec</TT>.
+Note these options only affect the averaging in <EM>time</EM>. Vector averaging
+is always use when averaging in <EM>frequency</EM>.
+
+<UL>
+<LI>``Vector'' averaging is just a straightforward average of the complex-values
+visibility data. This is the optimum thing to do if the data are corrupted
+by just Gaussian noise. However it is common for the data to
+be affected by fast-varying phase fluctuations. While the amplitude of the
+data are good before averaging, a plain vector average will result in
+some decorrelation.
+</LI>
+<LI>``Scalar'' averaging avoids this by using the
+average amplitude for the amplitude of the output quantity (the phase of the
+output is still the phase determined by vector averaging). The problem with
+scalar averaging is that it results in a noise bias when the signal-to-noise
+ratio is small (less than a few) - you should not use scalar averaging in
+this regime.
+</LI>
+<LI>For cases where phase stability is poor, and the signal-to-noise
+ratio on the parallel-hand correlations (<I>XX</I> and <I>YY</I>) is good, but the
+signal-to-noise ratio on the cross-hand correlations (<I>XY</I> and <I>YX</I> is
+poor, <A NAME="tex2html222"
+  HREF="../doc/uvaver.html">uvaver</A>
+provides the <TT>scavec</TT> options. This performs
+scalar averaging on the parallel-hand correlations, and vector
+averaging on the cross-hand correlations.
+</LI>
+</UL>
+
+<P>
+</LI>
+</UL>
+
+<P>
+For example, the inputs below show how to form a channel 0 dataset from
+a data set with two spectral windows (IFs), each with 33 channels
+(selecting the middle 25 channels from each window).  The two spectral
+windows are essentially treated as 66 contiguous channels.  Thus, we
+must use the <TT>line</TT> keyword to select channels 4 to 28, and then
+channels 37 to 61.  <A NAME="tex2html223"
+  HREF="../doc/uvaver.html">uvaver</A>
+will correclty maintain the dual
+window status (use <A NAME="tex2html224"
+  HREF="../doc/prthd.html">prthd</A>
+to verify this).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVAVER</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Input dual window 33 channel dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.uv.0</TD>
+<TD ALIGN="LEFT">Output channel 0 dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=channel,2,4,25,33</TD>
+<TD ALIGN="LEFT">Average channels 4 to 28  in each window</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2243"
+  HREF="node70.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2239"
+  HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2233"
+  HREF="node68.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2241"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2244"
+  HREF="node70.html">Plotting Visibilities</A>
+<B>Up:</B> <A NAME="tex2html2240"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B> Previous:</B> <A NAME="tex2html2234"
+  HREF="node68.html">Listing Visibilities</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Deconvolution and Restoration</TITLE>
+<META NAME="description" CONTENT="Deconvolution and Restoration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node174.html">
+<LINK REL="previous" HREF="node172.html">
+<LINK REL="up" HREF="node171.html">
+<LINK REL="next" HREF="node174.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3584"
+  HREF="node174.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3580"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3574"
+  HREF="node172.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3582"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3585"
+  HREF="node174.html">Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html3581"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3575"
+  HREF="node172.html">Imaging - INVERT</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002162000000000000000"></A><A NAME="14234"></A>
+<A NAME="s:mosdeconv"></A>
+<BR>
+Deconvolution and Restoration
+</H2>
+<I>Miriad</I> contains two tasks to deconvolve
+the mosaiced dirty images produced by <A NAME="tex2html866"
+  HREF="../doc/invert.html">invert</A>.
+In terms of theory, practical use
+and indeed internal implementation, these tasks are quite similar
+to the deconvolution tasks described in Chapter&nbsp;<A HREF="node99.html#c:decon">14</A>. The major
+difference is that the `convolution' operation (which turns a prospective
+model into a dirty image) is somewhat more involved. Also account must
+be made of the changing noise level across the dirty image.
+
+<P>
+The two mosaic deconvolution tasks are <A NAME="tex2html867"
+  HREF="../doc/mosmem.html">mosmem</A>, which implements a
+maximum-entropy-based deconvolution algorithm, and task <A NAME="tex2html868"
+  HREF="../doc/mossdi.html">mossdi</A>, which
+uses a Steer, Dewdney &amp; Ito (SDI) CLEAN algorithm. Generally <A NAME="tex2html869"
+  HREF="../doc/mosmem.html">mosmem</A>
+is superior, although <A NAME="tex2html870"
+  HREF="../doc/mossdi.html">mossdi</A>
+can be better for images containing
+point sources.
+Note that, although you can
+make mosaiced, multi-frequency synthesis images with <A NAME="tex2html871"
+  HREF="../doc/invert.html">invert</A>
+(and, indeed,
+produce a mosaiced, spectral dirty beam), there is no
+mosaic equivalent to <A NAME="tex2html872"
+  HREF="../doc/mfclean.html">mfclean</A>. In deconvolving a mosaiced,
+multi-frequency image you will have to tactically assume that the
+spectral index is 0. This should not be a problem - primary beam model
+errors are probably more significant than spectral errors in these
+deconvolutions.
+
+<P>
+If you are deconvolving, note the recommendations for <A NAME="tex2html873"
+  HREF="../doc/invert.html">invert</A>'s
+<code>imsize</code> parameter, and the use of <code>options=double</code>.
+
+<P>
+If you are familiar with the inputs to the conventional deconvolvers,
+the inputs to <A NAME="tex2html874"
+  HREF="../doc/mosmem.html">mosmem</A>
+and <A NAME="tex2html875"
+  HREF="../doc/mossdi.html">mossdi</A>
+should be fairly
+straightforward. In the case of the inputs to <A NAME="tex2html876"
+  HREF="../doc/mosmem.html">mosmem</A>
+and <A NAME="tex2html877"
+  HREF="../doc/maxen.html">maxen</A>,
+apart from differences in the <code>options</code>, the meaning of the <code>flux</code>
+keyword and the default <code>region</code>, the only significant difference is in
+specifying
+the expected RMS noise level in the dirty image. Because the noise level
+varies across the dirty image, <A NAME="tex2html878"
+  HREF="../doc/mosmem.html">mosmem</A>
+uses the theoretically
+expected noise level (which it computes) times a user-specified
+<EM>fudge factor</EM>, <code>rmsfac</code>. That is, if <code>rmsfac</code> is
+set at <I>1</I> (the default), then <A NAME="tex2html879"
+  HREF="../doc/mosmem.html">mosmem</A>
+uses the theoretical
+noise level when calculating its <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.png"
+ ALT="$\chi^2$"></SPAN> statistic.
+
+<P>
+Typical inputs to <A NAME="tex2html880"
+  HREF="../doc/mosmem.html">mosmem</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MOSMEM</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc.map</TD>
+<TD ALIGN="LEFT">Dirty image produced by <A NAME="tex2html861"
+  HREF="../doc/invert.html">invert</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=lmc.beam</TD>
+<TD ALIGN="LEFT">Beam dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">model</TD>
+<TD ALIGN="LEFT">An initial model estimate - generally unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">default</TD>
+<TD ALIGN="LEFT">The image that the solution should tend</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">towards - generally unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.model</TD>
+<TD ALIGN="LEFT">The output dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">niters=30</TD>
+<TD ALIGN="LEFT">Maximum number of iterations - default is 30.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=</TD>
+<TD ALIGN="LEFT">Region to deconvolve. The default is the entire image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">measure</TD>
+<TD ALIGN="LEFT">Leave unset gives you the Gull measure.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux=</TD>
+<TD ALIGN="LEFT">Estimate of the total flux - its best to give a value.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rmsfac=1</TD>
+<TD ALIGN="LEFT">RMS noise fudge factor. Default is 1.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">q</TD>
+<TD ALIGN="LEFT">An initial estimate of the beams volume. Generally</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">you can leave this unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Generally leave unset, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=doflux</TD>
+<TD ALIGN="LEFT">use <code>doflux</code> to enforce the flux constraint.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The inputs and use of <A NAME="tex2html881"
+  HREF="../doc/mossdi.html">mossdi</A>
+should be equally simple
+for someone familiar with <A NAME="tex2html882"
+  HREF="../doc/clean.html">clean</A>. If you are deconvolving a mosaic of linear polarisation try the task <A NAME="tex2html883"
+  HREF="../doc/moscsdi.html">moscsdi</A>, it does a combined clean on the Stokes Q and U images that gives better results for extended emission.
+
+<P>
+Having produced a model, we generally want to convolve this
+with a Gaussian CLEAN beam and add in the deconvolution
+residuals. This is done by <A NAME="tex2html884"
+  HREF="../doc/restor.html">restor</A>.
+The inputs and use of <A NAME="tex2html885"
+  HREF="../doc/restor.html">restor</A>
+is identical to a conventional observation
+(<A NAME="tex2html886"
+  HREF="../doc/restor.html">restor</A>
+is the only general task which is smart enough to recognise
+a mosaiced experiment directly). Task <A NAME="tex2html887"
+  HREF="../doc/restor.html">restor</A>
+uses a constant
+CLEAN beam - it is not a function of position. The only caveat is that,
+when determining
+a default CLEAN beam, <A NAME="tex2html888"
+  HREF="../doc/restor.html">restor</A>
+fits a Gaussian to the synthesised
+beam which corresponds to the first pointing. Provided the first
+pointing is a fairly typical pointing, this will probably be adequate.
+Otherwise
+you may wish to use task <A NAME="tex2html889"
+  HREF="../doc/mospsf.html">mospsf</A>
+(see Section&nbsp;<A HREF="node175.html#s:mostools">21.6</A> below)
+to generate an actual point-spread function (at some position) and then
+use <A NAME="tex2html890"
+  HREF="../doc/imfit.html">imfit</A>
+to determine Gaussian parameters for it.
+
+<P>
+Typical inputs to <A NAME="tex2html891"
+  HREF="../doc/restor.html">restor</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>RESTOR</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc.map</TD>
+<TD ALIGN="LEFT">Dirty image produced by <A NAME="tex2html862"
+  HREF="../doc/invert.html">invert</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=lmc.beam</TD>
+<TD ALIGN="LEFT">Beam dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">model=lmc.model</TD>
+<TD ALIGN="LEFT">Model produced by <A NAME="tex2html863"
+  HREF="../doc/mosmem.html">mosmem</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Leave unset to get restored image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">fwhm</TD>
+<TD ALIGN="LEFT">Beam size - leave unset to let <A NAME="tex2html864"
+  HREF="../doc/restor.html">restor</A></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">fit it, but to the first pointing!</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa</TD>
+<TD ALIGN="LEFT">Again leave unset to let <A NAME="tex2html865"
+  HREF="../doc/restor.html">restor</A>
+fit it.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3584"
+  HREF="node174.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3580"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3574"
+  HREF="node172.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3582"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3585"
+  HREF="node174.html">Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html3581"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3575"
+  HREF="node172.html">Imaging - INVERT</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

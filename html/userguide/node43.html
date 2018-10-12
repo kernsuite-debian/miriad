@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Region of Interest (region)</TITLE>
+<META NAME="description" CONTENT="Image Region of Interest (region)">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node42.html">
+<LINK REL="up" HREF="node40.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1906"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1902"
+  HREF="node40.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1898"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1904"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1907"
+  HREF="node44.html">Reduction Strategies</A>
+<B>Up:</B> <A NAME="tex2html1903"
+  HREF="node40.html">Image Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1899"
+  HREF="node42.html">Image Coordinate Systems</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00630000000000000000"></A><A NAME="s:region"></A>
+<BR>
+Image Region of Interest (region)
+</H1>
+Most image-related tasks can process a subset of the pixels in an input
+image. Depending on the task, the selected pixels may either be a fairly
+arbitrary region, or only a regular subimage of the input image.
+<A NAME="1747"></A>
+
+<P>
+The task parameter, <code>region</code>, which gives the region-of-interest
+consists of a combination of subcommands. Each subcommand
+specifies either a subregion or the units of the coordinates used in subsequent
+sub-commands.
+
+<P>
+The subregions selected by multiple subcommands are effectively `OR-ed'
+together to form the overall region. That is, the overall region selected
+is the `union' (not intersection) of the subregions.
+
+<P>
+For comparatively simple regions, combining subcommands is quite
+adequate. However for complex regions, a cursor-based program, <A NAME="tex2html47"
+  HREF="../doc/cgcurs.html">cgcurs</A>,
+may be the most convenient for generating the subcommands.
+
+<P>
+Region specification is composed of one or more of the following subcommands.
+Each subcommand can be abbreviated to uniqueness, and subcommands
+are separated by a comma.
+<DL>
+<DT><STRONG><TT>images(<I>z1,z2</I>)</TT></STRONG></DT>
+<DD>This selects the image planes <I>z1</I> to <I>z2</I>
+inclusive.
+<I>z2</I> is optional, defaulting to the same value as <I>z1</I>.
+<A NAME="1755"></A>
+</DD>
+<DT><STRONG><TT>quarter(<I>z1,z2</I>)</TT></STRONG></DT>
+<DD>This is somewhat like the <TT>images</TT>
+command, except that
+it selects only the central quarter of each plane. Both <I>z1</I> and <I>z2</I>
+are optional.
+</DD>
+<DT><STRONG><TT>box(<I>xmin,ymin,xmax,ymax</I>)(<I>z1,z2</I>)</TT></STRONG></DT>
+<DD>This subcommand selects the pixels within a box whose corners are
+<I>xmin, ymin,xmax</I> and <I>ymax</I>.
+<A NAME="1764"></A>
+<I>z1</I> and <I>z2</I> are optional, and
+are the same as in  the <TT>image</TT>
+subcommand. If the <TT>(<I>z1,z2</I>)</TT> part is missing, a default is used (generally
+all planes are selected).
+</DD>
+<DT><STRONG><TT>polygon(<I>x0,y0,x1,y1,x2,y2,...</I>)(<I>z1,z2</I>)</TT></STRONG></DT>
+<DD>This gives the vertices of a
+polygon.
+<BLOCKQUOTE>
+<TT>box(</TT><I>xmin,ymin,xmax,ymax</I><TT>)</TT>
+
+</BLOCKQUOTE>
+is equivalent to
+<A NAME="1776"></A>
+<BLOCKQUOTE>
+<TT>poly(</TT><I>xmin,ymin,xmax,ymin,xmax,ymax,xmin,ymax</I><TT>).</TT>
+
+</BLOCKQUOTE>
+<I>z1</I> and <I>z2</I> are the same as with the <TT>images</TT> and <TT>boxes</TT>
+subcommands.
+</DD>
+<DT><STRONG><TT>mask(<I>name</I>)</TT></STRONG></DT>
+<DD>This selects pixels according to the mask given by the mask item
+<A NAME="1787"></A> in the
+dataset <I>name</I>.
+</DD>
+</DL>
+
+<P>
+The units used for the coordinates are controlled by the following
+subcommands:
+<DL>
+<DT><STRONG><TT>abspixel</TT></STRONG></DT>
+<DD>Subsequent coordinates are given as absolute pixel values
+(<TT>i.e.</TT> values ranging from 1 to <I>NAXISi</I> - see <A NAME="tex2html48"
+  HREF="../doc/prthd.html">prthd</A>
+or
+<A NAME="tex2html49"
+  HREF="../doc/itemize.html">itemize</A>).
+This affects image coordinates and
+the coordinates along the third dimension. This is also the default.
+<A NAME="1796"></A>
+</DD>
+<DT><STRONG><TT>relpixel</TT></STRONG></DT>
+<DD>Subsequent image coordinates are relative to the reference
+pixel, as defined by the header of the map of interest. Use
+<A NAME="1798"></A>
+<A NAME="tex2html50"
+  HREF="../doc/prthd.html">prthd</A>
+to see the reference pixel is
+(<I>CRPIXi</I>).
+<A NAME="1801"></A>
+</DD>
+<DT><STRONG><TT>relcenter</TT></STRONG></DT>
+<DD>Subsequent image coordinates are relative to the central
+pixel of the image. This is somewhat like the <TT>relpixel</TT> command,
+but used the image centre, rather than the reference pixel.
+<A NAME="1804"></A>
+</DD>
+<DT><STRONG><TT>arcsec</TT></STRONG></DT>
+<DD>Subsequent image coordinates are given in arcseconds, and
+are relative to the reference pixel of the map of interest.
+<A NAME="1806"></A>
+</DD>
+<DT><STRONG><TT>kms</TT></STRONG></DT>
+<DD>Subsequent coordinates in the third dimension are given in
+km/s.
+<A NAME="1808"></A>
+</DD>
+</DL>
+
+<P>
+For example, to specify a 21 by 21 region, centred on the reference
+pixel, use:
+<PRE>
+   region=relpix,box(-10,-10,10,10)
+</PRE>
+or to give a 10 by 10 region in the lower left corner of the image,
+use
+<PRE>
+   region=box(1,1,10,10)
+</PRE>
+If there are multiple maps in the file, use
+<PRE>
+   region=box(1,1,10,10)(1,2)
+</PRE>
+to select the first 2 maps.
+
+<P>
+The region-of-interest specifications can become
+rather involved, when complex regions are used. As with visibility data selection,
+<code>@</code> files (see Section&nbsp;<A HREF="node18.html#s:atfile">2.5</A>)
+are a convenient way to store these.
+
+<P>
+There are some warnings for those accustomed to the <TT>select</TT>
+visibility data selection method:
+
+<UL>
+<LI>The subcommands of a region of interest are logically
+OR'ed together, whereas in the visibility data selection it is a logically
+AND. For <I>u-v</I> <TT>select</TT>  the
+logical OR must be explicitly given by use of the
+<TT>or</TT> subcommand.
+</LI>
+<LI>The subcommands do not allow a plus or minus prefix, like
+the visibility data selection does.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1906"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1902"
+  HREF="node40.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1898"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1904"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1907"
+  HREF="node44.html">Reduction Strategies</A>
+<B>Up:</B> <A NAME="tex2html1903"
+  HREF="node40.html">Image Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1899"
+  HREF="node42.html">Image Coordinate Systems</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

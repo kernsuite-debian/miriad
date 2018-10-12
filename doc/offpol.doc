@@ -1,0 +1,43 @@
+%N offpol
+%D Generate ATCA primary beam polarimetric response.
+%P rjs
+%: utility
+%B
+        OFFPOL generates images of the primary beam response (both total
+        intensity and polarimetric) of the ATCA antennas.  It performs a
+        simple simulation of an observation.
+ 
+%A out
+        Output name template.  No default.
+%A imsize
+        Two values, the image size.  Second value defaults to first.
+        Default 255.
+%A cell
+        Two values, the image cell size in RA and Dec, in arcsec.
+        Second value defaults to first.  Each defaults separately to
+        twice the primary beam FWHM divided by imsize.
+%A ra
+        Right ascension of the field centre.  (Used solely for setting
+        the output header, it has no effect on the computation.)
+        Default 0.
+%A dec
+        Declination of the field centre.  Default -45 deg.
+%A harange
+        Hour angle range to simulate - the start and end hour angles,
+        and the simulation step size.  The default is to simulate a
+        snapshot at 0 hours.  The default step size is 0.1 hours
+        (6 min) which might be inadequate for sources with a declination
+        near -30 deg.
+%A freq
+        Frequency of interest (GHz).  The default is 1.384 GHz.
+%A options
+        Task enrichment parameters. Several can be given.
+          raw      Generate images of the XX,YY,XY and YX responses,
+                   rather than the Stokes responses.
+          subtract Subtract off the circularly symmetric portion of the
+                   primary beam response from I, XX and YY responses.
+          new16    Use the measured patterns for 16cm, these have some
+                   obvious flaws but may give a better indication of the
+                   current instrumental polaristion
+ 
+%R 1.8, 2016/10/28 00:42:38 UTC

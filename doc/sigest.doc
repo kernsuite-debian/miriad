@@ -1,0 +1,23 @@
+%N sigest
+%D Estimate the rms level in an image.
+%P rjs
+%: map analysis
+%B
+        SIGEST is a Miriad task which attempts to estimate the rms noise
+        level in an image. It does this by determining statistics of a
+        clipped version of the image data. Based on the statistics of
+        clipped Gaussian noise, the rms is then estimated. This
+        assumes that the image pixels, after clipping, are dominated by noise.
+ 
+        SIGEST will work poorly on images containing significant sidelobes.
+%A in
+        The input image dataset. No default.
+%A clip
+        The clip level to use. Pixels are excluded from the calculation
+        if their absolute value is greater than the clip value. Ideally
+        the clip should be about 2 to 3 times the rms noise level.
+        The default uses an initial estimate of the rms to set the clip
+        at 2.5 times the rms.
+%A region
+        The standard image region of interest of the input. See the help
+        on "region" for more information. The default is the entire image.

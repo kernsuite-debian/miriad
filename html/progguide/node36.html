@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Arbitrary Regions of Interest and Blanking Information</TITLE>
+<META NAME="description" CONTENT="Arbitrary Regions of Interest and Blanking Information">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node37.html">
+<LINK REL="previous" HREF="node35.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node37.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html693"
+  HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html687"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html681"
+  HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html689"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html691"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html694"
+  HREF="node37.html">Reading and Writing Blanking</A>
+<B>Up:</B> <A NAME="tex2html688"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html682"
+  HREF="node35.html">Regular Regions of Interest</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004102000000000000000">
+Arbitrary Regions of Interest and Blanking Information</A>
+</H2>
+In addition to the above routines, there are three routines to allow treatment
+of more complex regions of interest. These are:
+<PRE>
+        subroutine BoxMask(tno,boxes,maxboxes)
+        logical function BoxRect(boxes)
+        subroutine BoxRuns(naxis,nsize,flags,boxes,
+    *        runs,maxruns,nruns,xblx,xtrc,yblc,ytrc)
+</PRE>
+
+<P>
+<TT>BoxMask</TT> requests that an image mask be ANDed with the region
+requested by the user. The input to the routine is the image dataset handle,
+<TT>tno</TT>, whereas the <TT>boxes</TT> array is an input/output integer array
+used to accumulate region of interest information. <TT>BoxMask</TT> can be
+called multiple times, each time ANDing in a new image mask. This is an optional
+routine. Typically it would be called for each of the input images, so that
+``blanked'' pixels in the input images would be excluded from the region of
+interest.
+
+<P>
+<TT>BoxRect</TT> returns <TT>.true.</TT> if the region
+of interest is rectangular (i.e. whether the region of interest is entirely
+described by <TT>blc</TT> and <TT>trc</TT>.
+
+<P>
+<TT>BoxRuns</TT> returns the region selected for a particular plane.
+The input arguments <TT>naxis</TT> and <TT>nsize</TT> are analogous to the same
+arguments in the <TT>xysetpl</TT> routine. <TT>runs</TT> is
+an integer array of size <!-- MATH
+ $3\times maxruns$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="97" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img31.png"
+ ALT="$3\times maxruns$"></SPAN>. On output it indicates which
+pixels in the plane are to be process.
+<TT>Runs</TT> consists of <TT>nruns</TT> entries of the form:
+<PRE>
+     j,imin,imax
+</PRE>
+This indicates that pixels (imin,j) to (imax,j) are to be processed.
+All entries are non-overlapping.
+There may be zero or many  entries for a particular value of j. The
+table is in increasing order of j and imin. On output, the integers
+<TT>xblc, xtrc, yblc</TT> and <TT>ytrc</TT> give the bottom left and top right
+corners, in x and y, of the smallest subimage which contains the selected
+pixels.
+The <TT>flags</TT> argument, an input character
+string, indicates some extra options. These are:
+<DL COMPACT>
+<DT>r</DT>
+<DD>Make the coordinates, returned in the <TT>runs</TT> table,
+relative to <TT>(xblc,yblc)</TT>.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html693"
+  HREF="node37.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html687"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html681"
+  HREF="node35.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html689"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html691"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html694"
+  HREF="node37.html">Reading and Writing Blanking</A>
+<B>Up:</B> <A NAME="tex2html688"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html682"
+  HREF="node35.html">Regular Regions of Interest</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

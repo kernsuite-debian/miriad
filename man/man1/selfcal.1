@@ -1,0 +1,128 @@
+.TH selfcal 1
+.SH NAME
+selfcal - Determine self-calibration of calibration gains.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+calibration, map making
+.SH DESCRIPTION
+SELFCAL is a MIRIAD task to perform self-calibration of
+visibility data.  Either phase only or amplitude and phase
+calibration can be performed.  The input to SELCAL are a
+visibility data file, and model images.  This program then
+calculates the visibilities corresponding to the model,
+accumulates the statistics needed to determine the antenna
+solutions, and then calculates the self-cal solutions.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Name of input visibility data file. No default.
+.TP
+\fIselect\fP
+Standard uv data selection criteria.  See the help on "select"
+for more information.
+.TP
+\fImodel\fP
+Name of the input models.  Several models can be given, which
+can cover different channel ranges and different pointing and
+sources of the input visibility data.  Generally the model
+should be derived (by mapping and deconvolution) from the input
+visibility file, so that the channels in the model correspond to
+channels in the visibility file.  The units of the model MUST be
+Jy/pixel, rather than Jy/beam, and should be weighted by the
+primary beam.  The task DEMOS can be used to extract primary
+beam weighted models from a mosaiced image.  If no models are
+given, a point source model is assumed.
+.sp
+NOTE: When you give SELFCAL a model, it will, by default, select
+the data associated with this model from the visibility data-
+set.  This includes selecting the appropriate range of channels
+and the appropriate pointing/source (if options=mosaic is used).
+If you use a point source model, if it YOUR responsibility to
+select the appropriate data.
+.TP
+\fIclip\fP
+Clip level.  For models of intensity, any pixels below the clip
+level are set to zero.  For models of Stokes Q,U,V, or MFS
+I*alpha models, any pixels whose absolute value is below the
+clip level are set to zero.  Default is 0.
+.TP
+\fIinterval\fP
+The length of time, in minutes, of a gain solution.  Default is
+5, but use a larger value in cases of poor signal-to-noise, or
+if the atmosphere and instrument is fairly stable.
+.TP
+\fInfbin\fP
+The number of frequency bins. The default is 1. Use nfbin>1 to
+solve for variation across the band in the gains.
+Works best for uv files with a single spectral window, i.e.,
+after uvsplit.
+.TP
+\fIoptions\fP
+This gives several processing options. Possible values are:
+.nf
+  amplitude  Perform amplitude and phase self-cal.
+  phase      Perform phase only self-cal.
+  mfs        This is used if there is a single plane in the
+             input model, which is assumed to represent the
+             image at all frequencies.  This should also be
+             used if the model has been derived from MFCLEAN.
+  mmfs       Same as mfs, but with multiple input models,
+             each applying to a subset of the bandwidth.
+             For use with nfbin>1: models will be allocated to
+             bins based on their centre frequency.
+  relax      Relax the convergence criteria. This is useful when
+             selfcal'ing with a very poor model.
+  noscale    Do not scale the gains.  By default the gains are
+             scaled so that the rms gain amplitude is 1.  In
+             this way, the total flux is not constrained to
+             agree with the model. If you are using nfbin>1
+             you may need this to make the data follow the
+             spectral shape of the model.
+  mosaic     This causes SELFCAL to select only those
+             visibilities whose observing center is within plus
+             or minus three pixels of the model reference pixel.
+             This is needed if there are multiple pointings or
+             multiple sources in the input uv file.  By default
+             no observing center selection is performed.
+.fi
+Note that "amplitude" and "phase" are mutually exclusive.
+The default is options=phase.
+.TP
+\fIminants\fP
+Data at a given solution interval is deleted if there are fewer
+than MinAnts antennae operative during the solution interval.
+The default is 3 for options=phase and 4 for options=amplitude.
+.TP
+\fIrefant\fP
+This sets the reference antenna, which is given a phase angle of
+zero.  The default, for a given solution interval, is the
+antenna with the greatest weight.
+.TP
+\fIflux\fP
+If MODEL is blank, then the flux density (Jy) of a point source
+model can be specified here.  The default is 1.
+Additional spectral parameters can be specified as follows:
+Reference frequency in GHz, spectral index, up to two higher
+order alpha terms (as produced by uvsfit or uvfmeas with
+options=mfflux)
+.TP
+\fIoffset\fP
+This gives the offset in arcseconds of a point source model (the
+offset is positive to the north and to the east).  This
+parameter is used if the MODEL parameter is blank.  The default
+is 0,0.  The amplitude of the point source is chosen so that
+flux in the model is the same as the visibility flux.
+.TP
+\fIline\fP
+The visibility linetype to use, in the standard form, viz:
+.nf
+  type,nchan,start,width,step
+.fi
+Generally if there is an input model, this parameter defaults to
+the linetype parameters used to construct the map.  If you wish
+to override this, or if the info is not in the header, or if you
+are using a point source model, this parameter can be useful.
+.sp
+.SH REVISION
+1.19, 2016/01/28 22:07:15 UTC

@@ -1,0 +1,31 @@
+.TH atrtfix 1
+.SH NAME
+atrtfix - Correct for misbehaving round trip system
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ATRTFIX corrects data for errors in the round trip phase measurement.
+This is only needed when the round trip measurement malfunctions.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file to correct. No default.
+.TP
+\fIout\fP
+The output corrected file. No default.
+.TP
+\fIrtphase\fP
+A text file containing the round trip phase measurements.
+No default.
+.TP
+\fIoptions\fP
+Extra processing options.
+.nf
+  glitch  Only modify the phase to account for glitches (not
+          the gradual variation).
+.TP
+\fIoffset\fP
+.fi
+Offset, in seconds, between the recorded values and the data

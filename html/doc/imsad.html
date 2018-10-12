@@ -1,0 +1,126 @@
+<title> Documentation on imsad </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on imsad</h1>
+<pre>
+
+Task: imsad
+Purpose: image search and destroy
+Categories: image analysis
+
+        IMSAD fits a Gaussian to the image histogram to determine the
+        true image rms noise, then searches for islands of pixels above
+        some cutoff, and attempts to fit Gaussian components to the
+        islands.  The fitting is borrowed from the miriad imfit task and
+        the island detection from the AIPS SAD task.
+ 
+        Pixels above the clip level are marked in yellow.  Then a square
+        region centred on each island is coloured in.
+ 
+        When fitting Gaussians, a cross is plotted at the midpoint of
+        the island.  Each island is displayed separately in the top
+        left of the display as it is fit.  The centroid of the fit is
+        plotted.
+ 
+        Information about the fit for each island is given.
+ 
+
+Key: <a name="in"><a href="in.html">in</a>
+ 
+        The name of the input image data set.
+
+Key: <a name="region"><a href="region.html">region</a>
+ 
+        The region of interest within the image (rectangular only).
+
+Key: <a name="range">range
+        Image intensity range to display.  Default is min to max for the
+        current plane being displayed.
+
+Key: <a name="clip">clip
+        Clip  level.  For input images of intensity, any pixels below
+        the clip level are excluded from the fitting process.  For other
+        sorts of images (e.g. Stokes Q, U or V) pixels whose absolute
+        values are below the clip level are excluded from the fit.
+ 
+        The clip level can be specified as a multiple of the true image
+        rms (using the hist option) or as an absolute pixel value.  No
+        default.
+
+Key: <a name="box">box
+        The minimum extents for island boundaries.  This would usually
+        be some multiple of the beam extents in x and y (2,2 is the
+        default).  For images with no beam characteristics there is no
+        default, the units in this case are pixels.
+
+Key: <a name="max">max
+        Sets the maximum number of boxes to return, if more then max
+        are detected then the max boxes with largest peak flux / pixel
+        are returned.
+
+Key: <a name="rad">rad
+        Will only report those islands detected within some angular
+        radius of the specified coordinate pair.  The default units are
+        absolute pixels, e.g. 16,18,10.  If units other than the default
+        are used you must specify these after the radius, e.g.
+        10:34:45.3,-45:54:02,0.005,hms,dms,degrees.
+
+Key: <a name="options"><a href="options.html">options</a>
+        Extra processing options.  Possible values are:
+ 
+        hist ....... compute the image pixel histogram and compute the
+                     true image rms
+        gauss ...... fit a Gaussian model to each component
+        fixed ...... the FWHM is fixed (circular cross-section)
+        point ...... a Gaussian with the characteristics of the point-
+                     spread function is fit
+        box ........ return the island box extents
+        arcsec ..... output box BLC/TRC units are arcsec offset from
+                     reference.  Default is absolute pixels.
+        fiddle ..... interactively adjust the display lookup table
+                     (LUT), and alter the transfer function.
+        nofit ...... do not perform any fitting
+        noplt ...... disable the plotting features
+        nodet ...... skip island detection and fit the box given by
+                     region - not implemented
+
+Key: <a name="device"><a href="device.html">device</a>
+        PGPLOT plot device
+
+Key: <a name="out"><a href="out.html">out</a>
+        Dataset to write fitted source parameters.  Each line of this
+        file summarises the result of the Gaussian fit for one island.
+        Each line contains:
+ 
+        Island name, island number, ra and dec of island centroid,
+        peak flux density, integrated flux density, deconvolved (from
+        beam) major axis FWHM (arcsec), deconvolved minor axis (arcsec),
+        deconvolved position angle (degrees), FLAG, DFLAG, FFLAG
+ 
+        FLAG:   IFAIL value (an integer) means Gaussian fit did not
+                  converge,
+                F means failed to find covariance matrix for Gaussian
+                  fit,
+                N means it was not possible to attempt a Gaussian fit,
+                C converged OK.
+ 
+        DFLAG:  D  deconvolution of size from beam OK,
+                P  deconvolution gave result close to point source,
+                ?  No synthesised beam so could not deconvolve,
+                F  deconvolution failed.
+ 
+        FFLAG:  F  Integrated flux &lt; peak flux (caused by beam &gt; source
+                   size).  If blank then ok.
+
+Key: <a name="log">log
+        If specified, output is written to the specified file instead of
+        to the terminal.
+
+Key: <a name="label">label
+        Special purpose label
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

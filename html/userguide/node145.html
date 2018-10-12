@@ -1,0 +1,348 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Copying, Reordering and Regridding Images</TITLE>
+<META NAME="description" CONTENT="Copying, Reordering and Regridding Images">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node146.html">
+<LINK REL="previous" HREF="node144.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node146.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3218"
+  HREF="node146.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3214"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3208"
+  HREF="node144.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3216"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3219"
+  HREF="node146.html">Image Arithmetic - MATHS</A>
+<B>Up:</B> <A NAME="tex2html3215"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3209"
+  HREF="node144.html">Source Fitting and Positions</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001840000000000000000"></A><A NAME="11726"></A><A NAME="11727"></A>
+<A NAME="11728"></A><A NAME="11729"></A>
+<BR>
+Copying, Reordering and Regridding Images
+</H1>
+
+<P>
+
+<UL>
+<LI>The task <A NAME="tex2html659"
+  HREF="../doc/imsub.html">imsub</A>
+allows you to extract out some region of one
+image and copy it to a new image.  For example, let us copy every other
+pixel from the central 20 by 20&nbsp;arcsec from the first 20 planes of a
+cube into a new file.  Naturally, <A NAME="tex2html660"
+  HREF="../doc/imsub.html">imsub</A>
+can also be used to make
+an identical copy of your entire image. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMSUB</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.imap</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=arcsec,box(-10,-10,10,10)(1,20)</TD>
+<TD ALIGN="LEFT">Select region of interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">incr=2,2,1</TD>
+<TD ALIGN="LEFT">Pixel increments</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela-sub.imap</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The task <A NAME="tex2html661"
+  HREF="../doc/imcat.html">imcat</A>
+allows you to concatenate images along the
+third dimension.  Thus you can build cubes from 2-D images, and bigger
+cubes from smaller cubes.  One use, for example, is that you might like
+to put dissimilar images (e.g.  2-D images from different spectral lines)
+into the one cube and make a Post-Script plot of all of them together on
+one plot (each plane in its own sub-plot) with <A NAME="tex2html662"
+  HREF="../doc/cgdisp.html">cgdisp</A>.   
+
+<P>
+When concatenating dissimilar images, you will probably want
+to set <TT>options=relax</TT>.  This tells <A NAME="tex2html663"
+  HREF="../doc/imcat.html">imcat</A>
+not to be
+concerned if axis descriptors differ.  However, the image
+dimensions must still be the same.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMCAT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=*.imap</TD>
+<TD ALIGN="LEFT">Input images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=big.icub</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=relax</TD>
+<TD ALIGN="LEFT">Ignore header discrepancies</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The task <A NAME="tex2html664"
+  HREF="../doc/reorder.html">reorder</A>
+enables you to reorder the axes of an 
+image.  For example, to reorder a cube in xyv order to vxy order
+and flip the direction of the velocity axis you would do the following:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>REORDER</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ngc253.xyv</TD>
+<TD ALIGN="LEFT">Input cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=ngc253.vxy</TD>
+<TD ALIGN="LEFT">Output cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode=-312</TD>
+<TD ALIGN="LEFT">Reordering instructions</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Similar to <A NAME="tex2html665"
+  HREF="../doc/reorder.html">reorder</A>
+is <A NAME="tex2html666"
+  HREF="../doc/imframe.html">imframe</A>.  It too can reorder
+the axes , but generally we recommend you use <A NAME="tex2html667"
+  HREF="../doc/reorder.html">reorder</A>
+for that
+application as its inputs are much simpler than those of <A NAME="tex2html668"
+  HREF="../doc/imframe.html">imframe</A>. 
+<A NAME="tex2html669"
+  HREF="../doc/imframe.html">imframe</A>
+is useful if you want embed an image inside a larger one
+and pad the border with zeros. 
+
+<P>
+In the example, we take an image of some size and pad it out to be 512
+by 512 pixels.  Note that the <TT>frame</TT> keyword which specifies the
+output image size in relative pixels is in the non-standard order of
+<TT>xmin,xmax,ymin,ymax</TT> compared to the <TT>region</TT> keyword which
+expects <TT>xmin,ymin,xmax,ymax</TT>. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMFRAME</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=cena.imem</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=cena-pad.imem</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">box</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">frame=-256,256,-255,255</TD>
+<TD ALIGN="LEFT">Output size in relative pixels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">goal</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>When comparing images, it is often necessary to have them
+on the same grid so that tasks such as <A NAME="tex2html670"
+  HREF="../doc/cgdisp.html">cgdisp</A>
+can 
+overlay them graphically, or so that <A NAME="tex2html671"
+  HREF="../doc/maths.html">maths</A>
+(see below) can 
+evaluate some expression involving the two images.
+
+<P>
+The task <A NAME="tex2html672"
+  HREF="../doc/regrid.html">regrid</A>
+enables you to take an image, and regrid it via
+a cubic interpolation scheme on a new grid.  This task can regrid any
+combination of the the first three axes of an image.  The new grid can
+be specified in one of two ways.  The first way (and generally
+easiest) is to give a template image and make the
+image of interest look like the template image.  The alternative way requires
+you to specify the output header axis descriptors explicitly with the
+keyword <TT>desc</TT>.  You have to input the reference value, reference
+pixel, pixel increment and number of pixels for each axis you want to
+regrid - pretty tedious stuff.
+
+<P>
+Note that <A NAME="tex2html673"
+  HREF="../doc/regrid.html">regrid</A>
+has comparatively recently been upgraded to handle
+non-linear axes correctly (older versions used a linear approximation
+
+<P>
+In this simple example, we regrid the first two axes of an image
+via a template image.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>REGRID</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=0336-vla.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">tin=0336-atca.icln</TD>
+<TD ALIGN="LEFT">Template image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=0336-vla-atca.icln</TD>
+<TD ALIGN="LEFT">Regridded image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">desc</TD>
+<TD ALIGN="LEFT">Unset for template</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axes=1,2</TD>
+<TD ALIGN="LEFT">Regrid first two axes only please</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+Task <A NAME="tex2html674"
+  HREF="../doc/regrid.html">regrid</A>
+is smart enough to correctly handle different projection
+geometries, conversion between equatorial and galactic coordinates, equinox
+conversion between B1950 and J2000, as well as conversions between different
+velocity systems (radio vs optical, LSR vs barycentric).
+
+<P>
+If the template does not have quite the geometric grid that you
+want, then <A NAME="tex2html675"
+  HREF="../doc/regrid.html">regrid</A>
+provides a number of options to fiddle what it
+treats as the template coordinate system before it does the regridding.
+Option <TT>galeqsw</TT> causes the template to be
+switched from galactic to equatorial, or visa versa before the regridding
+operation, whereas the option <TT>equisw</TT> switches the equinox from
+B1950 to J2000 (or visa versa). The <TT>project</TT> keyword can be used to
+reset the projection geometry of the template. The <TT>noscale</TT> option
+causes the template coordinate system's cell size <EM>not</EM> to scale
+with frequency (the images made by <A NAME="tex2html676"
+  HREF="../doc/invert.html">invert</A>
+are such that the
+cell size in inverse proportional to frequency).
+
+<P>
+Normally <A NAME="tex2html677"
+  HREF="../doc/regrid.html">regrid</A>
+makes the output exactly overlay the template or
+the axis descriptors. However, if you really only want them in the same
+coordinate system, with potentially different image sizes and offset perhaps
+by an integral number of pixels, then use <code>options=offset</code>.
+
+<P>
+Task <A NAME="tex2html678"
+  HREF="../doc/regrid.html">regrid</A>
+can be used to resample an image on its own. You
+would use this to set a 
+different projection geometry, to switch between galactic and
+equatorial coordinates, or to change equinoxes. If both 
+the template and axis descriptor are unset, <A NAME="tex2html679"
+  HREF="../doc/regrid.html">regrid</A>
+uses the main
+input as the template. To do this use <TT>options=offset</TT> along with
+the other options or parameters to change the template coordinate system.
+
+<P>
+There is a potential trap when regridding ATCA images to equatorial coordinates:
+ATCA images produced by <A NAME="tex2html680"
+  HREF="../doc/invert.html">invert</A>
+are in the so-called ``NCP'' projection.
+As this projection has a singularity at the equator, it is generally 
+disastrous to regrid an ATCA image which is near or on the galactic
+equator without also changing the projection. The ``SIN'' (sine) projection
+is a reasonable choice for this.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3218"
+  HREF="node146.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3214"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3208"
+  HREF="node144.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3216"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3219"
+  HREF="node146.html">Image Arithmetic - MATHS</A>
+<B>Up:</B> <A NAME="tex2html3215"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3209"
+  HREF="node144.html">Source Fitting and Positions</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

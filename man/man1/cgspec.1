@@ -1,0 +1,426 @@
+.TH cgspec 1
+.SH NAME
+cgspec - Overlay spectra on images with PGPLOT.
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+plotting
+.SH DESCRIPTION
+CGSPEC overlays spectra at spatial locations (specified in a
+text file) on images (displayed via a colour pixel map
+representation and/or contour plots) on a PGPLOT device.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+You may input up to 10 images.  Some of these are used to make
+a 2-D spatial display (one displayed via a colour pixel map
+representation up to three displayed via contours and).  Of the
+rest, up to five may have spectra extracted from them, and one
+may be used as a mask.
+.sp
+The pixel map, contour, and mask images must be of identical
+dimensions and size.  Each spectrum image can be of any
+dimensions, size, and order.  The mask image blanking mask is
+logically ORed to the pixel map and and contour plot image masks
+before they are displayed.  The mask image is not displayed.
+.sp
+These images can be input in any order (see TYPE).
+Wild card expansion is supported.  No default.
+.TP
+\fItype\fP
+Specifies the type of each image given, respectively, in the
+IN keyword.  Minimum match is supported (note that "pixel" was
+formerly "grey" which is still supported).  Choose from:
+.sp
+"contour"   (contour;     up to 3 of these)    xyv
+"pixel"     (pixel map;   up to 1 of these)    xyv
+"spectrum"  (spectrum;    up to 5 of these)    any order
+"dspectrum" (spectrum derivative          )    any order
+"mask"      (mask;        up to 1 of these)    xyv
+.sp
+The "spectrum" images can be in any order.  However, it will be
+faster to have the spectrum on the first axis if the cube is
+very large (i.e. the image should be in vxy order.  Use REORDER
+if necessary).  The "dspectrum" images are the same as
+"spectrum" images, except that the derivative of the spectrum
+with channel is taken by CGSPEC before it is plotted.  This is
+useful for Zeeman enthusiasts.  You can have up to 5 "spectrum"
+and "dspectrum" images in total.
+.TP
+\fIregion\fP
+Region of interest.  This applies only to, and equally to,
+the pixel map, contour and mask images.  All the image planes
+you select will be averaged before display.  Only the bounding
+box of the selected region is supported.
+.TP
+\fIxybin\fP
+Up to four values which give the spatial increment and binning
+size in pixels for the x and y axes to be applied to the
+selected region.  If the binning size is not unity, it must
+equal the increment.  For example, to bin up the image by 4
+pixels in the x direction and to pick out every third pixel in
+the y direction, set XYBIN=4,4,3,1
+Defaults are 1,XYBIN(1),XYBIN(1),XYBIN(3)
+.TP
+\fIslev\fP
+Up to three pairs of values for each contour image. First value
+is the type of contour level scale factor;  "p" for percentage
+and "a" for absolute.   Second value is the factor to scale LEVS
+by.  Thus, SLEV=p,1  would contour levels at LEVS * 1% of the
+image peak intensity.  Similarly, SLEV=a,1.4e-2 would contour
+levels at LEVS * 1.4E-2
+Default is no additional scaling of LEVS (i.e., "a",1.0)
+.TP
+\fIlevs1\fP
+The levels to contour for the first specified contour image are
+LEVS1 times SLEV (either percentage of the image peak or
+absolute).  Defaults try to choose something vaguely useful.
+.TP
+\fIlevs2\fP
+LEVS for the second contour image.
+.TP
+\fIlevs3\fP
+LEVS for the third contour image.
+.TP
+\fIgrange\fP
+Four values, the image intensity range to display (min to max),
+the transfer function type and the colour lookup table for the
+displayed pixel map image.  The transfer function type can be
+one of "lin" (linear), "sqr" (square root), "log" (logarithmic),
+and "heq" (histogram equalization).  The colour lookup table is
+an integer from 1 to 8 specifying a lookup table.  Valid values
+are 1 (b&w), 2 (rainbow), 3 (linear pseudo colour), 4 (floating
+zero colour contours), 5 (fixed zero colour contours), 6 (rgb),
+7 (background), 8 (heat), 9 (absolute b&w), 10-19 (cubehelix).
+Negate the number to reverse the lookup table.
+.sp
+The transfer function changes available with OPTIONS=FIDDLE are
+in addition (on top of) to the selections here, but the colour
+lookup table selections will replace those selected here.
+.sp
+Default is linear between the image minimum and maximum with
+a b&w lookup table.   You can default the intensity range with
+zeros, viz. "range=0,0,log,-2" say.
+.TP
+\fIvrange\fP
+Two values, the spectral range to plot, in the natural units of
+the axis, e.g. km/s for velocity, or GHz for frequency.  All
+spectra should be of the same type, use VELSW if necessary.
+Default is min to max from all the spectrum images.
+.TP
+\fIirange\fP
+Two values, the intensity range to plot for the spectra.
+Default is min to max from all the spectrum images.
+.TP
+\fIiscale\fP
+Up to five values, a factor for each spectrum image by which it
+is multiplied before plotting.
+Defaults are all 1.
+.TP
+\fIspsize\fP
+Two values, being the sizes of the spectra, in fractions of the
+view-port, in the x- and y-directions.
+Defaults are 0.1, 0.1
+.TP
+\fIstick\fP
+Two values, major tick mark increments on the spectrum axes or
+frame for labelling purposes.
+No default.
+.TP
+\fIdevice\fP
+The PGPLOT plot device, such as plot.plt/ps
+No default.
+.TP
+\fIlabtyp\fP
+Two values; the spatial label types of the x and y axes.
+Minimum match is active.  Select from:
+.sp
+"hms"     the label is in H M S.S (e.g. for RA)
+"dms"     the label is in D M S.S (e.g. for DEC)
+"arcsec"  the label is in arcsecond offsets
+"arcmin"  the label is in arcminute offsets
+"absdeg"  the label is in degrees
+"reldeg"  the label is in degree offsets
+.nf
+          The above assume the pixel increment is in radians
+.fi
+"abspix"  the label is in pixels
+"relpix"  the label is in pixel offsets
+"absnat"  the label is in natural coordinates as defined by
+.nf
+          the header.
+.fi
+"relnat"  the label is in offset natural coordinates
+"none"      no label and no numbers or ticks on the axis
+.sp
+All offsets are from the reference pixel of the contour/pixel
+map images.  Defaults are "relpix" except if LABTYP(1)="hms"
+when LABTYP(2) defaults to "dms" (to give RA and DEC).
+.sp
+.TP
+\fIoptions\fP
+Task enrichment options.  Minimum match of all keywords is
+active.
+.sp
+"blconly" means that if you have asked for some kind of spectrum
+.nf
+  labelling (frame or axes), only draw the frame or axes for
+  the spectrum in the bottom left hand corner of the plot
+.fi
+"colour" means make the axes the same colour as the first
+.nf
+  spectrum, else they are white.
+.fi
+"blacklab" means that, if the device is white-background, draw
+.nf
+  the axis labels in black. Default is red.
+.fi
+"fiddle" means enter a routine to allow you to interactively
+.nf
+  change the display lookup table.  You can cycle through a
+  variety of colour lookup tables, as well as alter a linear
+  transfer function by the cursor location, or by selecting
+  predefined transfer functions (linear, square root,
+  logarithmic, histogram  equalization)
+.fi
+.sp
+.nf
+  For hard copy devices (e.g. postscript), a keyboard driven
+  fiddle is offered; you can cycle through different colour
+  tables and invoke the predefined transfer functions, but the
+  linear fiddler is not available.  In this way you can make
+  colour hardcopy plots.
+.fi
+"frame" means draw a frame to the left and bottom of each
+.nf
+  spectrum and put the numeric labels on that frame.  The
+  default is no frame plotting.
+.fi
+"full" means do full plot annotation with contour levels, pixel
+.nf
+  map intensity range, image names, reference values, etc.
+  Otherwise more room for the plot is available.
+.fi
+"grid" means draw a coordinate grid on the plot rather than just
+.nf
+  ticks
+.fi
+"mark" marks the spatial location of the spectrum position with
+.nf
+  a star.  The spectra are plotted so that the centre if the
+  frame (which could be drawn with OPTIONS=FRAME) is at the
+  specified spatial location.   This positioning is not very
+  obvious without the frame.
+.fi
+"mirror" causes all specified contour levels for all contour
+.nf
+  images to be multiplied by -1 and added to the list of
+  contours
+.fi
+"naked" means don't write the numeric axis labels on the
+.nf
+  spectrum axes or frame so as to reduce clutter
+.fi
+"noaxes"  means don't draw the X=0 and Y=0 axes which would,
+.nf
+  by default, be drawn and have the numeric labels on them.
+  If the X=0 or Y=0 axes are not in the X and Y axis ranges of
+  your plot, then a FRAME (see above) option will automatically
+  be turned on for that axis.
+.fi
+"noblank" means draw the spectra where requested even if all of
+.nf
+  the displayed 2-D images are blanked at that location.  By
+  default, a spectrum is not displayed if all of the spatial
+  pixels over which the spectrum is averaged are blanked in all
+  of the displayed 2-D images.  Otherwise you get to see it.
+.fi
+"noepoch" means don't write the Epoch into the spatial axis
+.nf
+  label strings
+.fi
+"noerase" Don't erase a rectangle into which the "number"
+.nf
+  string is written.
+.fi
+"normalize" This option makes each spectrum come out with a
+.nf
+  peak of 1.0. This normalization is done after application
+  of ISCALE, so you could set ISCALE=-1 to make absorption
+  look like emssion and then normalize.
+.fi
+"number" writes the number of the spectrum in the corner of
+.nf
+  the box surrounding the spectrum.  The number is just
+  just the counter counting how many locations there are in
+  the overlay file (see OLAY).
+.fi
+"relax" means issue warnings when image axis descriptors are
+.nf
+  inconsistent (e.g. different pixel increments) instead
+  of a fatal error.  Applies to pixel map, contour and
+  mask images only.
+.fi
+"solneg1" means make negative contours solid and positive
+.nf
+  contours dashed for the first contour image. The default,
+  and usual convention is the reverse.
+.fi
+"solneg2" SOLNEG1 for the second contour image.
+"solneg3" SOLNEG1 for the third contour image.
+"unequal" means draw plots with unequal scales in x and y
+.nf
+  so that the plot surface is maximally filled.  The default
+  is for equal scales in x and y.
+.fi
+"wedge" means that if you are making a pixel map display, also
+.nf
+  draw and label a wedge to the right of the plot, showing the
+  map of intensity to colour
+.fi
+"1sided" means that for a derivative spectrum image, take a
+.nf
+  1-sided derivative instead of the default 2-sided derivative
+.fi
+.sp
+.TP
+\fIclines\fP
+Up to 3 values.  The line widths for each contour image
+as specified in the order of TYPE. These widths are integer
+multiples of 1.
+Defaults are all 1 for interactive devices and 2 for
+har copy devices.
+.TP
+\fIslines\fP
+Up to 5 pairs of values.  These are the line widths and types
+to use for the spectra for each spectrum image.  Line types
+can be 1 -> 5 (solid and a variety of dashed/dotted types).
+Widths are integer multiples of 1.
+Defaults are all 1 for interactive devices, and 2,1 for
+hard copy devices.
+.TP
+\fIblines\fP
+Up to 2 values.  These are the line widths to use for 1) the
+border and labels of the contour/pixel map display and 2) the
+border/axes for the spectra.  Widths are integer multiples of 1.
+Defaults are 1,1 for interactive devices, and 2,2 for hard copy
+devices.
+.TP
+\fIbreak\fP
+Up to 3 values. The intensity levels for the break between
+solid and dashed contours for each contour image.
+Defaults are 0.0,0.0,0.0
+.TP
+\fIcsize\fP
+Up to two values. Character sizes in units of the PGPLOT default
+(1, which is ~ 1/40 of the view surface height) for the
+contour/pixel map labels and the spectrum labels.
+Defaults try to do something useful.
+.TP
+\fIolay\fP
+You can either give one file name, or as many file names as
+there are spectrum images.  These files describe the locations
+at which the overlay spectra are to be drawn.  If you give one
+file only, the locations described by it are applied to all the
+input spectrum images.  If you give several files, each of these
+corresponds to the spectrum image in the order they are given in
+keyword IN.
+.sp
+Wild card expansion is active and there is no default.
+.sp
+Entries in the overlay file can be white space or comma-
+delimited or both.  Lines beginning with # are ignored.
+.sp
+.nf
+                **** DO NOT USE TABS ****
+.fi
+.sp
+Double quotes " are used below to indicate a string.  The "
+should not be put in the file.  For all the string parameters
+discussed below, you can abbreviate them with minimum match.
+.sp
+Miriad task "CGCURS" with OPTIONS=LOG,CGSPEC,CURSOR can be
+used to prepare a file suitable as input to OLAY.
+.sp
+There are two formats, depending upon the first line.
+.sp
+----------------------
+CASE 1; GRID LOCATIONS
+----------------------
+.sp
+If the first line is
+.sp
+GRID
+.sp
+There should be one further line in the file:
+.sp
+.nf
+  XINC  YINC  XSIZ  YSIZ
+.fi
+.sp
+XINC and YINC are the increments across the contour/pixel map
+image in ARCSEC at which spectra are to be drawn starting from
+the bottom left corner of the display (defined by the REGION
+keyword).
+.sp
+XSIZ and YSIZ are the spatial half-sizes in ARCSEC over which
+each spectrum is spatially averaged.  These are optional and
+default to 0 (no binning, just a spectrum at each spatial
+pixel).
+.sp
+---------------------------
+CASE 2; IRREGULAR LOCATIONS
+---------------------------
+.sp
+If the first line is
+.sp
+IRREGULAR
+.sp
+Each successive line describes one overlay spectrum location
+according to:
+.sp
+.nf
+  XOTYPE YOTYPE  X   Y   XSIZ  YSIZ
+.fi
+.sp
+XOTYPE and YOTYPE  give the units of the overlay location
+contained in the file for the x- and y-directions, respectively.
+Choose from
+.sp
+.nf
+ "hms", "dms", "hms", "dms", "abspix", "relpix", "arcsec",
+ "arcmin", "absdeg", "reldeg", "absnat", and "relnat"  as
+  described in the keyword LABTYP.
+.fi
+.sp
+Note that %OTYPE does not depend upon what you specified for
+LABTYP.
+.sp
+X,Y defines the center of the overlay in the nominated OTYPE
+coordinate system (X and Y OTYPE can be different).  Note
+that for coordinate systems other than "hms" and "dms", the
+coordinates are with respect to the pixel map  & contour images
+axis descriptors,  not those from the spectrum images.
+.sp
+For %OTYPE = "abspix ", "relpix", "arcsec", "arcmin",  "absnat",
+.nf
+             "relnat", "absdeg", and "reldeg"  X & Y are single
+              numbers.
+.fi
+.sp
+For %OTYPE = "hms" or "dms", the X and/or Y location is/are
+replaced by three numbers such as  HH MM SS.S or DD MM SS.S.
+Thus if XOTYPE=hms & YOTYPE=dms then the file should have lines
+like
+.sp
+.nf
+ hms dms  HH MM SS.S DD MM SS.S
+.fi
+.sp
+XSIZ and YSIZ are the spatial half-sizes in ARCSEC over which
+each spectrum is spatially averaged.  These are optional and
+default to 0 (no binning, just a spectrum at each spatial pixel)
+.sp
+.SH REVISION
+1.18, 2014/08/22 01:54:42 UTC

@@ -1,0 +1,44 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Usage: Buildtask
+#-----------------------------------------------------------------------------
+# Create a list of miriad tasks and other help topics.
+#
+# $Id: Buildtasks,v 1.4 2006/10/20 03:45:00 cal103 Exp $
+#-----------------------------------------------------------------------------
+
+rm -f /tmp/$$.{1,2} tasks.doc
+trap "rm -f /tmp/$$.* ; trap 0" 0 1 2 3 15
+
+for FILE in $MIR/doc/*.doc
+do
+  NAME=`echo "$FILE" | sed -e '{s|.*/||;s|\..*||;}'`
+
+  if [ -x "$MIRBIN/$NAME" ]
+  then
+    echo "$NAME" >> /tmp/$$.1
+  else
+    echo "$NAME" >> /tmp/$$.2
+  fi
+done
+
+cat << EOT
+%D A list of Miriad tasks
+%: miscellaneous
+%B
+	Available Miriad tasks are given below.
+	Type
+	  help <taskname>
+	to get extra help.
+
+EOT
+
+pr -6 -l1 -t /tmp/$$.1
+
+cat << EOT
+
+	Other help topics available are
+
+EOT
+
+pr -6 -l1 -t /tmp/$$.2

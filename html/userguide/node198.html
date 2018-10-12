@@ -1,0 +1,247 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Initial ``fixes'' to millimetre data</TITLE>
+<META NAME="description" CONTENT="Initial ``fixes'' to millimetre data">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node199.html">
+<LINK REL="previous" HREF="node197.html">
+<LINK REL="up" HREF="node196.html">
+<LINK REL="next" HREF="node199.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3913"
+  HREF="node199.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3909"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3903"
+  HREF="node197.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3911"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3914"
+  HREF="node199.html">Additional monitoring variables</A>
+<B>Up:</B> <A NAME="tex2html3910"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3904"
+  HREF="node197.html">Loading data into Miriad:</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002322000000000000000"></A><A NAME="s:atfix"></A>
+<BR>
+Initial ``fixes'' to millimetre data
+</H2> 
+The
+next step after loading is to apply a number of ``fixes'' that are
+important for 3-mm data.  Note that there is no record in the data
+that these steps have been performed. In particular the software
+will allow you to apply the fixes twice, which would be just
+as bad as not applying them at all.
+The task to do these, <A NAME="tex2html1040"
+  HREF="../doc/atfix.html">atfix</A>,
+performs the following functions:
+
+<UL>
+<LI>By default <A NAME="tex2html1041"
+  HREF="../doc/atfix.html">atfix</A>
+applies the ``standard'' gain/elevation
+model for the antennas.  You can disable this by using
+<code>options=nogainel</code>. 
+
+<P>
+</LI>
+<LI>By default <A NAME="tex2html1042"
+  HREF="../doc/atfix.html">atfix</A>
+corrects for a ``standard'' instrumental phase
+model.  You can disable this with <code>options=noinst</code>.
+
+<P>
+</LI>
+<LI>As mentioned above, the ATCA uses the chopper wheel method to
+measure an above atmosphere system temperature.  The nature of the
+hardware means the measurement is done only typically every 5 to
+30&nbsp;minutes.  When observing, the ATCA on-line system can either 
+apply a nominal system
+temperature value to the visibility data, or it can apply the actual
+measured system temperature values.  In applying these measured values, 
+on-line system will apply the
+most recent measurement. 
+
+<P>
+Task <A NAME="tex2html1043"
+  HREF="../doc/atfix.html">atfix</A>
+includes an algorithm to interpolate measured
+system temperature values, between measurements, and to correct the 
+visibility data accordingly. In doing this it correctly handles whether
+a nominal or the measured system temperature value applied to the
+data on-line. The interpolation
+algorithm takes into account changes in elevation and meteorological
+conditions.
+
+<P>
+The parameter <code>tsyscal</code> can be used to change this default behaviour.
+This parameter can take on values to revert the data back to the nominal
+system temperature value, to make no changes to the system temperature scaling,
+to use the most recent system temperature measurement, or to use an
+extrapolation (as distinct from interpolation) algorithm in estimating
+system temperatures.
+
+<P>
+</LI>
+<LI>Often you will want to apply a correction to your data to
+better account for the exact locations of the antennas.
+
+<P>
+On the night of an ATCA reconfiguration, a solution for the antenna
+positions is derived. The practise is to install this solution as
+the ``standard solution''. The on-line system will then use this solution in
+subsequent observations in that array configuration.
+The quality of this solution is important for the 
+ultimate phase calibration of 3mm data.
+
+<P>
+Experience has shown that often
+the position solution derived at the time of the reconfiguration is not
+necessarily the best possible. For example the solution will depend
+critically on the atmospheric phase stability at the time of the solution,
+and this might be less than ideal on the night of the reconfiguration.
+Consequently improved solutions will often be derived at a later time. 
+If improved
+solutions become available, then 3-mm observers should correct their
+data accordingly.
+
+<P>
+Updated solutions are stored in parameter files in the 
+<I>Miriad</I> system directory <code>$MIRCAT</code>. These solutions
+are distributed via the <I>Miriad</I> update mechanism, and
+have file names of the form ``<code>dantpos.</code><EM>yymmdd</EM>''. Here
+where ``<EM>yymmdd</EM>'' is the date of the relevant array reconfiguration.
+
+<P>
+Task <A NAME="tex2html1044"
+  HREF="../doc/atfix.html">atfix</A>
+corrects the data for an improved antenna location
+solution via the <TT>dantpos</TT> parameter.
+If an improved solution file is present, you can instruct <A NAME="tex2html1045"
+  HREF="../doc/atfix.html">atfix</A> to read this
+directly using the indirect parameter input mechanism 
+(see Section&nbsp;<A HREF="node18.html#s:atfile">2.5</A>). For example, to use the antenna location
+solution appropriate for a hypothetical array reconfiguration
+that happened on 16 October 2002, use
+<PRE>
+     dantpos=@$MIRCAT/dantpos.021016
+</PRE>
+
+<P>
+</LI>
+<LI>One of the flaws of the current ATCA  RPFITS files is that
+antenna locations are not saved when antennas are
+not in use. While this might not seem a serious flaw (who cares about
+the antennas if they are not in use?), the unused antennas
+can still cause shadowing - true antenna locations are needed
+for shadowing calculation. This was a particular issue with the interim
+3-antenna 3-mm system when observing in compact arrays. 
+
+<P>
+By giving a value to the <TT>array</TT> parameter, <A NAME="tex2html1046"
+  HREF="../doc/atfix.html">atfix</A>
+will fill in any
+antenna locations that are missing in the input visibility file.
+<EM>NOTE</EM>: This just fills in missing antenna locations, it does not perform
+any flagging of shadowed data.
+
+<P>
+The value given to this parameter is either an array configuration name
+(e.g. EW352 or 750A) or a list of six station names (``W106'' and ``N3''
+are examples of station names).
+When giving the station names, these must be in the order of the antennas
+(i.e. CA01, CA02, CA03 etc), regardless of any possible array shuffles.
+
+<P>
+<EM>NOTE</EM>: When antennas are in a shuffled order, or for arrays using
+the north spur, you should generally give the list of station
+names, as the standard array configuration names assume an
+antenna orderwhich is probably not correct.
+
+<P>
+If in doubt the <A NAME="tex2html1047"
+  HREF="../doc/confighist.html">on-line configuration history</A>
+should be consulted.
+
+<P>
+</LI>
+</UL>
+
+<P>
+Typical inputs to <A NAME="tex2html1048"
+  HREF="../doc/atfix.html">atfix</A>
+are:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ATFIX</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.uv</TD>
+<TD ALIGN="LEFT">Input visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.fixed.uv</TD>
+<TD ALIGN="LEFT">Output corrected visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dantpos=@$MIRCAT/dantpos.021016</TD>
+<TD ALIGN="LEFT">Antenna location correction.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3913"
+  HREF="node199.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3909"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3903"
+  HREF="node197.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3911"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3914"
+  HREF="node199.html">Additional monitoring variables</A>
+<B>Up:</B> <A NAME="tex2html3910"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3904"
+  HREF="node197.html">Loading data into Miriad:</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

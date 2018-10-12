@@ -1,0 +1,36 @@
+%N plgeom
+%D Fiddle planetary and solar system data.
+%P rjs
+%: uv analysis
+%B
+        plgeom is a Miriad task used to manipulate and rephase
+        a visibility dataset so that an image formed from that
+        dataset will result in a facet of that point. It achieves
+        this by both applying a shift to the data, and manipulating
+        the u-v coordinates. The parameters used to compute noise
+        variance of a visibility are also manipulated to account for
+        poorer sensitivity when observing the facet at oblique angles.
+ 
+        See Sault, Engel and de Pater (Icarus 2004) for more details
+        of its faceting algorithm.
+%A vis
+        The name of the input uv datasets. Several can be given
+        Wildcards are supported. No default.
+%A out
+        The name of the output uv data-set. There is no default name.
+%A select
+        The normal uv selection commands. The default is to select everything.
+%A latlon
+        The latitude and longitude of the facet centre. The latitude
+        is planetographic. For Jupiter, the longitude is System III.
+%A tol
+        When the fractional sensitivity of a modified visibility drops
+        below "tol" of the original measurement, then the visibility
+        is flagged. The default value is 0.1.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           nocal       Do not apply the gains table.
+           nopass      Do not apply bandpass corrections.
+           nopol       Do not apply polarization corrections.

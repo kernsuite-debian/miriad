@@ -1,0 +1,42 @@
+.TH moslst 1
+.SH NAME
+moslst - LST coverage of the different pointings in a mosaic.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+Determine the LSTs at which particular fields in a mosaic
+run are observed.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input vis datasets. No default.
+.TP
+\fIfields\fP
+Indices of the pointings to check. If nothing is given, all
+pointings are checked.
+.TP
+\fIsource\fP
+Base source name of the mosaic. By default, MOSLST assumes that
+any source whose names ends in digits is a pointing of a mosaic,
+and takes this digits as the pointing number. If the SOURCE parameter
+is given, then MOSLST takes only those sources starting with that
+name, ending in digits, and with a possible underscore character
+in between.
+.TP
+\fIdevice\fP
+PGPLOT device for the LST ranges. The default is no plot.
+.TP
+\fIppp\fP
+"Pointings per plot". This is used for plotting, and allows the
+output to be broken into a number of subplots. Each subplot will
+have (at most) the given number of pointings in it. The default
+is to not break it into subplots.
+.TP
+\fIlog\fP
+Output log file. Default is the terminal.
+.TP
+\fIgap\fP
+Gap tolerance. This is used for the log output to indicate
+large gaps in the LST coverage. The default is 36 minutes.

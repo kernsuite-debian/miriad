@@ -1,0 +1,120 @@
+%N gpdof
+%D Compute Degrees-of-freedom for calibration solutions.
+%P dpr
+%: calibration
+%B
+ 
+        GPDOF estimates the likely error in a calibration solution, by
+        calculating the errors in the "Degrees-of-Freedom" (dofs) of an
+        interferometer. This is useful for calibration of high-precision
+        circular polarization observations.
+ 
+        What GPDOF does is to determine the average calibration solution
+        of several input solutions. Then, assuming that this average
+        solution is "ideal", GPDoF determines the error in each of the
+        input calibration solutions, using the degrees-of-freedom
+        notation. Finally, GPDoF calculates the std and standard error
+        of the derived dofs, which you can use to estimate the errors in
+        the Stokes V of a target observation.
+ 
+        The input calibration solutions should have been processed using
+        the method outlined in the "Circular Polarization User's Guide"
+        (see References below). Obviously, the more calibrators you
+        have, the more accurate the dof estimates will be.
+ 
+        Explanation:
+ 
+        The degrees-of-freedom (dofs) are linear combinations of leakage
+        (delta) or gain (gamma) errors. The advantages in the dofs over
+        other measures of calibration consistency (eg. rms scatter in
+        the leakages) is that the dofs actually describe how the
+        calibration error would affect a target observation.  Thus, for
+        the dofs delta-+, delta--, and gamma--, and equatorially-mounted
+        antennas:
+ 
+        Stokes V error = delta-+ * Stokes I +
+                           delta-- * Stokes Q +
+                             gamma-- * Stokes U
+ 
+        For the ATCA, the parallactic angle \chi comes, in so it
+        isn't quite so elegant:
+ 
+        Stokes V error = delta-+ * I +
+                          delta-- * ( Q.sin(2\chi) + U.cos(2\chi)) +
+                            gamma-- * ( U.sin(2\chi) + Q.cos(2\chi))
+ 
+        Note that these are the instantaneous calibration errors in
+        a target source; for a synthesis observation, where \chi
+        varies, the resultant error in the Stokes V image will be
+        more complicated.
+ 
+        GPDoF estimates the std and standard error in the dofs. These
+        parameters be combined with the above equation for Stokes V
+        Error to estimate the likely level of leakage errors in a target
+        observation. If you are just using the solution from a single
+        calibrator, calculate using the std. If you are going to use the
+        average calibration solution (using GPComb), then calculate
+        using the standard error.
+ 
+        For each dof, GPDoF has an "error" estimate, which measures the
+        variations in the calibration solutions which are NOT
+        attributable to a dof. The physical significance of these
+        quantities isn't even clear to the author. In general, however,
+        if the "error" term is dominant, then un-dof-like errors are
+        dominating the calibration eg. pure random errors, or bizzarro
+        systematic errors. In this situation, the relationship between
+        the dofs and the error in the target observation may break down.
+ 
+        Um, I did mention that there are actually seven dofs? GPDoF only
+        computes the three which affect calibration of circular
+        polarization.  There are some good reasons for this (some of the
+        others can't easily be computed, or are time-variable), besides
+        the obvious one that I'm too lazy.
+ 
+        Note that GPDoF is entirely ATCAcentric.
+ 
+        Note that the leakage errors derived from GPDoF are not the only
+        errors in a circular polarization observation! See Equation 1 of
+        Rayner et al, 2000. A task to estimate the effect of the dofs on
+        a synthesis observation will hopefully become available
+        soon. Actually, forget the "soon"...
+ 
+        And finally, if you have consistent systematic errors in your
+        solutions (eg. you haven't used xyref,polref in gpcal), then
+        GPDoF will severely underestimate the leakage errors.
+ 
+        References:
+ 
+        For an explanation of degrees of freedom, see:
+ 
+        Sault, R J, "The Hamaker-Bregman-Sault Measurement Equation",
+        pp 657--699, in Syhthesis Imaging in Radio Astronomy II, 1999,
+        eds. Taylor, Carilli,and Perley.
+ 
+        or
+ 
+        Sault, Hamaker and Bregman, "Understanding radio polarimetry II.
+        Instrumental calibration of an interferometer array", 1996
+        A&AS, v117, pp149-159.
+        ftp://ftp.atnf.csiro.au/pub/people/rsault/papers/polar2.ps.gz
+ 
+        For an overview of high-precision circular polarization
+        calibration with the ATCA, see
+ 
+        Rayner, "Circular Polarization User's Guide", ATNF Technical
+        Document Series, 2000, 39.3/102,
+        http://www.atnf.csiro.au/people/drayner/Publications/
+        index.html#Circular_Polarization_Users_Guide
+ 
+        For a summary of the ATCA circular polarization error budget,
+        see Equation 1 of
+ 
+        Rayner, Norris, Sault, "Radio circular polarization of active
+        galaxies", 2000, v319, pp484-496
+        http://www.atnf.csiro.au/people/drayner/Publications/mnr3854.pdf
+ 
+%A cal
+        The data-sets containing the nominally correct polarization
+        calibration. No default.
+%A select
+        Normal uv selection. Only antenna-based selection is supported.

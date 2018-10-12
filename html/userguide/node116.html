@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Self-Calibrating with Multiple Models</TITLE>
+<META NAME="description" CONTENT="Self-Calibrating with Multiple Models">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node117.html">
+<LINK REL="previous" HREF="node115.html">
+<LINK REL="up" HREF="node114.html">
+<LINK REL="next" HREF="node117.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2852"
+  HREF="node117.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2848"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2842"
+  HREF="node115.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2850"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2853"
+  HREF="node117.html">Polarisation Handling</A>
+<B>Up:</B> <A NAME="tex2html2849"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2843"
+  HREF="node115.html">Apply Your Original Calibration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001512000000000000000">
+Self-Calibrating with Multiple Models</A>
+</H2>
+Both <A NAME="tex2html506"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html507"
+  HREF="../doc/gpscal.html">gpscal</A>
+can be given multiple input model
+images. The input models can be cubes for multi-channel data. These different
+models represent some different aspect of the data. For example, the data
+could contain multiple pointing centres from a mosaiced observation or multiple
+spectral lines. The self-calibration
+tasks assume that the gains are not dependent on these different aspects of
+the data (<I>e.g.</I> the gains are independent of frequency and pointing
+centre). All the information will be used in a simultaneous solution of the
+gains.
+The self-calibration tasks will generally determine the appropriate correspondence
+between data and model (<I>e.g.</I> it will associate the data from
+a particular pointing with a model with the same pointing).
+There are, however, some caveats described below.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,110 @@
+.TH contsub 1
+.SH NAME
+contsub - Subtract continuum from a datacube
+.SH PERSON RESPONSIBLE
+bpw
+.SH CATEGORIES
+map manipulation
+.SH DESCRIPTION
+CONTSUB is used to subtract the continuum from a datacube which
+can be arbitrarily oriented.  Several subtraction algorithms are
+possible, selected using the mode keyword.  The maximum length
+of the spectral axis is 8192 pixels.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+Standard keyword in. See the help on "in" for more information.
+.sp
+.TP
+\fIregion\fP
+Standard keyword region. See the help on "region" for more information.
+Anything outside the region is untouched (only rectangular boxes
+are recognized by contsub).
+.sp
+.TP
+\fIout\fP
+Standard keyword out. See the help on "out" for more information.
+For modes poly, mean and avgs either this keyword or cont= must
+be specified, for mode subtr it must always be given.  This
+output dataset will contain only those channels from the input
+dataset selected by the 'region' keyword.
+.sp
+.TP
+\fIcont\fP
+An optional output dataset which will be one plane deep and
+contain the continuum map.  For mode=
+.nf
+  poly: the interpolated map at the channel halfway between the
+        first and last line channel selected.
+  mean: the averaged image that was subtracted from the channel
+        maps.
+  avgs: the average of the two average images that are
+        calculated (see description of mode keyword).
+  subtr: an input set which will be subtracted from each plane
+        of the input dataset.
+.fi
+For modes poly, mean and avgs either this keyword or out= must
+be specified, while for mode subtr it must always be given.
+.sp
+.TP
+\fIcontchan\fP
+Select channels that supposedly contain continuum signal only.
+A selection is a list of ranges.  A range is specified as
+(z1,z2), meaning channels z1 through z2, or as (z3) for a single
+channel.  Ranges are separated by commas, e.g.
+(z1,z2),(z3),(z4,z5).
+.sp
+For options 'poly' (or 'mean'), the fit (or average), is done
+using all selected continuum channels.  For option 'avgs', the
+selection of continuum channels must consist of two ranges.
+The 'contchan' keyword always refers to spectral channels,
+independent of whether the spectral axis is the 'z'-axis, the
+'x'-axis or any other axis.
+(Not used for mode='subtr').
+.sp
+.TP
+\fImode\fP
+Selects the continuum-determination algorithm.  In each case the
+operation is done separately for each image pixel.  May be
+abbreviated.  The default is 'poly,1'.
+.sp
+'poly,#' - a polynomial fit of order # is made through the
+selected continuum channels.  The interpolated continuum
+intensity is subtracted from each separate channels.  The
+maximum order is 8.
+.sp
+'mean' - the average intensity of the selected continuum
+channels is calculated and the average is subtracted from each
+channel (equivalent to 'poly,0').
+.sp
+'avgs' - an average of the first range and of the second range
+of channels is calculated and a linear interpolation between the
+two averages is subtracted from each channel.
+.sp
+'subtr' - at each position, subtract the value in the dataset
+given by cont= from the profile at the same position in the
+input dataset.
+.sp
+.TP
+\fIoptions\fP
+Select which output to write with the cont keyword.  By default
+the continuum is written.  If options=coeff,# one of the
+coefficients of the polynomial fit is written instead.
+'#' gives the order for which the coefficient is written (e.g.
+if cont=a+bx: 0='a', 1='b', etc).
+.sp
+.TP
+\fIverbose\fP
+verbose=true makes contsub print out some info every now and
+then.
+.sp
+.TP
+\fIvelaxis\fP
+For datacubes where the spectral axis cannot be determined
+automatically, this may be used to indicate which it is.  Must
+be one of 'x', 'y', 'z', 'a', 'b', 'c', or 'd'.
+The default is 'z'.
+.sp
+.SH REVISION
+1.5, 2012/03/13 02:21:33 UTC

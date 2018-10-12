@@ -1,0 +1,34 @@
+%N tmgen
+%D Simulate a SMA polarimetric observation.
+%P rjs
+%: uv analysis, map making
+%B
+        tmgen forms a visibility dataset which has some of the characteristics
+        of an SMA polarimetric dataset. In particular it can optionally produce
+        time-multiplexed polarization products and two-part, Nasmyth-like leakages.
+ 
+%A vis
+        The input visibility dataset. No default. NOTE: For a number of the
+        steps performed by this task, the input visibility dataset must
+        have four simultaneous polarization correlations (e.g. XX, YY, XY, YX
+        or RR, LL, RL, LR).
+%A out
+        The output visibility dataset. No default.
+%A polar
+        Polarization patterns for generating time shared polarization data.
+        Up to MAXPOLAR=100 strings of the characters R and L, or X and Y,
+        to represent the polarization of each antenna
+        R, L (right and left circular polarization), X and Y (linear
+        polarization).
+        E.g. for 3 antennas, the polar=LLL,LRR,RRL,RLR cycles
+        through all combinations of LCP and RCP for each baseline every
+        4 integrations. The default is to not subset the data based
+        on polarization.
+%A leakage
+        Simulate polarimetric leakage. This parameter gives the leakage magnitude
+        as a percent. Random leakages with this rms value are generated and
+        applied to the data.
+%A options
+        Extra processing options.
+          nasmyth   Add an extra rotation to the polarisations that would result
+                    from SMA-style Nasmyth receiver placement.

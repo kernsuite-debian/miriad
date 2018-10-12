@@ -1,0 +1,36 @@
+%N uvwide
+%D recompute wide band from narrow band
+%P pjt
+%: uv-data
+%B
+      PROGRAM uvwide
+      IMPLICIT NONE
+ 
+      UVWIDE is a Hat Creek specific MIRIAD task which allows you to
+      recompute the wide band data from the narrow band data. It is
+      assumed the first two wide band channels are the digital wide
+      band derived from the narrow band data (LSB and USB).
+ 
+      It is also possible to reset the narrow band flags, based
+      on the wide band flags, and vice versa.
+ 
+%A vis
+      The name of the input visibility dataset.
+      No default.
+%A out
+      The name of the recomputed output visibility dataset. If no dataset
+      given, program will flag the wideband flags based on all the  narrow
+      flags.
+      Default: none.
+%A reset
+      A logical that describes whether or not all wideband data is
+      recomputed. By default (reset=true), all wideband data is recomputed
+      regardless of the value of the previously existing wideband flags;
+      otherwise (reset=false), only wideband data with valid flags are
+      recomputed (i.e. data flagged bad are simply copied).
+      Default: true.
+%A narrow
+      A logical that describes if the narrow band data need to be
+      re-flagged, based on existing wide band flags. If set, the narrow
+      band flags that belong to a flagged wide band flag, are flagged.
+      Default: false.

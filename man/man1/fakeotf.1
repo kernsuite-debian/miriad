@@ -1,0 +1,46 @@
+.TH fakeotf 1
+.SH NAME
+fakeotf - Generate a fake RPFITS file from an existing one
+.SH PERSON RESPONSIBLE
+tw
+.SH CATEGORIES
+analysis
+.SH DESCRIPTION
+FAKEOTF reads an RPFITS file and replaces all spectra with a
+single Gaussian profile.  The amplitude of the Gaussian is
+either constant across the map (fwhm=0) or falls of as a
+circular 2-D Gaussian in the image plane.  A new RPFITS file is
+produced.  Use this to simulate the effects of Gridzilla on
+Mopra OTF data.
+Limitation: The same parameters will be used for all IFs.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+Input RPFITS file, which should be an OTF map.  It is assumed
+that the position and spectral timestamps match; if not run
+MOPFIX first.
+.TP
+\fIout\fP
+Output RPFITS file.  No default.
+.TP
+\fIspecpar\fP
+Amplitude and sigma of spectral Gaussian, in K and channel
+units.  Default is 1,20 - i.e. 1 K and 20 channels.
+.TP
+\fIcentre\fP
+RA,DEC of centre position for image Gaussian.  No default, but
+can be omitted if fwhm=0.
+.TP
+\fIfwhm\fP
+FWHM of image Gaussian in arcsec (default 30). Give 0 for flat
+plane.
+.TP
+\fItsys\fP
+System temps for channels A and B respectively.  If only one
+value is given, this is used for both channels.  This is also
+used to determine the amount of noise in each spectrum.  Default
+is to use the original Tsys measurements from the input file.
+.sp
+.SH REVISION
+1.7, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,53 @@
+%N uvaver
+%D Copy and average a uv dataset.
+%P rjs
+%: uv analysis
+%B
+        UVAVER copies a uv dataset, performing averaging, both in time
+        and/or frequency.
+%A vis
+        The name of the input uv data sets. Several can be given (wild
+        cards are supported). No default.
+%A select
+        The normal uv selection commands. The default is copy everything.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels (or all wide channels if there are no
+        spectral channels). The output will consist of only spectral or
+        wideband data (but not both).
+%A ref
+        The normal reference linetype, in the form:
+          line,start,width
+        The default is no reference line.
+%A stokes
+        If a value is given, uvaver converts the input into the required
+        polarizations before writing to the output. Default is to copy
+        across the polarizations present in the input files.
+%A interval
+        Time averaging interval, in minutes. The default is 0 (i.e. no
+        averaging).
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreivated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           nocal       Do not apply the gains file. By default, UVAVER
+                       applies the gains file in copying the data.
+           nopass      Do not apply bandpass corrections. By default,
+                       UVAVER corrects for the bandpass shape if the
+                       required information is available.
+           nopol       Do not apply polarizatiopn corrections. By default
+                       UVAVER corrects for polarization corss-talk.
+           relax       Normally UVAVER discards a correlation record if
+                       all the correlations are bad. This option causes
+                       UVAVER to retain all records.
+           vector      Means do vector averaging.  This is the default.
+           scalar      Means do scalar averaging for the amplitudes
+                       and vector averaging for the phase.
+           scavec      Means do scalar averaging for the amplitudes of
+                       the  `parallel-hand' polarisations (i,xx,yy,rr,ll).
+                       Vector averaging is used for the amplitudes of
+                       the cross-hand visibilities (q,u,v,xy,yx,rl,lr)
+                       and for the phases for all visibilities.
+%A out
+        The name of the output uv data set. No default.

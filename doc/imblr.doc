@@ -1,0 +1,16 @@
+%N imblr
+%D Replace blanked pixels in an image with the specified value
+%P nebk
+%: image analysis
+%B
+        IMBLR replaces any pixel that is blanked by an unblanked pixel
+        with value specified by the user.
+ 
+%A in
+        Input image.  Wild card expansion supported.
+%A out
+        Output image
+%A value
+        Value to replace blanked pixels by. Default is zero.
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

@@ -1,0 +1,60 @@
+.TH imframe 1
+.SH NAME
+imframe - Interchange axes of a cube and decrease/enlarge the frame
+.SH PERSON RESPONSIBLE
+bpw
+.SH CATEGORIES
+map manipulation
+.SH DESCRIPTION
+IMFRAME takes any part of an input cube, rotates it over any
+combination of 90 deg angles and writes the result anywhere in an
+output cube. This works on any cube whose longest axis is less than
+262144 pixels long.
+Note that IMFRAME does not resample images, only whole-pixel
+transformations are possible. See REGRID to resample/rotate in a more
+arbitrary way.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image. No default.
+.TP
+\fIregion\fP
+Standard keyword region. See the help on "region" for more information.
+.TP
+\fIbox\fP
+Some subcommands of the region keyword work only nicely on 3-d cubes.
+This is too limited for imframe, so an alternative keyword is
+provided for other cases, which is less fancy than region= but it
+does the job.  The values to be given are a list of ranges for each
+coordinate axis, in relative pixel coordinates, in the order
+.nf
+  xmin,xmax,ymin,ymax,...
+.fi
+etc. c  Note that this is different from the standard region order
+xmin,ymin,xmax,ymax.
+The default is to take the whole cube. box= and region= are mutually
+exclusive.
+.TP
+\fIout\fP
+The output image. No default.
+.TP
+\fIframe\fP
+The size of the output dataset.  The values to be given are a list of
+ranges for each coordinate axis in relative pixel coordinates, in the
+order
+.nf
+  xmin,xmax,ymin,ymax,...
+.fi
+etc. Note that this is different from the standard region order
+xmin,ymin,xmax,ymax. The defined frame may be bigger or smaller than
+the input box. The values refer to the axes in the original ordering.
+If not given, the input box is assumed (from either region= or box=,
+whichever one was given).
+.TP
+\fIgoal\fP
+The new axis ordering in terms of the old axis ordering: i.e. 'zxy'
+makes the original 'z'-axis the 'x'-axis of the output. It is only
+necessary to give the axes that are changed, the other axes are
+concatenated to the list, i.e. 'z' would do just as well in the
+example above. The default is not to exchange axes. Precede an
+axisname with a - to reverse the direction.

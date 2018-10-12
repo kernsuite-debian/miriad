@@ -1,0 +1,22 @@
+.TH doc2man 1
+.SH NAME
+doc2man - Format Miriad *doc files as a man page
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+tools
+.SH DESCRIPTION
+doc2man is a tool that formats a MIRIAD .doc file into an even less
+readable form: the unix man format. However, with X windows utilities
+like xman or hman, a much more superior online help system is created.
+Within miriad a script 'mir.man' or alias 'mirman' should be present
+to aid in starting up a windows based man browser.
+Optionally a section number can be passed to the output man file.
+.sp
+Usage:
+.nf
+              doc2man [-section] file.doc > file.man
+.fi
+.sp
+.SH REVISION
+1.3, 2010/04/28 07:41:05 UTC

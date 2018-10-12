@@ -1,0 +1,10 @@
+%N uv2ms
+%D Convert a Miriad uv file into a MeasurementSet
+%P mhw
+%: data transfer
+%B
+        uv2ms is now obsolete
+        please use the casa task importmiriad available in CASA 4.3.0 or later.
+
+%R 1.2, 2015/01/16 21:08:16 UTC
+

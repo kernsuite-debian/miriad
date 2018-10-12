@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interpolation/Extrapolation Tolerance</TITLE>
+<META NAME="description" CONTENT="Interpolation/Extrapolation Tolerance">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node90.html">
+<LINK REL="previous" HREF="node88.html">
+<LINK REL="up" HREF="node88.html">
+<LINK REL="next" HREF="node90.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2501"
+  HREF="node90.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2497"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2491"
+  HREF="node88.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2499"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2502"
+  HREF="node90.html">Averaging Antenna Gains with</A>
+<B>Up:</B> <A NAME="tex2html2498"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2492"
+  HREF="node88.html">The Interpolation Process</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001241000000000000000"></A><A NAME="3459"></A><A NAME="s:inttol"></A>
+<BR>
+Interpolation/Extrapolation Tolerance
+</H2>
+Clearly there is some limit to the interval of time over which you can
+sensibly interpolate or extrapolate gains. If the gap between the secondary
+observations is too large, then the interpolation of the gain solutions may
+have no resemblance to the true gains at a given time.
+The software that interpolates or extrapolates between the
+gain solutions has a tolerance which limits
+the gaps in time that it will permit.
+If the time differences between a source observation and two
+gain solutions bounding it are both less than the tolerance, then the
+program source gain is the interpolation of the two gain solutions.
+If there is only one gain solution within
+the time tolerance, then this is used without any
+interpolation. If there are no gains within the time tolerance, the
+corresponding program source data are marked as flagged.
+
+<P>
+This interpolation tolerance is stored as the <TT>interval</TT> item
+the visibility dataset. It is given as a double precision number with
+units of days. Task <A NAME="tex2html348"
+  HREF="../doc/gpcal.html">gpcal</A>
+sets its value as half a day (<TT>interval=0.5</TT>). Though this is excessively generous, this will not be a
+problem unless there are large gaps between calibrator scans (perhaps because
+some calibrator scans had to be discarded). You can set the set the
+interpolation tolerance using <A NAME="tex2html349"
+  HREF="../doc/puthd.html">puthd</A>. For example
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.4800/interval</TD>
+<TD ALIGN="LEFT">Set the interpolation tolerance of</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">dataset vela.4800.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=0.1</TD>
+<TD ALIGN="LEFT">Set the tolerance to 2.4 hours (0.1 days).</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2501"
+  HREF="node90.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2497"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2491"
+  HREF="node88.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2499"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2502"
+  HREF="node90.html">Averaging Antenna Gains with</A>
+<B>Up:</B> <A NAME="tex2html2498"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2492"
+  HREF="node88.html">The Interpolation Process</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

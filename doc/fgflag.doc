@@ -1,0 +1,32 @@
+%N fgflag
+%D Apply an AIPS flagging table to visibility data.
+%P rjs
+%: calibration, uv analysis
+%B
+        FGFLAG is a Miriad task which flags visibility data according to
+        the contents of an AIPS flagging table (``AIPS FG'' tables).
+        These flagging tables can be created by AIPS, and transfered by
+        FITS file. If a visibility FITS file read using Miriad task ``fits''
+        contains AIPS FG tables, they will be copied (without applying them)
+        to the output Miriad data-set. FGFLAG can then be used to apply these
+        flagging tables to the data.
+ 
+        Note: The flagging tables, and information needed to apply them, is
+        not copied by any Miriad tasks such as ``uvaver'' or ``uvcat'',
+        nor do any other Miriad tasks interpret them. It is best to apply
+        the flagging table soon after loading in a FITS file.
+ 
+        Note: The information to flag based upon polarization is lost by
+        task ``fits''. Consequently fgflag flags without regard to
+        polarization type.
+ 
+%A vis
+        The input visibility data-set to flag. No default.
+%A select
+        Normal uv selection. This selects which data to apply the flagging
+        table to. Window and amplitude selection are not allowed.
+        The default is to apply the flagging table to the entire data-set.
+%A fgtable
+        When there are multiple flagging tables in the data-set, this gives
+        the table number to apply. The default is the highest versioned
+        table.

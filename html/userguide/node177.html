@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Splitting and Imaging</TITLE>
+<META NAME="description" CONTENT="Splitting and Imaging">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node178.html">
+<LINK REL="previous" HREF="node176.html">
+<LINK REL="up" HREF="node176.html">
+<LINK REL="next" HREF="node178.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3634"
+  HREF="node178.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3630"
+  HREF="node176.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3624"
+  HREF="node176.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3632"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3635"
+  HREF="node178.html">Deconvolution, Restoration and Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html3631"
+  HREF="node176.html">The Individual Approach</A>
+<B> Previous:</B> <A NAME="tex2html3625"
+  HREF="node176.html">The Individual Approach</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002171000000000000000">
+Splitting and Imaging</A>
+</H2>
+Although this is largely a matter of taste, it
+may be convenient (particularly if self-calibration is to be used)
+to split the multi-pointing visibility dataset into
+single pointing ones. Task <A NAME="tex2html929"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+(with no options, and only
+the multi-pointing visibility dataset as input) will do this function.
+It will also copy across any calibration tables associated with the input
+dataset.
+
+<P>
+In the individual approach, you will run <A NAME="tex2html930"
+  HREF="../doc/invert.html">invert</A>
+many times,
+once for each pointing (you may have split the multi-pointing visibility
+dataset into single pointing ones, or you could use selection  by source name
+to select out the appropriate subset of data). Apart from possibly the names
+of the input and output datasets, the parameters to <A NAME="tex2html931"
+  HREF="../doc/invert.html">invert</A>
+should not
+be changed between runs.
+
+<P>
+Even though you are imaging just a single pointing, you will still want to use
+<A NAME="tex2html932"
+  HREF="../doc/invert.html">invert</A>'s mosaic mode (<code>options=mosaic</code>). This causes
+<A NAME="tex2html933"
+  HREF="../doc/invert.html">invert</A>
+to perform its geometry corrections and to create the
+the images of the different pointings on the same
+pixel grid.
+In this way, no interpolation will be needed when the images from the different
+pointing are finally combined. Consequently the artifacts and problems
+associated with interpolation can be avoided.
+
+<P>
+To compute the geometry, however, <EM>you must provide</EM> a reference position
+on the sky - the tangent point. The default tangent point is the pointing centre
+of the data being imaged - <EM>this is not appropriate</EM> as it will vary
+from pointing to pointing. You will want a tangent point which is
+the same for all the pointings.
+Although it
+can be any arbitrary point, it is best to make it near the centre of the
+source being imaged. If there is a point source which dominates the
+image, you might choose its position as the tangent point to help reduce
+deconvolution problems.
+The tangent point is given through the <code>offset</code> keyword, in the format
+<I>hh:mm:ss,dd:mm:ss</I> (or as decimal hours and degrees). 
+
+<P>
+As an example, consider an LMC observation, where we wish to image
+field 123 (which has field name <code>lmc_123</code>). Assuming we have a
+multi-pointing dataset, and wish to use position (RA,DEC)=(4:30,-71:00)
+as the tangent point. Typical inputs to <A NAME="tex2html934"
+  HREF="../doc/invert.html">invert</A>
+would be:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>INVERT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=lmc.uv</TD>
+<TD ALIGN="LEFT">The input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(lmc_123)</TD>
+<TD ALIGN="LEFT">Select a single pointing.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mosaic</TD>
+<TD ALIGN="LEFT">Use mosaic mode.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">offset=4:30,-71:00</TD>
+<TD ALIGN="LEFT">Set position for geometry computation.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc_123.map</TD>
+<TD ALIGN="LEFT">Output image name.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=lmc_123.beam</TD>
+<TD ALIGN="LEFT">Output beam name.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=</TD>
+<TD ALIGN="LEFT">Set cell size.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=</TD>
+<TD ALIGN="LEFT">Set output image size.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3634"
+  HREF="node178.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3630"
+  HREF="node176.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3624"
+  HREF="node176.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3632"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3635"
+  HREF="node178.html">Deconvolution, Restoration and Self-Calibration</A>
+<B>Up:</B> <A NAME="tex2html3631"
+  HREF="node176.html">The Individual Approach</A>
+<B> Previous:</B> <A NAME="tex2html3625"
+  HREF="node176.html">The Individual Approach</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

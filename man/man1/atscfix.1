@@ -1,0 +1,29 @@
+.TH atscfix 1
+.SH NAME
+atscfix - Correct for inadvertent on-line selfcal application
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ATSCFIX corrects data that has been affected by on-line selfcal
+which was switched on by mistake
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file to correct. No default.
+.TP
+\fIout\fP
+The output corrected file. No default.
+.TP
+\fIscphase\fP
+A text file containing the selfcal phase corrections.
+Format : time (yymmmdd:hh:mm:ss), phase (6x).
+Each time should appear twice, first one is XX, second one YY.
+No default.
+.nf
+  .
+.TP
+\fIoffset\fP
+.fi
+Offset, in seconds, between the recorded values and the data

@@ -1,0 +1,305 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Non-Linear Method - MOSMEM</TITLE>
+<META NAME="description" CONTENT="The Non-Linear Method - MOSMEM">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node185.html">
+<LINK REL="previous" HREF="node183.html">
+<LINK REL="up" HREF="node181.html">
+<LINK REL="next" HREF="node185.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3718"
+  HREF="node185.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3714"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3708"
+  HREF="node183.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3716"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3719"
+  HREF="node185.html">Some Alternative Non-Linear Methods</A>
+<B>Up:</B> <A NAME="tex2html3715"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3709"
+  HREF="node183.html">The Linear Method -</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002183000000000000000">
+The Non-Linear Method - MOSMEM</A>
+</H2>
+The non-linear path to combination is conceptually quite different to the
+linear one, even though its success ultimately rests on the same data.
+The non-linear
+combination uses the task <A NAME="tex2html978"
+  HREF="../doc/mosmem.html">mosmem</A>
+(and the maximum entropy principle)
+to perform a joint deconvolution of the mosaic and single-dish images. It
+finds the model which maximises the entropy, subject to two
+separate <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.png"
+ ALT="$\chi^2$"></SPAN> constraints (one each for the mosaic and 
+single-dish images).
+Usage of <A NAME="tex2html979"
+  HREF="../doc/mosmem.html">mosmem</A>
+is similar to that in Section&nbsp;<A HREF="node173.html#s:mosdeconv">21.6</A>,
+expect that there are now two parameter values for the <TT>map</TT>,
+<TT>beam</TT>, <TT>rmsfac</TT> and <TT>q</TT> keywords, with these
+corresponding to the mosaic and single-dish values (in that order).
+
+<P>
+Unlike <A NAME="tex2html980"
+  HREF="../doc/immerge.html">immerge</A>, the non-linear approach works with dirty images.
+
+<P>
+Note that you have to give a single-dish <TT>beam</TT> dataset. Unlike all the
+other deconvolution tasks, the image size of this dataset can be
+much smaller than the image being deconvolved (<A NAME="tex2html981"
+  HREF="../doc/mosmem.html">mosmem</A>
+will zero pad to
+make it the size that it requires), and it can be asymmetric (normally
+beams are assumed to have ``even'' symmetry). If you do not have a beam dataset,
+then probably the best thing you can do (apart from actually going out
+and determining it through an observation) is to generate
+a gaussian image, with the appropriate resolution, with <A NAME="tex2html982"
+  HREF="../doc/imgen.html">imgen</A>.
+Task <A NAME="tex2html983"
+  HREF="../doc/imgen.html">imgen</A>
+takes a template image as its input, multiplies the template by a scale
+factor, and then adds an ``object''. A convenient approach would be to use
+the single-dish image as the template (or a single plane of this in spectral
+line experiments), multiply this by 0 and then add a gaussian.
+Typical inputs would be:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.sd</TD>
+<TD ALIGN="LEFT">Give the single-dish image as template.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">factor=0</TD>
+<TD ALIGN="LEFT">Multiply template by 0.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=gaussian</TD>
+<TD ALIGN="LEFT">Add a gaussian.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar=1,0,0,1128,1128,0</TD>
+<TD ALIGN="LEFT">Gaussian is 18.8 by 18.8 arcmin</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">(1128 arcsec) at image centre and with amplitude 1.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.sd_beam</TD>
+<TD ALIGN="LEFT">Output is the beam dataset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Task <A NAME="tex2html984"
+  HREF="../doc/mosmem.html">mosmem</A>
+needs to know the rms noise in the two input
+images. It determines this by multiplying the theoretical rms noise
+(the theoretical noise is required to be present in the dataset) with 
+the <TT>rmsfac</TT> input parameter. While <A NAME="tex2html985"
+  HREF="../doc/invert.html">invert</A>
+will have saved the 
+required noise information in the mosaic dataset, you will most likely have to
+add some estimate of the theoretical noise level to the single-dish
+dataset. You could estimate this by using <A NAME="tex2html986"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+(using <TT>options=stat</TT>) to determine the rms level in some blank part 
+of the sky (see Section&nbsp;<A HREF="node138.html#s:pgplot">17.3</A>). Task <A NAME="tex2html987"
+  HREF="../doc/puthd.html">puthd</A>
+can then be
+used to set the appropriate item (named, surprisingly, <TT>rms</TT>)
+in the single-dish image. For example:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>PUTHD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=lmc.sd/rms</TD>
+<TD ALIGN="LEFT">Set the rms item in the single-dish dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=5.0</TD>
+<TD ALIGN="LEFT">Set the theoretical noise as 5.0 Jy/beam.</TD>
+</TR>
+</TABLE>
+</DIV>
+As you have probably set the <TT>rms</TT> item in the dataset to the noise
+level that you believe is true, the <TT>rmsfac</TT> parameter for the
+single-dish image that you input to <A NAME="tex2html988"
+  HREF="../doc/mosmem.html">mosmem</A>
+can usually be left unset (it will default to 1).
+
+<P>
+As with <A NAME="tex2html989"
+  HREF="../doc/immerge.html">immerge</A>, parameter <TT>factor</TT> allows you to set the
+flux calibration factor (the factor by which the single-dish is scaled)
+as one of the inputs to <A NAME="tex2html990"
+  HREF="../doc/mosmem.html">mosmem</A>. However, unlike <A NAME="tex2html991"
+  HREF="../doc/immerge.html">immerge</A>,
+if you do not set the parameter, <A NAME="tex2html992"
+  HREF="../doc/mosmem.html">mosmem</A>
+assumes the flux
+calibration factor is 1 - that is, <A NAME="tex2html993"
+  HREF="../doc/mosmem.html">mosmem</A>
+does not
+determine this parameter by default. However <A NAME="tex2html994"
+  HREF="../doc/mosmem.html">mosmem</A>
+still has the
+ability to solve for the calibration factor - use <TT>options=dofactor</TT>
+to turn this on. In this case, the <TT>factor</TT> parameter is used as
+an initial estimate (it should be a reasonably good estimate). Unlike
+<A NAME="tex2html995"
+  HREF="../doc/immerge.html">immerge</A>, you do not need to tell <A NAME="tex2html996"
+  HREF="../doc/mosmem.html">mosmem</A>
+what the overlap 
+annulus is - this information is implicit in the beam datasets. 
+
+<P>
+It might be instructive to compare the factor estimated by <A NAME="tex2html997"
+  HREF="../doc/mosmem.html">mosmem</A>
+and
+<A NAME="tex2html998"
+  HREF="../doc/immerge.html">immerge</A>
+- they can differ significantly, and yet both seem to
+be consistent with the data.
+
+<P>
+If you use <TT>options=dofactor</TT> with a spectral cube, <A NAME="tex2html999"
+  HREF="../doc/mosmem.html">mosmem</A>
+will
+work out a separate flux calibration factor for each plane. This is not
+what you probably want (particularly for planes that are predominantly noise!). 
+In this case, its better to deduce the calibration factor beforehand, and
+not to use <TT>options=dofactor</TT> in <A NAME="tex2html1000"
+  HREF="../doc/mosmem.html">mosmem</A>.
+Some approaches to deduce the calibration factor beforehand include:
+
+<UL>
+<LI>use <A NAME="tex2html1001"
+  HREF="../doc/immerge.html">immerge</A>
+(but recall that <A NAME="tex2html1002"
+  HREF="../doc/immerge.html">immerge</A>
+requires a deconvolved mosaic), or
+</LI>
+<LI>use <A NAME="tex2html1003"
+  HREF="../doc/mosmem.html">mosmem</A>
+on an integrated intensity (zeroth-order moment)
+image or on a plane with substantial emission.
+</LI>
+</UL>
+
+<P>
+Note that <TT>options=doflux</TT> cannot be used when doing a joint mosaic/single-dish
+deconvolution - an integrated flux constraint is implicit in the
+single-dish data.
+
+<P>
+Typical inputs to <A NAME="tex2html1004"
+  HREF="../doc/mosmem.html">mosmem</A>
+would be
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MOSMEM</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=lmc.mosaic,lmc.sd</TD>
+<TD ALIGN="LEFT">Inputs are the dirty mosaic and</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">single-dish datasets.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=lmc.beam,lmc.sd_beam</TD>
+<TD ALIGN="LEFT">Mosaic and single-dish beams.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">niters=30</TD>
+<TD ALIGN="LEFT">Maximum number of iterations.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=</TD>
+<TD ALIGN="LEFT">Region to deconvolve.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rmsfac=1,1</TD>
+<TD ALIGN="LEFT">RMS noise fudge factors.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=lmc.model</TD>
+<TD ALIGN="LEFT">The output model.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">factor=</TD>
+<TD ALIGN="LEFT">Set this to the calibration factor, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">it defaults to 1.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset to fix the calibration factor, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=dofactor</TD>
+<TD ALIGN="LEFT">get MOSMEM to solve for this.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Having performed a joint deconvolved, you will want to use
+<A NAME="tex2html1005"
+  HREF="../doc/restor.html">restor</A>
+with the model produced
+by <A NAME="tex2html1006"
+  HREF="../doc/mosmem.html">mosmem</A>
+along with the mosaic dirty image and beam.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3718"
+  HREF="node185.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3714"
+  HREF="node181.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3708"
+  HREF="node183.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3716"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3719"
+  HREF="node185.html">Some Alternative Non-Linear Methods</A>
+<B>Up:</B> <A NAME="tex2html3715"
+  HREF="node181.html">Combining Mosaics and Single</A>
+<B> Previous:</B> <A NAME="tex2html3709"
+  HREF="node183.html">The Linear Method -</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,64 @@
+.TH uvaflag 1
+.SH NAME
+uvaflag - Use flags in one visibility dataset to flag another.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVAFLAG is a MIRIAD task which flags correlations in one
+visibility dataset based on the flag status of matching
+correlations in a template dataset.
+.sp
+The template dataset should be a subset of the visibility dataset
+being flagged, and the order of records in the two datasets
+should be the same. Normally correlations in the template and
+visibility datasets are matched by comparing time, polarisation,
+baseline, bin and frequency. However options `nopol',`nofreq'
+and 'nobin' can turn off the matching of polarisation, frequency
+and bin  number.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file to be flagged. No default.
+.TP
+\fItvis\fP
+The template input visibility file. The default is the same
+as the `vis' dataset. This default makes no sense without the
+`nopol' or `nofreq' options. Several files can be given.
+Wildcards are supported.
+.TP
+\fIselect\fP
+Normal visibility selection, which is applied to the template
+dataset. See the help on "select" for more information.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas.
+Minimum match is supported. Possible values are:
+.nf
+  nopol  The polarisation of the records in the template are
+         ignored. If any polarisation in the template is
+         flagged, then all polarisations in the input are flagged
+         This can be useful when applying flagging based on one
+         polarisation type (e.g. stokes V) to the other
+         polarisations.
+  nofreq The frequency of the correlations in the template are
+         ignored. If any channel in the template is flagged, then
+         all channels in the input are flagged. This can be
+         useful when applying flagging based on a `channel-0'
+         dataset.
+  nobin  The bin numbers of the correlations in the template are
+         ignored. If any bin in the template is flagged, then
+         all bins in the input are flagged. This can be useful
+         when applying flagging based on a bin averaged dataset.
+  freq   The first baseline of the template is read and the
+         flags are applied to all times, baselines and bins
+         in the input. This can be useful when applying spectral
+         flags based on a small sample of data or time averaged
+         data. Option freq implies nobin. It can be combined
+         with nopol, but not with nofreq.
+  noapply Do not apply the flagging, just report the statistics
+         about what would be flagged.
+.SH REVISION
+1.5, 2012/04/17 02:08:46 UTC

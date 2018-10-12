@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Region of Interest and Pixel Blanking</TITLE>
+<META NAME="description" CONTENT="Region of Interest and Pixel Blanking">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node33.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node35.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html662"
+  HREF="node35.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html656"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html650"
+  HREF="node33.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html658"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html660"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html663"
+  HREF="node35.html">Regular Regions of Interest</A>
+<B>Up:</B> <A NAME="tex2html657"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html651"
+  HREF="node33.html">Image Coordinate System</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004100000000000000000"></A><A NAME="625"></A>
+<A NAME="626"></A>
+<BR>
+Region of Interest and Pixel Blanking
+</H1>
+It is a common situation for the user to want to process a limited subset
+of an image. It is also common for an image to contain pixels which are
+``blanked'' or have an ``undefined value''. <I>Miriad</I> routines are available to
+treat these two pixel selection operations together. The input to these
+routines are the task parameters which describe the subregion the user
+is interested in, and a masking item that may be associated with an image.
+The output is a description of the pixels selected.
+
+<P>
+Each image dataset may have a masking item. This
+is a bitmap containing a flag for each pixel, indicating
+whether the pixel is good or bad. For bad pixels, the pixel value actually
+stored
+in the image is not defined, though it will be a legal or typical value.
+Zero, or the value of the pixel before blanking, is a good choice.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html664"
+  HREF="node35.html">Regular Regions of Interest</A>
+<LI><A NAME="tex2html665"
+  HREF="node36.html">Arbitrary Regions of Interest and Blanking Information</A>
+<LI><A NAME="tex2html666"
+  HREF="node37.html">Reading and Writing Blanking Information</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

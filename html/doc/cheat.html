@@ -1,0 +1,898 @@
+<title>cheat</title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on cheat</h1>
+<pre>
+Purpose: Miriad tasks and keyword summary
+Categories: miscellaneous
+
+Creation date: Friday 10 August  22:00:09 AEST 2018
+
+Task name conventions:
+
+	im* .... operates on xyv images.
+	uv* .... operates on uv datasets.
+	tv* .... uses a TV device.
+	gp* .... gain/polarisation calibration task (antenna based).
+	cg* .... PGPLOT-based image display tasks.
+	zee* ... application programs often with application symbol.
+	or use common name (eg, clean).
+
+Keyword conventions:
+
+	device ..... PGPLOT device.
+	server ..... TV server/device.
+	in ......... input image dataset.
+	out ........ output dataset.
+	vis ........ uv dataset.
+	dataset .... calibration dataset.
+	region ..... image region-of-interest.
+	select ..... uv data selection.
+	line ....... uv linetype.
+	map/beam ... xy image.
+
+	  ----------------------------------------------
+
+addhis    Add comments to the history of a dataset                             
+          in       comment  file     lines    
+
+antconv   convert baseline corrections into antenna corrections                
+          in       nants    refant   
+
+antpol    Calculate instrumental polarization from averaged uv-data.           
+          vis      select   line     log      
+
+arrayplt  Plot antenna layout of the array.                                    
+          vis      select   options  device   log      
+
+arrfix    Correct ASKAP antennna table caused by faulty uv FITS file.          
+          vis      select   out      
+
+atfix     Apply various miscellaneous corrections to ATCA visibility data      
+          vis      select   out      dantpos  tsyscal  options  array    
+
+atlod     Convert an RPFITS file into Miriad uv format.                        
+          in       out      ifsel    restfreq options  nfiles   nscans   
+          nopcorr  edge     
+
+atmerge   Merge ancillary information with an AT-observed uv file.             
+          vis      tsys     xyphase  chi      xyamp    out      
+
+atmos     Generate ATCA-style mosaic file.                                     
+          source   out      cycles   interval origin   ref      lst      
+          options  
+
+atrecal   Copy and recalibrate a CABB uv dataset.                              
+          vis      select   line     options  naver    out      
+
+atrtfix   Correct for misbehaving round trip system                            
+          vis      out      rtphase  options  offset   
+
+atscfix   Correct for inadvertent on-line selfcal application                  
+          vis      out      scphase  offset   
+
+
+attsys    Do various operations with Tsys values.                              
+          vis      out      tsysif   factor   options  
+
+atwvr     Correct phases using WVR data                                        
+          vis      out      wvrphase offset   uvrange  log      
+
+atxy      Apply on-line XY phase measurements to Miriad data.                  
+          vis      xyphase  refant   interval break    sideband out      
+          options  
+
+avmaths   Operate on cube with averaged plane from cube                        
+          in       out      region   options  
+
+blcal     Compute and apply baseline calibration.                              
+          vis      select   line     stokes   interval out      options  
+
+blflag    Interactive flagging task.                                           
+          vis      line     device   stokes   select   axis     xrange   
+          yrange   options  
+
+boxspec   Write spectra (from vxy cube) as text file                           
+          in       chan     aveop    hann     infile   log      
+
+calc      A calculator program.                                                
+
+calplot   Plot flux of primary calibrators                                     
+          source   xrange   stokes   options  device   
+
+calred    Analyse flux densities of sources with poor phase stability          
+          vis      select   line     stokes   interval options  
+
+c         Complex (Polarization) Clean                                         
+          map      beam     model    out      gain     options  cutoff   
+          niters   region   mode     clip     
+
+cgcurs    Read quantities with cursor from images on a PGPLOT device           
+          in       type     region   xybin    chan     slev     levs     
+          range    device   nxy      labtyp   options  3format  csize    
+
+cgdisp    displays and overlays images on a PGPLOT device                      
+          in       type     region   xybin    chan     slev     levs1    
+          levs2    levs3    cols1    cols2    cols3    range    vecfac   
+          boxfac   device   nxy      labtyp   beamtyp  options  3format  
+          lines    break    csize    scale    comment1 comment2 comment3 
+          comment4 comment5 olay     
+
+cginit    Initialize a PGPLOT device.                                          
+          device   
+
+cgrego    Convert a polygonal region text file to a cgdisp overlay file        
+          region   olay     
+
+cgslice   Display an image and interactively extract 1-D slices                
+          in       type     region   xybin    chan     slev     levs     
+          range    xrange   yrange   device   nxy      labtyp   options  
+          3format  csize    posin    posout   valout   modout   
+
+cgspec    Overlay spectra on images with PGPLOT.                               
+          in       type     region   xybin    slev     levs1    levs2    
+          levs3    grange   vrange   irange   iscale   spsize   stick    
+          device   labtyp   options  clines   slines   blines   break    
+          csize    olay     
+
+clean     Apply Hogbom, Clark or Steer CLEAN algorithm to a map                
+          map      beam     model    out      gain     options  cutoff   
+          niters   region   phat     minpatch speed    mode     clip     
+
+clfind    Find clumps by tracing contours (in 3D)                              
+          in       dt       start    nmin     
+
+closure   Plot closure quantities                                              
+          vis      select   line     stokes   device   nxy      yrange   
+          interval options  
+
+clplot    Plot integrated maps, etc and clump assigment from clfind            
+          in       device   region   log      
+
+clstats   Calculate dispersions, masses, etc for each clump from clfind file   
+          in       dist     disterr  x        xerr     meanmol  jyperk   
+          xy       rms      nmin     
+
+colden    calculates column densities for linear molecules                     
+          method   in1      in2      region   out      cut      b1       
+          b2       j1       j2       mu       scale1   scale2   abund    
+          dist     options  
+
+conterr   Continuum subtraction error estimate, when using UVLIN.              
+          in       order    bw       fwhm     out      options  
+
+contsen   Continuum subtraction noise sensitivity.                             
+          chans    xrange   order    device   nxy      
+
+contsub   Subtract continuum from a datacube                                   
+          in       region   out      cont     contchan mode     options  
+          verbose  velaxis  
+
+convol    Convolve a cube with a "beam function"                               
+          map      beam     fwhm     pa       region   out      options  
+          sigma    
+
+copyhd    Copy items from one data-set to another.                             
+          in       out      items    
+
+cotra     coordinate transformations                                           
+          radec    type     epoch    uvw      theta0   z        restfreq 
+
+csdi      Complex Steer Clean                                                  
+
+delhd     Delete a dataset item.                                               
+          in       
+
+demos     Inverse mosaicing operation                                          
+          map      vis      select   out      imsize   options  
+
+deprojec  deproject an image                                                   
+          in       out      center   pa       inc      osize    ocenter  
+          iflux    invert   
+
+
+doc       Strip preamble comments out of miriad source files                   
+
+doc2man   Format Miriad *doc files as a man page                               
+
+docfmt    Format Miriad .doc files.                                            
+
+early     Flag data which has early/normal problems.                           
+          vis      select   sigma    log      options  
+
+ellint    Integrate a Miriad image in elliptical annuli.                       
+          in       out      region   center   pa       incline  radius   
+          telescop scale    options  medsmoot log      
+
+ellplt    Plot points in elliptical annuli.                                    
+          in       region   center   pa       incline  radius   range    
+          device   log      options  
+
+
+fakeotf   Generate a fake RPFITS file from an existing one                     
+          in       out      specpar  centre   fwhm     tsys     
+
+fft       Fourier transform on image(s)                                        
+          rin      iin      sign     center   rout     iout     mag      
+          phase    
+
+fgflag    Apply an AIPS flagging table to visibility data.                     
+          vis      select   fgtable  
+
+fits      Conversion between Miriad and FITS image and uv formats              
+          in       op       out      line     region   select   stokes   
+          options  velocity 
+
+flint     fortran source code verifier                                         
+
+gaufit    Fit gaussians to profile                                             
+          in       region   rmsest   estim    ngauss   parinp   params   
+          fitaxis  smooth   options  cmpsort  model    residual prof     
+          cutoff   cutval   crange   wrange   log      
+
+gethd     Print the value of a header item.                                    
+          in       format   log      
+
+gpaver    Average (smooth) gain solutions.                                     
+          vis      interval options  
+
+gpboot    Correct the gains table of a visibility data-set.                    
+          vis      cal      select   
+
+gpbreak   Insert a break point in the gain table.                              
+          vis      break    ants     feeds    
+
+gpcal     Gain/phase/polarization calibration of dual feed data.               
+          vis      select   line     flux     spec     refant   minants  
+          interval nfbin    tol      xyphase  options  
+
+gpcomb    Combine multiple polarization calibration solutions.                 
+          vis      cal      select   options  
+
+gpcopy    Copy or merge gains, bandpass and polarization correction.           
+          vis      out      mode     options  
+
+gpdof     Compute Degrees-of-freedom for calibration solutions.                
+          cal      select   
+
+gpedit    Edit the gain table.                                                 
+          vis      select   feeds    gain     options  width    
+
+gperror   Add dummy gains to a visibility file.                                
+          vis      interval pnoise   gnoise   
+
+gplist    List information about calibration tables.                           
+          vis      
+
+gpnorm    Correct the polarisation leakage terms for an offset.                
+          vis      cal      select   options  
+
+gpplt     Plot and list gain and polarization correction terms.                
+          vis      device   log      yaxis    options  nxy      select   
+          yrange   
+
+gpscal    Self-calibration for arrays with linear feeds                        
+          vis      select   model    clip     flux     spec     offset   
+          interval options  minants  refant   line     
+
+gpshift   Shift the frequency of bandpass solutions.                           
+          vis      offset   
+
+hanning   Smooth a cube along the spectral axis                                
+          in       out      region   object   width    
+
+hermes    Make model images for Mercury.                                       
+          in       imsize   log      out      
+
+histo     Find statistics of image and plot simple histogram                   
+          in       region   range    nbin     
+
+im2uv     Convert an image to visibilities.                                    
+          model    out      region   select   
+
+imbin     Bin up an image.                                                     
+          in       region   bin      out      options  
+
+imblr     Replace blanked pixels in an image with the specified value          
+          in       out      value    
+
+imcat     Concatenate several images into one.                                 
+          in       out      axis     options  
+
+imcfn     Compute confusion noise for an interferometer image                  
+          beam     out      flux     poly     power    n0       device   
+
+imcmp     Compare two images                                                   
+          in1      in2      region   cut      tol      device   limx     
+          limy     log      
+
+imcomb    Combine images                                                       
+          in       out      rms      options  
+
+imdiff    Shift and expand an image to make it match another.                  
+          in1      in2      adjust   resid    region   guard    xshift   
+          yshift   expand   amp      offset   options  
+
+imfit     Fit models to a given image dataset                                  
+          in       region   clip     object   spar     fix      out      
+          options  
+
+imframe   Interchange axes of a cube and decrease/enlarge the frame            
+          in       region   box      out      frame    goal     
+
+imgen     All-purpose image manipulator/creator                                
+          in       out      factor   object   spar     imsize   cell     
+          radec    options  seed     
+
+imheq     apply histogram equalization to an image                             
+          in       out      nbins    range    options  device   
+
+imhist    plot a histogram of the data                                         
+          in       region   options  cutoff   xrange   device   log      
+
+imhol     Compute amplitude and phase images from real and imaginary           
+          in       mag      phase    sigma    sncut    pacut    options  
+
+imlist    List items and pixel values from an image                            
+          in       options  region   format   log      
+
+imload    Make a Miriad image from an ascii file.                              
+          in       imsize   out      
+
+immask    mask an image dataset                                                
+          in       region   logic    flag     history  options  
+
+immerge   Linear merging of images.                                            
+          in       out      factor   uvrange  region   device   guard    
+          options  
+
+imom      Compute intensity-weighted moment of an image                        
+          in       options  region   min      max      log      
+
+impol     Compute polarized intensity and position angle from Q and U          
+          in       poli     polm     pa       sigma    sncut    pacut    
+          rm       options  device   
+
+impoly    Flat field subtraction using a 2D polynomial fit                     
+          in       out      order    coeffs   region   
+
+impos     Converts image coordinates between different systems.                
+          in       coord    type     stype    options  
+
+imrm      Compute rotation measure image from position angle images            
+          in       inerr    rmi      rm       pa0      qcut     errcut   
+          rmcut    pacut    device   nxy      csize    options  
+
+imsad     image search and destroy                                             
+          in       region   range    clip     box      max      rad      
+          options  device   out      log      label    
+
+imsharp   Sharpen an image                                                     
+          in       out      method   
+
+imspec    plots spectra from image data                                        
+          in       region   axes     plot     cutoff   device   options  
+          beam     log      
+
+imspect   Make spectrum from a Miriad image.                                   
+          in       region   xaxis    yaxis    yrange   hann     options  
+          device   log      comment  
+
+imstat    calculate and plot map statistics                                    
+          in       region   axes     plot     cutoff   device   options  
+          beam     log      
+
+imstore   Write out image data in an ascii format.                             
+          in       region   clip     scale    mode     format   units    
+          log      
+
+imsub     Extract subportion of an image                                       
+          in       out      region   incr     
+
+imtab     Tabulate image data                                                  
+          in       region   clip     scale    mode     format   units    
+          log      
+
+intf2c    A C preprocessor, to aid calling C from FORTRAN.                     
+
+invert    Transform multi-pointing visibility data into a map                  
+          vis      map      beam     imsize   cell     offset   fwhm     
+          sup      robust   line     ref      select   stokes   options  
+          mode     slop     
+
+itemize   List information about MIRIAD dataset(s)                             
+          in       log      index    format   options  
+
+lagflg    Flag visibility data in the lag domain.                              
+          vis      out      lags     select   options  
+
+linmos    Linear mosaicing of datacubes                                        
+          in       out      rms      bw       cutoff   options  
+
+mathd     Perform mathematical operations on items.                            
+          in       item     exp      
+
+maths     Mathematical operations on images and image data                     
+          exp      mask     region   out      imsize   xrange   yrange   
+          zrange   options  
+
+maxen     Maximum Entropy deconvolution                                        
+          map      beam     model    default  out      niters   region   
+          measure  tol      q        rms      flux     options  
+
+maxfit    Fits a 2-D parabola to a 3x3 region of an image                      
+          in       region   options  log      
+
+mbspect   Make spectrum and measure velocities from a Miriad image.            
+          in       out      coord    width    xaxis    yaxis    xrange   
+          yrange   hann     order    options  clip     mask     profile  
+          device   csize    lines    colors   log      comment  
+
+mfboot    Set the flux scale of a visibility dataset.                          
+          vis      line     select   flux     mode     clip     device   
+          options  
+
+mfcal     Multifrequency antenna and passband calibration.                     
+          vis      line     stokes   edge     select   flux     refant   
+          minants  interval options  tol      
+
+mfclean   Multi-frequency synthesis CLEAN.                                     
+          map      beam     model    out      gain     cutoff   niters   
+          region   minpatch speed    mode     log      
+
+mfflat    Flatten the spectral variation of a visibility data-set.             
+          vis      model    
+
+mfplan    Determine good frequency setups for multi-frequency synthesis.       
+          freq     nfreq    nants    config   fixed    options  device   
+
+mfspin    Compute spectral index from a MFCLEAN model.                         
+          model    beam     clip     fwhm     pa       options  out      
+
+minmax    Forced write of the minimum and maximum data header values           
+          in       region   minmax   
+
+mirbug    Send mail about bugs to appropriate person                           
+
+mirhelp   Give help on a Miriad task                                           
+
+miriad    Simple Miriad front-end for dumb terminals.                          
+
+mirmax    Print Miriad's built in size limits                                  
+
+mirversi  Give the version of Miriad.                                          
+
+moment    Calculate moments of a Miriad image.                                 
+          in       region   out      mom      axis     clip     span     
+          rngmsk   pkmask   
+
+mopfix    Recalculate (u,v,w) in a Mopra RPFITS file                           
+          in       out      postab   maxgap   flagtime flagscan resample 
+          options  
+
+moscsdi   Mosaic Complex Steer CLEAN algorithm                                 
+          map      beam     model    out      gain     niters   cutoff   
+          clip     region   
+
+mosgen    Generate a mosaic file for the on-line system or for UVGEN.          
+          radec    width    freq     device   log      olay     mode     
+          telescop name     cycles   
+
+moslst    LST coverage of the different pointings in a mosaic.                 
+          vis      fields   source   device   ppp      log      gap      
+
+mosmem    Maximum Entropy deconvolution for a mosaiced image                   
+          map      beam     model    default  out      niters   region   
+          measure  tol      q        rmsfac   factor   flux     options  
+
+mospsf    Determine approximate PSF of a mosaic experiment                     
+          beam     out      radec    freq     
+
+mossdi    Mosaic Steer CLEAN algorithm                                         
+          map      beam     model    out      gain     niters   cutoff   
+          clip     region   options  
+
+mossen    Determine the rms and gain in a mosaiced image.                      
+          in       region   sen      gain     
+
+mostess   Maximum Entropy deconvolution for a mosaiced observation             
+          map      beam     default  model    out      niters   measure  
+          tol      q        rmsfac   flux     options  
+
+obsrms    Calculate theoretical rms for telescope array observations.          
+          tsys     jyperk   antdiam  lambda   freq     theta    nants    
+          bw       deltav   inttime  coreta   rmsphase 
+
+odnh3     Ammonia analysis program                                             
+          map1     map2     mapt     mask     region   op       out      
+
+offaxis   Remove (or simulate) ATCA off-axis polarisation effects              
+          vis      select   line     stokes   model    out      clip     
+          options  
+
+offpol    Generate ATCA primary beam polarimetric response.                    
+          out      imsize   cell     ra       dec      harange  freq     
+          options  
+
+opplt     Plot opacity and sky brightness.                                     
+          freq     el       device   log      options  t        z        
+          p        h        
+
+paraplot  Plot parallactic and elevation angle for a source.                   
+          lat      elev     dec      device   log      
+
+pbplot    Plot primary beam shapes.                                            
+          telescop freq     bw       options  device   log      
+
+pcsub     Subtract a plane (optional by polynomial fit) from a cube            
+          in       out      order    region   cont     
+
+pgflag    displays waterfall plots of uv data and allows flagging              
+          vis      line     select   stokes   device   device2  device3  
+          mode     flagpar  patch    log      command  options  
+
+planets   Print ephemerides of planets and the Sun.                            
+          source   epoch    telescop 
+
+plboot    Set the flux scale of a visibility dataset given a planet obs.       
+          vis      select   device   options  
+
+plgeom    Fiddle planetary and solar system data.                              
+          vis      out      select   latlon   tol      options  
+
+plplt     Plot the visibility function for a planet                            
+          source   epoch    device   freq     pltb     uvrange  
+
+pmosmem   Maximum Entropy deconvolution for polarization mosaics               
+          map      beam     default  out      niters   region   tol      
+          q        rmsfac   factor   flux     options  
+
+pops      Convert position to another epoch.                                   
+          radec    epochs   telescop 
+
+ppmtomir  Convert a ascii PPM file to Miriad format.                           
+          in       out      
+
+prthd     Summarise the contents of a data-set.                                
+          in       log      options  
+
+prthis    List history item of a dataset                                       
+          in       bcount   log      task     
+
+psrbl     Subtract off-pulse uv baseline                                       
+          vis      select   binsl    out      options  
+
+psrfix    Process and copy a pulsar dataset.                                   
+          vis      select   dm       binsl    out      options  
+
+psrplt    Plot pulsar visibility data as a function of bin.                    
+          vis      stokes   line     select   device   offset   axis     
+          range    mode     title    options  log      
+
+puthd     Change the value of or add a single header item                      
+          in       value    type     
+
+qvack     Flag after change to observing setup                                 
+          vis      select   interval force    options  mode     
+
+ratty     FORTRAN preprocessor, so that same code works on more machines       
+
+regrid    regrid an image dataset                                              
+          in       out      axes     tin      desc     rotate   lonpole  
+          latpole  phi0     theta0   xyzero   project  pv       options  
+          tol      
+
+reorder   Interchange the axes of a cube                                       
+          in       out      mode     
+
+restor    Restore clean components to make the CLEAN map                       
+          model    beam     map      mode     fwhm     pa       options  
+          out      
+
+rmclean   Run RM-CLEAN on a set of 'dirty' rm-cubes                            
+          inq      inu      freq     weight   nmax     gain     cutoff   
+          fwhm     method   outq     outu     modq     modu     resq     
+          resu     ni       derot    debug    
+
+rpfread   Output information about an ATNF RPFITS file                         
+          in       tformat  posout   tsysout  options  
+
+rpgen     Generate an RPFITS file based on the input parameters                
+          out      source   radec    scan     time     inttime  spwin    
+          stokes   options  
+
+selfcal   Determine self-calibration of calibration gains.                     
+          vis      select   model    clip     interval nfbin    options  
+          minants  refant   flux     offset   line     
+
+sfind     Automatically or interactively find sources in images                
+          in       type     region   xybin    chan     slev     levs     
+          range    cutoff   rmsbox   alpha    xrms     device   nxy      
+          labtyp   logfile  options  csize    
+
+shifty    Align two images.                                                    
+          in1      in2      out      
+
+sigest    Estimate the rms level in an image.                                  
+          in       clip     region   
+
+smooth    Convolve an image (in the image domain) with a 2-D Gaussian          
+          in       out      type     fwhm     pa       scale    options  
+
+specshif  shift velocity profiles                                              
+          in       tin      out      region   refpix   options  
+
+telepar   Report telescope characteristics.                                    
+          telescop 
+
+tmcal     Gain/phase/polarization calibration for SMA data.                    
+          vis      select   line     flux     refant   minants  interval 
+          tol      options  
+
+tmcvt     Convert time-multiplexed polarization visibilities to Stokes.        
+          vis      line     select   out      stokes   interval options  
+
+tmgen     Simulate a SMA polarimetric observation.                             
+          vis      out      polar    leakage  options  
+
+tpcp      Tape copy.                                                           
+
+
+
+transfix  Correct for leakage near transit of DEC ~ -30 sources.               
+          vis      select   line     pparams  options  out      
+
+
+tvall     Interact with a previously displayed image                           
+          server   
+
+tvclip    Interactive editing of a UV data set on a TV device.                 
+          vis      server   tvchan   range    tvcorn   line     mode     
+          taver    clip     options  commands select   
+
+tvcycle   Cycle through TV channels to compare different images.               
+          tvchan   delay    server   options  
+
+tvdisp    Display an image on a TV device                                      
+          in       region   range    tvchan   incr     tvcorn   server   
+          options  
+
+tvflag    Interactive editing of a UV data set on a TV device.                 
+          vis      server   tvchan   range    tvcorn   line     mode     
+          taver    select   options  
+
+tvinit    Initialize a TV device                                               
+          server   
+
+tvset     Set up and initialize the TV device.                                 
+          server   table    
+
+uvacflag  Flag cross-correlations with flagged auto-correlations.              
+          vis      options  
+
+uvaflag   Use flags in one visibility dataset to flag another.                 
+          vis      tvis     select   options  
+
+uvamp     Annular averages a uv dataset in bins. Prints and plots results.     
+          vis      select   line     ref      stokes   options  bin      
+          offset   type     device   log      
+
+uvaver    Copy and average a uv dataset.                                       
+          vis      select   line     ref      stokes   interval options  
+          out      
+
+uvcat     Catenate and copy uv datasets; Apply gains file, Select windows.     
+          vis      select   stokes   options  out      
+
+uvclip    determine data to flag from channel-0 uv dataset                     
+          vis      select   options  interval clip     log      
+
+uvdflag   Flags a visibility dataset on uvdistance in klambda.                 
+          vis      select   uvrange  options  
+
+uvdiff    Difference two visibility datasets.                                  
+          vis      select   out      mode     tol      
+
+uvdump    Generate an output text file of information from a visibility dataset
+          vis      vars     line     select   stokes   log      options  
+
+uvedit    Editing of the baseline of a UV data set.                            
+          vis      source   apfile   antpos   dantpos  ra       dec      
+          time     delay    out      options  
+
+uvfft     Fourier transform a sequence of selected uv-data.                    
+          vis      select   line     size     log      device   delay    
+
+uvfit     Fit point sources to a given vis file.                               
+          vis      stokes   line     select   object   spar     bin      
+          fix      fix2     out      options  
+
+uvflag    Flags or unflags uv data                                             
+          vis      select   line     edge     flagval  options  log      
+
+uvflux    Determine some statistics about visibilities.                        
+          vis      select   line     stokes   offset   options  
+
+uvfmeas   Calculate the fluxes of a point source at the phase                  
+          vis      select   line     stokes   hann     offset   order    
+          options  yrange   device   nxy      log      fitp     feval    
+
+uvfstats  Print flagging statistics.                                           
+          vis      line     select   mode     options  
+
+uvgains   Create baseline-based channel gains from averaged uv-data            
+          vis      select   line     ref      stokes   interval out      
+          options  device   nxy      npoly    badchan  endchan  
+
+uvgen     Compute visibilities for a model source.                             
+          source   ant      baseunit telescop corr     spectra  time     
+          freq     radec    harange  ellim    stokes   polar    leakage  
+          zeeman   lat      cycle    pbfwhm   center   gnoise   pnoise   
+          systemp  tpower   jyperk   options  out      
+
+uvglue    glue channels together                                               
+          vis      nfiles   out      
+
+uvimage   Create a 3D image from uvdata                                        
+          vis      select   line     view     out      mode     options  
+          ignore   
+
+uvindex   Scan a uvdata file, and note when uvvariables change.                
+          vis      interval log      options  
+
+uvlin     Separate continuum and lines in a spectral data-set.                 
+          vis      select   line     chans    out      order    offset   
+          mode     options  
+
+uvlist    Print data, variables and other information from uv dataset          
+          vis      options  select   stokes   line     recnum   log      
+
+uvmodel   Add, subtract, etc, a model from a uv data set.                      
+          vis      model    select   options  clip     flux     offset   
+          line     sigma    out      
+
+uvpflag   Flag correlations of certain polarizations when template             
+          vis      polt     pols     options  
+
+uvpit     Fit polarisation of a time-varying point source.                     
+          vis      line     select   flux     offset   out      options  
+
+uvplanet  Fiddle planetary and solar system data.                              
+          vis      out      select   pltb     options  sources  pmotion  
+
+uvplt     Make plots from a UV-data base on a PGPLOT device.                   
+          vis      line     select   stokes   axis     xrange   yrange   
+          average  hann     inc      options  subtitle device   nxy      
+          size     log      comment  
+
+uvputhd   Allows user to alter values of header variables in uv dataset        
+          vis      hdvar    type     length   varval   table    time0    
+          options  out      
+
+uvratio   Determines the ratio of the XX to YY (or RR to LL) correlations.     
+          vis      line     select   out      options  
+
+uvredo    Recompute various derived quantitues in a uv data-set                
+          vis      select   line     stokes   out      options  velocity 
+
+uvrms     Measure the RMS value of a visibility dataset.                       
+          vis      stokes   select   line     options  
+
+uvrot     Rotate uv coordinates.                                               
+          vis      out      select   angle    options  
+
+uvsector  Flag a sector of UV data.                                            
+          vis      select   angle    in       region   width    options  
+
+uvsfit    Fit point sources to a given vis file.                               
+          vis      stokes   line     select   object   spar     fix      
+          sspar    sfix     freqref  out      options  log      
+
+uvspec    Plot averaged spectra of a visibility dataset.                       
+          vis      select   line     stokes   interval hann     offset   
+          options  axis     xrange   yrange   device   nxy      log      
+
+uvsplit   Break a uv data-set into single source, single-band files.           
+          vis      select   options  maxwidth 
+
+uvstat    plot uvdata statistics.                                              
+          vis      select   line     device   axis     options  
+
+uvsub     Subtract point source models from visibilities                       
+          vis      line     model    out      
+
+uvswap    Relabel polarizations in uvdata.                                     
+          vis      out      options  
+
+uvtcor    Redo the Tsys correction, using a median smoothed Tsys curve         
+          vis      out      freq     source   fields   device   options  
+
+uvtplt    Plot Tsys for each field of a mosaiced observation                   
+          vis      freq     source   fields   device   nxy      options  
+          size     
+
+uvwide    recompute wide band from narrow band                                 
+          vis      out      reset    narrow   
+
+uvzflag   Flags a visibility dataset where data are zero or fixed.             
+          vis      select   options  
+
+varlist   List all variables in dataset                                        
+          vis      log      option   
+
+varmerge  Merge in a new visibility variable.                                  
+          vis      out      var      data     
+
+varplt    Plot and list variables.                                             
+          vis      device   log      xaxis    yaxis    nxy      xrange   
+          yrange   options  
+
+
+vblank    mask outlier pixels on the spectral axis                             
+          in       tol      
+
+velcolor  Make an RGB image cube to display velocity as color.                 
+          in       region   pivot    out      clip     
+
+velfit    Fit a theoretical velocity pattern to isovelocity image.             
+          in       region   center   pa       incline  radius   vsys     
+          frang    log      options  
+
+velimage  Make (x,y,z) image from an (x,y) image and model z-values.           
+          in       region   sigma    nchan    start    step     out      
+          options  
+
+velmodel  Make a model image for a theoretical velocity pattern.               
+          in       region   center   pa       incline  radius   vrot     
+          vrad     vsys     z        out      options  
+
+velplot   Interactively plot spectra and slices from Miriad Images.            
+          in       device   region   log      
+
+velsw     Change the 'velocity' axis of an image.                              
+          in       axis     options  
+
+wblod     Convert an RPFITS file into Miriad uv format.                        
+          in       out      ifsel    restfreq posout   posin    options  
+          nfiles   nscans   
+
+wbplt     WBPLT is a program used to analyse wbcorr data.                      
+          vis      select   stokes   inc      chans    calfile  bpfile   
+          calfac   xrange   yrange   axis     device   log      lags     
+          mask     options  
+
+xmtv      Miriad X-windows display                                             
+
+xyphase   Determine XY phase corrections from on-line measurements.            
+          vis      select   refant   interval break    options  
+
+zapchan   replace range of channels with average of adjacent channels.         
+          in       out      chans    
+
+zeeeta    Compute Zeeman parameter eta                                         
+          in       out      sigma    chan     blc      trc      der      
+          aveop    
+
+zeefake   Generate fake Zeeman data.                                           
+          iout     iuout    vout     imsize   vinc     delv     fwhm     
+          grvc     grint    grfwhm   grsplit  theta    noise    restfreq 
+          type     
+
+zeemap    Map the magnetic field from I and V cubes                            
+          iin      vin      b        d        be       g        blc      
+          trc      freq     op       cutoff   vrms     mode     y        
+
+zeesim    Test reliability of Zeeman splitting errors                          
+          iin      vin      beam     mode     aveop    chan     freq     
+          blc      trc      bin      split    nruns    infile   log      
+          nran     
+
+zeestat   Fits Zeeman parameters to I and V cubes                              
+          iin      vin      beam     rho      freq     mode     aveop    
+          chan     blc      trc      log      out      
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 10 Aug 2018 </address>
+</body>

@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using X Windows</TITLE>
+<META NAME="description" CONTENT="Using X Windows">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1671"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1667"
+  HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1661"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1669"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1672"
+  HREF="node25.html">PGPLOT Plotting Devices</A>
+<B>Up:</B> <A NAME="tex2html1668"
+  HREF="node21.html">Plotting Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1662"
+  HREF="node23.html">The ATNF Visualisation Suite</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00330000000000000000">
+Using X Windows</A>
+</H1>
+The ATNF Visualisation software and some of the PGPLOT devices
+work via X-windows. For these to work, you must ensure that you have
+setup your environment to allow communication with your X server.
+In particular
+
+<P>
+
+<UL>
+<LI>You should be working at a workstation running X windows!
+
+<P>
+</LI>
+<LI>You do not need to run the display tasks on the same
+computer as the X-windows server.  However if you are running on a
+different machine, then you will need to tell the display software
+which machine is
+running your X server.  
+
+<P>
+If you have connected through SSH, then the SSH client should have, or
+can be made to automatically configure X-windows forwarding to your local
+screen. To ensure that X-forwarding is enabled, use the SSH connection
+command:
+<BLOCKQUOTE>
+<TT>% ssh -X user@</TT><I>remotehost</I>
+
+</BLOCKQUOTE>
+
+<P>
+Different SSH clients may use <TT>-Y</TT> or <TT>-x</TT> to enable X-forwarding;
+check your man page to determine which is appropriate for your installation.
+
+<P>
+If you have connected in another way - <TT>telnet</TT> for example - then you will
+need issue the command
+<BLOCKQUOTE>
+<TT>% setenv DISPLAY </TT><I>localhost</I><TT>:0</TT>
+
+</BLOCKQUOTE>
+to the machine you are running
+<I>Miriad</I> tasks on.  Here <I>localhost</I> is the name of the host machine
+running X windows.  Normally this will be you local workstation. Do NOT just type
+<TT>localhost</TT> as this will not work.
+
+<P>
+</LI>
+<LI>X windows has a simple security feature to prevent arbitrary
+people drawing plots on your screen.  To authorise a particular machine
+to send commands to your X server, you will need to issue the command
+<BLOCKQUOTE>
+<TT>% xhost +</TT><I>remotehost</I>
+
+</BLOCKQUOTE>
+to your local host.  Here
+<I>remotehost</I> is the name of the host machine that you want to grant
+permission to.  For <I>Miriad</I> applications, this will be the host you are
+running the plotting task on.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1671"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1667"
+  HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1661"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1669"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1672"
+  HREF="node25.html">PGPLOT Plotting Devices</A>
+<B>Up:</B> <A NAME="tex2html1668"
+  HREF="node21.html">Plotting Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1662"
+  HREF="node23.html">The ATNF Visualisation Suite</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

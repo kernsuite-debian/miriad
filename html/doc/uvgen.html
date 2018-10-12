@@ -1,0 +1,283 @@
+<title> Documentation on uvgen </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on uvgen</h1>
+<pre>
+
+Task: uvgen
+Purpose: Compute visibilities for a model source.
+Categories: uv analysis, map making
+
+        UVGEN is a MIRIAD task which computes visibility data for a
+        model source distribution at u-v data points specified by a set
+        of antenna positions, hour angle range and sample interval.  The
+        model is specified by a set of Gaussian sources with given
+        positions and flux densities.  Analytic expressions are used to
+        calculate the value of the visibilities.  The calculation
+        includes the response to polarized sources with linear and
+        circularly polarized feeds.  U-V trajectories for all pairs of
+        antennas are computed.
+
+Key: <a name="source">source
+        The name of a text file containing the source components, one
+        component per line.  There is no default.  The source components
+        are elliptical Gaussian components.  Each line consists of at
+        least three and up to ten values:
+          flux,dra,ddec,bmaj,bmin,bpa,iflux,ipa,vflux
+        where
+          flux:          Total flux in Jy.
+          dra,ddec:      Position offset from the phase center in
+                         arcsec.
+          bmaj,bmin,bpa: The full width to half maximum of the major and
+                         minor axes, and the position angle of the major
+                         axis measured from north to the east.  The
+                         default half width is 0."0001.
+          iflux,ipa:     The sources can be partially linearly
+                         polarized.  This information is given as a
+                         percentage polarization and position angle.
+                         The default is 0.
+          vflux:         Percentage circular polarization.  The default
+                         is 0.
+          alpha:         Spectral index. The default is 0.
+        The text file is free-format, with commas or blanks used to
+        separate the values.  Comments (starting with #) can be included
+        in the file.
+
+Key: <a name="ant">ant
+        The name of a text file containing the position of the antennas.
+        There is no default.  Each line of the text file gives three
+        values, being the x, y and z location of an antenna.  The
+        antenna positions can be given in either a right handed
+        equatorial system or as a local ground based coordinates
+        measured to the north, east and in elevation.  See the
+        "baseunit" parameter to specify the coordinate system.  Some
+        standard antenna configurations can be found in $MIRCAT/*.ant
+        for ATCA, BIMA and VLA telescopes.  The BIMA and VLA antenna
+        tables, use with baseunit=1, whereas for the ATCA, use
+        baseunit=-51.0204.
+ 
+        The text file is free-format, with commas or blanks used to
+        separate the values.  Comments (starting with #) can be included
+        in the file.
+
+Key: <a name="baseunit">baseunit
+        This specifies the coordinate system used in the antenna file.
+        A positive value for "baseunit" indicates an equatorial system,
+        whereas a negative value indicates a local system.  The
+        magnitude of "baseunit" gives the conversion factor between the
+        baseline units used in the antenna file, and nanoseconds.  The
+        default value is +1, which means that the antenna file gives the
+        antenna position in an equatorial system measured in nanosec.
+        E.g.    baseunit=-1 for topocentric coordinates in nanosec,
+                baseunit=3.33564 for geocentric coordinates in metres.
+
+Key: <a name="telescop"><a href="telescop.html">telescop</a>
+        This parameter determine the feed angle variation (i.e. the
+        parallactic angle plus the feed offset angle - evector).  It is
+        also used to set the name of the telescop variable in the output
+        dataset.  If can take two values, the first gives the antenna
+        mount type, and can be "altaz", "xyew", or "equatorial".  The
+        second value gives the feed offset angle ("evector") in degrees.
+        The default is 0.
+ 
+        Alternatively, you can give the name of a known telescope for
+        this parameter.  In this case, the mount type and feed offset
+        angle will be that of that particular telescope.
+ 
+        The default value is "hatcreek" (which is equivalent to
+        "altaz,0").
+
+Key: <a name="corr">corr
+        Defines the correlator setup.  The values are:
+          nchan:       Number of channels in each spectral window.
+                       Use 0 for a wideband only file.
+          nspect:      Number of spectral windows.  Default 1; max 4.
+          f1,f2,...:   "nspect" values giving the offset for the center
+                       frequency of each window, in MHz.  Default 0.
+          df1,df2,...: "nspect" values giving the total widths of each
+                       spectral window, in MHz.  Default 1000.
+        No checking is made for valid combinations.
+        Default is wideband only for each spectral window.
+
+Key: <a name="spectra">spectra
+        Model a Gaussian spectral line.
+        The spectral line model line consists of three values:
+          famp:        The line to continuum ratio
+          fcen:        Line freq (GHz)
+          fwid:        Line width (GHz).
+        Default is no spectral line.
+
+Key: <a name="time">time
+        The time of the observation (corresponding to ha=0) in the form
+          yymmmdd.ddd
+        or
+          yymmmdd:hh:mm:ss.s
+        The default is 80JAN01.0.  A function of this is also used
+        as a seed for the random number generator.
+
+Key: <a name="freq">freq
+        Frequency and IF frequency in GHz.
+        Defaults are 100,0.0 GHz.
+
+Key: <a name="radec">radec
+        Source right ascension and declination.  These can be given in
+        hh:mm:ss,dd:mm:ss format, or as decimal hours and decimal
+        degrees.  The default is 0,30.
+
+Key: <a name="harange">harange
+        Hour Angle range (start,stop,step) in hours.  Default is
+        -6 hrs to + 6 hrs, with a sample interval=0.1 (6 minute)
+
+Key: <a name="ellim">ellim
+        Elevation limit in degrees.  The default is not to limit
+        uv coverage by elevation.  If set, then hour angles below the
+        limit are not "observed".
+
+Key: <a name="stokes"><a href="stokes.html">stokes</a>
+        This selects the polarization parameters formed.  Up to 4
+        polarizations can be formed in one run.  They can be 'i'
+        (default), 'xx', 'yy', 'xy', 'yx, 'lr', 'rl', 'rr' or 'll'.
+        For example:
+          stokes=xx,yy,xy,yx
+        will form a file with the 4 polarisations corresponding to an
+        array with linear feeds.  For linear feeds the convention is
+        that the X feed has a position angle of 0, and the Y feed is
+        90 (measured north towards east).
+
+Key: <a name="polar">polar
+        Polarization patterns for generating time shared polarization
+        data.  Up to MAXPOLAR=20 strings of the characters R and L, or X
+        and Y, to represent the polarization of each antenna R (right
+        circular polarization), L (left circular polarization) X (linear
+        polarization PA=0), Y (linear polarization PA=90).  E.g. for 3
+        antennas, the polar=LLL,LRR,RRL,RLR cycles through all
+        combinations of LCP and RCP for each baseline every 4
+        integrations.  The default is to use the stokes keyword.
+
+Key: <a name="leakage">leakage
+        Polarization leakage errors, given as a percent.  This gives the
+        rms value of leakages of one polarisation feed into another.
+        Polarization leakage errors are constant over the observation.
+        To use this, you must set
+          stokes=xx,yy,xy,yx
+        or
+          stokes=rr,ll,rl,lr
+        The default is 0 (i.e. no polarization leakage).
+
+Key: <a name="zeeman">zeeman
+        Zeeman effect; the keyword gives the product B * Z, where,
+           Stokes V = B * Z * dI/dnu + Leakage * I
+           B = line of sight field, and Z = Zeeman splitting term.
+        This generates a circular polarization for a spectral line.
+        Default = 0.
+
+Key: <a name="lat">lat
+        Latitude of observatory, in degrees.  Default is 40 degrees.
+
+Key: <a name="cycle">cycle
+        This gives two values, being the time on-source, and the time
+        off-source cycle times, both in hours.  This allows simulation
+        of time segments lost while observing calibrators, etc.  For
+        example, if simulating an observation which observes the source
+        for 24 minutes and then is off-source (observing a calibrator)
+        for 6 minutes, use:
+          cycle=0.4,0.1
+        Similarly, if simulating this calibrator, use:
+          cycle=0.1,0.4
+        The default is harange(3),0 (i.e. do not interrupt the
+        observations).
+
+Key: <a name="pbfwhm">pbfwhm
+        This dictates the primary beam model used in the simulation.  It
+        gives the FWHM of a gaussian primary beam, in arcsec.
+        The default is no primary beam attenuation.
+
+Key: <a name="center">center
+        Offset observing centers for a mosaiced observation, in arcsec
+        Two values (x and y offset) are required per pointing.  Several
+        values can be given.  Default is 0,0 (i.e. a plain, single
+        pointing observation).  The time spent on each pointing is given
+        by the value of "cycle(1)".  Note that the default value of
+        cycle(1) means that the observing center changes every
+        integration.
+
+Key: <a name="gnoise">gnoise
+        Antenna based gain noise, given as a percentage.  This gives the
+        multiplicative gain variations, specified by the rms amplitude
+        to be added to the gain of each antenna at each sample interval.
+        The gain error stays constant over the period given by the
+        "cycle(1)" parameter (see above).  Thus "cycle(1)" can be varied
+        to give different atmosphere/instrument stabilities.  Note that
+        the default of the "cycle" parameter means that the gain changes
+        every integration.
+ 
+        A gain error can also be used to mimic random pointing errors
+        provided the source is a point source.
+        The default is 0 (i.e. no gain error).
+
+Key: <a name="pnoise">pnoise
+        Antenna based phase noise, in degrees.  This gives the phase
+        noise, specified by the rms phase noise to be added to each
+        antenna.  Up to 4 values can be given to compute the phase noise
+          pnoise(1) + pnoise(2)*(baseline)**pnoise(3)*sinel**pnoise(4)
+        where ``baseline'' is the baseline length in km.  Typical values
+        for pnoise(2) are 1mm rms pathlength (e.g. 2 radians at 100GHz),
+        For Kolmogorov turbulence pnoise(3)=5/6 for baseline &lt; 100m
+        and 0.33 for baseline &gt; 100m (outer scale of turbulence).
+        pnoise(4)=-0.5 for a thick turbulent screen, and -1 for a thin
+        layer.  See also the ``gnoise'' parameter.  Default is 0,0,0,0
+        (i.e. no phase error).
+
+Key: <a name="systemp">systemp
+        System temperature used to compute additive random noise and
+        total power.  One or 3 values can be given; either the average
+        single sideband systemp including the atmosphere (TELEPAR gives
+        typical values), or the double sideband receiver temperature,
+        sky temperature, and zenith opacity, when systemp is computed
+        as:
+          systemp = 2.*(Trx + Tsky*(1-exp(-tau/sinel)))*exp(tau/sinel)
+        where systemp, Trx and Tsky are in Kelvin.  Typical values for
+        Hat Creek Trx, Tsky, and tau are 75,290,0.15.  (OBSTAU gives
+        values for tau).  systemp is used to generate random Gaussian
+        noise to add to each data point.  Default is 0,0,0 (i.e. no
+        additive noise).
+
+Key: <a name="tpower">tpower
+        Two values can be given to represent the total power variations
+        due to receiver instability (Trms), and atmospheric noise
+        (Tatm):
+           tpower = Trms * systemp +  Tatm * pnoise
+        The receiver instablity is modeled as multiplicative Gaussian
+        noise.  The atmospheric noise is modeled to be correlated with
+        the antenna phase noise.  Typical values at 3mm wavelength are
+        Trms = 0.001 and Tatm = 0.2 K/radian (280 degrees/K).
+        Default is tpower=0,0
+
+Key: <a name="jyperk">jyperk
+        The system sensitivity, in Jy/K.  Its value is given by
+        2*k/(eta * A) where k is Boltzmans constant (1.38e3 Jy m**2/K),
+        A is the physical area of each antenna (pi/4 * D**2), and eta is
+        an efficiency.  For the ATCA, D is 22 metres, and eta is
+        composed of a correlator efficiency (0.88) and an antenna
+        efficiency (0.65 at 6 cm).  The overall result is jyperk=12.7.
+        The default jyperk=150, a typical value for the Hat Creek 6.1m
+        antennas.
+
+Key: <a name="options"><a href="options.html">options</a>
+        A number of options can be specified, separated by commas.
+          'leakfvar' Add linear variation of leakage parameters across
+                     each spectral window
+          'delay'    Add delay noise instead of phase noise, i.e., make
+                     the phases vary with frequency
+          'bandpass' Add a semi random bandpass function to the spectra
+
+Key: <a name="out"><a href="out.html">out</a>
+        This gives the name of the output Miriad data file.  There is
+        no default.  If the dataset exists, visibilities are appended to
+        the dataset, with an appropriate informational message.
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

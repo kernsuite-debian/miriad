@@ -1,0 +1,192 @@
+.TH uvsfit 1
+.SH NAME
+uvsfit - Fit point sources to a given vis file.
+.SH PERSON RESPONSIBLE
+dmcc
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVSFIT is a Miriad task which fits model components to a visibility
+dataset. UVSFIT differs from UVFIT by fitting explicitly for the
+frequency dependence of source flux. Optionally the model or
+residual visibilities can be written out.
+UVSFIT can only handle a limited number of visibilities in fitting
+mode. You can reduce the data volume by averaging in frequency
+using the line parameter (apply bandpass first) or selecting a
+subset of the data. If you want to produce model or residual
+visibilities at full resolution for all the data, you can
+run UVSFIT again with all source parameters specified and fixed.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Name of the input visibility file or files. No default.
+.TP
+\fIstokes\fP
+Normal Stokes/polarisation parameter (e.g. i,q,u,v,ii etc).
+Only a single polarisation can be requested. The default is
+`ii' (i.e. Stokes-I for an unpolarised source).
+.TP
+\fIline\fP
+Normal line-type processing with normal defaults.
+.TP
+\fIselect\fP
+Normal data selection. Default is all cross-correlation data.
+.TP
+\fIobject\fP
+This gives the object type that uvsfit fits for. Several objects
+can be given (the objects can be of the same type, or different),
+and minimum match is supported. Possible objects are
+.nf
+  point       A point source
+  disk        An elliptical or circular disk.
+  gaussian    An elliptical or circular gaussian.
+  shell       The 2D projection of a thin, spherical shell.
+  ring        A face-on, thin, elliptical or circular ring
+.fi
+For example, to fit for a point source and gaussian, use:
+`object=point,gaussian'.
+.TP
+\fIspar\fP
+.nf
+ This gives initial estimates of source parameters.  For
+ each object given by the `object' keyword, either 3 (for
+ point sources) or 6 (for disks and gaussians) values should be
+ given. The values are as follows:
+   Object Type             SPAR values
+   -----------             -----------
+    point                   flux,x,y
+    gaussian                flux,x,y,bmaj,bmin,pa
+    disk                    flux,x,y,bmaj,bmin,pa
+    shell                   flux,x,y,bmaj
+    ring                    flux,x,y,bmaj,bmin,pa
+.fi
+.sp
+.nf
+ Here "flux" is the total flux density of the component,
+ "x" and "y" are the offset positions (in arcsec) of the object
+ relative to the observing center, "bmaj" and "bmin" are the major
+ and minor axes FWHM (in arcsec), and "pa" is the position angle
+ of an elliptical component (in degrees). The position angle is
+ measured from north through east.
+ You must give initial estimates for all parameters for each object
+ (this includes parameters that are redundant or meaningless,
+ such as "bmin" and "pa" for components that are constrained to be
+ circular).
+.fi
+.sp
+.nf
+ The more complex the set of objects being fitted for, the more
+ important it is to give a good estimate of the source parameters.
+ Generally the estimates of the source position should be accurate
+ to the fundamental resolution (for point sources) or the size of
+ the component (for extended sources).
+.TP
+\fIfix\fP
+ This gives a set a flag parameters, one parameter per source.
+ Each parameter consists of a set of letters, which indicate
+ which source parameters of a component are to be held fixed.
+ These source parameters are fixed by the initial estimates
+ given by the `spar' parameter.
+ The letters corresponding to each source parameter are:
+   f   The flux is fixed.
+   x   The offset in RA is fixed.
+   y   The offset in DEC is fixed.
+   a   The major axis parameter is fixed.
+   b   The minor axis parameter is fixed.
+   p   The position angle parameter is fixed.
+   c   The gaussian, disk or ring is circular (not elliptical).
+ For a source where all source parameters vary, a dash (-)
+ can be used for this parameter.
+.fi
+.sp
+.nf
+ For example "fix=fx,fc" indicates that the flux and RA offset
+ is to be fixed for the first source, whereas the second source,
+ (which is presumably a gaussian, disk or ring) has a fixed flux, and
+ is circular.
+.fi
+.sp
+.TP
+\fIsspar\fP
+.nf
+ This gives initial estimates of source spectral parameters.  For
+ each object given by the `object' keyword, 3  values should be
+ given. The values, for all object types, are as follows:
+              SSPAR values
+              -----------
+             alpha0,alpha1,alpha2
+.fi
+.sp
+.nf
+ Here "alpha0", "alpha1" and "alpha2" are defined in:
+.fi
+.sp
+.nf
+           lfr = ln(frq/frq0)
+          alpha(frq) = alpha0 + lfr*(alpha1 + lfr*alpha2)
+.fi
+.sp
+.nf
+ giving the spectral index as a function of frequency so that
+.fi
+.sp
+.nf
+           flux(frq) = flux*(frq/frq0)**alpha(frq)
+.fi
+.sp
+.nf
+ gives the component flux at frequency frq. Here frq0 is the reference
+ frequency. If alpha0, alpha1, alpha2 are not given, values of zero
+.fi
+are used.
+If any sspar values are given, all (three per source) must be given.
+.TP
+\fIsfix\fP
+.nf
+ This gives a set a flag parameters for the spectral parameters,
+ one parameter per source.  Each parameter consists of a set of
+ digits, indicating which of the spectral terms are to be held fixed.
+ These source parameters are fixed by the initial estimates
+ given by the `sspar' parameter.
+ The digits corresponding to each source parameter are:
+   0   The spectral term alpha0 is fixed.
+   1   The spectral term alpha1 is fixed.
+   2   The spectral term alpha2 is fixed.
+.fi
+.sp
+.nf
+ For a source where all source parameters vary, a dash (-)
+ can be used for this parameter.
+.TP
+\fIfreqref\fP
+.fi
+A frequency in GHz used as the reference frequency for the flux
+and spectral index results.
+.TP
+\fIout\fP
+Optionally, an output file will be written for each input file.
+If given, the number of output data-sets should equal the number
+of input visibility files, and either the model or residual
+visibilities can be saved.
+.TP
+\fIoptions\fP
+.nf
+ Extra processing options. Several can be given, separated by commas.
+ Minimum match is used. Possible values are:
+   residual The residual visibilities are written to the output.
+            If an output is being created, the default is to make
+            this the fitted model.
+.TP
+\fIlog\fP
+.fi
+Optionally, a log file will be written with the model parameters
+and their errors.  For each fitted source, four lines are written
+to the log: line 1 has source number, object type and three or six
+parameter values, depending on the object type; line 2 has the
+formal errors in each (0.0 if not a free parameter); line 3 has
+the values of all three spectral terms; line 4 has the formal
+errors in those terms (again 0.0 if not included in the fit).
+.sp
+.SH REVISION
+1.7, 2018/04/03 21:38:22 UTC

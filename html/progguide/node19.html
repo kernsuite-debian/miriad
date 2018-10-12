@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reading and Writing Continuum Visibilities</TITLE>
+<META NAME="description" CONTENT="Reading and Writing Continuum Visibilities">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node20.html">
+<LINK REL="previous" HREF="node18.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node20.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html454"
+  HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html448"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html442"
+  HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html450"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html452"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html455"
+  HREF="node20.html">Direct Access to UV</A>
+<B>Up:</B> <A NAME="tex2html449"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html443"
+  HREF="node18.html">Reading and Writing Visibilities</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00454000000000000000">
+Reading and Writing Continuum Visibilities</A>
+</H2>
+<I>Miriad</I> uv datasets can contain both spectral and continuumn visibility
+data simultaneously. When both are present, the user/programmer will
+normally select which of these data to read, using the <TT>uvset</TT> routine
+(see Section&nbsp;<A HREF="node26.html#sect:uvset">2.5.11</A>). However this allows only one ``linetype'' to be
+read and written at a time. The <TT>uvwread</TT> and <TT>uvwwrite</TT> allow
+the programmer to read and write the continuum data independently
+of the ``linetype''. These routines completely bypass linetype processing.
+They should be used only when both a particular linetype, and the continuum
+data are required. <TT>Uvwread</TT> should be called after the call to
+<TT>uvread</TT>, whereas <TT>uvwwrite</TT> should be called before the call to
+<TT>uvwrite</TT>.
+
+<P>
+The routine <TT>uvwflgwr</TT> is the ``wide'' equivalent of <TT>uvflgwr</TT>.
+That is, by calling <TT>uvwflgwr</TT>, you can overwrite the flags associated
+with the previous call to 
+<TT>uvwread</TT> and <TT>uvwwrite</TT>. Note that <TT>uvwflgwr</TT> aborts if no
+flagging file exists.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

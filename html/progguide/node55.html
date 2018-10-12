@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Command</TITLE>
+<META NAME="description" CONTENT="The Command">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node56.html">
+<LINK REL="previous" HREF="node54.html">
+<LINK REL="up" HREF="node54.html">
+<LINK REL="next" HREF="node56.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html973"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html967"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html961"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html969"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html971"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html974"
+  HREF="node56.html">Language Extensions</A>
+<B>Up:</B> <A NAME="tex2html968"
+  HREF="node54.html">RATTY</A>
+<B> Previous:</B> <A NAME="tex2html962"
+  HREF="node54.html">RATTY</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00521000000000000000">
+The Command</A>
+</H2>
+The command is:
+<PRE>
+     % ratty [-s system] [-I incdir] [-D symbol] [-b] [-?] input output
+</PRE>
+``Input'' is a text file containing a mildly extended FORTRAN, whereas
+``output'' is the resultant standard (?) code. The default input and
+output are the standard input and standard output. A few command line
+flags are also recognized.
+<DL>
+<DT><STRONG>-s</STRONG></DT>
+<DD>The string following this flag indicates the target compiler.
+RATTY performs some special processing for the following
+compilers:
+<DL>
+<DT><STRONG>vms</STRONG></DT>
+<DD>VAX/VMS FORTRAN compiler.
+</DD>
+<DT><STRONG>cft</STRONG></DT>
+<DD>Cray FORTRAN compiler for both CTSS and COS.
+</DD>
+<DT><STRONG>f77</STRONG></DT>
+<DD>UNIX FORTRAN-77 compiler.
+</DD>
+<DT><STRONG>convex</STRONG></DT>
+<DD>Convex C-1 compiler.
+</DD>
+<DT><STRONG>fx</STRONG></DT>
+<DD>Alliants compiler.
+</DD>
+<DT><STRONG>trace</STRONG></DT>
+<DD>Multiflow Trace computers.
+</DD>
+<DT><STRONG>sun</STRONG></DT>
+<DD>Sun computers.
+</DD>
+</DL>
+RATTY assumes that target compilers other than these are strict FORTRAN-77
+compilers.
+</DD>
+<DT><STRONG>-I</STRONG></DT>
+<DD>The string following this flag indicates an alternate directory to
+search for include files. The -I flag can occur several times, giving several
+directories. When opening include files, first the current directory is
+check, and then each directory given by the -I flag is check in the order
+in which they appeared on the command line.
+</DD>
+<DT><STRONG>-D</STRONG></DT>
+<DD>The name following this flag is treated as if it appeared in a
+#define statement. Note that unlike the cc compiler, a space is required
+between the -D and the name.
+</DD>
+<DT><STRONG>-b</STRONG></DT>
+<DD>If this flag is given, every backslash in the input is converted to
+two backslashes in the output. This is useful when the target compiler
+treats backslash as an ``escape character'' (i.e. several UNIX FORTRAN
+compilers).
+</DD>
+<DT><STRONG>?</STRONG></DT>
+<DD>This causes some help (on using ratty) to be printed.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html973"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html967"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html961"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html969"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html971"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html974"
+  HREF="node56.html">Language Extensions</A>
+<B>Up:</B> <A NAME="tex2html968"
+  HREF="node54.html">RATTY</A>
+<B> Previous:</B> <A NAME="tex2html962"
+  HREF="node54.html">RATTY</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

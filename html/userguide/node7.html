@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>INP, GO and TASK</TITLE>
+<META NAME="description" CONTENT="INP, GO and TASK">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node8.html">
+<LINK REL="previous" HREF="node6.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node8.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1467"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1463"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1457"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1465"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1468"
+  HREF="node8.html">HELP</A>
+<B>Up:</B> <A NAME="tex2html1464"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1458"
+  HREF="node6.html">The miriad Front-End</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00221000000000000000">
+INP, GO and TASK</A>
+</H2> 
+
+<P>
+To inspect the inputs of a task, as well as to select the task, <I>e.g.</I>
+<TT>histo</TT> type
+<PRE>
+   miriad% inp histo
+</PRE>
+<TT>miriad</TT> will 
+show the parameters of the task along with the values, if any, 
+previously set.  For example, if, the first time you run <TT>miriad</TT>, you type:
+<PRE>
+   miriad% inp histo
+</PRE>
+<TT>miriad</TT> will reply by writing
+<PRE>
+   Task:   histo
+   in       =
+   region   = 
+   range    =  
+   nbin     =
+</PRE>
+and will replace the <TT>miriad%</TT> prompt with a task prompt
+<PRE>
+   histo%
+</PRE>
+indicating that you have chosen the task <TT>histo</TT>.  You can also choose the
+task <TT>histo</TT> without using <TT>inp</TT> by typing:
+<PRE>
+   miriad% task histo
+</PRE>
+<TT>miriad</TT> will then replace the <TT>miriad%</TT> prompt with the 
+<TT>histo%</TT> prompt, but
+the inputs will not be printed out.  Either way
+a parameter can be set with:
+<PRE>
+   histo% in=gauss
+</PRE>
+Retyping:
+<PRE>
+   histo% inp
+</PRE>
+will result in <TT>miriad</TT> replying:
+<PRE>
+   Task:   histo
+   in       = gauss
+   region   =  
+   range    =  
+   nbin     =
+</PRE>
+Tasks are run either by typing <TT>go</TT> <I>taskname</I> at 
+the <TT>miriad%</TT> prompt
+(advisable only if you know you like the inputs) or by typing <TT>go</TT> at the
+<I>taskname</I><TT>%</TT> prompt.  Thus, in the above example, typing:
+<PRE>
+   histo% go
+</PRE>
+would result in the task <TT>histo</TT> running with <TT>in=gauss</TT> as the only
+assigned parameter (all the other parameters would be set to their default
+values).  
+
+<P>
+Any task can be run regardless of the chosen task, merely by typing:
+<PRE>
+   miriad% go itemize
+</PRE>
+<TT>miriad</TT> then executes the task <TT>itemize</TT>
+(using whatever input parameters it finds from the <TT>lastexit</TT> file
+or a previous run) and changes the default 
+task and prompt to:
+<PRE>
+   itemize%
+</PRE>
+
+<P>
+Generally <TT>miriad</TT> waits for the task to finish before it resumes. The
+<TT>-b</TT> can be used to tell the operating system to put the task in
+the background<A NAME="190"></A>, and allow <TT>miriad</TT> to be ready
+immediately for new commands. However the output of the task just started
+may still return output to the terminal. You can start as many jobs as the
+operating system will allow.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1467"
+  HREF="node8.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1463"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1457"
+  HREF="node6.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1465"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1468"
+  HREF="node8.html">HELP</A>
+<B>Up:</B> <A NAME="tex2html1464"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1458"
+  HREF="node6.html">The miriad Front-End</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

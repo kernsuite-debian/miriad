@@ -1,0 +1,63 @@
+%N uvamp
+%D Annular averages a uv dataset in bins. Prints and plots results.
+%P lgm
+%: uv analysis
+%B
+        UVAMP reads a uv dataset, bins the data in annuli according to
+        uv distance and prints/plots vector averaged amplitude versus
+        uvdist. Statistical error bars and the expected amplitude for
+        zero signal are calculated.
+%A vis
+        The name of the input uv data set. No default.
+%A select
+        The normal uv selection commands.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels (or all wide channels if there are no
+        spectral channels). The output will consist of only spectral or
+        wideband data (but not both). If spectral averaging is performed
+        (``width'' not equal to 1), then the output will be written as a
+        single spectral window.
+%A ref
+        The normal reference linetype, in the form:
+          line,start,width
+        The default is no reference line.
+%A stokes
+        If a value is given, uvamp will work with the specified
+        polarizations. Normally this should be set to stokes I if
+        the data includes polarizations.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           'nocal'       Do not apply the gains file. By default, UVAMP
+                         applies the gains file in copying the data.
+           'nopol'       Do not apply polarizatiopn corrections. By default
+                         UVAMP corrects for polarization cross-talk.
+           'nopass'      DO not apply bandpass corrections. By default
+                         UVAMP corrects for the bandpass shape.
+           'ampscalar'   Applies vector averaging to work out the
+                         averaged visibility phase, but scalar averaging
+                         to find the averaged visibility amplitude.
+%A bin
+        Number of bins, width of bins, and units of bin width. Up to 200
+        bins are allowed. The units for bin width may be either nsec or
+        klam. The default unit for bin width is nsecs.
+        Default values: 30,40,nsec
+%A offset
+        RA-Dec offset of desired phase center relative to phase center
+        of original uv dataset in arcseconds. Source of interest should be
+        at the phase center in the typical use of this program.
+        Default = 0.0,0.0.
+%A type
+        Calculate the amplitude and standard deviation for each bin based on
+        the real and imaginary components (total) or just based on the real
+        component (real). The "real" option is useful if your expected source
+        visibility is entirely real -- i.e. a point source or circularly
+        symmetric source at the phase center.
+        Possible options are "total" and "real". Default: total.
+%A device
+        Plot device name. If not specified, no plot is created.
+%A log
+        Log file name. Default is no log file.

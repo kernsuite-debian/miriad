@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Tracking accuracy</TITLE>
+<META NAME="description" CONTENT="Tracking accuracy">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node201.html">
+<LINK REL="up" HREF="node199.html">
+<LINK REL="next" HREF="node203.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3962"
+  HREF="node203.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3958"
+  HREF="node199.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3954"
+  HREF="node201.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3960"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3963"
+  HREF="node203.html">Bandpass and antenna gain</A>
+<B>Up:</B> <A NAME="tex2html3959"
+  HREF="node199.html">Additional monitoring variables</A>
+<B> Previous:</B> <A NAME="tex2html3955"
+  HREF="node201.html">Seeing monitor measurement</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION002323300000000000000">
+Tracking accuracy</A>
+</H3>
+With the ATCA beam at 3mm being comparatively small (<SPAN CLASS="MATH"><IMG
+ WIDTH="28" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img130.png"
+ ALT="$35''$"></SPAN>), it is
+possible for
+tracking errors to be significant. This
+may occur during windy weather (gusts can blow
+the antennas off the directed tracking position). In additional
+poor tuning of the antenna drive systems can sometimes cause poor tracking,
+particiularly soon after a change in source.
+
+<P>
+Note that tracking errors should be distinguished from pointing errors.
+Tracking errors are the inability of the antenna drive system
+to follow the requested path. Pointing errors correspond 
+to the difference between the position that the astronomer
+requests and the actual position. Tracking errors are caused by
+flaws in the drive servo system, whereas pointing errors are a sum of
+tracking errors and errors in the antenna pointing model.
+
+<P>
+Since October 2003, tracking errors have been saved in the <I>Miriad</I> dataset.
+The uv variables corresponding to the rms and 
+maximum tracking
+error in a cycle are <code>axisrms</code> and <code>axismax</code>. 
+
+<P>
+Both the maximum and rms give two tracking error values for each antenna, nominally corresponding
+to the tracking error in the azimuth and elevation axes. However the ATCA on-line
+system produces a single composite value, which is replicated for the two
+axes in the dataset.
+
+<P>
+When the tracking error is less than <SPAN CLASS="MATH"><IMG
+ WIDTH="17" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img131.png"
+ ALT="$2'$"></SPAN>, the ATCA on-line
+system believes that this error sufficiently small to consider
+that the antenna is tracking. However this tolerance is not
+generally good enough for 3-mm observations.
+The task <A NAME="tex2html1050"
+  HREF="../doc/uvflag.html">uvflag</A>
+can be used to flag based upon rms tracking error.
+To do this, use the selection
+<code>pointing</code> subcommand.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.uv</TD>
+<TD ALIGN="LEFT">Input visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flagval=flag</TD>
+<TD ALIGN="LEFT">Flag selected points.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=pointing(15,1000)</TD>
+<TD ALIGN="LEFT">Flag when the rms tracking error</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">is between <SPAN CLASS="MATH"><IMG
+ WIDTH="28" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img132.png"
+ ALT="$15''$"></SPAN> and <SPAN CLASS="MATH"><IMG
+ WIDTH="44" HEIGHT="16" ALIGN="BOTTOM" BORDER="0"
+ SRC="img133.png"
+ ALT="$1000''$"></SPAN>.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3962"
+  HREF="node203.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3958"
+  HREF="node199.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3954"
+  HREF="node201.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3960"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3963"
+  HREF="node203.html">Bandpass and antenna gain</A>
+<B>Up:</B> <A NAME="tex2html3959"
+  HREF="node199.html">Additional monitoring variables</A>
+<B> Previous:</B> <A NAME="tex2html3955"
+  HREF="node201.html">Seeing monitor measurement</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

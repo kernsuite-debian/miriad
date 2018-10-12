@@ -1,0 +1,297 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Fitting a tilted ring model to a warped galactic disk</TITLE>
+<META NAME="description" CONTENT="Fitting a tilted ring model to a warped galactic disk">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node162.html">
+<LINK REL="up" HREF="node161.html">
+<LINK REL="next" HREF="node164.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3442"
+  HREF="node164.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3438"
+  HREF="node161.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3434"
+  HREF="node162.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3440"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3443"
+  HREF="node164.html">Zeeman Analysis</A>
+<B>Up:</B> <A NAME="tex2html3439"
+  HREF="node161.html">Modelling galactic disks</A>
+<B> Previous:</B> <A NAME="tex2html3435"
+  HREF="node162.html">Fitting a rotation curve</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002052000000000000000">
+Fitting a tilted ring model to a warped galactic disk</A>
+</H2>
+Here we illustrate typical use of the <I>Miriad</I> tasks
+<A NAME="tex2html794"
+  HREF="../doc/velmodel.html">velmodel</A>
+and <A NAME="tex2html795"
+  HREF="../doc/velimage.html">velimage</A>. To make the tilted ring model one must
+utilise
+also <A NAME="tex2html796"
+  HREF="../doc/imgen.html">imgen</A>
+and <A NAME="tex2html797"
+  HREF="../doc/maths.html">maths</A>
+(see Sections&nbsp;<A HREF="node148.html#s:imgen">18.7</A> and
+<A HREF="node146.html#s:maths">18.5</A>). The warp is simulated by varying
+the inclination and position angles of successive annuli (usually suggested
+from various plots from <code>data.cube</code> such as closure of isovelocity contours
+along the major axis and twists in channel maps showing the minor axis).
+The velocity rotation profile in the plane of the disk may be suggested
+by inspection of position-velocity maps made with velplot. For the purpose of
+this exercise we will assume a flat rotation velocity profile in the plane
+of the disk of 150 km/s. So we make the 3-dimensional data cube for each tilted
+ring with <A NAME="tex2html798"
+  HREF="../doc/velimage.html">velimage</A>
+and add them together with <A NAME="tex2html799"
+  HREF="../doc/maths.html">maths</A>.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VELIMAGE</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=aaa,vvv</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sigma=10</TD>
+<TD ALIGN="LEFT">Velocity dispersion,mandatory if no 3rd image above</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nchan=64</TD>
+<TD ALIGN="LEFT">Number of velocity channels in the output cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">start=230</TD>
+<TD ALIGN="LEFT">Velocity at channel 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">step=6.6</TD>
+<TD ALIGN="LEFT">Velocity increment between channels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=model.cube</TD>
+<TD ALIGN="LEFT">The output cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=relax</TD>
+<TD ALIGN="LEFT">Usually necessary in this type of scheme.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Obviously, prior to running <A NAME="tex2html800"
+  HREF="../doc/velimage.html">velimage</A>, we must have generated
+the input files <code>aaa</code> and <code>vvv</code> which contain our assumptions about
+the variation in intensity and velocity in our model.
+
+<P>
+<code>aaa</code> is the <I>(x,y)</I> intensity distribution of what will be
+<code>model.cube</code>
+integrated over the <I>z</I>-axis. In this example it is an elliptical annulus of
+uniform intensity made by subtracting an inner disk from an outer disk using
+<A NAME="tex2html801"
+  HREF="../doc/maths.html">maths</A>, the disks having been made using <A NAME="tex2html802"
+  HREF="../doc/imgen.html">imgen</A>
+as follows :
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=aao</TD>
+<TD ALIGN="LEFT">Output dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=disk</TD>
+<TD ALIGN="LEFT">Disk model.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar=0.01,0,-60,1000,500,30</TD>
+<TD ALIGN="LEFT">Source parameters, 10 mJy intensity annulus,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">centred 60 arcsec south of the image centre,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">major axis=1000 arcsec,minor axis=500 arcsec</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">major axis pa=30 degrees</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=128,128</TD>
+<TD ALIGN="LEFT">Image size.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=30,30</TD>
+<TD ALIGN="LEFT">Cell size in arcsec.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=aai</TD>
+<TD ALIGN="LEFT">The outer dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=disk</TD>
+<TD ALIGN="LEFT">Disk model.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar=0.01,0,-60,1000,500,30</TD>
+<TD ALIGN="LEFT">Source parameters, 10 mJy intensity annulus,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">centred 60 arcsec south of the image centre,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">major axis=1000 arcsec,minor axis=500 arcsec</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">major axis pa=30 degrees</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=128,128</TD>
+<TD ALIGN="LEFT">Image size.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=30,30</TD>
+<TD ALIGN="LEFT">Cell size in arcsec.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=aai</TD>
+<TD ALIGN="LEFT">The inner disk.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=disk</TD>
+<TD ALIGN="LEFT">Disk model again.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar=0.01,0,-60,800,400,30</TD>
+<TD ALIGN="LEFT">Similar parameters, but smaller radii.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize=128,128</TD>
+<TD ALIGN="LEFT">Same image size and</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell=30,30</TD>
+<TD ALIGN="LEFT">resolution.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MATHS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">exp=(aao-aai)</TD>
+<TD ALIGN="LEFT">Generate a annulus.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=aaa</TD>
+<TD ALIGN="LEFT">Output dataset name.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<code>vvv</code> is a model for the velocities (<I>z</I>-axis) made using <A NAME="tex2html803"
+  HREF="../doc/velmodel.html">velmodel</A>.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VELMODEL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=data.cube</TD>
+<TD ALIGN="LEFT">Template input.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa=30</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">incline=65</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">radius=30</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vrot=150</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vsys=440</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vvv</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Note that the input (<code>data.cube</code> in the above) a template only but if
+you use your actual data cube you will finally end up with a model
+with much of the header information the same as the data, e.g. it will
+appear to be in the same position in the sky.
+
+<P>
+One makes a number of such <code>model.cubes</code> and adds them together
+with <A NAME="tex2html804"
+  HREF="../doc/maths.html">maths</A>
+to obtain the final 3-dimensional tilted ring model.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3442"
+  HREF="node164.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3438"
+  HREF="node161.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3434"
+  HREF="node162.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3440"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3443"
+  HREF="node164.html">Zeeman Analysis</A>
+<B>Up:</B> <A NAME="tex2html3439"
+  HREF="node161.html">Modelling galactic disks</A>
+<B> Previous:</B> <A NAME="tex2html3435"
+  HREF="node162.html">Fitting a rotation curve</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

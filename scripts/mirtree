@@ -1,0 +1,87 @@
+#!/bin/sh
+#-----------------------------------------------------------------------------
+# Usage: mirtree
+#-----------------------------------------------------------------------------
+# Construct a workspace for Miriad software development.
+#
+# Original: 2007/03/06 Mark Calabretta, ATNF
+# $Id: mirtree,v 1.5 2011/12/13 04:29:12 cal103 Exp $
+#-----------------------------------------------------------------------------
+  trap 'exit 1' 1 2 3 15
+
+# Sanity checks.
+  if [ "$MIR" = "" -o ! -d "$MIR" ]
+  then
+    echo 'mirtree: $MIR is not defined or does not exist.' 1>&2
+    exit 1
+  fi
+
+# Are RCS repositories present?
+  MIRRCS="$MIR/RCS"
+  [ -d "$MIRRCS" ] || MIRRCS=
+
+# The name of the root of the programmer workspace MUST accord with $MIR.
+  PGMRROOT=`echo "$MIR" | sed -e 's|.*/|./|'`
+
+# Create only relevant subdirectories.
+  SUBDIRS="cat etc guides guides/prog guides/user inc inc/linux64 linpack "
+  SUBDIRS="$SUBDIRS prog scripts scripts/$MIRARCH"
+  SUBDIRS="$SUBDIRS subs subs/unix subs/unix/alpha_linux tools"
+  SUBDIRS="$SUBDIRS spec spec/sxmtv spec/xmtv spec/xpanel tools"
+
+  for SUBDIR in "" $SUBDIRS
+  do
+    [ -n "$SUBDIR" ] && SUBDIR=/$SUBDIR
+
+    if [ ! -d "$PGMRROOT$SUBDIR" ]
+    then
+      echo "Creating $PGMRROOT$SUBDIR/"
+      mkdir "$PGMRROOT$SUBDIR/"
+    fi
+
+    if [ -n "$MIRRCS" ]
+    then
+      # RCS repositories are present so link to them.
+      if [ ! -h "$PGMRROOT$SUBDIR/RCS" ]
+      then
+        echo "Creating symlinks $PGMRROOT$SUBDIR/{RCS,SRC}"
+        if [ -n "$SUBDIR" ]
+        then
+          LEAF=`basename "$SUBDIR"`
+          ln -s "../RCS/$LEAF" "$PGMRROOT$SUBDIR/RCS"
+          ln -s "../SRC/$LEAF" "$PGMRROOT$SUBDIR/SRC"
+        else
+          ln -s "$MIR/RCS" "$PGMRROOT/RCS"
+          ln -s "$MIR" "$PGMRROOT/SRC"
+        fi
+      fi
+    else
+      # RCS repositories are absent so link to the makefile.
+      if [ ! -h "$PGMRROOT$SUBDIR/GNUmakefile" ]
+      then
+        echo "Creating symlinks $PGMRROOT$SUBDIR/{GNUmakefile,SRC}"
+        if [ -n "$SUBDIR" ]
+        then
+          LEAF=`basename "$SUBDIR"`
+          ln -s "../SRC/$LEAF" "$PGMRROOT$SUBDIR/SRC"
+        else
+          ln -s "$MIR" "$PGMRROOT/SRC"
+        fi
+        ln -s "SRC/GNUmakefile" "$PGMRROOT$SUBDIR/GNUmakefile"
+      fi
+    fi
+  done
+
+  # Create architecture-specific subdirectories.
+  for SUBDIR in "" aux bin lib
+  do
+    [ -n "$SUBDIR" ] && SUBDIR=/$SUBDIR
+
+    if [ ! -d "$PGMRROOT/$MIRARCH$SUBDIR" ]
+    then
+      echo "Creating $PGMRROOT/$MIRARCH$SUBDIR/"
+      mkdir "$PGMRROOT/$MIRARCH$SUBDIR/"
+    fi
+  done
+
+  exit 0

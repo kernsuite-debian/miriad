@@ -1,0 +1,61 @@
+.TH tmcvt 1
+.SH NAME
+tmcvt - Convert time-multiplexed polarization visibilities to Stokes.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+TMCVT converts time-multiplexed polarization observations to
+Stokes parameters, applying any leakage correction in the process.
+For an observation where polarizations are time multiplexed
+(i.e. four polarization states are not simultaneously measured),
+there is no simple way to convert between raw polarization
+visibilities and Stokes parameters. This task operates by finding
+the four polarizations measurements at a given instant which result in
+the minimum time mismatch. It then uses this set in the conversion process.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. Wildcards are supported.
+No default.
+.TP
+\fIline\fP
+Standard line parameter, with standard defaults. See the help on
+"line" for more information.
+.TP
+\fIselect\fP
+Standard visibility data selection. See the help on "select" for
+more information. The default is to select all data.
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.TP
+\fIstokes\fP
+Several Stokes parameters of the output. Possible values are
+i, q, u and v. There is no default - this parameter must be
+specified.
+.TP
+\fIinterval\fP
+Time interval tolerance, in minutes. This sets the maximum mismatch
+between polarization correlations that can be tolerated. The default
+is 10 minutes,
+.TP
+\fIoptions\fP
+Extra processing options. Several options can be given,
+separated by commas. Minimum match is supported.
+.nf
+  nopol     Do not apply polarization leakage correction.
+  nocal     Do not apply antenna gain correction.
+  nopass    Do not apply bandpass calibration correction.
+  pseudo    By default, tmcvt generates a visibility stream where
+            the error from time mismatches is minimized for each output
+            Stokes visibility. This usually results with different
+            Stokes visibilities for a given baseline having different
+            time tags. The "pseudo" option causes tmcvt to generate an output
+            dataset where all the Stokes visibilities for a given baseline
+            are pseudo-simultaneous (same time tag). This results in larger
+            errors, but may be more convenient if you must form an output
+            image where the beams are the same for the different Stokes
+            parameters, or where you are going to written out to a FITS
+            file.

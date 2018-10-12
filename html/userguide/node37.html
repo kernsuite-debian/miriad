@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Spectral Window Selection</TITLE>
+<META NAME="description" CONTENT="Spectral Window Selection">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1835"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1831"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1825"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1833"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1836"
+  HREF="node38.html">Selection and Multi-Source/Multi-Frequency Datasets</A>
+<B>Up:</B> <A NAME="tex2html1832"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1826"
+  HREF="node36.html">Selecting UV Data in</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00560000000000000000"></A><A NAME="s:window"></A>
+<BR>
+Spectral Window Selection
+</H1>
+A <I>Miriad</I> visibility dataset can contain simultaneous observations at multiple
+spectral bands, or spectral
+windows. These are called `IF-bands' in AIPS. When there are multiple
+spectral windows, channels are still numbered from 1 to <I>N</I>, where channel 1 is
+the first channel of the first spectral window, and channel <I>N</I> is the last
+channel of the last spectral window. That is, channel numbering takes no
+regard of spectral window boundaries.
+
+<P>
+When there are multiple spectral windows, it is often convenient to be able
+to select based on the spectral window, rather than a channel range. This is
+achieved with <code>select=window</code>, which selects data from a set of
+spectral windows. The general form is
+<BLOCKQUOTE>
+<TT>select=window(</TT><I>w1,w2,...</I><TT>)</TT>
+
+</BLOCKQUOTE>
+where <I>w1, w2,</I> etc, are spectral window numbers. For example,
+selecting the data from spectral windows 1, 2 and 3 would be achieved with
+<BLOCKQUOTE>
+<TT>select=window(1,2,3)</TT>
+
+</BLOCKQUOTE>
+
+<P>
+Spectral window selection and <TT>velocity</TT>/<TT>felocity</TT> linetypes are
+quite complementary.
+The different spectral windows might correspond to different spectral
+lines with different rest frequencies, and so it is desirable to select only
+a subset of spectral windows (those corresponding to a given spectral
+line) in forming the output velocity channels.
+
+<P>
+Spectral window selection is not particularly complementary to
+<TT>channel</TT> linetype processing - both select a range of input channels.
+When <TT>line=channel</TT> and <TT>select=window</TT> are used together, the
+total apparent number of input channels is equal to the number of channels
+in the selected spectral windows, and the <I>start</I> channel number of the
+<code>line</code> parameter is relative to the first selected spectral
+window. For example, if there are multiple spectral windows, then
+<BLOCKQUOTE>
+<TT>select=window(2)</TT>
+<BR><TT>line=channel,1</TT>
+
+</BLOCKQUOTE>
+
+<P>
+would select just the first channel of the second spectral window. Similarly
+<BLOCKQUOTE>
+<TT>select=window(2)</TT>
+<BR><TT>line=channel,10,8,1,2</TT>
+
+</BLOCKQUOTE>
+would select 10 channels, being every second channel starting at the 8th
+channel of the second spectral window.
+
+<P>
+There are some restrictions on the use of spectral window selection.
+
+<UL>
+<LI>For <TT>channel</TT> linetype, the selected
+spectral windows must be contiguous. For example, you cannot select just
+windows 1 and 3. This restriction is relaxed by some tasks, most notably
+<A NAME="tex2html45"
+  HREF="../doc/uvcat.html">uvcat</A>.
+</LI>
+<LI>For <TT>channel</TT> linetype, <TT>window</TT> selection cannot be used
+with <TT>or</TT> selection.
+</LI>
+<LI>For <TT>velocity</TT>/<TT>felocity</TT> linetype, if both <TT>window</TT> and <TT>or</TT>
+selections are used, then there should be
+a window selection within each <TT>or</TT> clause. Additionally only
+one of the <TT>or</TT> clauses should be satisfiable for a given visibility.
+For example, consider the following:
+<PRE>
+   select=time(0:00,1:00),window(1,2),or
+          time(0:00,2:00),window(3,4)
+</PRE>
+Here data in the times 0:00 to 1:00 could have been selected by either of
+the two clauses. There is no guarantee as to which of the two window
+subcommands will be used during this time interval.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1835"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1831"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1825"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1833"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1836"
+  HREF="node38.html">Selection and Multi-Source/Multi-Frequency Datasets</A>
+<B>Up:</B> <A NAME="tex2html1832"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1826"
+  HREF="node36.html">Selecting UV Data in</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

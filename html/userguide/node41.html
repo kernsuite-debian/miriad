@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Datasets</TITLE>
+<META NAME="description" CONTENT="Image Datasets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="node40.html">
+<LINK REL="next" HREF="node42.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1884"
+  HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1880"
+  HREF="node40.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1874"
+  HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1882"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1885"
+  HREF="node42.html">Image Coordinate Systems</A>
+<B>Up:</B> <A NAME="tex2html1881"
+  HREF="node40.html">Image Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1875"
+  HREF="node40.html">Image Data Concepts</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00610000000000000000">
+Image Datasets</A>
+</H1>
+Most of the items which are used to build up an image follow a FITS-like
+convention. For example the number of axes in an image is given by the
+<TT>naxis</TT> item, whereas the number of pixels along each axis is
+given by item <TT>naxis</TT><EM>i</EM>. Three exceptions are the <TT>image</TT>,
+<TT>mask</TT> and <TT>history</TT> item. The <TT>image</TT> item contains the pixel
+data, stored as floating point numbers. The <TT>mask</TT> item, if present,
+contains a bit-mask used for pixel blanking - <I>Miriad</I> does not use
+magic value blanking like AIPS. Finally the <TT>history</TT> item
+contains a text file describing the history of the dataset.
+
+<P>
+A complete list of the items that are potentially contained within
+an image dataset is given in Appendix&nbsp;<A HREF="node213.html#app:image">B</A>.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

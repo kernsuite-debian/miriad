@@ -1,0 +1,44 @@
+.TH puthd 1
+.SH NAME
+puthd - Change the value of or add a single header item
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+PUTHD is a MIRIAD task to add or modify an item in the "header"
+of an image or uv dataset.  The item CANNOT be an array or any
+other complex data structure, it must be a single entity.  To
+modify such complex data structures, specialized programs are
+available.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+The name of an item within a data set.  This is given in the
+form as in the example:
+.nf
+   puthd in=dataset/item
+.TP
+\fIvalue\fP
+.fi
+The value to be placed in the item.  Note only single values can
+be given, no arrays.
+.sp
+An optional second units argument can be given to convert the
+value before the item is stored.  Possible units are "degrees",
+"arcminutes", "arcseconds", "time", "hours", "hms", and "dms"
+(with mininum match).  Times are given in the standard Miriad
+form and are stored as Julian dates.  Angular units are
+converted if necessary and stored in radians.  bpa, being the
+exception, is stored in degrees.
+.TP
+\fItype\fP
+The data type of the argument.  Values can be 'integer', 'real',
+'double' and 'ascii'.  The default is determined from the format
+of the value parameter or from the type of the item if it was
+already present.  Normally you can allow this parameter to
+default.
+.sp
+PUTHD will complain when you change the datatype, but otherwise
+allow you to do so.

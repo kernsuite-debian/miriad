@@ -1,0 +1,885 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Calibration</TITLE>
+<META NAME="description" CONTENT="Calibration">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node88.html">
+<LINK REL="previous" HREF="node86.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node88.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2474"
+  HREF="node88.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2470"
+  HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2464"
+  HREF="node86.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2472"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2475"
+  HREF="node88.html">The Interpolation Process</A>
+<B>Up:</B> <A NAME="tex2html2471"
+  HREF="node84.html">Calibration Strategies</A>
+<B> Previous:</B> <A NAME="tex2html2465"
+  HREF="node86.html">Preparing your Data</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001230000000000000000">
+Calibration</A>
+</H1>
+You are now ready to start the main calibration step. You
+should have a large number of <I>Miriad</I> datasets, each containing
+a single frequency band and source. The calibration process will
+determine bandpass functions (assuming you have not already averaged your
+data into a channel-0 dataset) and antenna gains as a function of time.
+If you have measured all four polarisation products, the process will also
+determine
+instrumental polarisation and the polarisation of the secondary calibrator.
+Assuming you have observations of
+the primary flux density calibrator, 1934-638, a secondary phase
+calibrator, and
+your program source, there are two avenues open to you. The first,
+sketched in Figure&nbsp;<A HREF="#fig:polcal2">12.2</A>, uses the secondary to determine
+all the calibration quantities except the absolute flux density scale. The
+primary is used to determine the absolute flux density scale, and is
+generally used to double check the other quantities. While this avenue is
+the preferred path, it requires good parallactic
+angle coverage of the secondary to disentangle the instrumental polarisation
+and the secondary calibrator polarisation. For typical secondary calibrator
+flux densities, it also requires a modest amount of integration time
+to determine the bandpass to good accuracy.
+
+<P>
+The second avenue is to rely on the observation of the primary
+calibrator, 1934-638, to determine instrumental polarisation and bandpass
+function. This is possible as 1934-638 is strong, and its polarisation
+is known (it is less than 0.2% polarised). This approach is shown
+in Figure&nbsp;<A HREF="#fig:polcal3">12.3</A>. Note that this approach relies on knowing
+the polarisation of 1934-638. This approach cannot be used if an
+alternative primary calibrator is used.
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:polcal2"></A><A NAME="3205"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 12.2:</STRONG>
+Flow chart for polarisation calibration in <I>Miriad</I> when
+there is sufficient secondary calibrator data to determine all calibration
+parameters from the secondary.</CAPTION>
+<TR><TD><IMG
+ WIDTH="483" HEIGHT="432" BORDER="0"
+ SRC="img30.png"
+ ALT="\begin{figure}\begin{center}\epsfxsize =14cm\leavevmode\epsffile{polcal2.ps}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV ALIGN="CENTER"><A NAME="fig:polcal3"></A><A NAME="3212"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure 12.3:</STRONG>
+Flow chart for polarisation calibration in <I>Miriad</I> when
+there is insufficient secondary calibrator data to determine some
+calibration parameters.</CAPTION>
+<TR><TD><IMG
+ WIDTH="483" HEIGHT="625" BORDER="0"
+ SRC="img31.png"
+ ALT="\begin{figure}\begin{center}\epsfxsize =14cm\leavevmode\epsffile{polcal3.ps}
+\end{center}
+\end{figure}"></TD></TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<OL>
+<LI><A NAME="step:mfcal"></A><A NAME="3217"></A><A NAME="3218"></A>
+We start by calibrating 1934-638. Assuming that you have not
+averaged the data into a channel-0 dataset, we start with bandpass
+calibration. The task to perform this is <A NAME="tex2html304"
+  HREF="../doc/mfcal.html">mfcal</A>. After having
+solved for the bandpass function, <A NAME="tex2html305"
+  HREF="../doc/mfcal.html">mfcal</A>
+writes a bandpass
+table in the visibility dataset - the data themselves are not
+modified. Although it
+is possible for <A NAME="tex2html306"
+  HREF="../doc/mfcal.html">mfcal</A>
+to cope with datasets which contain
+multiple IF bands, and which frequency switch with time, we recommend
+that you <EM>do not</EM> use this feature. It is easier to stick with
+datasets with a single frequency band.
+
+<P>
+As well as determining a bandpass function, <A NAME="tex2html307"
+  HREF="../doc/mfcal.html">mfcal</A>
+determines
+antenna gains. These gains are based upon the assumption that
+the source is unpolarised (which happens to be true for 1934-638) and that
+the instrumental polarisation is zero (which is not true). While these
+assumptions do not affect the quality of the bandpass, and provided you
+have measured all four polarisation correlations, it is best to follow the
+run of <A NAME="tex2html308"
+  HREF="../doc/mfcal.html">mfcal</A>
+with task <A NAME="tex2html309"
+  HREF="../doc/gpcal.html">gpcal</A>
+to correctly determine
+instrumental polarisation. The task <A NAME="tex2html310"
+  HREF="../doc/mfcal.html">mfcal</A>
+is described more
+completely in Section&nbsp;<A HREF="node79.html#s:mfcal">11.4</A>
+
+<P>
+If your data are to be combined (or compared) with pre-August 1994 ATCA data,
+you will probably also use the <TT>oldflux</TT>
+option (see Section&nbsp;<A HREF="node93.html#s:1934flux">12.6</A>).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=1934-638.4800</TD>
+<TD ALIGN="LEFT">Specify primary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux</TD>
+<TD ALIGN="LEFT">Leave unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Select good channels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Specify the reference antenna.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=5</TD>
+<TD ALIGN="LEFT">Solution interval for gain solutions (minutes).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Normally leave  blank, but</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=oldflux</TD>
+<TD ALIGN="LEFT">set to <TT>oldflux</TT> to get the pre-August 1994 scale.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="3239"></A><A NAME="3240"></A>
+Skip this step if you have measured only the <I>XX</I> and <I>YY</I> correlations.
+We now proceed
+to determine the antenna gains and instrumental
+polarisation from the primary calibrator. Task <A NAME="tex2html311"
+  HREF="../doc/gpcal.html">gpcal</A>
+is used
+for this (see Section&nbsp;<A HREF="node80.html#s:gpcal">11.5</A> for more information). Task <A NAME="tex2html312"
+  HREF="../doc/gpcal.html">gpcal</A>
+will generally use the bandpass determined by <A NAME="tex2html313"
+  HREF="../doc/mfcal.html">mfcal</A>
+to partially correct
+the data. When calibrating 1934-638, the only options that you
+will normally turn on is for the <I>XY</I> phases to be solved for as a function
+of time; <code>options=xyvary</code>.
+If your data are to be combined (or compared) with pre-August 1994 ATCA data,
+you will probably also use the <TT>oldflux</TT>
+option (see Section&nbsp;<A HREF="node93.html#s:1934flux">12.6</A>).
+Typical parameters for calibrating 1934-638 are thus
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=1934-638.4800</TD>
+<TD ALIGN="LEFT">Specify primary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Specify the reference antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=5</TD>
+<TD ALIGN="LEFT">Solution interval for gain solutions (minutes)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=xyvary</TD>
+<TD ALIGN="LEFT">Solve for <I>XY</I> phase as a function of time, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=xyvary,oldflux</TD>
+<TD ALIGN="LEFT">add <TT>oldflux</TT> to get pre-August 1994 flux scale.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Task <A NAME="tex2html314"
+  HREF="../doc/gpcal.html">gpcal</A>
+will report the instrumental polarisation parameters
+(leakages) - two complex numbers per feed. Typically these are 1 to 2%,
+although they can be 4% under bad conditions. Typically these are quite
+constant with time, with similar values resulting from observations
+several months apart. However they are modestly frequency dependent.
+
+<P>
+</LI>
+<LI>Calibration of 1934-638 is
+now complete. You should examine the calibration solutions for
+reasonableness.
+Generally the bandpass function will have an amplitude
+of 1, plus or minus 15%, and phase of a few degrees. Provided you equalised
+the gains at the start of your observation, your antenna gains
+should have an amplitude close to 1, although the phases should reflect
+atmospheric phase stability. If you see glitches in the antenna gains
+in time, it
+is probably due to bad data. Go back and look at the data near this
+time, and perhaps do some more flagging - see Section&nbsp;<A HREF="node62.html#s:uvflag">10.1</A>.
+
+<P>
+Tasks appropriate to examine the effectiveness of the calibration are
+<A NAME="tex2html315"
+  HREF="../doc/uvplt.html">uvplt</A>
+(to generate plots of the calibrated data - remember that many
+<I>Miriad</I> tasks apply any available calibration by default) and <A NAME="tex2html316"
+  HREF="../doc/gpplt.html">gpplt</A>
+(to generate plots of the calibration tables - both antenna gains
+and bandpass functions). A particularly useful plot is the ``scatter diagram''
+plot generated by <A NAME="tex2html317"
+  HREF="../doc/uvplt.html">uvplt</A>
+with the following inputs
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=1934-638.4800</TD>
+<TD ALIGN="LEFT">Specify primary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,q,u,v</TD>
+<TD ALIGN="LEFT">Plot all Stokes parameters.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=real,imag</TD>
+<TD ALIGN="LEFT">Plot real vs imaginary</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=equal,nobase</TD>
+<TD ALIGN="LEFT">Equal X and Y axes. Plot all baselines</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">together.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Normal PGPLOT device - Xwindows for example</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+This scatter diagram should show four concentrations of points - one for
+<I>I</I> at the flux density of the calibrator, and the others for <I>Q</I>, <I>U</I> and <I>V</I>
+probably
+near zero. If there are outliers, you probably need to do some more flagging.
+If you see arcs, the phase calibration is probably bad - you might try
+decreasing the solution interval.
+
+<P>
+</LI>
+<LI>We now come to calibrating the secondary calibrator, and there are
+three possible approaches to follow:
+
+<UL>
+<LI>If you have multi-channel data for the secondary (i.e. not channel-0),
+but you do not have sufficient observations on the secondary to determine a bandpass
+from it, you must use the second approach (Figure&nbsp;<A HREF="#fig:polcal3">12.3</A> and
+step 6 below).
+</LI>
+<LI>If you have measured all four polarisation correlations and if you
+have poor parallactic angle coverage of the secondary,
+you must use the second approach (Figure&nbsp;<A HREF="#fig:polcal3">12.3</A> and step 6).
+</LI>
+<LI>Otherwise you have sufficient data to use your secondary to
+determine the appropriate calibration parameters, and you can use the first
+approach (Figure&nbsp;<A HREF="#fig:polcal2">12.2</A> and step 5).
+</LI>
+<LI>There is a third, hybrid, approach, which determines the bandpass from
+the primary and the polarisation characteristics from the secondary. Although
+this approach is no more complicated than the other two, we leave it as
+an exercise for the reader to determine the correct sequence.
+</LI>
+</UL>
+
+<P>
+Good parallactic angle coverage enables you to disentangle the instrumental
+and secondary polarisations from each other. ``Good coverage'' generally means
+more than a few cuts. For sources near declination of -30 degrees, the
+parallactic angle remains constant through much of the observation, except near
+transit where it goes through a rapid change, whereas for sources near the
+poles, parallactic angle changes linearly with time.
+You can plot your parallactic angle coverage using the
+task <A NAME="tex2html318"
+  HREF="../doc/varplt.html">varplt</A>. More strictly, it plots the angle between the
+sky and the feed (i.e. parallactic angle plus 45 degrees for the
+ATCA).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VARPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xaxis</TD>
+<TD ALIGN="LEFT">Time is the default x axis</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yaxis=chi</TD>
+<TD ALIGN="LEFT">Plot parallactic angle + 45 degrees</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">PGPLOT device - xwindows in this case</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><EM>If you have sufficient secondary data:</EM>
+If you have not already averaged
+the data into a channel-0 dataset, you should determine the bandpass
+calibration of the secondary. This is identical to the determining the bandpass
+calibration for the primary, except that the flux density, and its
+variation with frequency, will generally not be known for the secondary.
+In this case <A NAME="tex2html319"
+  HREF="../doc/mfcal.html">mfcal</A>
+assumes a spectral index of 0 and a flux density to
+make the rms antenna gains equal to 1. Again, if the atmospheric phase stability
+is good, set the solution interval to the scan length. Otherwise, provided
+the source is moderately strong, set the
+solution interval to a small value. Typical input parameters are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Specify the reference antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=5</TD>
+<TD ALIGN="LEFT">Solution interval for gain solutions (minutes)</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<A NAME="3301"></A>
+Skip the remainder of this step if you have only measured <I>XX</I> and <I>YY</I>
+correlations, as the
+gains determined by <A NAME="tex2html320"
+  HREF="../doc/mfcal.html">mfcal</A>
+are as good as you can do. Otherwise
+we now come to solving for instrumental polarisation and the polarisation
+of the secondary itself. Given good parallactic angle coverage, these
+can be disentangled. For a given correlation, the instrumental polarisation
+terms stay constant with time, whereas
+the polarisation due to the source vary as sinusoids of the parallactic angle.
+Inputs to <A NAME="tex2html321"
+  HREF="../doc/gpcal.html">gpcal</A>
+are similar to the case of the primary, with
+the very significant exception that we must turn on the switch to solve for
+the secondary's polarisation. The appropriate
+options to do this are <TT>options=qusolve,xyvary</TT>. As with <A NAME="tex2html322"
+  HREF="../doc/mfcal.html">mfcal</A>, the
+flux density of the secondary will generally not be known, so <A NAME="tex2html323"
+  HREF="../doc/gpcal.html">gpcal</A>
+determines a flux density so that the rms antenna gains are 1. Again
+the <TT>interval</TT> parameter should be set to the calibrator scan length
+if the phase stability is good. If this is not so, then it should be set to
+a smaller value (1 to 0.1 minutes) with the caveats as noted in the
+Section&nbsp;<A HREF="node79.html#s:mfcal">11.4</A> above. If you do set it so a small value,
+there is an additional step (and decision) to be performed before you can
+interpolate the gain solutions onto your program source - see
+Section&nbsp;<A HREF="node90.html#s:gpaver">12.4</A>.
+
+<P>
+Typical inputs for this case are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Specify the reference antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=5</TD>
+<TD ALIGN="LEFT">Solution interval for gain solutions (minutes)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=qusolve,xyvary</TD>
+<TD ALIGN="LEFT">Solve for calibrator <I>Q</I> and <I>U</I>, and</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">allow <I>XY</I> phase to vary with time.</TD>
+</TR>
+</TABLE>
+</DIV>
+In the unlikely chance that your calibrator turns out to be more than
+about 5% polarised, you may wish to run <A NAME="tex2html324"
+  HREF="../doc/gpcal.html">gpcal</A>
+again, but this
+time you should add options <code>xyref</code> and <code>polref</code>. This will solve
+for an <I>XY</I> phase offset on the reference antenna, as well as an
+instrumental polarisation characteristic that cannot be determined from
+a weakly polarised source.
+
+<P>
+</LI>
+<LI><EM>If you have little secondary data:</EM>
+If you have poor parallactic angle coverage of your secondary
+and/or there are insufficient observations of the
+secondary to determine a bandpass solution, then it is best to
+rely on the instrumental polarisation and bandpass calibration
+determined from 1934-638. The
+suggested approach, sketched in Figure&nbsp;<A HREF="#fig:polcal3">12.3</A>, is to copy the
+instrumental polarisation parameters (if present) and bandpass from 1934-648
+to your secondary, and then solve for the antenna gains. Additionally
+if all four polarisation correlations were measure, the polarisation of
+the secondary is also solved for.
+
+<P>
+The task to copy the instrumental polarisation and bandpass function is
+<A NAME="tex2html325"
+  HREF="../doc/gpcopy.html">gpcopy</A>. The inputs are very simple for this situation - you give it
+the names of the input and output datasets. For example
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPCOPY</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=1934-638.4800</TD>
+<TD ALIGN="LEFT">Specify 1934-638 dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify the output secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Leave unset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+This will also copy the antenna gains determined for 1934-638 - this is
+unimportant as we will now overwrite them by rerunning <A NAME="tex2html326"
+  HREF="../doc/gpcal.html">gpcal</A>. We
+want to solve for antenna gains and the <I>XY</I> phases as a function of time.
+Additionally, if we have measured all four polarisation correlations, we want
+to solve for the polarisation of the secondary.
+We <EM>do not</EM> have enough data to solve for
+instrumental and secondary polarisation simultaneously, so we turn off
+the solver for instrumental polarisation.
+The relevant options are
+thus <TT>options=xyvary,qusolve,nopol</TT> if all four polarisation correlations
+were measured, and <TT>options=xyvary,nopol</TT> if only <I>XX</I> and <I>YY</I> were
+measured. Again the solution
+interval should be either the scan length (for observations with good
+phase stability) or set to a small value (if phase stability
+is poor). Typical inputs are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPCAL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Specify the reference antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=5</TD>
+<TD ALIGN="LEFT">Solution interval for gain solutions (minutes)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=xyvary,qusolve,nopol</TD>
+<TD ALIGN="LEFT">If you measured <I>XX</I>,<I>YY</I>,<I>XY</I> and <I>YX</I>, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=xyvary,nopol</TD>
+<TD ALIGN="LEFT">if you have only <I>XX</I> and <I>YY</I> correlations.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="3357"></A> The calibration of the secondary is almost complete. Before we
+complete it, though we should examine
+the quality of the solutions. Four tasks are recommended for this -
+<A NAME="tex2html327"
+  HREF="../doc/uvflux.html">uvflux</A>
+(how well
+does the secondary data fit a point source model?),
+<A NAME="tex2html328"
+  HREF="../doc/uvplt.html">uvplt</A>
+(plot the calibrated secondary data), <A NAME="tex2html329"
+  HREF="../doc/gpplt.html">gpplt</A>
+(plot
+the gain solutions) and <A NAME="tex2html330"
+  HREF="../doc/gpnorm.html">gpnorm</A>
+(compare secondary solutions with those
+determined from the primary or elsewhere).
+
+<P>
+The first, and simplest, check of the calibration process is to use
+<A NAME="3362"></A>
+<A NAME="tex2html331"
+  HREF="../doc/uvflux.html">uvflux</A>
+to check how well the calibrated data fits a point source.
+Task <A NAME="tex2html332"
+  HREF="../doc/uvflux.html">uvflux</A>
+assumes the data represents a point source, and determines
+the source flux density and the rms scatter about this point. It also prints out
+the theoretical scatter based on thermal noise arguments. It will do this for
+any of the Stokes parameters. Typical inputs are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVFLUX</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,q,u,v</TD>
+<TD ALIGN="LEFT">Check all four Stokes parameters.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset (apply calibration).</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The first numeric column given for each Stokes parameter is the theoretical
+scatter. Note if you are using the 33 channel / 128 MHz system, and if
+no channel averaging has been performed, or the <TT>birdie</TT> options
+has not been used with <A NAME="tex2html333"
+  HREF="../doc/atlod.html">atlod</A>, then the
+theoretical scatter printed by <A NAME="tex2html334"
+  HREF="../doc/uvflux.html">uvflux</A>
+is a factor of <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img32.png"
+ ALT="$\sqrt{2}$"></SPAN>
+higher than the true theoretical value. This is as, for this correlator
+configuration (and not for others), individual channels are not independent -
+they overlap by a factor of exactly 2 (in noise bandwidth). Task <A NAME="tex2html335"
+  HREF="../doc/uvflux.html">uvflux</A>
+fails to take account of this. The second and third numeric columns
+are the mean visibility
+amplitude and phase. The phase should be near 0 for <I>I</I>, but could be either
+0 or 180 degrees for <I>Q</I> and <I>U</I> (assuming there is signal in these!).
+<I>V</I> should be noise. The fourth
+column gives the actual scatter. This should be close to the theoretical
+value. Do not be concerned if it is a factor of 2 or so bigger. If it is
+more than a factor of a few greater than the theoretical, you probably
+still have bad data or a bad gain solution.
+
+<P>
+Using <A NAME="tex2html336"
+  HREF="../doc/uvplt.html">uvplt</A>
+to plot the calibrated data is also recommended. As
+with the primary, a scatter diagram plot is quite useful and quick.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,q,u,v</TD>
+<TD ALIGN="LEFT">Plot all Stokes parameters.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=real,imag</TD>
+<TD ALIGN="LEFT">Plot real vs imaginary</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=equal,nobase</TD>
+<TD ALIGN="LEFT">Equal X and Y axes. Plot all baselines</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">together.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Normal PGPLOT device - Xwindows for example</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Outliers in the scatter diagram probably indicate bad data - you might
+want to go back and flag some more, and redo some calibration steps. Note,
+however, that the ultimate objective of the calibration process is to get
+good calibration solutions - you are not attempting to produce perfect
+primary or secondary calibrator data. If you do not believe that outliers
+affect the calibration solutions unduly, ignore them.
+
+<P>
+Another check is to plot the gain solutions and inspect them for
+consistency - use <A NAME="tex2html337"
+  HREF="../doc/gpplt.html">gpplt</A>
+for this (see Section&nbsp;<A HREF="node82.html#s:gpplt">11.7</A>).
+Typical inputs for plotting the solved-for <I>XY</I>
+phases are given below. These <I>XY</I> phases are the difference between the
+actual <I>XY</I> phases and the <I>XY</I> phase correction applied by <A NAME="tex2html338"
+  HREF="../doc/atlod.html">atlod</A>.
+These should be constant (within the noise) and no more than a few degrees.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPPLT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823.uv</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">PGPLOT device - X windows in this case</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yaxis=phase</TD>
+<TD ALIGN="LEFT">Plot the phase of the ratio</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=xygains</TD>
+<TD ALIGN="LEFT">of the <I>X</I> and <I>Y</I> gains</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+In addition to plotting these solved-for <I>XY</I> phases, it is probably worth
+while plotting antenna and bandpass gains and phases. If you see glitches
+in the solutions, check the data again. This might be due to bad data
+or interference. You might do some more flagging, and redo some of the
+calibration again.
+
+<P>
+A final check is to compare the instrumental polarisation solution
+(the leakage parameters). You can compare these with another independently
+derived set of these solutions. These solutions are moderately time
+independent (they are moderately consistent over months), although there
+is significant frequency variation. The independent set of solutions
+may have come from the primary (e.g. if you determined instrumental polarisation
+for the primary and secondary independently - which was recommended if
+you had sufficient parallactic angle coverage), or from a previous
+configuration, or possibly other secondary calibrators from the same
+observing run. The task to compare the different solutions is <A NAME="tex2html339"
+  HREF="../doc/gpnorm.html">gpnorm</A>.
+Apart from just taking some sort of difference between two sets of parameters,
+it adjusts certain parameters to minimise the difference. The parameters
+that it adjusts are the absolute feed orientation and ellipticity - two
+quantities that are not solved for in the preceding calibration process
+(unless you had a strongly polarised calibrator, and used <TT>options=polref</TT>
+in <A NAME="tex2html340"
+  HREF="../doc/gpcal.html">gpcal</A>). Task <A NAME="tex2html341"
+  HREF="../doc/gpnorm.html">gpnorm</A>
+can also deduce an error in the
+absolute <I>XY</I> phase between the two observations (an error in the absolute
+<I>XY</I> phase leaves a signature in the instrumental polarisation parameters).
+
+<P>
+Task <A NAME="tex2html342"
+  HREF="../doc/gpnorm.html">gpnorm</A>
+reports three numbers - an <I>XY</I> phase offset, the
+offset in absolute orientation and ellipticity, and a residual rms error.
+As the preceding calibration process should have corrected for the <I>XY</I>
+phase offset, this should be no more than a few degrees. The offset in
+absolute orientation and ellipticity should be no more than 2-3%.
+The rms residual error should be no more than 0.005. You would
+expect the agreement to degrade with time difference in the observations
+used to derive the parameters. Agreement should be very good for
+parameters derived from observations on the same day, whereas agreement
+should be less good for observations several months apart.
+
+<P>
+Having solved for an offset in absolute <I>XY</I> phase, orientation and
+ellipticity, <A NAME="tex2html343"
+  HREF="../doc/gpnorm.html">gpnorm</A>
+can ``correct'' the calibration tables
+for these. This is generally not advisable.
+
+<P>
+Typical inputs to <A NAME="tex2html344"
+  HREF="../doc/gpnorm.html">gpnorm</A>
+are
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPNORM</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">The leakages to check.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cal=1934-638.4800</TD>
+<TD ALIGN="LEFT">The `good' set of leakages.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="3429"></A><A NAME="3430"></A>
+Having produced a good set of calibration tables for the secondary, all
+that remains is to correct for the flux density of the secondary calibrator.
+The task to do this is <A NAME="tex2html345"
+  HREF="../doc/gpboot.html">gpboot</A>.
+Recall that the flux density of the secondary was determined by assuming that
+the rms gain amplitude was 1. This assumption will be in error, although if
+the gains were equalised before the observation (which is the normal practice),
+the error will typically be small. Only a small adjustment needs to be made.
+Given that we know the flux density of the primary, the correction for the
+secondary's flux density can be determined. Then the gains of the secondary
+can be corrected to reflect the true flux density of the secondary.
+
+<P>
+In principle, you should use observations of the secondary and primary
+calibrators that were taken at the same time and elevation. For obvious
+reasons this is not possible. However, you can use the <TT>select</TT> keyword
+to select data from the secondary when it was as close as possible to the
+primary's elevation when it was observed.
+
+<P>
+Task <A NAME="tex2html346"
+  HREF="../doc/gpboot.html">gpboot</A>
+can optionally correct the <I>XY</I> phases of the
+secondary, assuming that the <I>XY</I> phases of the primary are correct,
+and that the <I>XY</I> phases are constant.  Given <I>XY</I> phase strategy
+that you should have already followed, this is not recommended.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPBOOT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cal=1934-638.4800</TD>
+<TD ALIGN="LEFT">Specify the primary calibrator.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Use this to select the time range of</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">the secondary.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=noxy</TD>
+<TD ALIGN="LEFT">Do not make XY phase corrections</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>All that remains is to transfer the calibration tables to the program source.
+Again we use <A NAME="tex2html347"
+  HREF="../doc/gpcopy.html">gpcopy</A>
+to go this. Typical inputs are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPCOPY</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=0823-500.4800</TD>
+<TD ALIGN="LEFT">Specify secondary calibrator</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.4800</TD>
+<TD ALIGN="LEFT">Specify the program source dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2474"
+  HREF="node88.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2470"
+  HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2464"
+  HREF="node86.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2472"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2475"
+  HREF="node88.html">The Interpolation Process</A>
+<B>Up:</B> <A NAME="tex2html2471"
+  HREF="node84.html">Calibration Strategies</A>
+<B> Previous:</B> <A NAME="tex2html2465"
+  HREF="node86.html">Preparing your Data</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

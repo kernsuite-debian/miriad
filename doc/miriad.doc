@@ -1,0 +1,33 @@
+%N miriad
+%D Simple Miriad front-end for dumb terminals.
+%P rjs
+%: tools
+%B
+  "miriad" is a command-line front-end to run Miriad tasks from a dumb
+  terminal. The commands that you give it are somewhat AIPS-like.
+  Unrecognised commands are passed to the host command interpreter.
+
+  The following are the recognised commands:
+
+    set <key> <value>           Set or show a keyword.
+    <key>=<value>               Set a keyword.
+    unset <key> [<key> ... ]    Unset keyword(s).
+    er <key>                    Line-edit a keyword value.
+    task [<task>]               Set/show default task.
+    inp [<task>]                Show settings of keywords to task.
+    go  [<task>] [> log] [&]    Run a task.
+    help [-k key] [-w] [<task>] Help on a task or topic.
+    view [<task>]               Edit keyword file for task.
+    save/load [file]            Save/load global keyword file.
+    tget/tput [-l] [<task>]     Save/load task keyword file.
+    setenv env value            Set environment variable.
+    unsetenv env                Unset environment variable.
+    cd <dir>                    Change and/or show current directory
+    source <file>               Read commands from <file>
+    exit                        Exit miriad and save variables.
+    quit                        Exit miriad and do not save variables.
+
+  Type
+    help tasks
+  for more information about Miriad tasks.
+

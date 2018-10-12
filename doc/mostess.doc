@@ -1,0 +1,61 @@
+%N mostess
+%D Maximum Entropy deconvolution for a mosaiced observation
+%P rjs
+%: deconvolution
+%B
+        MOSMANY performs a joint maximum entropy deconvolution of a
+        collection of dirty images from a mosaiced observation.
+ 
+%A map
+        The input dirty maps. No default.
+%A beam
+        The input dirty beams. No default.
+%A default
+        Default image name. The default is a flat image.
+%A model
+        Name of the initial estimate. Default is a flat initial
+        estimate.
+%A out
+        The name of the output map.
+%A niters
+        The maximum number of iterations. The default is 30.
+%A measure
+        The entropy measure to be used, either "gull" (-p*log(p/e)) or
+        "cornwell" (-log(cosh(p)) -- also called the maximum emptiness
+        criteria).
+%A tol
+        Tolerance of solution. There is no need to change this from the
+        default of 0.01.
+%A q
+        An estimate of the number of points per beam. MOSMEM can usually
+        come up with a good, image-dependent estimate.
+%A rmsfac
+        MOSTESS knows the theoretical rms noise of the input dirty maps,
+        and will, by default, attempt to reduce the residuals to have an
+        rms of this amount.  If the true rms noise is different from the
+        theoretical, you may give the factor to multiply by to convert
+        from theoretical to true rms noise.
+ 
+        The theoretical rms will usually be an optimistic estimate of
+        the true noise level.  The true noise will be increased by
+        calibration errors, confusion, poorly understood distant
+        sidelobes, etc, so rmsfac will usually give some "fudge factor"
+        greater than 1.
+%A flux
+        An estimate of the total flux of the source.  Giving a good
+        total flux will help MOSMEM find a good solution.  On the other
+        hand, giving a poor value may do harm.  Normally MOSMEM will NOT
+        constrain the total flux to be this value, but see the "doflux"
+        option below.  The default is image-dependent for measure=gull,
+        and zero for measure=cornwell.
+%A options
+        Task enrichment parameters.  Several can be given, separated by
+        commas.  Minimum match is used.  Possible values are:
+          doflux     Constraint the flux to be that given by the "flux"
+                     parameter.  Normally the "flux" parameter value is
+                     only used to determine the default image level.
+          verbose    Give lots of messages during the iterations.  The
+                     default is to give a one line message at each
+                     iteration.
+ 
+%R 1.11, 2016/03/18 03:25:44 UTC

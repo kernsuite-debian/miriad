@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Displaying Calibration Tables - GPPLT</TITLE>
+<META NAME="description" CONTENT="Displaying Calibration Tables - GPPLT">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node83.html">
+<LINK REL="previous" HREF="node81.html">
+<LINK REL="up" HREF="node73.html">
+<LINK REL="next" HREF="node83.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2407"
+  HREF="node83.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2403"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2397"
+  HREF="node81.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2405"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2408"
+  HREF="node83.html">Deleting Calibration Tables -</A>
+<B>Up:</B> <A NAME="tex2html2404"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2398"
+  HREF="node81.html">Copying Calibration Tables -</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001170000000000000000"></A><A NAME="s:gpplt"></A><A NAME="3084"></A>
+<A NAME="3085"></A>
+<BR>
+Displaying Calibration Tables - GPPLT
+</H1>
+
+<P>
+Calibration corrections can be examined with the task <A NAME="tex2html292"
+  HREF="../doc/gpplt.html">gpplt</A>.
+This task can list and plot antenna gain, bandpass, delay and
+leakage terms.  Most of the inputs are self-explanatory - see the help
+file for more information.  Only a few parameters will be described
+here.
+
+<P>
+
+<UL>
+<LI>The input dataset is given by the normal <TT>vis</TT> parameter.
+
+<P>
+</LI>
+<LI>The <TT>device</TT> parameter specifies the PGPLOT device for the
+plot, whereas the <TT>log</TT> parameter gives the output logfile for the
+listing.  Either <TT>device</TT> or <TT>log</TT> must be set.
+
+<P>
+</LI>
+<LI>The <TT>options</TT> parameter determines what quantities to plot or
+list.  Several quantities can be given, separated by commas.
+Possibilities are <TT>gains</TT> (<I>i.e.</I>  the antenna gains), <TT>polarisation</TT> (the polarisation leakage terms), <TT>delays</TT> and <TT>bandpass</TT>.  Additionally for dual polarisation
+systems, there are two quantities derived from the gains, namely <TT>xygains</TT> and <TT>xbyygain</TT>.  <TT>xygains</TT> gives the <I>X</I> polarisation
+gain divided by the <I>Y</I> polarisation gain (or <I>R</I> divided by <I>L</I> for
+circular feeds).  The phase of this quantity is the much reviled <I>XY</I>
+phase of the ATCA.  xbyygain is the product of the <I>X</I> and <I>Y</I>
+polarisation gains - it is of more limited use.
+
+<P>
+Two other options are sometimes useful.  Option <TT>dots</TT> causes the
+plots to use small dots rather than larger blobs.  This can
+reduce the size of plot files significantly and reduce the printing
+time.  Option <TT>dtime</TT> causes the time axis to be plotted in decimal
+hours (rather than the normal hh:mm:ss).  This can be useful for
+listings which are to be put into another package (<I>e.g.</I>  a
+spreadsheet) for further analysis.
+
+<P>
+</LI>
+<LI>The yaxis parameter controls whether the amplitude, phase, real
+or imaginary part of the gain is plotted.  Several values chosen from
+<TT>amp</TT>, <TT>phase</TT>, <TT>real</TT> or <TT>imag</TT> can be given.  When
+several values are given, then several plots will result from a given
+option for a given baseline.
+
+<P>
+</LI>
+<LI>The <TT>select</TT> parameter behaves like the normal visibility
+selection parameter (see Section&nbsp;<A HREF="node36.html#s:select">5.5</A>) - except that you are
+selecting gains rather than visibilities.  Currently only a subset of the
+normal <TT>select</TT> commands are supported, and these are not entirely
+consistently handled.  <TT>Antenna</TT> and <TT>time</TT>
+selection is supported for gains. <TT>Time</TT> selection is supported for
+delay and spectral correction. <TT>Antenna</TT> and <TT>frequency</TT> selection
+is supported for band passes.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2407"
+  HREF="node83.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2403"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2397"
+  HREF="node81.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2405"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2408"
+  HREF="node83.html">Deleting Calibration Tables -</A>
+<B>Up:</B> <A NAME="tex2html2404"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2398"
+  HREF="node81.html">Copying Calibration Tables -</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

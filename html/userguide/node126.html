@@ -1,0 +1,157 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Spectral Line Processing and RPFITS files</TITLE>
+<META NAME="description" CONTENT="Spectral Line Processing and RPFITS files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node127.html">
+<LINK REL="previous" HREF="node125.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node127.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2981"
+  HREF="node127.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2977"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2971"
+  HREF="node125.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2979"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2982"
+  HREF="node127.html">Spectral Line Processing and</A>
+<B>Up:</B> <A NAME="tex2html2978"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2972"
+  HREF="node125.html">ATCA Spectral Line Correlator</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001630000000000000000"></A><A NAME="s:specrpfits"></A><A NAME="4209"></A>
+<BR>
+Spectral Line Processing and RPFITS files
+</H1>
+When using <A NAME="tex2html546"
+  HREF="../doc/atlod.html">atlod</A>
+to read in spectral line data, there are a few
+extra parameters that should be considered
+<DL>
+<DT><STRONG><TT>ifsel</TT>:</STRONG></DT>
+<DD>The ATCA allows you to observe two frequency setups
+simultaneously<code>ifsel</code> allows you to load just one of them by
+setting <code>ifsel=1</code> or <code>ifsel=2</code>. The default is to load both
+of them.
+</DD>
+<DT><STRONG><TT>restfreq</TT>:</STRONG></DT>
+<DD>The RPFITS file does not contain the
+rest frequency of the spectral line observed, so you need to give
+this at some stage during data reduction - the earlier the better.
+The rest frequency can be entered (via <code>restfreq</code>, in GHz) in
+<A NAME="tex2html547"
+  HREF="../doc/atlod.html">atlod</A>.
+</DD>
+</DL>
+
+<P>
+There are a few <TT>options</TT> in <I>Miriad</I>'s <A NAME="tex2html548"
+  HREF="../doc/atlod.html">atlod</A>
+of particular
+interest to spectral line observers:
+<DL>
+<DT><STRONG><TT>bary:</TT></STRONG></DT>
+<DD>By default, task <A NAME="tex2html549"
+  HREF="../doc/atlod.html">atlod</A>
+uses the LSR as the rest
+frame when computing velocity information.
+However you can change
+this to the barycentre by using <TT>options=bary</TT>. Note that LSR
+velocities are the standard for Galactic astronomy, whereas barycentric
+are more commonly used by extragalactic astronomers. If you load with
+the wrong velocity reference frame, you can change this later with
+<A NAME="tex2html550"
+  HREF="../doc/uvredo.html">uvredo</A>
+(for visibility datasets) or <A NAME="tex2html551"
+  HREF="../doc/velsw.html">velsw</A>
+(for images).
+</DD>
+<DT><STRONG><TT>birdie:</TT></STRONG></DT>
+<DD>The ATCA suffers self-interference at frequencies
+which are multiples of 128 MHz (e.g. 1408 MHz). For spectral line
+modes, the <code>birdie</code> option flags any channels that are affected
+by the self-interference. This is strongly recommended.
+</DD>
+<DT><STRONG><TT>hanning</TT>:</STRONG></DT>
+<DD>This option performs Hanning<A NAME="4226"></A>
+smoothing of the
+spectra, and discards every second channel.
+</DD>
+<DT><STRONG><TT>compress</TT>:</STRONG></DT>
+<DD>This causes the data to be written in a scaled 16-bit format,
+thus reducing disk usage by a factor of two.
+</DD>
+<DT><STRONG><TT>noif</TT>:</STRONG></DT>
+<DD>If you are loading the ATCA's two frequency setups
+simultaneously, <A NAME="tex2html552"
+  HREF="../doc/atlod.html">atlod</A>
+normally tries to stack the two together
+as ``spectral windows'' (IFs in AIPS terminology). However this will
+not be possible if the two setups sample different sets of polarisation
+parameters. In this case, you will need to use <code>options=noif</code> to
+get <A NAME="tex2html553"
+  HREF="../doc/atlod.html">atlod</A>
+to store the different frequency setups as
+different visibilities.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2981"
+  HREF="node127.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2977"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2971"
+  HREF="node125.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2979"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2982"
+  HREF="node127.html">Spectral Line Processing and</A>
+<B>Up:</B> <A NAME="tex2html2978"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2972"
+  HREF="node125.html">ATCA Spectral Line Correlator</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

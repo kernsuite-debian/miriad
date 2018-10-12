@@ -1,0 +1,31 @@
+.TH minmax 1
+.SH NAME
+minmax - Forced write of the minimum and maximum data header values
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map analysis
+.SH DESCRIPTION
+MINMAX sets the DATAMIN and DATAMAX items in an image in those rare
+cases that you need it computed from a selected area. Most commonly
+when data have been flagged (e.g. with MATHS or IMFLAG).
+See also PUTHD on how to patch a user supplied value for DATAMIN
+and/or DATAMAX.
+If the min/max was found to be the same, nothing will be done to
+the dataset.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input dataset name. No default.
+.TP
+\fIregion\fP
+The region of interest over which the min and max are to be computed.
+Full region specifications are supported.
+See the Users Manual for instructions on how to specify this.
+Default: the whole dataset
+.TP
+\fIminmax\fP
+If supplied, this is a fast way to set a new value for the min and
+max as you want them. There is no checking if the values are
+correct, or even if ``min < max''.
+Default: not used.

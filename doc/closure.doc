@@ -1,0 +1,81 @@
+%N closure
+%D Plot closure quantities
+%P rjs
+%: uv analysis, plotting
+%B
+        CLOSURE is a Miriad task that plots closure quantities: the
+        closure phase ("triple phase"), closure amplitude ("quad
+        amplitude"), and two less well known quantities - the triple
+        amplitude and quad phase.
+ 
+        These are defined as
+ 
+          Closure (triple) phase:    arg( V12*V23*conjg(V13) )
+          Closure (quad) amplitude:  abs( (V12*V34)/(V14*conjg(V34)) )
+          Triple amplitude:          abs( V12*V23*conjg(V13) )**0.3333
+          Quad phase:                arg( (V12*V34)/(V14*conjg(V34)) )
+ 
+        The closure phase, quad phase and closure amplitude should be
+        independent of antenna-based errors, and for a point source
+        should have values of zero phase or unit amplitude.  The triple
+        amplitude is independent of antenna-based phase errors (but not
+        amplitude errors), and for a point source is a measure of the
+        flux density.
+ 
+        The task works by averaging the quantites that are the argument
+        of the abs or arg function.  These are always averaged over the
+        selected frequency channels and over the parallel-hand
+        polarizations. Optionally the averaging can also be done over
+        time and over the different closure paths.
+ 
+        CLOSURE also prints (and optionally plots) the theoretical error
+        (as a result of thermal noise) of the quantities.  Note this
+        assumes a point source model, and that the signal-to-noise ratio
+        is appreciable (at least 10) in each averaged product.
+ 
+%A vis
+        The input visibility datasets. Several datasets can be given.
+%A select
+        Standard visibility selection. See help on "select" for more
+        information.
+%A line
+        Standard visibility linetype. See the help "line" for more
+        information.
+%A stokes
+        Normal Stokes/polaization selection. The default is to process
+        all parallel-hand polarisations.
+%A device
+        PGPLOT plotting device. The default is no plotting device (the
+        program merely prints out some statistics).
+%A nxy
+        The number of plots per page in x and y. The default depends on
+        the number of plots.
+%A yrange
+        The y range of the plots. The default is to autoscale.
+%A interval
+        Time averaging interval. The default is no time averaging of the
+        triple correlations.
+%A options
+        Task enrichment parameters.  Several parameters can be given,
+        separated by commas.  Minimum match is supported. Possible
+        options are:
+          amplitude Plot the amplitude quantity (the default is to plot
+                    phase).
+          quad      Plot the quad quantity (the default is to plot the
+                    triple quantity).
+          avall     Average all quantities from different triangles
+                    together. Note the theoretical error estimates are
+                    incorrect when using options=avall.
+          notriple  Plot data from all quantities on a single plot.
+          rms       Plot theoretical error bars on the points. The error
+                    bars are +/- sigma.
+          log       Make a log file closure_log.txt.
+        The following give control over calibration to be applied to the
+        visibility data before the triple correlations are formed. Note
+        that applying phase calibrations does not affect the closure
+        phase!
+          nocal     Do not perform gain calibration.
+          nopol     Do not perform polarisation calibration on the data.
+          nopass    Do not perform bandpass calibration on the data.
+ 
+%R 1.8, 2013/08/30 01:49:21 UTC

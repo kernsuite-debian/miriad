@@ -1,0 +1,35 @@
+%N plboot
+%D Set the flux scale of a visibility dataset given a planet obs.
+%P rjs
+%: calibration
+%B
+        PlBoot is a MIRIAD program which corrects the flux scale in
+        visibility datasets. In doing this, it assumes that the flux
+        scale is out by a constant factor. PlBoot looks for observations
+        of planets, and given its model of the planetary visibility
+        function, it computes the factor needed to correct the dataset's
+        flux scale.
+ 
+        To fix the flux scale, PlBoot modifies calibration tables attached
+        to each dataset.
+%A vis
+        Input visibility datasets. Several datasets can be given (wildcards
+        are supported). The datasets should include observations of a planet.
+%A select
+        Normal uv-selection parameter. This selects the data in the input
+        datasets to analyse. See the help on ``select'' for more information.
+        plboot will use any data that has a source name which it recognises
+        as a planet. You may wish to select just the shortest spacing, where
+        the planet is strongest.
+%A device
+        PGPLOT device to plot the planet model data as well as the visibility
+        data. The default is to not produce a plot.
+%A options
+        Extra processing options. Several can be given, separated by commas.
+          vector  Use the real part (rather than amplitude) of the data and
+                  model. This option should be used if the visibility data are
+                  phase calibrated
+          noapply Do not apply the scale factor (just evaluate it).
+          nofqav  When dealing with amplitude data, PLBOOT normally
+                  averaging in frequency first, to avoid noise
+                  biases. The nofqav disables this averaging.

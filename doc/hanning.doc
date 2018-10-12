@@ -1,0 +1,30 @@
+%N hanning
+%D Smooth a cube along the spectral axis
+%P bpw
+%: map combination
+%B
+        Hanning does a Hann or boxcar smooth on the spectral axis of
+        a Miriad image cube.  It determines the axis from the header,
+        or else assumes that it is the z-axis.  Masked pixels are
+        zeroed before smoothing.
+        For very large cubes hanning smoothing the 3rd axis can be
+        too slow, it may be much quicker to use reorder to put the
+        spectral axis first, then run hanning, and then reorder back.
+ 
+%A in
+         The input image.  No default.
+ 
+%A out
+         The output image.  No default.
+ 
+%A region
+         Region of the input image to process.
+ 
+%A object
+         hanning or boxcar.  Default is hanning.
+ 
+%A width
+         The number of channels over which to smooth.  Must be an odd
+         number.  Default is 3.
+ 
+%R 1.7, 2016/09/14 03:44:47 UTC

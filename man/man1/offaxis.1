@@ -1,0 +1,64 @@
+.TH offaxis 1
+.SH NAME
+offaxis - Remove (or simulate) ATCA off-axis polarisation effects
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+OFFAXIS is a Miriad task that attempts to remove off-axis
+instrumental polarisation from ATCA observations. As input,
+OFFAXIS takes a visibility dataset and a model of the source
+total intensity (Stokes I). Given this, it computes the expected
+off-axis effects (given its internal models of the effects),
+subtracts this from the data, and produces an output (nominally)
+corrected dataset.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility dataset. No default.
+.TP
+\fIselect\fP
+Normal visibility selection parameter. The default is to
+select all data. See the help on "select" for more information.
+.TP
+\fIline\fP
+Normal line parameter with the normal defaults. See the help on
+"line" for more information.
+.TP
+\fIstokes\fP
+Stokes/polarisations to be processed.  The default is
+XX,YY,XY,YX.  The only other legitimate value is I.
+.TP
+\fImodel\fP
+Input model of the total intensity image.  This should be the
+apparent total intensity (i.e. not corrected for primary beam
+attenuation) in Jy/pixel.  No default.
+.TP
+\fIout\fP
+The name of the output, corrected, visibility dataset.
+No default.
+.TP
+\fIclip\fP
+Pixels in the model less (in absolute value) than the clip level
+are treated as if they are 0. The default is 0.
+.TP
+\fIoptions\fP
+Task enrichment parameters. Several can be given, separated by
+commas. Only the minimum number of characters to guarantee
+uniqueness are needed. Possible options are:
+.nf
+  replace   Normally OFFAXIS subtracts the computed off-axis
+            response from the data. This option causes the
+            visibility to be replaced with the model.
+  nocal     Do not apply any antenna gain calibration.
+            The default is to apply these if they are available.
+  nopol     Do not apply any polarization leakage correction.
+            The default is to apply these if they are available.
+  nopass    Do not apply bandpass calibration. The default is to
+            apply these calibrations if they are available.
+.fi
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

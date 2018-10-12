@@ -1,0 +1,153 @@
+<title> Documentation on blflag </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on blflag</h1>
+<pre>
+
+Task: blflag
+Purpose: Interactive flagging task.
+Categories: uv analysis
+
+        BLFLAG is a Miriad task for flagging visibilities interactively.
+        It plots visibilities (e.g. amplitude vs time), either one
+        baseline at a time or all together, and allows discrepant points
+        to be flagged with a cursor.
+ 
+        Commands are entered as a single character at the keyboard:
+          Left-Button  Left mouse button flags the nearest visibility.
+          Right-Button Right mouse button causes BLFLAG to precede to
+                       the next baseline.
+          &lt;CR&gt;         Carriage-return gives help.
+          ?            Help.
+          a            Flag nearest visibility (same as left mouse
+                       button).
+          c            Clear the flagging for this baseline and redraw
+                       plot.
+          h            Give help (same as carriage return).
+          p            Define a polygonal region, and flag visibilities
+                       within this region.  Define the vertices of the
+                       polygon by moving the cursor and then hitting the
+                       left mouse button (or a).  Finish defining the
+                       polygon by hitting the right mouse button (or x).
+                       You can delete vertices with the middle mouse
+                       button (or d).
+          q            Abort completely.  This does not apply flagging.
+          r            Redraw plot.
+          u            Unzoom.
+          x            Move to next baseline (same as right mouse
+                       button).
+          z            Zoom in.  You follow this by clicking the mouse
+                       on the left and right limits to zoom.
+ 
+
+Key: <a name="vis"><a href="vis.html">vis</a>
+        Input visibility dataset to be flagged.  No default.
+ 
+
+Key: <a name="line"><a href="line.html">line</a>
+        The normal Miriad linetype specification.  BLFLAG averages all
+        channels together before displaying them, flags being applied
+        to all channels.  The default is all channels.
+ 
+
+Key: <a name="device"><a href="device.html">device</a>
+        Normal PGPLOT plot device.  An interactive device, e.g. /xserve,
+        must be selected.  No default.
+ 
+
+Key: <a name="stokes"><a href="stokes.html">stokes</a>
+        Normal Stokes/polarisation parameter selection.  The default is
+        'ii' (i.e. Stokes-I assuming the source is unpolarised).  NOTE
+        BLFLAG plots the average of all the selected Stokes/polarisation
+        quantities.  Also it flags ALL quantities, regardless of whether
+        they were selected or not.
+ 
+
+Key: <a name="select"><a href="select.html">select</a>
+        Normal visibility data selection.  Only selected data can be
+        flagged.  The default is to select all data.
+ 
+
+Key: <a name="axis">axis
+        Two character strings, giving the X and Y axes of the plot.
+        Possible axis values are:
+          time         (the default for the X axis)
+          lst          Local apparent sidereal time.
+          uvdistance   sqrt(u**2+v**2)
+          hangle       (hour angle)
+          channel      (implies nofqav)
+          amplitude    (the default for the Y axis)
+          phase
+          real
+          imaginary
+          rms          Theoretical rms noise.
+ 
+
+Key: <a name="xrange">xrange
+        Plot range in the x-direction
+          If axis = uvdistance            [kilo-lambda;   2 values]
+          If axis = time                  [dd,hh,mm,ss.s; 8 values]
+          If axis = amplitude, real, imag [natural units; 2 values]
+          If axis = phase                 [degrees;       2 values]
+          If axis = hangle                [hh,mm,ss.s;    6 values]
+          If axis = rms                   [flux units;    2 values]
+          If axis = lst                   [decimal hours; 2 values]
+ 
+        For axis types other than 'time' or 'hangle', one or other of
+        the limits may be set with the other self-scaled by specifying
+        the lower limit as 'min' and the upper as 'max' (or simply
+        omitting it).  For example,
+ 
+          xrange=min,0
+ 
+        self-scales the lower limit while pinning the upper limit to
+        zero, whereas either of the following
+ 
+          xrange=0,max
+          xrange=0
+ 
+        set the lower limit to zero while self-scaling the upper limit.
+ 
+        Default is to self-scale both limits.
+ 
+
+Key: <a name="yrange">yrange
+        Plot range for the y-axis as for the x-axis.  The default is to
+        self-scale.  For amplitude type plots you can greatly reduce the
+        number of points to plot by using something like yrange=0.3 to
+        cut out noise.
+ 
+
+Key: <a name="options"><a href="options.html">options</a>
+        Task enrichment parameters.  Several can be given, separated by
+        commas.  Minimum match is used.  Possible values are:
+          nobase  Normally BLFLAG plots a single baseline at a time.
+                  This option causes all baselines to be plotted on
+                  a single plot.
+          selgen  Generate a file appropriate for selecting the bad
+                  data (via a <a href="select.html">select</a> keyword).  The output is a text
+                  file called "blflag.select".
+          noapply Do not apply the flagging.
+          rms     When processing spectra, blflag normally plots the
+                  mean value of the spectra.  Using options=rms causes
+                  it to plot the rms value instead.
+          scalar  When processing spectra, blflag normally forms an
+                  average value by vector averaging.  This option
+                  causes it to generate the scalar average.  It should
+                  be used with significant caution.
+          nofqaver Do not average spectra - the resulting number of
+                  points may be too large to handle.  Use select to
+                  break up the data in time ranges or use yrange to
+                  exclude noise.
+        The following options can be used to disable calibration.
+          nocal   Do not apply antenna gain calibration.
+          nopass  Do not apply bandpass correction.
+          nopol   Do not apply polarisation leakage correction.
+ 
+Revision: 1.22, 2015/12/04 03:07:29 UTC
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

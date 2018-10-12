@@ -1,0 +1,43 @@
+%N atrecal
+%D Copy and recalibrate a CABB uv dataset.
+%P rjs
+%: uv analysis
+%B
+        atrecal copies a uv dataset and recomputes the systemp and
+        xyphase variables from the autocorrelations.
+        Useful for CABB data with RFI affected Tsys or when splitting
+        wide bands. Invert uses the systemp variable for the data
+        weights when options=systemp is used.
+%A vis
+        The name of the input uv data sets. Several can be given (wild
+        cards are supported). No default.
+%A select
+        The normal uv selection commands. The default is copy everything
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels (or all wide channels if there are
+        no spectral channels). The output will consist of only spectral
+        or wideband data (but not both).
+%A options
+        This gives extra processing options. Several options can be
+        given, each separated by commas. They may be abbreviated to the
+        minimum needed to avoid ambiguity. Possible options are:
+           nocal       Do not apply the gains file. By default, atrecal
+                       applies the gains file in copying the data.
+           nopass      Do not apply bandpass corrections. By default,
+                       atrecal corrects for the bandpass shape if the
+                       required information is available.
+           nopol       Do not apply polarization corrections. By default
+                       atrecal corrects for polarization cross-talk.
+           relax       Normally atrecal discards a correlation record if
+                       all the correlations are bad. This option causes
+                       atrecal to retain all records.
+           spectrum    Store a tsys spectrum in addition to the normal
+                       systemp variable.
+%A naver
+        The number of channels to average together to derive a point for
+        the tsys spectrum. Defaults to 1.
+%A out
+        The name of the output uv data set. No default.
+%R 1.4, 2013/08/30 01:49:21 UTC

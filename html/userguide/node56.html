@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Making a Fake Observation</TITLE>
+<META NAME="description" CONTENT="Making a Fake Observation">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node57.html">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node55.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2072"
+  HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2068"
+  HREF="node55.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2062"
+  HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2070"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2073"
+  HREF="node57.html">Generating Visibilities from a</A>
+<B>Up:</B> <A NAME="tex2html2069"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B> Previous:</B> <A NAME="tex2html2063"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00910000000000000000">
+Making a Fake Observation</A>
+</H1>
+The <I>Miriad</I> task <A NAME="tex2html144"
+  HREF="../doc/uvgen.html">uvgen</A>
+can be used to simulate a variety of observing
+modes. Additionally it can simulate a number of systematic and random
+errors and non-ideal effects that a synthesis instrument will typically
+suffer.
+
+<P>
+Simulating a telescope approximately, let alone in some detail, requires
+a good many parameters. <A NAME="tex2html145"
+  HREF="../doc/uvgen.html">uvgen</A>
+takes an appreciable number of
+parameters and input files to describe the telescope, correlator and
+source. Fortunately keyword and set-up files for some common situations
+exist (<I>e.g.</I> simulating the ATCA and VLA). Also the defaults are usually
+sensible.
+
+<P>
+Some inputs to <A NAME="tex2html146"
+  HREF="../doc/uvgen.html">uvgen</A>, and typical values for the ATCA, are given
+below. <EM>Note that these are not the default values.</EM>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">source=</TD>
+<TD ALIGN="LEFT">Source description file - see help file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ant=</TD>
+<TD ALIGN="LEFT">Antenna location file - see help file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">baseunit=-51.02</TD>
+<TD ALIGN="LEFT">Basic antenna increment (15m) in nanosec,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">for coorinates in a topocentric system.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">corr=0,1,0,104</TD>
+<TD ALIGN="LEFT">Correlator model - see help file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spectra=</TD>
+<TD ALIGN="LEFT">Spectral line model - see help file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ellim=12</TD>
+<TD ALIGN="LEFT">Telescope elevation limit.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">telescop=atca</TD>
+<TD ALIGN="LEFT">Telescope name - see help file.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=xx,yy,xy,yx</TD>
+<TD ALIGN="LEFT">ATCA measures linear polarisations.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">lat=-30</TD>
+<TD ALIGN="LEFT">Latitude of Narrabri.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">radec=</TD>
+<TD ALIGN="LEFT">Source RA and declination, in hours and degrees.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">systemp=50</TD>
+<TD ALIGN="LEFT">Typical receivers have a <SPAN CLASS="MATH"><IMG
+ WIDTH="33" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img7.png"
+ ALT="$T_{sys}$"></SPAN> of 50 K</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pbfwhm=</TD>
+<TD ALIGN="LEFT">Primary beam size? Varies with frequency</TD>
+</TR>
+<TR><TD ALIGN="LEFT">leakage=2</TD>
+<TD ALIGN="LEFT">Typical polarisation leakage</TD>
+</TR>
+<TR><TD ALIGN="LEFT">jyperk=12.7</TD>
+<TD ALIGN="LEFT">System gain is about 12.7 Jy/K</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pnoise=</TD>
+<TD ALIGN="LEFT">Rms antenna phase variation</TD>
+</TR>
+<TR><TD ALIGN="LEFT">gnoise=</TD>
+<TD ALIGN="LEFT">Rms antenna amplitude gain variation</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+These typical values for the ATCA, and also the VLA, can be found in
+in `keyword' files, found in the <code>$MIRCAT</code> directory.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>Telescope Keyword Files</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>$MIRCAT/uvgen.def.atca</code></TD>
+<TD ALIGN="LEFT">Typical <A NAME="tex2html142"
+  HREF="../doc/uvgen.html">uvgen</A>
+parameters for the ATCA</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>$MIRCAT/uvgen.def.vla</code></TD>
+<TD ALIGN="LEFT">Typical <A NAME="tex2html143"
+  HREF="../doc/uvgen.html">uvgen</A>
+parameters for the VLA</TD>
+</TR>
+</TABLE>
+</DIV>
+The parameters in these files can be loaded from within the <code>miriad</code>
+shell using the <code>source</code> command.
+For example, to load typical parameters for the ATCA, use
+<PRE>
+      miriad% source $MIRCAT/uvgen.def.atca
+</PRE>
+
+<P>
+By leaving some of <A NAME="tex2html147"
+  HREF="../doc/uvgen.html">uvgen</A>'s parameters unset (<I>e.g.</I> leakage, systemp,
+pbfwhm) you get an idealised telescope (no polarisation leakage, no receiver
+noise, no primary beam effects). Additionally there is no reason why you
+cannot request an ATCA-like telescope to produce Stokes I or circular
+polarisations!
+
+<P>
+<A NAME="2240"></A>
+<A NAME="2241"></A>
+The source and antenna description files are described in the
+help for <A NAME="tex2html148"
+  HREF="../doc/uvgen.html">uvgen</A>, as are a number of other parameters needed in the
+simulation process. There are, however, a collection of description
+files for common situations. These are all kept in the <code>$MIRCAT</code>
+directory.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>Source Description File</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">File</TD>
+<TD ALIGN="LEFT">Description</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>no.source</code></TD>
+<TD ALIGN="LEFT">Nothing! No source at all</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>point.source</code></TD>
+<TD ALIGN="LEFT">A 1 Jy unpolarised point source, at field centre</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>poff.source</code></TD>
+<TD ALIGN="LEFT">A point source offset from the  field centre</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>qpoint.source</code></TD>
+<TD ALIGN="LEFT">A 1% linearly polarised point source</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>spiral.source</code></TD>
+<TD ALIGN="LEFT">A spiral</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>Antenna Description File</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">File</TD>
+<TD ALIGN="LEFT">Description</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>h75.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration H75</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>h168.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration H168</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>h214.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration H214</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.122.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.122A</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>ew214.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration EW214</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>ew352.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration EW352</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>ew367.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration EW367</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.375.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.375</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.75a.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.75A</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.75b.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.75B</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.75c.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.75C</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>0.75d.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 0.75D</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>1.5a.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 1.5A</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>1.5b.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 1.5B</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>1.5c.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 1.5C</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>1.5d.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 1.5D</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>3.0a.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 3.0A or 6.0A</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>3.0b.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 3.0B or 6.0B</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>3.0c.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 3.0C or 6.0C</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>3.0d.ant</code></TD>
+<TD ALIGN="LEFT">ATCA configuration 3.0D or 6.0D</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>vla_a.ant</code></TD>
+<TD ALIGN="LEFT">VLA configuration A</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>vla_b.ant</code></TD>
+<TD ALIGN="LEFT">VLA configuration B</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>vla_c.ant</code></TD>
+<TD ALIGN="LEFT">VLA configuration C</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>vla_d.ant</code></TD>
+<TD ALIGN="LEFT">VLA configuration D</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Given the various standard keyword and description files kept in the
+<code>$MIRCAT</code> directory, it is not particularly difficult to set up the
+inputs to <A NAME="tex2html149"
+  HREF="../doc/uvgen.html">uvgen</A>.
+For example, to simulate the `spiral' source using configuration
+<code>3.0A</code>, in a continuum mode, you would give the following commands
+to the <code>miriad</code> front-end:
+<PRE>
+  miriad% source $MIRCAT/uvgen.def.atca
+  miriad% source = $MIRCAT/spiral.source
+  miriad% ant = $MIRCAT/3.0a.ant
+  miriad% inp uvgen
+</PRE>
+and then set or unset other parameters as desired.
+
+<P>
+If you wish to model a particular telescope, the task <A NAME="tex2html150"
+  HREF="../doc/telepar.html">telepar</A>
+contains a database of telescope characteristics.
+
+<P>
+For models which are more complex than those that can be readily
+simulated with <A NAME="tex2html151"
+  HREF="../doc/uvgen.html">uvgen</A>, one approach is to generate the visibilities
+are the appropriate <I>u-v</I> tracks, and then to use the task
+<A NAME="tex2html152"
+  HREF="../doc/uvmodel.html">uvmodel</A>
+to compute the visibilities, on those tracks, of a
+particular image model.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2072"
+  HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2068"
+  HREF="node55.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2062"
+  HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2070"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2073"
+  HREF="node57.html">Generating Visibilities from a</A>
+<B>Up:</B> <A NAME="tex2html2069"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B> Previous:</B> <A NAME="tex2html2063"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

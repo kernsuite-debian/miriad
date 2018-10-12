@@ -1,0 +1,109 @@
+%N uvfit
+%D Fit point sources to a given vis file.
+%P rjs
+%: uv analysis
+%B
+        UVFIT is a Miriad task which fits model components to a visibility
+        dataset. Optionally the model or residual visibilities can
+        be written out.
+%A vis
+        Name of the input visibility file. No default.
+%A stokes
+        Normal Stokes/polarisation parameter (e.g. i,q,u,v,ii etc).
+        Only a single polarisation can be requested. The default is
+        `ii' (i.e. Stokes-I for an unpolarised source).
+%A line
+        Normal line-type processing with normal defaults.
+%A select
+        Normal data selection. Default is all cross-correlation data.
+%A object
+        This gives the object type that uvfit fits for. Several objects
+        can be given (the objects can be of the same type, or different),
+        and minimum match is supported. Possible objects are
+          point       A point source
+          disk        An elliptical or circular disk.
+          gaussian    An elliptical or circular gaussian.
+          shell       The 2D projection of a thin, spherical shell.
+          ring        A face-on, thin, elliptical or circular ring
+        For example, to fit for a point source and gaussian, use:
+        `object=point,gaussian'.
+%A spar
+        This gives initial estimates of source parameters.  For
+        each object given by the `object' keyword, either 3 (for
+        point sources) or 6 (for disks and gaussians) values should be
+        given. The values are as follows:
+          Object Type             SPAR values
+          -----------             -----------
+           point                   flux,x,y
+           gaussian                flux,x,y,bmaj,bmin,pa
+           disk                    flux,x,y,bmaj,bmin,pa
+           shell                   flux,x,y,bmaj
+           ring                    flux,x,y,bmaj,bmin,pa
+ 
+        Here "flux" is the total flux density of the component,
+        "x" and "y" are the offset positions (in arcsec) of the object
+        relative to the observing center, "bmaj" and "bmin" are the major
+        and minor axes FWHM (in arcsec), and "pa" is the position angle
+        of an elliptical component (in degrees). The position angle is
+        measured from north through east.
+        You must give initial estimates for all parameters for each object
+        (this includes parameters that are redundant or meaningless,
+        such as "bmin" and "pa" for components that are constrained to be
+        circular).
+ 
+        The more complex the set of objects being fitted for, the more
+        important it is to give a good estimate of the source parameters.
+        Generally the estimates of the source position should be accurate
+        to the fundamental resolution (for point sources) or the size of
+        the component (for extended sources).
+%A bin
+        Specify frequency and time binning of the data.
+        The first value specifies the size of the frequency bins in GHz
+        to divide the data into.
+        The second value specifies the size of the time bins in hours.
+        An initial fit with all the data will be done to improve the
+        starting values of the fit.
+        The output will contain the interpolated model (or residuals).
+        A spectral index estimate will be given for frequency binning.
+        Defaults to 0,0 (no binning).
+%A fix
+        This gives a set a flag parameters, one parameter per source.
+        Each parameter consists of a set of letters, which indicate
+        which source parameters of a component are to be held fixed.
+        These source parameters are fixed by the initial estimates
+        given by the `spar' parameter.
+        The letters corresponding to each source parameter are:
+          f   The flux is fixed.
+          x   The offset in RA is fixed.
+          y   The offset in DEC is fixed.
+          a   The major axis parameter is fixed.
+          b   The minor axis parameter is fixed.
+          p   The position angle parameter is fixed.
+          c   The gaussian, disk or ring is circular (not elliptical).
+        For a source where all source parameters vary, a dash (-)
+        can be used for this parameter.
+ 
+        For example "fix=fx,fc" indicates that the flux and RA offset
+        is to be fixed for the first source, whereas the second source,
+        (which is presumably a gaussian, disk or ring) has a fixed flux, and
+        is circular
+%A fix2
+        Like fix, but applied after the initial fit using all data.
+        Use this with the bin parameter to fix e.g., position while
+        fitting for flux variation with time or frequency.
+        Defaults to the value of fix.
+%A out
+        Optionally, you can specify one or more output files for model
+        or residual visibilities. If you specify one output file, all data
+        will be written to that file. If you specify more than one output
+        file, the number of output files should equal the number of input
+        visibility files.
+%A options
+        Extra processing options. Several can be given, separated by commas.
+        Minimum match is used. Possible values are:
+          residual The output data-set is the residual visibilities.
+                   If an output is being created, the default is to make
+                   this the fitted model.
+ 
+ 
+%R 1.10, 2013/08/30 01:49:21 UTC

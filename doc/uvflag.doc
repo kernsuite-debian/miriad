@@ -1,0 +1,98 @@
+%N uvflag
+%D Flags or unflags uv data
+%P bpw
+%: calibration, uv analysis
+%B
+        UVFLAG is used to change flags corresponding to visibility data.
+        Using the keywords select, line and edge one selects a portion of a
+        uv-data file. For all selected correlations the flags are then set to
+        the value specified with the keyword flagval. If flagval equals
+        'flag', the uv data are flagged as bad; for flagval equal to 'unflag',
+        the uv data are flagged as good.
+        The user can control the amount of output produced using the options
+        keyword. Only records that fulfill all selection criteria as
+        specified by select, line and edge are shown and counted, not the
+        complete datafile.
+        Because the physical writing of the flags is done using a buffering
+        approach, the flags are only actually changed in the datafile if
+        one lets uvflag finish normally. I.e., if the 'q' option is used to
+        stop printing, the flags may or may not have been changed.
+        UVFLAG can also be used to inspect the uv-data. If option 'noapply'
+        is used, everything works as it would do normally, except that the
+        flags are not actually changed in the datafile. This is particularly
+        useful in combination with option 'full'.
+%A vis
+        Standard keyword vis. See the help on "vis" for more information.
+        Multiple input datasets are allowed.
+%A select
+        Standard keyword select. See the help on "select" for more information.
+%A line
+        Standard keyword line. See the help on "line" for more information.
+        Uvflag supports only types 'channel and wide'. If line is
+        unspecified, both the 'channel data' and the 'wideband data'
+        (if present) will be flagged. Also, since averaging of data
+        is an undefined operation when setting flags, width is
+        forced to be equal to 1.
+%A edge
+        This keyword allows uvflag to work on the edges of spectral
+        windows. Three numbers may be given, n, m and c. Flags will
+        be changed only for the first n and last m channels of each
+        spectral window and for the central c channels.
+        If one value is given, the number of selected channels at
+        the start and end of the window is assumed to be equal.
+        If two values are given the first gives the number of
+        selected channels at the start, the second the number at
+        the end. In this case either one may also be 0.
+        The third value gives the number of channels to delete from
+        the center of the band. The default is 0.  The center of a
+        window is defined as 'startchannel+nchannels/2'.
+        A negative value is interpreted as meaning that the beginning,
+        ending, or middle 1/8th of the band must be deleted.
+        Use of the edge keyword forces the step parameter of the
+        line keyword to be equal to 1.
+        Edge cannot be combined with linetype 'wide'. If edge is
+        used, the linetype defaults to channel,0,1,1,1, i.e. all
+        channels.
+        This also works for multiple input visibility files, even
+        if these have different correlator modes.
+        [0,0,0]
+%A flagval
+        Either 'flag' or 'unflag', which tells whether the flags for
+        the correlations selected by 'select', 'line' and 'edge'
+        have to be set or unset. May be abbreviated to 'f' or 'u'.
+        Exactly one of the options 'flag' or 'unflag' must be
+        present.
+%A options
+        One or more of
+          'noapply',
+          'none', 'brief', 'indicative', 'full', 'noquery',
+          'hms', 'decimal'.
+ 
+        These options can be abbreviated to uniqueness. The default
+        is 'brief,hms', except when a logfile is given (see keyword
+        log), then it becomes 'indicative,hms'.
+ 
+        'noapply' will go through the whole process without
+        actually changing the flags. Useful for checking what will
+        happen or for inspecting the flags.
+        No history comments are written.
+ 
+        'none', 'brief', 'indicative' and 'full' control the
+        amount of information returned to the user.
+          - 'brief' gives an overview when UVFLAG finishes.
+          - 'indicative' lists the number of good, bad and changed
+             flags for each selected uv-record.
+          - 'full' lists the data, the old flag and the new flag for
+             each channel separately and also an overview of each record.
+          - If more than 1 verbosity level is given, the lowest is taken.
+          - Option 'noquery' will turn off the feature that printing
+            is halted every 22 lines.
+ 
+        For verbosity levels 'indicative' and 'full' the format
+        of the time that is written is determined by 'hms' (hours,
+        minutes and seconds) or 'decimal' (decimal parts of a day).
+%A log
+        Name of a file where reported information is written.
+        If empty this implies the terminal screen, else the
+        named file. Giving a filename also sets option 'indicative'.
+        [terminal]

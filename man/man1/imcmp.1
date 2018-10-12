@@ -1,0 +1,46 @@
+.TH imcmp 1
+.SH NAME
+imcmp - Compare two images
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map analysis
+.SH DESCRIPTION
+IMCMP is a MIRIAD task to compare two images. The maps must have
+the same dimensions.
+The two images are compared on a pixel by pixel basis, within a
+user defined region.
+.SH PARAMETERS
+.TP
+\fIin1\fP
+The first input image.  No default
+.TP
+\fIin2\fP
+The second input image.  No default
+.TP
+\fIregion\fP
+Region to select data to compare. Only pixels where both input
+maps were unmasked will be compared. Only a rectangular region
+of interest is supported.
+.TP
+\fIcut\fP
+Cutoff applied to data. By default not used, all data used.
+.TP
+\fItol\fP
+Tolerance when comparing the absolute difference between the two
+maps on pixel by pixel basis. Default: 0
+.TP
+\fIdevice\fP
+PGPLOT Plotting device. Default: no plot.
+.TP
+\fIlimx\fP
+Minimum and maximum for plotting the pixel values of image 1.
+Default: autoscaling.
+.TP
+\fIlimy\fP
+Minimum and maximum for plotting the pixel values of image 2
+Default: autoscaling.
+.TP
+\fIlog\fP
+File in which to write the data (as two columns).
+Default: no logfile.

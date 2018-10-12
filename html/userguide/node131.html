@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Velocity Linetype</TITLE>
+<META NAME="description" CONTENT="Velocity Linetype">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node132.html">
+<LINK REL="previous" HREF="node130.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node132.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3041"
+  HREF="node132.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3037"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3031"
+  HREF="node130.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3039"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3042"
+  HREF="node132.html">Continuum Subtraction</A>
+<B>Up:</B> <A NAME="tex2html3038"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3032"
+  HREF="node130.html">Setting the Rest Frequency</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001680000000000000000"></A><A NAME="s:veloline"></A><A NAME="4296"></A>
+<A NAME="4297"></A>
+<BR>
+Velocity Linetype
+</H1>
+As mentioned in Section&nbsp;<A HREF="node35.html#s:line">5.4</A>,
+many <I>Miriad</I> tasks allow a range of channels to be given by
+their velocities (rather than their channel numbers). Because these
+channels often do not correspond to any channels that the correlator
+might produce, they will be call ``velocity channels''. Velocity
+channels are specified using the
+<code>line</code> parameter. The velocities are given in km/s, in the radio
+or optical definition,
+with respect to the rest frame of the dataset.
+The main reason for `velocity channels' is that they are corrected for
+the Earth's motion - a particular source
+velocity component will remain in the same velocity channel regardless of
+whether the observatory Doppler tracks or not.
+
+<P>
+The velocity specification is given in the form
+<BLOCKQUOTE>
+<TT>line=velocity,</TT><I>nchan</I><TT>,</TT><I>start</I><TT>,</TT><I>width</I><TT>,</TT><I>step</I>
+
+</BLOCKQUOTE>
+or
+<BLOCKQUOTE>
+<TT>line=felocity,</TT><I>nchan</I><TT>,</TT><I>start</I><TT>,</TT><I>width</I><TT>,</TT><I>step</I>
+
+</BLOCKQUOTE>
+where <I>nchan</I> is the number of velocity channels to select, <I>start</I>
+is the centre velocity of the first channel selected, <I>width</I> is
+the width of each channel, and <I>step</I> is the velocity step between
+channels. With the <code>velocity</code> form, the radio velocity definition is
+assumed, whereas the <code>felocity</code> form uses the optical definition.
+Note, however, both forms produce channels at equal increments in
+<EM>radio</EM> velocity (<EM>even the <code>felocity</code> linetype</EM>). See
+Section&nbsp;<A HREF="node35.html#s:line">5.4</A> for more information.
+
+<P>
+For example
+<BLOCKQUOTE>
+<TT>line=velocity,10,1.5,1.0,3.0</TT>
+
+</BLOCKQUOTE>
+will specify 10 channels, having velocities (radio definition)
+centred at 1.5, 4.5, 7.5, etc, km/s, with respect to the rest frame.
+Each channel has a width of 1 km/s.
+
+<P>
+If the <I>start</I>, <I>width</I> and <I>step</I> values cause the velocity
+channels not to map directly to the underlying correlator channels,
+a weighted sum of correlator channels is used to determine a velocity
+channel.
+If the magnitude of the velocity channel width (the <I>width</I> value in
+km/s) corresponds to correlator channel increment, i.e. if
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+|width| = | c\frac{\Delta\nu}{\nu_0} |
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="109" HEIGHT="41" BORDER="0"
+ SRC="img76.png"
+ ALT="\begin{displaymath}
+\vert width\vert = \vert c\frac{\Delta\nu}{\nu_0} \vert
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+(where <SPAN CLASS="MATH"><IMG
+ WIDTH="26" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img77.png"
+ ALT="$\Delta\nu$"></SPAN> is the correlator channel increment) then the weighted sum
+is equivalent to linear interpolation.
+
+<P>
+For telescopes that do not Doppler track, such as the ATCA, it
+will rarely be the case that velocity channels map directly to correlator
+channels because of the continual change in the observatory's radial velocity.
+
+<P>
+There are some caveats when using velocity channels:
+
+<UL>
+<LI>The rms noise in each velocity channel will vary if there is not a
+one-to-one mapping between these and correlator channels. Also there
+may be some noise correlation between consecutive channels. The theoretical
+noise given by <I>Miriad</I> will generally be an overestimate. This is
+worst for a long synthesis when the channel resolution is 0.5 km/sor
+finer. In this case, the true theoretical noise will be, on average,
+a factor of <SPAN CLASS="MATH"><IMG
+ WIDTH="44" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img78.png"
+ ALT="$\sqrt{3/2}$"></SPAN> less than that suggested by <I>Miriad</I>.
+</LI>
+<LI>The ``weighted sum'' method of determining a velocity channel
+is inferior to more sophisticated interpolation schemes (e.g. the FFT based
+interpolation in AIPS <A NAME="tex2html574"
+  HREF="../doc/CVEL.html">CVEL</A>).
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3041"
+  HREF="node132.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3037"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3031"
+  HREF="node130.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3039"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3042"
+  HREF="node132.html">Continuum Subtraction</A>
+<B>Up:</B> <A NAME="tex2html3038"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3032"
+  HREF="node130.html">Setting the Rest Frequency</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

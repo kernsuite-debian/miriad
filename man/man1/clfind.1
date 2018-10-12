@@ -1,0 +1,51 @@
+.TH clfind 1
+.SH NAME
+clfind - Find clumps by tracing contours (in 3D)
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+CLFIND is a MIRIAD task which finds the clumps in a 3-d cube,
+by tracing contours, proceeding to lower levels and following
+merging of said clumps. For full description/testing/application in
+.nf
+  Williams, J.P, de Geus, E.J. & Blitz, L., ApJ, 428, 693. (1994)
+.fi
+Also see
+.nf
+  http://www.ifa.hawaii.edu/~jpw/research/clfind/clfind.html
+.fi
+for a general description and access to a postscript memo.
+.sp
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+.nf
+   The input image containing the data cube.  (No default)
+   The output clump assignment file (also a miriad datacube
+   with the same dimensions as the input) has the name "in".cf
+.fi
+.sp
+.TP
+\fIdt\fP
+.nf
+   The contour increment (no default)
+.fi
+.sp
+.TP
+\fIstart\fP
+.nf
+   The starting contour level (default=1)
+.fi
+.sp
+.TP
+\fInmin\fP
+.nf
+   Minimum number of pixels in each clump.
+   Any clumps with fewer pixels are rejected (default=4).
+.fi
+.sp
+.SH REVISION
+1.10, 2013/08/30 01:49:21 UTC

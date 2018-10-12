@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Multi-Frequency Models</TITLE>
+<META NAME="description" CONTENT="Multi-Frequency Models">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node119.html">
+<LINK REL="up" HREF="node118.html">
+<LINK REL="next" HREF="node121.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2900"
+  HREF="node121.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2896"
+  HREF="node118.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2892"
+  HREF="node119.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2898"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2901"
+  HREF="node121.html">Input Parameters to the</A>
+<B>Up:</B> <A NAME="tex2html2897"
+  HREF="node118.html">Frequency Handling</A>
+<B> Previous:</B> <A NAME="tex2html2893"
+  HREF="node119.html">Multi-Plane Models</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION001514200000000000000">
+Multi-Frequency Models</A>
+</H3>
+
+<P>
+When using multi-frequency techniques for continuum work (<I>i.e.</I>
+specifying <TT>options=mfs</TT> to <A NAME="tex2html522"
+  HREF="../doc/invert.html">invert</A>), the model will
+generally consist of a single plane (if derived from <A NAME="tex2html523"
+  HREF="../doc/clean.html">clean</A>
+or
+<A NAME="tex2html524"
+  HREF="../doc/maxen.html">maxen</A>) or an intensity plane and flux scaled derivative plane
+(<A NAME="tex2html525"
+  HREF="../doc/mfclean.html">mfclean</A>). In these cases, the self-calibration tasks can
+generate the model for all needed frequencies. However, you
+<EM>must</EM> tell the self-calibration tasks that the model is a
+multi-frequency one by specifying <TT>options=mfs</TT>.
+
+<P>
+In the case of the models produced by <A NAME="tex2html526"
+  HREF="../doc/clean.html">clean</A>
+and
+<A NAME="tex2html527"
+  HREF="../doc/maxen.html">maxen</A>
+for multi-frequency images, as these deconvolution tasks
+do not determine the derivative plane, the self-calibration tasks assume
+that the spectral index is 0.
+
+<P>
+The <TT>line</TT> parameter can still be used when performing multi-frequency
+self-calibration. In this case, it selects out those channels in the
+visibility dataset that are appropriate to the model. Indeed, the default
+<TT>line</TT> parameter can be rather inadequate, and you should give the
+parameter explicitly.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

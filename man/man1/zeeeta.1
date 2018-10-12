@@ -1,0 +1,53 @@
+.TH zeeeta 1
+.SH NAME
+zeeeta - Compute Zeeman parameter eta
+.SH PERSON RESPONSIBLE
+bpw
+.SH CATEGORIES
+profile analysis
+.SH DESCRIPTION
+ZEEETA is a MIRIAD task to compute the Zeeman signal-to-noise
+parameter eta;
+.sp
+eta  =  (dI/dnu)_rms / sigma
+.nf
+     =  sqrt[SUM (dI/dnu)**2 / N] / sigma
+.fi
+.sp
+where sigma is the standard deviation of the I or V image, and N
+is the number of channels in the spectrum.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input Stokes I image in vxy order.  No default.
+.TP
+\fIout\fP
+The output eta image, if blc,trc is not specified.
+.TP
+\fIsigma\fP
+r.m.s. noise of signal free I spectrum.
+.TP
+\fIchan\fP
+The channel range.  Default is all channels.
+.TP
+\fIblc\fP
+Specify the blc of the spatial window in pixels.  If unset, the
+whole image is done, with no spatial summing, and an output eta
+image made.  If blc and trc are set, then eta is computed for
+this window, and the results output to the terminal.
+.TP
+\fItrc\fP
+Specify the trc of the spatial window in pixels
+.TP
+\fIder\fP
+1 or 2 for one or two sided derivative.  If you would like to
+see a plot of the last derivative spectrum, include a 'p' as
+well, e.g. 2p or 1p.
+.TP
+\fIaveop\fP
+'a' to average spectra before computing eta.  Only if blc,trc
+set.
+.sp
+.SH REVISION
+1.6, 2013/08/30 01:49:21 UTC

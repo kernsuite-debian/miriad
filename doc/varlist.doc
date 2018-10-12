@@ -1,0 +1,13 @@
+%N varlist
+%D List all variables in dataset
+%P lgm
+%: utility, plotting
+%B
+        VARLIST lists all variable names or names, types and length
+        in a data set.
+%A vis
+        Standard keyword vis. See the help on "vis" for more information.
+%A log
+        Name of output file
+%A option
+        Option for printout (names or all).  Default is "all."

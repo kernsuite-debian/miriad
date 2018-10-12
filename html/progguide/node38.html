@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Scratch Files</TITLE>
+<META NAME="description" CONTENT="Scratch Files">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html719"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html713"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html707"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html715"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html717"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html720"
+  HREF="node39.html">General Item Routines</A>
+<B>Up:</B> <A NAME="tex2html714"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html708"
+  HREF="node37.html">Reading and Writing Blanking</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004110000000000000000"></A><A NAME="726"></A>
+<BR>
+Scratch Files
+</H1>
+<PRE>
+      subroutine scropen(tno)
+      subroutine scrread(tno,buffer,offset,length)
+      subroutine scrwrite(tno,buffer,offset,length)
+      subroutine scrclose(tno)
+</PRE>
+The scratch i/o routines are used to create and read and write from a
+scratch file containing real-valued data. Here <TT>tno</TT> is a handle passed
+back by the open routine,
+and must be used in all subsequent calls to the scratch i/o routines.
+<TT>Scrread</TT> and <TT>scrwrite</TT> read and write scratch data to/from the
+real array <TT>buffer</TT>. <TT>Length</TT> values are accessed, starting
+at the offset given by <TT>offset</TT> (for a scratch file of <SPAN CLASS="MATH"><IMG
+ WIDTH="18" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img8.png"
+ ALT="$N$"></SPAN> real
+values, <TT>offset</TT> can vary from 0 to <SPAN CLASS="MATH"><IMG
+ WIDTH="45" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img32.png"
+ ALT="$N-1$"></SPAN>).
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

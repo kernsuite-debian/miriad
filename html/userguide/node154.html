@@ -1,0 +1,214 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Displaying spectra only</TITLE>
+<META NAME="description" CONTENT="Displaying spectra only">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node155.html">
+<LINK REL="previous" HREF="node153.html">
+<LINK REL="up" HREF="node151.html">
+<LINK REL="next" HREF="node155.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3328"
+  HREF="node155.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3324"
+  HREF="node151.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3318"
+  HREF="node153.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3326"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3329"
+  HREF="node155.html">Overlaying spectra on images</A>
+<B>Up:</B> <A NAME="tex2html3325"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3319"
+  HREF="node153.html">The ATNF Visualisation Software</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001930000000000000000"></A><A NAME="12984"></A><A NAME="12985"></A>
+<BR>
+Displaying spectra only
+</H1>
+
+<P>
+The tasks we discuss here allow you to make a line plot plot of a
+single spectrum averaged over some spatial region from a cube.  There
+are two rather similar tasks with rather similar names; <A NAME="tex2html748"
+  HREF="../doc/imspect.html">imspect</A>
+and <A NAME="tex2html749"
+  HREF="../doc/imspec.html">imspec</A>.  The latter offers more options, the former is easier
+to drive if you want something basic.  We will give examples of both. 
+
+<P>
+
+<UL>
+<LI>We begin with <A NAME="tex2html750"
+  HREF="../doc/imspect.html">imspect</A>.  The input cube can be in xyv or vxy
+order.  This example plots a 3-point Hanning smoothed spectrum averaged
+over a small spatial region centred on the reference pixel. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMSPECT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=neon.xyv</TD>
+<TD ALIGN="LEFT">Input cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=relpix,box(-2,-3,2,3)</TD>
+<TD ALIGN="LEFT">Spatial region to average over</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xaxis</TD>
+<TD ALIGN="LEFT">Default to label x-axis in natural</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">spectral units (km/s or GHz)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yaxis=average</TD>
+<TD ALIGN="LEFT">Average over spatial region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">hann=3</TD>
+<TD ALIGN="LEFT">Hanning smooth</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=plot/ps</TD>
+<TD ALIGN="LEFT">PGPLOT device</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log</TD>
+<TD ALIGN="LEFT">Unset; use to write spectrum to text file</TD>
+</TR>
+<TR><TD ALIGN="LEFT">comment</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Note that <A NAME="tex2html751"
+  HREF="../doc/imspect.html">imspect</A>
+can also be used to plot the derivative
+of a spectrum (<TT>options=1der</TT> or <TT>options=2der</TT>) which
+may be useful for Zeeman enthusiasts.
+
+<P>
+Now for <A NAME="tex2html752"
+  HREF="../doc/imspec.html">imspec</A>, which offers wider flexibility than
+<A NAME="tex2html753"
+  HREF="../doc/imspect.html">imspect</A>.  It also plots spectra from a cube, but the cube can be
+in any order.  It offers options to average or sum the data in RA-DEC,
+RA-VEL and DEC-VEL planes (keyword <TT>axes</TT> - see the help file for
+details) so that you get profiles along the velocity, DEC, and RA planes
+respectively.  You can also convert the units from Jy to brightness
+temperature and write the spectrum to a text file.  <A NAME="tex2html754"
+  HREF="../doc/imspec.html">imspec</A>
+offers
+Hanning and boxcar spectral smoothing as well as the derivative options
+available in <A NAME="tex2html755"
+  HREF="../doc/imspect.html">imspect</A>.  You can also specify a cut-off level below
+which data do not contribute to the spectrum and convert from Jy/beam to
+Jy. 
+
+<P>
+Note that the region you specify with <A NAME="tex2html756"
+  HREF="../doc/imspec.html">imspec</A>
+is limited to
+rectangular boxes only.   The following example takes a cube
+in xyv order, computes the spectrum from channels 1 to 256 averaged
+over the central 4 by 6&nbsp;arcsec, and then 3-point Hanning smooths it
+before displaying it on the local X-window.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMSPEC</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=neon.xyv</TD>
+<TD ALIGN="LEFT">Input cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=relpix,box(-2,-3,2,3)(1,256)</TD>
+<TD ALIGN="LEFT">Region of interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">plot=average</TD>
+<TD ALIGN="LEFT">Plot average</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=hann,3</TD>
+<TD ALIGN="LEFT">Hanning smooth</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cutoff</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axes=ra,dec</TD>
+<TD ALIGN="LEFT">Average over RA and DEC axes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">PGPLOT device</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+</TABLE>
+</DIV>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3328"
+  HREF="node155.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3324"
+  HREF="node151.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3318"
+  HREF="node153.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3326"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3329"
+  HREF="node155.html">Overlaying spectra on images</A>
+<B>Up:</B> <A NAME="tex2html3325"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3319"
+  HREF="node153.html">The ATNF Visualisation Software</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

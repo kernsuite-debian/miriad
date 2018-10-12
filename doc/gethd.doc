@@ -1,0 +1,29 @@
+%N gethd
+%D Print the value of a header item.
+%P rjs
+%: miscellaneous
+%B
+        GetHd simply prints the value of a header item. Its main use will
+        be in scripts, where it can be used to extract information from
+        the image header.
+%A in
+        The name of an item within a dataset. This is given in the form
+          in=dataset/item
+        There is no default. The dataset may be either a uv or image data-set.
+%A format
+        For numeric values, this determines the way that the output value
+        is converted and formated. Possible values are:
+          default   No conversion. This is the default.
+          time      The value is assumed to be a Julian day, and is formatted
+                    into Miriad's date format.
+          pol       The value is assumed to be a polarization tag, and is
+                    formatted as I,Q,U,V,XX,YY, etc.
+        The following assume that the value is in radians.
+          arcsec    The value is converted to arcsec.
+          arcmin    The value is converted to arcmin.
+          degrees   The value is converted to degrees.
+          hours     The value is converted to hours.
+          hms       The value is formatted as hh:mm:ss.
+          dms       The value is formatted as dd:mm:ss.
+%A log
+        Output log file. Default is the terminal.

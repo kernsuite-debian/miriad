@@ -1,0 +1,67 @@
+%N tvdisp
+%D Display an image on a TV device
+%P jm
+%: visual display
+%B
+        TVDISP is a MIRIAD task to display an image on a TV device.
+        TVDISP does not clear the screen before it initializes the TV;
+        see TVINIT for this function.
+%A in
+        Standard keyword in. See the help on "in" for more information.
+ 
+%A region
+        Standard keyword region. See the help on "region" for more information.
+ 
+        NOTE: This region only permits simple bounding boxes.
+        The default is to display the entire image.
+ 
+%A range
+        The minimum and maximum range used in scaling. The default is
+        to use the minimum and maximum values of the image.
+ 
+%A tvchan
+        The TV channel to display the image on.  This can be 1 to 3 on
+        the IVAS; 1 to 2 on the MXAS or XMTV servers.  The default is 1.
+ 
+%A incr
+        Only every INCR'th pixel is displayed.  This can take from 1
+        to up to 3 values, giving the increment along the x, y, and z
+        axis, respectively. The default is chosen such that the selected
+        region of each image will fit on the screen.
+ 
+%A tvcorn
+        This gives the coordinate where the lower left corner of the
+        image is displayed.  The coordinate system typically runs from
+        1 to 1024 in x and y, the origin being in the lower left corner.
+        The default is to center the image on the screen.
+ 
+%A server
+        Standard keyword server. See the help on "server" for more information.
+ 
+        There is no default for the server.
+ 
+%A options
+        These indicate extra operations that may be performed. One or
+        more can be given.  Possible values are:
+ 
+          fiddle  Allow interactive modification of colour tables, zoom,
+                  etc.  NOTE: The Fiddle option currently only works
+                  with the IVAS servers!
+          zoom    Zoom in on the displayed images.  NOTE: Zoom attempts
+                  to display the bounding box of all of the displayed
+                  images.  If more than one channel was loaded, then
+                  the zoomed display will be of the first channel.
+          movie   Display the sequence of images as a movie.
+                  NOTE: Movie will attempt to zoom onto one image and
+                  then center the display step by step through each
+                  following image (and then return back to the first
+                  image to begin again).  The rate at which the images
+                  will change is a function of the cursor's X position.
+                  The further to the left of the display that the cursor
+                  is located, the faster the rate of change; the further
+                  right, the slower.  NOTE: some displays require a
+                  mouse button press to identify the cursor position.
+                  Functions to control the direction and style of motion
+                  are available if the panel is present.  If not, a
+                  subset of functions will be available to the four
+                  functions A - D (may also be keys F3 - F6).

@@ -1,0 +1,111 @@
+.TH linmos 1
+.SH NAME
+linmos - Linear mosaicing of datacubes
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+map combination
+.SH DESCRIPTION
+LINMOS is a MIRIAD task that performs simple linear mosaicing
+of input cubes to produce a single output cube.  If only one
+input cube is given, LINMOS essentially does primary beam
+correction on it.  If the input cubes overlap, LINMOS combines
+the overlapping regions so as to minimize the rms error.
+.sp
+To determine the primary beam of the telescope, LINMOS first
+checks the map header for the presence of the "pbtype" and then
+"pbfwhm" parameters.  If present, LINMOS assumes the primary
+beam is the given type.  If these parameters are missing, LINMOS
+checks if the telescope is one that it knows.  If so, then the
+known form for the primary beam is used. See task "pbplot" to
+check LINMOS's primary beam models.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The names of the input cubes - many may be given.  There is no
+default.  Inputs should generally be on the same grid system,
+use invert with options=mosaic and the offset keyword to achieve
+this. If not, linear interpolation is performed to regrid using
+the first plane of the first image as the template. LINMOS's
+ability to do this is inferior to task REGRID.
+The intensity units of all the inputs, and the pixel size and
+alignment of the third dimension are assumed to be the same.
+Mosaicing fields with different resolution together will cause
+errors in the fluxdensities of sources.
+.TP
+\fIout\fP
+The name of the output cube.  No default.  The center and pixel
+size of the first input image is used as the grid system of the
+output. The synthesized beam parameters are also taken from the
+first image header - you may want to pick a better average beam.
+.TP
+\fIrms\fP
+RMS noise level in each of the input cubes.  If not specified,
+the value is taken from the 'rms' item in the input image header
+if that is available, and if not, then the rms of the previous
+image is used.  If no value could be determined for the first
+image, a warning is issued and ALL images are given equal weight
+by assigning an RMS of 1.0.
+.TP
+\fIbw\fP
+Bandwidth of the image in GHz, default 0. If specified the beam
+response will either be averaged across the frequency band before
+being applied to the image or, if the input images contain a
+spectral index plane (created with the mfs option of restor)
+the images will be evaluated and corrected across the band.
+Use this for wide band images to improve the accuracy of the
+correction.
+Note that doing wide band primary beam correction at low
+frequency will make the effective observing frequency vary
+significantly across the field.
+An optional second parameter can be given to set the number
+of frequencies to divide the bandwidth into, it defaults to 10.
+.sp
+.TP
+\fIcutoff\fP
+The cutoff level to use for the primary beam, e.g., use 0.5 to
+restrict the contribution of each input cube to the pixels inside
+the half power beam width. Normally the built-in level for each
+beam model is used (generally <0.1). This can be useful
+e.g., to restrict polarization mosaics to use only the part of
+the beam with low instrumental polarization. Use pbplot to see
+what radius each level corresponds to. Defaults to zero
+which means use the built-in level.
+.TP
+\fIoptions\fP
+Extra processing options.  Several can be given, separated by
+commas.  Minimum match is supported.  Possible values are:
+.nf
+  taper        By default, LINMOS fully corrects for primary
+               beam attenutation.  This can cause excessive
+               noise amplification at the edge of the mosaiced
+               field.  The `taper' option aims at achieving
+               approximately uniform noise across the image.
+               This prevents full primary beam correction at the
+               edge of the mosaic.  See Eq. (2) in Sault,
+               Staveley-Smith and Brouw (1996), A&AS, 120, 375,
+               or use "options=gains" to see the form of the
+               tapering.
+  sensitivity  Rather than a mosaiced image, produce an image
+               giving the RMS noise across the field.  This is
+               dependent on the RMS specified, either as an
+               input parameter or else as a header item (see
+               above).
+  gain         Rather than a mosaiced image, produce an image
+               giving the effective gain across the field.  If
+               options=taper is used, this will be a smooth
+               function.  Otherwise it will be 1 or 0 (blanked).
+  frequency    Rather than a mosaiced image, produce an image
+               giving the effective frequency across the field.
+  alpha        If an I*alpha plane is present in the input,
+               produce a mosaiced version of this as well.
+               You can feed the output image to mfspin to
+               produce the mosaiced spectral index image.
+               The spectral index mosaic becomes unreliable
+               when the fractional bandwidth is > 0.4 (this
+               is because higher orders are needed to model
+               the primary beam response with frequency).
+.fi
+.sp
+.SH REVISION
+1.32, 2016/03/18 02:55:49 UTC

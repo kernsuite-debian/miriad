@@ -1,0 +1,22 @@
+%N gpbreak
+%D Insert a break point in the gain table.
+%P rjs
+%: calibration
+%B
+        GpBreak is a MIRIAD task which modifies a gain table to include a
+        break point. This prevents normal interpolation of gains across
+        this point.
+%A vis
+        The input visibility file, containing the gain file to modify.
+        No default.
+%A break
+        The times, in the normal Miriad format, where to insert the
+        break point. Several times can be given. No default.
+%A ants
+        The antennas affected. The default is all antennas.
+%A feeds
+        The polarisation feeds affected (e.g. R, L, X or Y). Default is
+        all feeds.
+ 
+        Example:
+          gpbreak vis=cyga times=20:30,21:15 ants=1,2 feeds=X

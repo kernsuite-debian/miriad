@@ -1,0 +1,43 @@
+%N imheq
+%D apply histogram equalization to an image
+%P nebk
+%: map manipulation
+%B
+        IMHEQ -- applies histogram equalization to an image.  This
+        technique generates a cumulative histogram of an image.  The
+        ordinate for this histogram (number of pixels) is then also
+        discretized into the prescribed number of bins.  Each image
+        pixel is then replaced by the value of the cumulative
+        histogram bin that it contributed to.  This essentially means
+        that in terms of a non-cumulative histogram of the image,
+        equal numbers of pixels have fallen into each intensity bin
+        so that the bins are not of equal intensity width.  This
+        technique enables you to see best the intensity range that
+        has the most pixels.
+ 
+        Image pixels which are flagged by the image mask will not
+        contribute to the histograms.  However, they will be equalized
+        in the output image (although their mask will be unchanged).
+ 
+%A in
+        The input image. No default.
+%A out
+        The output image. No default.
+%A nbins
+        The number of bins for the image histogram.   Default is 128.
+%A range
+        The intensity minimum and maximum to bin in the histogram.
+        Pixels outside this range are set to the nearest limit.
+        Default is to use the full image plane range.  Over-rides
+        OPTIONS=GLOBAL below.
+%A options
+        "global" means use the global image minimum and maximum as the
+           histogram limits for all image planes.  By default, each
+           image plane is equalized with the intensity minimum and
+           maximum from that plane.
+%A device
+        PGPLOT device to show plots of the histograms & discretized
+        cumulative histogram. Will plot after each plane, so really
+        of use only for single plane images
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

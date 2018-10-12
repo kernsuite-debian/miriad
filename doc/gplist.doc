@@ -1,0 +1,9 @@
+%N gplist
+%D List information about calibration tables.
+%P rjs
+%: calibration
+%B
+        GpList is a Miriad task to list information about visibility
+        calibration tables and to check their consistency.
+%A vis
+        The input dataset containing the visibility calibration tables.

@@ -1,0 +1,34 @@
+.TH contsen 1
+.SH NAME
+contsen - Continuum subtraction noise sensitivity.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+CONTSEN makes plots of noise amplification factor of tasks such
+as UVLIN, AVMATHS and CONTSUB.
+.SH PARAMETERS
+.TP
+\fIchans\fP
+This specifices the channel ranges that contain only continuum
+(line free). It consists of a number of paris, each pair giving
+a start and end channel. The default is that there are 512
+continuum channels.
+.TP
+\fIxrange\fP
+The range of channels to plot the noise sensitivity. The default
+is the min anx max channels given by the chans keyword.
+.TP
+\fIorder\fP
+The order of the polynomial fit in UVLIN. Either 1 or 2 numbers
+can be given. If two numbers are given, then CONTSEN determines
+the noise sensitivity for order(1) to order(2) inclusive. The
+default is to determine the noise sensitivity for first order
+only.
+.TP
+\fIdevice\fP
+PGPLOT device. No default.
+.TP
+\fInxy\fP
+The plot grid. The default depends on the number of plots.

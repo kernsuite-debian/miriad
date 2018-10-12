@@ -1,0 +1,521 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Preparing Your Data in AIPS</TITLE>
+<META NAME="description" CONTENT="Preparing Your Data in AIPS">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node216.html">
+<LINK REL="previous" HREF="node214.html">
+<LINK REL="up" HREF="userhtml.html">
+<LINK REL="next" HREF="node216.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html4116"
+  HREF="node216.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4112"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4106"
+  HREF="node214.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4114"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4117"
+  HREF="node216.html">Using xmtv and xpanel</A>
+<B>Up:</B> <A NAME="tex2html4113"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html4107"
+  HREF="node214.html">UV Variables</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002800000000000000000"></A><A NAME="c:oldcal"></A>
+<BR>
+Preparing Your Data in AIPS
+</H1>
+If you feel that you would rather load and flag your data within AIPS but calibrate within <I>Miriad</I>, a number of steps need to be performed:
+
+<OL>
+<LI>The AIPS task to load RPFITS data is <A NAME="tex2html1107"
+  HREF="../doc/ATLOD.html">ATLOD</A>. Copious information
+on this is
+given in Neil Killeen's `Analysis of Australia Telescope Compact Array Data'.
+However, before loading your data into AIPS, if
+you have measured all four polarisation correlations, it is best to do a 
+preliminary run of <A NAME="tex2html1108"
+  HREF="../doc/ATLOD.html">ATLOD</A>
+using the <TT>optype ='sysc'</TT> option.
+<A NAME="16775"></A><A NAME="16776"></A>
+This run writes a
+text file (<code>XYPHS_</code><I>xx</I>, where <I>xx</I> is your AIPS number)
+containing the <I>XY</I> phase for each antenna into the FITS area (<TT>/DATA/FITS</TT>). Text files of system temperature are also written.
+Although the various selection parameters of <A NAME="tex2html1109"
+  HREF="../doc/ATLOD.html">ATLOD</A>
+are still active,
+you probably want to see all the data. Most of the other <A NAME="tex2html1110"
+  HREF="../doc/ATLOD.html">ATLOD</A>
+parameters are unimportant for this.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>AIPS/ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">optype = 'sysc'</TD>
+<TD ALIGN="LEFT">Load the data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">freqsel</TD>
+<TD ALIGN="LEFT">Select all data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ifsel</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">source</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">timer</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+You should plot the phases (and the system temperatures) with the Unix program
+<TT>pltsys</TT> - which prompts you for the name of the text file to plot as
+well as other information. Examine these plots carefully to assess
+their quality.  You should use these plots to choose your reference
+antenna (for calibration purposes).  Choose the reference antenna to be the
+antenna having the cleanest, most stable <I>XY</I> phase measurements.
+
+<P>
+Determine some mean value of the <I>XY</I> phase for each antenna from
+the plots.  The command <TT>pltsys</TT> prints out both the average and
+median <I>XY</I> phase. As there are often outliers, the median is more likely
+to reflect the true <I>XY</I> phase value. Getting a good value is only
+important for the reference antenna. Do not be too concerned if there
+are large jumps in the <I>XY</I> phases on antennas other than the reference
+antenna.
+
+<P>
+</LI>
+<LI><EM>No <I>XY</I> Phase Correction in <TT>ATLOD</TT>:</EM>
+You are now confronted with the decision of where to correct the <I>XY</I>
+phase of the reference antenna. Your choice will depend on taste,
+circumstances and the quality of the <I>XY</I> phase measurements. There are
+three main options:
+
+<UL>
+<LI>Correct using the <I>Miriad</I> task <A NAME="tex2html1111"
+  HREF="../doc/atxy.html">atxy</A>
+(described later). This
+is generally the best option.
+This allows you to correct for the
+variation of <I>XY</I> phase with time. This will be essential if there is
+significant time variability. To use this approach, you
+will need to keep a copy of your <I>XY</I> phase text file, <code>XYPHS_</code><I>xx</I>.
+</LI>
+<LI>Correct in AIPS <TT>ATLOD</TT>. This has been the approach once
+recommended, and is still useful if the <I>XY</I> phase of at least
+one antenna is quite constant with time. It also has the advantage of
+getting the <I>XY</I> correction step over and done with early. However the
+user input can be error prone and tedious if the observation switches
+frequency with time.
+</LI>
+<LI>When only <I>XX</I> and <I>YY</I> correlations have been measured, absolute
+<I>XY</I> phase 
+becomes irrelevant. Indeed it is not measured. In this case you do not
+need to apply any <I>XY</I> phase correction.
+</LI>
+</UL>
+There are a number of other possibilities, which will not be described here.
+
+<P>
+If you are going to correct the <I>XY</I> phases in <I>Miriad</I>, or if you are not
+going to correct <I>XY</I> phase at all, then
+you should now load your data <EM>without applying any <I>XY</I> phase</EM>.
+It is probably worth your while to pretend that the polarisations are
+circular rather than linear with the usual fudges, as not all the
+AIPS software will recognise linears (most of the calibration software
+will). You must <EM>not</EM> convert to Stokes parameters. 
+The appropriate <TT>ATLOD</TT> parameters are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>AIPS/ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">optype = 'load'</TD>
+<TD ALIGN="LEFT">Load the data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">aparm(1) =-1</TD>
+<TD ALIGN="LEFT">Label as circular</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cparm(5) =0</TD>
+<TD ALIGN="LEFT">Do <EM>not</EM> apply any <I>XY</I> phases.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><A NAME="16830"></A><A NAME="16831"></A>
+<EM>Correcting <I>XY</I> Phases with <TT>ATLOD</TT>:</EM> If you want to correct the <I>XY</I> phases with AIPS <TT>ATLOD</TT>,
+the <I>XY</I> phases on at least one antenna should be reasonably constant with
+time (vary by no more than a few degrees). In this
+case, give <TT>ATLOD</TT> the values of the
+<I>XY</I> phases that you determined from the plots discussed above.
+Input these values into <TT>ATLOD</TT> with the <TT>xyphase</TT> array.  You
+must enter one value per antenna for each frequency.  If you have more
+than one frequency, you must enter <I>XY</I> phases for all six
+antennas, even if you do not have antenna 6 in the array during the
+observation (the <I>XY</I> phase value is not important for this
+antenna, of course).  Note that even if the values are close to zero,
+you still should apply them. <EM>Applying a value of
+zero is different from not applying anything</EM>. 
+Again, you must <EM>not</EM> convert
+to Stokes parameters. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>AIPS/ATLOD</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">optype = 'load'</TD>
+<TD ALIGN="LEFT">Load the data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">aparm(1) =-1</TD>
+<TD ALIGN="LEFT">Label as circular</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cparm(4) =1</TD>
+<TD ALIGN="LEFT">Use <TT>xyphase</TT> array and</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">not the on-line values</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cparm(5) =1</TD>
+<TD ALIGN="LEFT">Apply <I>XY</I> phase to <I>Y</I> gains</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xyphase</TD>
+<TD ALIGN="LEFT">Assign the <I>XY</I> phases here</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Now flag the data in the way you would normally do with the
+AIPS tasks <TT>SPFLG</TT>, <TT>TVFLG</TT>, <TT>IBLED</TT>, and <TT>UVFLG</TT>.
+Using <TT>SPFLG</TT> is highly recommended, particularly at 20 and 13&nbsp;cm, to
+check for interference.
+
+<P>
+For continuum work,
+to save disk space and to speed access to the data, you may consider
+averaging your channels together to form ``channel-0''
+datasets, using task <TT>AVSPC</TT>. While this causes very little degradation
+for
+3 cm observations, forming ``channel-0'' results in bandwidth smearing
+in 13 and 20 cm observations, and so is probably inadvisable for
+high dynamic range work there. For high dynamic range work at 6&nbsp;cm, it is
+debatable whether averaging is detrimental. If in doubt, do not average. It
+is always possible to form a channel-0 dataset later anyway.
+
+<P>
+One other consideration in determining whether or not to average is whether
+or not you are going to apply <I>XY</I> phase corrections with task <A NAME="tex2html1112"
+  HREF="../doc/atxy.html">atxy</A>.
+For obscure reasons, if you used AIPS <TT>ATLOD</TT>,
+<A NAME="tex2html1113"
+  HREF="../doc/atxy.html">atxy</A>
+needs to know the ``sideband indicator''
+of the data. The sideband indicator, which is <SPAN CLASS="MATH"><IMG
+ WIDTH="24" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.png"
+ ALT="$\pm 1$"></SPAN>, is copiously
+reported by <TT>ATLOD</TT>, both in its output to the terminal, and in the
+history file. The sideband indicator also happens to be the sign of the
+channel frequency increment. This is how <A NAME="tex2html1114"
+  HREF="../doc/atxy.html">atxy</A>
+normally determines
+them.
+However, if you form a channel-0 dataset, the sign
+of the frequency increment is lost! So if you give <A NAME="tex2html1115"
+  HREF="../doc/atxy.html">atxy</A>
+a channel-0
+dataset, you will also have to tell it the sideband indicators. 
+You must give it a sideband indicator for each IF. Provided the
+sideband indicator remains constant with time, this is little more than
+an annoyance. However if the sideband indicator varies with time, you
+are in some trouble. Overall it is best not to form
+channel-0 datasets if you used AIPS <TT>ATLOD</TT> and you are going to
+use <A NAME="tex2html1116"
+  HREF="../doc/atxy.html">atxy</A>.
+
+<P>
+After flagging (and possibly averaging), write
+your data as a FITS file using <TT>FITTP</TT>. It is probably most
+convenient to
+write out a multi-source file. At this stage you have no
+calibration - only flagging tables (which you can apply in <I>Miriad</I> later).
+
+<P>
+</LI>
+<LI>Read the data into <I>Miriad</I> using <A NAME="tex2html1117"
+  HREF="../doc/fits.html">fits</A>. Task
+<A NAME="tex2html1118"
+  HREF="../doc/fits.html">fits</A>
+does <EM>not</EM> apply AIPS flagging tables (<TT>FG</TT> tables). Instead
+you have to use another task to do this - <A NAME="tex2html1119"
+  HREF="../doc/fgflag.html">fgflag</A>.
+Tasks <A NAME="tex2html1120"
+  HREF="../doc/fits.html">fits</A>
+and <A NAME="tex2html1121"
+  HREF="../doc/fgflag.html">fgflag</A>
+are discussed in
+Chapters&nbsp;<A HREF="node45.html#c:inout">8</A> and
+<A HREF="node58.html#c:edit">10</A> respectively, although they are usually fairly straight forward. An
+exception is for spectral line observations, where the velocity system
+should be defined with <A NAME="tex2html1122"
+  HREF="../doc/fits.html">fits</A>
+- see Chapter&nbsp;<A HREF="node123.html#c:lineobs">16</A>.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FITS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=MULTI.FITS</TD>
+<TD ALIGN="LEFT">FITS multi-source file to be loaded into <I>Miriad</I></TD>
+</TR>
+<TR><TD ALIGN="LEFT">op=uvin</TD>
+<TD ALIGN="LEFT">Read uv data in</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=multi.uv</TD>
+<TD ALIGN="LEFT">The output <I>Miriad</I> dataset.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FGFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">Apply AIPS flagging table to the data.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+At this stage it is worth running
+<A NAME="tex2html1123"
+  HREF="../doc/uvindex.html">uvindex</A>. This produces a summary of your dataset, which
+you should probably save in a log file. Inspect this summary
+carefully, particularly the frequencies (especially in <A NAME="tex2html1124"
+  HREF="../doc/fits.html">fits</A>
+complained about inconsistent frequency definitions). If the frequency
+information looks incorrect, read Chapter&nbsp;<A HREF="node45.html#c:inout">8</A> more carefully
+and/or seek help.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVINDEX</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">Dataset to summarise.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=multi.log</TD>
+<TD ALIGN="LEFT">Output log file.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Skip <A NAME="16911"></A><A NAME="16912"></A><A NAME="16913"></A>
+this step if you have only measured two polarisation products.
+Otherwise now is the time to apply your <I>XY</I> phases to the data if you
+have not already done so with AIPS <TT>ATLOD</TT>. As mentioned above,
+the task to do this is
+<A NAME="tex2html1125"
+  HREF="../doc/atxy.html">atxy</A>. If you used AIPS <TT>ATLOD</TT>, you should also have
+<I>XY</I> phase text file that it produced. 
+Let us discuss the various input parameters:
+
+<UL>
+<LI><TT>vis:</TT> The name of the input dataset. Generally this will
+be a multi-source dataset. 
+</LI>
+<LI><TT>xyphase:</TT> You need
+to give the name of the <I>XY</I> phase text file that AIPS <TT>ATLOD</TT>
+produced.
+Generally this will be of the form <code>XYPHS_</code><I>xx</I>,
+where <I>xx</I> is your AIPS user number.
+Task <A NAME="tex2html1126"
+  HREF="../doc/atxy.html">atxy</A>
+can also be used to correct the <I>XY</I> phases of
+data loaded with <I>Miriad</I> <A NAME="tex2html1127"
+  HREF="../doc/atlod.html">atlod</A>
+where <code>options=xycorr</code>
+was not used.
+In this case, the on-line <I>XY</I> phase measurements are contained
+within the dataset (as the variable <code>xyphase</code>), and you do not require
+a input text file.
+</LI>
+<LI><TT>refant:</TT>
+It is best to correct for a time varying <I>XY</I> phase on only one
+antenna. All other antennas are assumed to have an <I>XY</I> phase of zero (in
+the AIPS <I>XY</I> phase convention - see below).
+The antenna which is corrected for a time varying <I>XY</I> phase
+should be the antenna
+with the cleanest, most constant <I>XY</I> phase (as determined by the <TT>pltsys</TT>
+or <A NAME="tex2html1128"
+  HREF="../doc/varplt.html">varplt</A>
+plots). This will be the antenna you will use as the reference antenna for
+calibration purposes. It is not necessarily the same as the antenna
+used as the reference during the observation - although it will often
+happen that it is the same. You give this antenna via the <TT>refant</TT> keyword.
+Note that if you have broken a dataset up into sub-files before using
+<A NAME="tex2html1129"
+  HREF="../doc/atxy.html">atxy</A>
+(e.g. break it up into a calibrator dataset and a program
+source dataset), then you <EM>must</EM> correct the same antennas in
+all datasets.
+</LI>
+<LI><TT>interval:</TT> This gives one or two numbers, both in minutes,
+which determine
+the length of a solution interval (the time interval over which an <I>XY</I> phase
+is solved for; should be comparable to the time scale on which the
+<I>XY</I> phases are constant over - use <A NAME="tex2html1130"
+  HREF="../doc/varplt.html">varplt</A>). The first number gives the maximum length of a solution
+interval, whereas the second gives the maximum gap within a solution
+interval. A new solution interval is started when either the maximum
+time length is exceeded, or a gap larger than the maximum gap is encountered.
+The default maximum length is 30 minutes. The default maximum gap is the
+same as the maximum length.
+</LI>
+<LI><TT>break:</TT> If significant steps in the <I>XY</I> phase occurs during
+the observation (usually caused by resetting the delays), then it is
+best to prevent a solution interval spanning this time. To do this, you
+list the times where there was a break in the <I>XY</I> phase.
+The times are given in the normal <I>Miriad</I> time format (i.e. either
+<I>hh:mm:ss</I> or 
+<I>yymmmdd:hh:mm:ss</I>, such as 93oct18:19:21:00, for 7:21 pm on 18 October,
+1993).
+</LI>
+<LI><TT>sideband:</TT> As noted above, <A NAME="tex2html1131"
+  HREF="../doc/atxy.html">atxy</A>
+needs to know the
+sideband indicator for for data
+loaded with AIPS <TT>ATLOD</TT>. For multi-channel data, this will
+be the sign of the frequency increment. However this sign will be
+lost if you form a channel-0 dataset. In this is what you have done,
+you will need to tell <A NAME="tex2html1132"
+  HREF="../doc/atxy.html">atxy</A>
+the sideband indicators for each
+IF band. Note that <A NAME="tex2html1133"
+  HREF="../doc/atxy.html">atxy</A>
+cannot cope with a channel-0 
+dataset if the sideband indicators change with time. 
+</LI>
+<LI><TT>out:</TT> The name of the output dataset. Apart from application
+of the <I>XY</I> phase, this will be a copy of the input dataset.
+</LI>
+</UL>
+Typical inputs to <A NAME="tex2html1134"
+  HREF="../doc/atxy.html">atxy</A>
+are given below
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ATXY</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">The input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xyphase=XYPHS_56</TD>
+<TD ALIGN="LEFT">The input AIPS <TT>ATLOD</TT> <I>XY</I></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">phase text file, or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xyphase</TD>
+<TD ALIGN="LEFT">leave unset if <I>Miriad</I> <A NAME="tex2html1106"
+  HREF="../doc/atlod.html">atlod</A>
+was used.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">refant=3</TD>
+<TD ALIGN="LEFT">Correct antenna 3 in time varying way.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=#</TD>
+<TD ALIGN="LEFT">Solution interval. Default is 30 min</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sideband</TD>
+<TD ALIGN="LEFT">Sideband indicator. Leave unset for</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">multi-channel data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=multi.uvxy</TD>
+<TD ALIGN="LEFT">Output <I>XY</I> phase corrected data.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html4116"
+  HREF="node216.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4112"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4106"
+  HREF="node214.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4114"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4117"
+  HREF="node216.html">Using xmtv and xpanel</A>
+<B>Up:</B> <A NAME="tex2html4113"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html4107"
+  HREF="node214.html">UV Variables</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,107 @@
+%N mfclean
+%D Multi-frequency synthesis CLEAN.
+%P rjs
+%: deconvolution
+%B
+        MFCLEAN is a MIRIAD task to deconvolve a multi-frequency
+        synthesis image.  It can perform either Clark or Hogbom
+        iterations.  To achieve good results, the width of the beam
+        should be at least 3 times that of the region being cleaned.
+        The region being cleaned should be reasonably centred in the
+        map, and should have an appreciable guard band around it to the
+        map edge (of size comparable to the width of the region being
+        cleaned).
+ 
+        To form a multi-frequency synthesis image and beam, use INVERTs
+        "mfs" and "sdb" options.  This will create a map with one plane,
+        and a beam with two planes (the normal dirty beam, and the
+        spectral dirty beam).
+ 
+        The result of MFCLEAN is a component image consisting of two
+        planes.  The first plane contains the normal flux components.
+        The second consists of components of "flux times spectral index"
+        (that is, I*alpha).
+ 
+        Use task MFSPIN to get a crude spectral index image from the
+        output of MFCLEAN.
+ 
+        The sign convention used for the spectral index, alpha, is that:
+          I(f) = I(f0) * (f/f0) ** alpha
+ 
+        MFCLEAN differs from CLEAN in a number of ways.
+        * Task CLEAN only requires that the beam is twice the size of
+          the region being cleaned whereas, for MFCLEAN, it is
+          recommended that the dirty beam be three times the size of the
+          region being cleaned.
+        * MFCLEAN requires a guard band around the edge of the region
+          being cleaned.
+        * MFCLEAN does not have a Steer cleaning option, nor Prussian
+          hats.
+%A map
+        The input dirty map which should have units of Jy/beam.  No
+        default.
+%A beam
+        The input dirty beam. This should be formed using INVERT with
+        options=sdb. No default.
+%A model
+        An initial model of the deconvolved image.  This could be the
+        output from a previous run of MFCLEAN.  It must have flux units
+        of Jy/pixel.  The default is no model (i.e. a zero map).
+%A out
+        The name of the output map.  The units of the output will be
+        Jy/pixel.  This file will contain the contribution of the input
+        model.  It will consist of two planes, giving the flux density
+        image and the "flux times spectral index" image (also called the
+        scaled flux derivative image).  No default.
+%A gain
+        The minor iteration loop gain.  Two values can be given, the
+        second being the gain for the spectral components.  If only one
+        value is given, the flux and spectral components use the same
+        gain.  The default is 0.1.
+%A cutoff
+        MFCLEAN finishes when the absolute maximum residual falls below
+        CUTOFF. Default is 0. When two values are given, do a deep
+        clean to the second cutoff limiting peak finding to
+        the pixels that are already in the model.
+%A niters
+        The maximum number of minor iterations.  MFCLEAN finishes when
+        abs(NITERS) minor iterations have been performed.  Clean may
+        finish before this point, however, if NITERS is negative and the
+        absolute maximum residual becomes negative valued, or if the
+        cutoff level (as described above) is reached. Optional second
+        value will force MFCLEAN to report on the level reached and
+        (for mode=clark) start a new major iteration at least every
+        niters(2) iterations. This can be useful to avoid overcleaning.
+%A region
+        This specifies the region to be Cleaned.  See the User's Manual
+        for instructions on how to specify this.  The default is
+        generally inadequate, and a smaller region should be explicitly
+        specified. An easy way to do this is using the percentage option
+        of region. When the beam is the same size as the image use
+        region=perc(33), for a 'double' size beam use region=perc(66).
+%A minpatch
+        The minimum patch size when performing minor iterations.
+        Default is 511, but make it larger if you are having problems
+        with corrugations.  You can make it smaller when cleaning
+        images that consist of a pretty good dirty beam.
+%A speed
+        This is the same as the speed-up factor in the AIPS APCLN.
+        Negative values makes the rule used to end a major iteration
+        more conservative.  This causes less components to be found
+        during a major iteration, and so should improve the quality of
+        the Clean algorithm.  Usually this will not be needed unless you
+        are having problems with corrugations.  A positive value can be
+        useful when cleaning simple point-like sources.  Default is 0.
+%A mode
+        This can be either "hogbom", "clark" or "any", and determines
+        the Clean algorithm used.  If the mode is "any" MFCLEAN
+        determines which is the best algorithm to use.  The default is
+        "any".
+%A log
+        Output log file containing a list of all the components.  The
+        log file consists of 5 columns, being the iteration number, the
+        x and y pixel coordinate (in the output model; this goes from 1
+        to N), the "I" component and the "I*alpha" component.  The
+        default is to not create a log file.
+ 
+%R 1.14, 2017/10/19 04:45:13 UTC

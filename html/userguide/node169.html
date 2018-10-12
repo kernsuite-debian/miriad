@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Visibility Processing</TITLE>
+<META NAME="description" CONTENT="Visibility Processing">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node170.html">
+<LINK REL="previous" HREF="node168.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node170.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3532"
+  HREF="node170.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3528"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3522"
+  HREF="node168.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3530"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3533"
+  HREF="node170.html">Summary of Imaging Strategies</A>
+<B>Up:</B> <A NAME="tex2html3529"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3523"
+  HREF="node168.html">Mosaicing Observing Strategies</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002140000000000000000"></A><A NAME="14144"></A>
+<BR>
+Visibility Processing
+</H1>
+The flagging, splitting and calibration of a mosaic experiment
+are rather similar to a conventional experiment. The following
+concentrates on the differences only. This section will assume that,
+as is usual, only a single phase calibrator is used for all pointings.
+
+<P>
+
+<UL>
+<LI><EM>Flagging:</EM>  Flagging differs only in that, when the instrument
+is continually changing to a new pointing centre, it can be more difficult
+to spot the outliers which indicate bad data.
+
+<P>
+In its processing, <A NAME="tex2html838"
+  HREF="../doc/tvflag.html">tvflag</A>
+usually produces a gap in its display
+every time the source being observed is changed. When mosaicing, this
+can very quickly mount up to taking the entire display (and <A NAME="tex2html839"
+  HREF="../doc/tvflag.html">tvflag</A>
+will complain about not being able to determine an appropriate averaging
+interval). In this case, <code>options=nosrc</code> can be used to suppress the
+gap and allow <A NAME="tex2html840"
+  HREF="../doc/tvflag.html">tvflag</A>
+to average across source changes.
+</LI>
+<LI><EM>Splitting:</EM> As with conventional reduction,
+for calibration and imaging purposes, it is easiest in <I>Miriad</I> to split the data into datasets containing a `single source' and
+single frequency band. For a mosaic experiment, all the pointings
+from the object of interest should be considered a `single source'. As
+the ATCA on-line system labels each pointing with a different field name,
+<A NAME="tex2html841"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+would normally break
+the dataset into one file per pointing. To avoid this, use <A NAME="tex2html842"
+  HREF="../doc/uvsplit.html">uvsplit</A>'s
+mosaic option. This causes <A NAME="tex2html843"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+to use the source name up to
+any underscore character. Thus, assuming you have used
+the field naming convention of Section&nbsp;<A HREF="node168.html#s:mosobs">21.3</A>, <A NAME="tex2html844"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+will not split apart all the separate pointings.
+
+<P>
+If you failed to follow the naming convention, the <code>select</code> keyword of
+<A NAME="tex2html845"
+  HREF="../doc/uvaver.html">uvaver</A>
+and <A NAME="tex2html846"
+  HREF="../doc/uvsplit.html">uvsplit</A>
+can be used to split the dataset up. This
+is left as an exercise for the reader.
+
+<P>
+For example, assuming a dataset containing calibrators and an observation
+of the LMC (with appropriately named fields), the following inputs will
+generate datasets for the calibrators and a single dataset for all the LMC
+data. 
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVSPLIT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=mosaic.uv</TD>
+<TD ALIGN="LEFT">The input dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mosaic</TD>
+<TD ALIGN="LEFT">Assume mosaic experiment, so create</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">multi-pointing output where necessary.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI><EM>Data Selection:</EM> With mosaic visibility datasets, the <code>select=ra</code> 
+and <code>select=dec</code> selection sub-commands can be useful to extract or
+manipulate a subset of the visibility data.
+</LI>
+<LI><EM>Calibration:</EM> Determining the calibration solutions does not differ from that
+described in Chapter&nbsp;<A HREF="node84.html#c:polarimetry">12</A>. You will then use <A NAME="tex2html847"
+  HREF="../doc/gpcopy.html">gpcopy</A>
+to copy the calibration tables to
+the multi-pointing dataset.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3532"
+  HREF="node170.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3528"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3522"
+  HREF="node168.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3530"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3533"
+  HREF="node170.html">Summary of Imaging Strategies</A>
+<B>Up:</B> <A NAME="tex2html3529"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3523"
+  HREF="node168.html">Mosaicing Observing Strategies</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

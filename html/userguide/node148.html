@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Modifying Images by Models</TITLE>
+<META NAME="description" CONTENT="Modifying Images by Models">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node149.html">
+<LINK REL="previous" HREF="node147.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node149.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3254"
+  HREF="node149.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3250"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3244"
+  HREF="node147.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3252"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3255"
+  HREF="node149.html">Polarimetric Analysis Tasks</A>
+<B>Up:</B> <A NAME="tex2html3251"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3245"
+  HREF="node147.html">Smoothing Images</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001870000000000000000"></A><A NAME="s:imgen"></A><A NAME="11938"></A>
+<BR>
+Modifying Images by Models
+</H1>
+
+<P>
+The task <A NAME="tex2html710"
+  HREF="../doc/imgen.html">imgen</A>
+can be used to create an image with a source of
+some simple model disposition.  It can generate noise, point sources,
+Gaussians, elliptical disks, Bessel functions and DC terms.  It can also
+be used to modify an already existing image by a model.  In the
+following example, we subtract an offset (by -1.5 and 3.5&nbsp;arcsec in
+<I>x</I> and <I>y</I> from the reference pixel) circular Gaussian model from an
+image.  The Gaussian parameters are given in the keyword <TT>spar</TT>
+(height 0.87&nbsp;Jy, FWHM of 1.7&nbsp;arcsec).  Note that <A NAME="tex2html711"
+  HREF="../doc/imgen.html">imgen</A>
+cannot
+create elliptical Gaussians unless they align with the <I>x</I> and <I>y</I> axes. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMGEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=ic4296-sub.icln</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">factor=1</TD>
+<TD ALIGN="LEFT">Multiply input by 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object=gaussian</TD>
+<TD ALIGN="LEFT">Gaussian model</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spar=-0.87,1.7,1.7</TD>
+<TD ALIGN="LEFT">Gaussian parameters</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xy=-1.5,3.5</TD>
+<TD ALIGN="LEFT">Offset from reference pixel</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cell</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+If you wish to create an entirely new image with <A NAME="tex2html712"
+  HREF="../doc/imgen.html">imgen</A>,
+you should leave <TT>in</TT> unset, and specify <TT>cell</TT>
+and <TT>imsize</TT>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3254"
+  HREF="node149.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3250"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3244"
+  HREF="node147.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3252"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3255"
+  HREF="node149.html">Polarimetric Analysis Tasks</A>
+<B>Up:</B> <A NAME="tex2html3251"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3245"
+  HREF="node147.html">Smoothing Images</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

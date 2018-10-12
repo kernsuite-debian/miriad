@@ -1,0 +1,129 @@
+<title> Documentation on wblod </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on wblod</h1>
+<pre>
+
+Task: wblod
+Purpose: Convert an RPFITS file into Miriad uv format.
+Categories: data transfer
+
+        WBLOD is a MIRIAD task, which converts a uv data-set from the RPFITS
+        format to Miriad format.  It is a clone of ATLOD intended for loading
+        wide-band analogue correlator data.
+
+Key: <a name="in"><a href="in.html">in</a>
+        Name of the input RPFITS files. Several names can be given -- wildcard
+        expansion is supported. If a single name is given, this can be a raw
+        tape device name (e.g. /dev/nrst0 in UNIX) containing several files.
+        In this case, see the NFILES keyword below. There is no default.
+
+Key: <a name="out"><a href="out.html">out</a>
+        Name of the output Miriad uv data-set. No default.
+
+Key: <a name="ifsel">ifsel
+        IF number to select.  Default is all IFs.  For example,
+        if you observed with 5 GHz (frequency 1) and 8 GHz (frequency 2)
+        simultaneously, IF 1 would be the 5 GHz data and IF 2 would
+        be the 8 GHz data.
+
+Key: <a name="restfreq">restfreq
+        The rest frequency, in GHz, for line observations.  By default,
+        the value in the RPFITS file is used.  Giving a value for the
+        "restfreq" parameter overrides the RPFITS file value. If you
+        do set this parameter, you MUST give the same number of values as the
+        number of IFs written out. A value of 0 is used for a continuum
+        observation. For example, if you have two IFs, the first of
+        which is HI, and the second is continuum, use
+            restfreq=1.420405752,0
+
+Key: <a name="posout">posout
+        Name of an output ascii file to contain a log of the antenna positions.
+        Format is MJD, antenna, RA (rad), DEC (rad).
+
+Key: <a name="posin">posin
+        Name of an input ascii file which contains the antenna positions.
+        Format is MJD, antenna, RA (rad), DEC (rad). If a filename is
+        given, the antenna positions in the rpfits file are ignored.
+        Usually this file will be that written by the posout parameter.
+        The advantage of this is that excessive interpolation is avoided
+        in cases where the antenna positions lag the correlator data.
+
+Key: <a name="options"><a href="options.html">options</a>
+        This gives extra processing options. Several can be given,
+        separated by comas.
+          'birdie'  ATCA self-interference can corrupt channels at integral
+                    multiples of 128 MHz. The birdie option flags these
+                    channels. Additionally, in continuum (33 channels/128MHz)
+                    mode, the birdie option dicards every second channel, plus
+                    some edge channels. The channels discarded
+                    are those most likely affected by the self-interference.
+                    Discarding these channels does not have a
+                    sensitivity penalty, because the effective channel
+                    bandwidth is twice the channel separation.
+          'reweight' Re-weight the lag spectrum to eliminate the "Gibbs" phenomena.
+          'compress' Write output data in compressed format.
+          'noauto'  Discard autocorrelation data. The default is to
+                    copy the autocorrelation data.
+          'nocross' Discard cross-correlation data. The default is to
+                    copy the cross correlation data.
+          'relax'   Do not flag visibilities based on SYSCAL information.
+                    The default is to flag visibilities if they have
+                    not been preceded by a valid SYSCAL record, or if the
+                    the values in the SYSCAL record look bad. SYSCAL
+                    values are checked for sampler statistics being within
+                    3% of 17.3%, or 0.5% of 50.0%, that the XY phase
+                    is within 10 degrees of its running median, and that
+                    the XY amplitudes are within 1 Jy or 10% of its running
+                    median.
+          'unflag'  Save any data that is flagged. By default ATLOD
+                    discards most data that is flagged.
+          'samcorr' Correct the pre-Dec93 data for incorrect sampler
+                    statistics. Since December 1993, sampler corrections
+                    are performed online -- Miriad ignores the samcorr
+                    option for this data.
+          'xycorr'  Apply the on-line measurement of the XY phase.
+          'hanning' Hanning smooth spectra and drop every other channel
+                    This option is ignored for 128-MHz, 33-channel data.
+          'bary'    Use the barycentre as the velocity rest frame. The
+                    default is to use the LSR frame.
+          'noif'    Do not map the simultaneous IFs to the IF axis.
+                    By default ATLOD attempts to map the simultaneous
+                    frequencies to the IF axis. This will not be possible
+                    if there are a different number of polarisations in
+                    the different IFs.
+          'nopflag' If at least one polarisation of a set of 2 or 4 polarimetric
+                    spectra are bad, ATLOD normally flags all of the
+                    polarisations. Option nopflag changes this so that only
+                    the nominally bad spectrum is flagged.
+          'hires'   Treat bin data as measurements in the high time resolution
+                    mode. The output dataset contains no bins, but instead
+                    appears as data measured with small cycle times.
+          'pmps'    Undo `poor man's phase switching'. This is an obscure option
+                    that you should not generally use.
+          'detail'  Give a more detailed error log when loading.
+
+Key: <a name="nfiles">nfiles
+        This gives one or two numbers, being the number of files to skip,
+        followed by the number of files to process. This is only
+        useful when the input is a tape device containing multiple files.
+        The default is 0,1 (i.e. skip none, process 1 file).
+ 
+        <B>NOTE:</B> Using this feature to skip many files on a tape is VERY
+        inefficient. It is far faster to skip using operating system commands.
+        When doing this, however, you should be aware is that every RPFITS files
+        consists of 3 tape files. Thus you will want to skip three times as
+        many tape files as RPFITS files. For example, in UNIX, to skip 10
+        RPFITS files, use
+                    mt -f /dev/nrst0 fsf 30
+
+Key: <a name="nscans">nscans
+        This gives one or two numbers, being the number of scans to skip,
+        followed by the number of scans to process. <B>NOTE:</B> This applies to
+        all files read. The default is to skip none and process all scans.
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

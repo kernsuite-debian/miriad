@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Apply Your Original Calibration Before Self-Calibrating</TITLE>
+<META NAME="description" CONTENT="Apply Your Original Calibration Before Self-Calibrating">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node116.html">
+<LINK REL="previous" HREF="node114.html">
+<LINK REL="up" HREF="node114.html">
+<LINK REL="next" HREF="node116.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2840"
+  HREF="node116.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2836"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2830"
+  HREF="node114.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2838"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2841"
+  HREF="node116.html">Self-Calibrating with Multiple Models</A>
+<B>Up:</B> <A NAME="tex2html2837"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2831"
+  HREF="node114.html">Computation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001511000000000000000">
+Apply Your Original Calibration Before Self-Calibrating</A>
+</H2>
+Both <A NAME="tex2html496"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html497"
+  HREF="../doc/gpscal.html">gpscal</A>
+produce antenna gain tables in the same
+format as the
+calibration tasks previously described. Consequently, after running
+these tasks, the gains they derive are applied to the data `on-the-fly'.
+However, the new gain tables derived by the self-calibration
+tasks will overwrite any old gain tables. Provided the self-calibration
+produces an improvement, this is fine. However, if the self-calibration process
+degrades the quality of the image (possibly because you gave it bad inputs
+or a poor model,
+or because you were attempting to calibrate a weak source), then you may have
+lost your good set of gains. An additional shortcoming is that the
+self-calibration tasks do not apply bandpass corrections - they
+assume bandpass corrections have been previously applied. Finally,
+if the primary gains have appreciable <I>XY</I> phase (for any antenna
+for <A NAME="tex2html498"
+  HREF="../doc/selfcal.html">selfcal</A>, but for the reference antenna only for <A NAME="tex2html499"
+  HREF="../doc/gpscal.html">gpscal</A>),
+or significant amplitude gain mismatches (for <A NAME="tex2html500"
+  HREF="../doc/selfcal.html">selfcal</A>
+only)
+then these corrections should be applied to the data before self-calibration.
+Consequently, <EM>it is usually wise, before starting to perform self-calibration
+iterations, to form a calibrated dataset (apply bandpass
+corrections and primary antenna gains).</EM> Additionally if you are going to
+use <A NAME="tex2html501"
+  HREF="../doc/selfcal.html">selfcal</A>, as discussed below, you should convert to Stokes
+parameters. The task used to apply calibration and convert to Stokes
+parameters is <A NAME="tex2html502"
+  HREF="../doc/uvaver.html">uvaver</A>.
+
+<P>
+Thus when using <A NAME="tex2html503"
+  HREF="../doc/selfcal.html">selfcal</A>, use inputs to <A NAME="tex2html504"
+  HREF="../doc/uvaver.html">uvaver</A>
+such as;
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVAVER</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Raw visibility dataset, with primary</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">calibration tables.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.uv.cal</TD>
+<TD ALIGN="LEFT">Output with primary calibration applied.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes=i,q,u,v</TD>
+<TD ALIGN="LEFT">Perform Stokes conversion.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+If using <A NAME="tex2html505"
+  HREF="../doc/gpscal.html">gpscal</A>, do not perform Stokes conversion.
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVAVER</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Raw visibility dataset, with primary</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">calibration tables.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.uv.cal</TD>
+<TD ALIGN="LEFT">Output with primary calibration applied.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes</TD>
+<TD ALIGN="LEFT">Unset for no Stokes conversion.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Once you have started self-calibrating, however, you probably
+do not need to form a calibrated dataset after each iteration. Provided you
+keep your best model of the image, if you do overwrite good gains with bad ones,
+then they are simple enough to regenerate using self-calibration and the best
+model.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2840"
+  HREF="node116.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2836"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2830"
+  HREF="node114.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2838"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2841"
+  HREF="node116.html">Self-Calibrating with Multiple Models</A>
+<B>Up:</B> <A NAME="tex2html2837"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2831"
+  HREF="node114.html">Computation</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

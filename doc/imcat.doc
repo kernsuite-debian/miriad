@@ -1,0 +1,25 @@
+%N imcat
+%D Concatenate several images into one.
+%P mchw
+%: map combination
+%B
+        IMCAT is a MIRIAD task to concatenate several images together
+        along an axis (generally the frequency or velocity
+        dimension).
+%A in
+        The input images.  Several file names can be entered, separated
+        by commas.  No default.
+%A out
+        The output image.  No default.
+%A axis
+        The axis to concatentate together.  The default is the 3rd axis
+        (i.e. axis=3).  You cannot concatenate together on the first
+        axis.
+%A options
+        Task enrichment options.  Minimum match is used.  Currently
+        there is only a single option:
+          relax  This instructs IMCAT to ignore axis descriptor
+                 mismatches (e.g. pixel increments etc).  Use this with
+                 care.
+ 
+%R 1.8, 2013/08/30 01:49:21 UTC

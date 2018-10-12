@@ -1,0 +1,75 @@
+.TH uvsplit 1
+.SH NAME
+uvsplit - Break a uv data-set into single source, single-band files.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVSPLIT breaks an input data-set into a number of output
+data-sets, each of which contains a single ``type'' of data.
+Generally this means single source and single frequency
+band, though this is controlled by some options.
+.sp
+UVSPLIT chooses its own names for the output data-sets. These
+are in the form
+.nf
+    sourcename.frequency
+.fi
+Where ``frequency'' is the center frequency of the band, in MHz,
+rounded to the nearest MHz.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name if an input uv data-set. No default.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is copy everything.
+.TP
+\fIoptions\fP
+This gives extra processing options. Several options can be given,
+each separated by commas. They may be abbreivated to the minimum
+needed to avoid ambiguity.
+.nf
+  nocopy    By default, uvsplit copies any calibration tables
+            present in the input to the output. The nocopy
+            option suppresses this.
+  mosaic    Typically this option is used when splitting datasets
+            observed in mosaic mode. UVSPLIT attempts to place all
+            pointing centres of the source of interest into the one
+            output dataset. This requires that the field names of
+            the different pointings be composed of two parts,
+            separated by an underscore, viz
+                  a_b
+            Where "a" is common to all field names (typically
+            a source) and "b" is a field-specific name (typically
+            a field number). For example field 123 of a mosaic
+            experiment of the LMC might be called "lmc_123"
+  clobber   If a dataset exists with the same name as one that
+            uvsplit would create, then delete that dataset before
+            creating uvsplit's output.
+  calcode   If splitting by source, take calcode into account
+  ifchain   If splitting by freq, take ifchain into account. This
+            can be used to separate two identical frequency
+            setups differing only in the online signal path.
+.fi
+The following three options determine which data-set characteristics
+result in UVSPLIT generating different output data-sets.
+.nf
+  nosource  Do not produce new data-sets based on source name. That
+            is each output data-set can contain multiple sources.
+            The default is for each output to contain only a single
+            source.
+  nofreq    Do not produce new output data-sets based on a switch
+            in frequency. That is each output data-set can contain
+            frequency switches.
+  nowindow  Do not generate a separate output data-set for each
+            spectral window. The default is to create a new
+            output for each spectral window.
+.TP
+\fImaxwidth\fP
+ The maximum bandwidth (in GHz) for each output frequency band.
+ Default is no subdivision of input bands. The maxwidth limit
+ is only applied when splitting by frequency.
+.fi
+$Id: uvsplit.for,v 1.18 2016/05/09 03:06:18 sau078 Exp $

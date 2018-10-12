@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Host Command-Line Interface</TITLE>
+<META NAME="description" CONTENT="Host Command-Line Interface">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node20.html">
+<LINK REL="previous" HREF="node18.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node20.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1609"
+  HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1605"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1599"
+  HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1607"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1610"
+  HREF="node20.html">Writing Shell Scripts</A>
+<B>Up:</B> <A NAME="tex2html1606"
+  HREF="node4.html">The User Interface</A>
+<B> Previous:</B> <A NAME="tex2html1600"
+  HREF="node18.html">Indirect Parameter Input</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00260000000000000000"></A>
+<A NAME="s:cmdline"></A>
+<BR>
+Host Command-Line Interface
+</H1>
+<I>Miriad</I> tasks can always be run by specifying their
+parameters on the host command line.
+A parameter is specified by equating its keyword to its
+value. For example, <TT>out=gauss</TT> sets the parameter <TT>out</TT> to
+the `value' <TT>gauss</TT>.
+As an example, we shall first create an image
+dataset, <TT>gauss</TT>, with the task <A NAME="tex2html17"
+  HREF="../doc/imgen.html">imgen</A>.
+At the system prompt type
+<PRE>
+   % imgen out=gauss
+</PRE>
+In this case, default values are used for all parameters, other 
+than <TT>out</TT>. The names of all parameters, and their default values, are
+described in a help file (see below) which is always available on line.
+
+<P>
+Next, we will run a histogram task, <A NAME="tex2html18"
+  HREF="../doc/histo.html">histo</A>, with the input image
+dataset <TT>gauss</TT> that we just created:
+<PRE>
+   % histo in=gauss
+</PRE>
+
+<P>
+Several parameters can be given on the command line, separated by spaces.
+Often a parameter value consists of several numbers and/or 
+strings. These values 
+should be separated by commas. For example:
+<PRE>
+   % histo in=gauss range=0,1 nbins=10
+</PRE>
+
+<P>
+Strings will often be file names. These are the names used by the host
+computer, and so they should obey the file-naming rules of the computer.
+Some tasks support wildcard expansion for file names.
+
+<P>
+Whether strings are in lower or upper case is usually
+significant. That is,
+<PRE>
+   % histo in=gaus
+</PRE>
+is very different to
+<PRE>
+   % HISTO IN=GAUS
+</PRE>
+Generally lower case is preferred.
+
+<P>
+A parameter value cannot contain a space. Often a parameter value will be
+composed of one or more strings out of a fixed set. In this case, the
+strings can be abbreviated to the minimum number of
+characters required for uniqueness.
+
+<P>
+The host's shell may try to interpret special characters in your commands -
+most notably the UNIX shells treat asterisks and brackets as special. This will
+often result in the host shell issuing cryptic messages and failing to
+invoke the <I>Miriad</I> task. For example, giving the command
+<PRE>
+   % histo in=gaus*
+</PRE>
+will probably result in
+<PRE>
+   No match.
+</PRE>
+Similarly
+<PRE>
+   % histo in=gaus region=quarter(1)
+</PRE>
+will result in
+<PRE>
+   Badly placed ()'s.
+</PRE>
+You can avoid this by escaping the special character or quoting the text
+containing the special characters. For example:
+<PRE>
+   % histo in=gaus "region=quarter(1)"
+</PRE>
+
+<P>
+The command-line interface is quite appropriate for tasks that take relatively
+few parameters, or in 
+shell scripts. However, it is cumbersome when a task has many parameters.
+Here the use of a keyword file comes in handy:
+
+<P>
+Keyword files <A NAME="373"></A> are files containing 
+<TT>parameter=value</TT> pairs, one per line, 
+and can be created with an editor
+(most front-ends to be discussed in the next sections create such <TT>.def</TT>
+files by themselves) and passed to a <I>Miriad</I> task using the <TT>-f</TT>
+<A NAME="377"></A>
+command line switch, or flag. Hence the previous example 
+would be equivalent to:
+<PRE>
+   % histo -f histo.def
+</PRE>
+where the file <TT>histo.def</TT> would contain:
+<PRE>
+   in=gaus
+   region=quarter(1)
+</PRE>
+Unknown keywords are simply ignored (though you will get a warning). The
+file should not use the same keyword twice. As parameter values do
+not go through the host's shell, special characters do not
+need to be escaped or quoted.
+
+<P>
+Help on a <I>Miriad</I> task can be obtained on the host command line with the
+command <TT>mirhelp</TT>.
+Example:<A NAME="384"></A>
+<A NAME="385"></A> 
+<PRE>
+   % mirhelp histo
+</PRE>
+This will provide description of the task parameters and
+their default values.
+
+<P>
+The <TT>mirhelp</TT> command can be used to save help on a <I>Miriad</I> task as
+a text file, or to get a print-out of a help file. In UNIX, you would
+use the normal shell output redirection and piping. For example, to
+redirect the help on task <A NAME="tex2html19"
+  HREF="../doc/histo.html">histo</A>
+to a file <TT>histo.hlp</TT>, use:
+<PRE>
+   % mirhelp histo &gt; histo.hlp
+</PRE>
+Alternately, to print out this help file, use
+<PRE>
+   % mirhelp histo | lw80
+</PRE>
+where <TT>lw80</TT> is your favourite print command.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1609"
+  HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1605"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1599"
+  HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1607"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1610"
+  HREF="node20.html">Writing Shell Scripts</A>
+<B>Up:</B> <A NAME="tex2html1606"
+  HREF="node4.html">The User Interface</A>
+<B> Previous:</B> <A NAME="tex2html1600"
+  HREF="node18.html">Indirect Parameter Input</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

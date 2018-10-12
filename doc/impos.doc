@@ -1,0 +1,69 @@
+%N impos
+%D Converts image coordinates between different systems.
+%P nebk
+%: image analysis
+%B
+        IMPOS takes a coordinate in a specified system (such as "abspix"
+        or "arcsec") and converts it to all appropriate coordinate
+        systems (absolute world, offset world, pixels, offset pixels).
+ 
+        If a rest frequency is stored in the header, then in addition to
+        the type specified in the header, spectral axes are converted
+        to frequency (FREQ), radio velocity (VRAD), optical velocity
+        (VOPT), redshift (ZOPT), and relativistic velocity (VELO).
+ 
+        If the input is an image and the specified coordinate represents
+        a valid pixel, its value is reported as well.
+ 
+%A in
+        The input image or visibility dataset.  For a visibility
+        dataset, the coordinate system is relative to the first
+        visibility record.
+%A coord
+        Specify the coordinate for each axis that you are interested
+        in; you don't necessarily need one for every axis in the image.
+        No default.
+%A type
+        Specify the coordinate system of the input coordinate for each
+        axis.  Different axes can be in different systems.  Choose from:
+ 
+           "hms"         HH:MM:SS.S  (e.g. for RA)
+           "dms"         DD:MM:SS.S  (e.g. for DEC)
+           "arcsec"      Arcseconds relative to the reference pixel
+           "absdeg"      Absolute degrees
+           "reldeg"      Degrees relative to the reference pixel
+           "abspix"      Pixels
+           "relpix"      Pixels relative to the reference pixel
+           "absghz"      GHz
+           "relghz"      GHz relative to the reference pixel
+           "abskms"      km/s
+           "relkms"      km/s relative to the reference pixel
+           "abslin"      Linear coordinate
+           "rellin"      Linear coordinate relative to the reference
+                         pixel
+ 
+        The default for unspecified axes is the type of the previous
+        axis.  The default for the first axis is "relpix".
+%A stype
+        'VRAD' (or 'radio'), 'VOPT' (or 'optical'), 'VELO' (or
+        'relativistic') - the velocity convention for a spectral
+        coordinate.  For example, the header might define a frequency
+        axis but you could provide a velocity with "type=abskms", in
+        which case you must qualify the velocity convention via stype,
+        i.e. VRAD, VOPT, or VELO.
+%A options
+        Extra processing options.  Several can be given, separated by
+        commas, with minimum-match.
+          altprj    Interpret a CAR (plate carée) projection in the
+                    input ot template image as a simple linear
+                    coordinate system with an additional 1/cos(lat0)
+                    scaling factor applied when computing the longitude,
+                    e.g.
+                       RA = (p1 - CRPIX1)*CDELT1/cos(CRVAL2).
+                    This interpretation differs significantly from the
+                    FITS standard when lat0 (i.e. CRVAL2) is non-zero.
+          altspc    Report FREQ-{HEL,LSR} axes as is, namely
+                    topocentric, i.e. don't Doppler shift to barycentric
+                    or LSRK (see help for velsw).
+ 
+%R 1.16, 2015/07/31 01:20:50 UTC

@@ -1,0 +1,113 @@
+%N uvlin
+%D Separate continuum and lines in a spectral data-set.
+%P rjs
+%: uv analysis
+%B
+        UVLIN separates line and continuum in a spectral visibility
+        data-set. It does this by fitting a low order polynomial to the
+        real and imaginary parts of the line free channels of each
+        spectrum.
+        This polynomial function is taken to represent the continuum, and
+        any deviation from this is taken to represent the line data.
+ 
+        Optionally a constraint can be added that the line shape is
+        constant, and its strength is proportional to the continuum
+        level. This is a good approximation in many recombination line
+        experiments. In this case, an iterative algorithm is used to
+        estimate the line shape and to optimally disentangle the line
+        and the continuum.
+ 
+        See the related tasks CONTSEN and CONTERR, which give estimates
+        of the noise amplification and the residual continuum.
+%A vis
+        The name of the input uv data set. No default.
+%A select
+        The normal uv selection commands. The default is to select
+        everything.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels. Note that if there are multiple
+        spectral windows, the fitting process is performed on each window
+        separately.
+%A chans
+        This specifies the channel ranges that contain only continuum
+        (line free). It consists of a number of pairs, each pair giving
+        a start and end channel. These are relative to the channels
+        selected with the "line" parameter. The default is that all
+        channels are line-free, which is quite a good approximation if
+        the line is weak compared to the continuum.
+%A out
+        The name of the output uv data-set. There is no default name.
+        The output can be either the line, continuum, or fitted line
+        shape, as specified by the options keyword. The default is to
+        write the line data.
+%A order
+        Order of polynomial used to fit the continuum. The default is 1
+        (i.e. a linear fit). Possible values are 0 to 5. Also see the
+        `relax' option.
+%A offset
+        An offset (in arcsec) that would shift the data to the center of
+        the dominant emission. Giving this shift allows UVLIN to reduce
+        the error involved in approximating the continuum as a
+        polynomial.
+        The shift information is only used in the fitting process -- the
+        output data is not shifted. The default is 0,0 (no shift).
+        The following options determine what is written to the output
+        data-set.
+%A mode
+        This determines what is written out. The default is to write out
+        the line data. The following are possible values:
+           line        The output data-set is the line data. This is
+                       the default.
+           fit         The output data-set is the fitted line shape data.
+                       This is valid only when using the 'lpropc' option.
+           chan0       The output data-set is an average of all the
+                       continuum data in a visibility record.
+           continuum   The output data-set is the continuum data. This
+                       has the same number of channels as the input
+                       data-set.
+           ratio       The output data-set is the input data divided by
+                       the fitted continuum data minus one.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreivated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           sun         With this options, the OFFSET keyword is ignored,
+                       and a shift appropriate for the Sun is determined
+                       This can be useful to eliminate solar
+                       interference.
+           twofit      If either the OFFSET parameter is set, or the SUN
+                       option invoked, this options instructs UVLIN to
+                       perform a simultaneous polynomial fit for emission
+                       both at the phase centre and at the appropriate
+                       offset.
+           nowindow    Normally uvlin processes the different windows
+                       separately. This will usually give the best result
+                       when the different windows are at quite different
+                       frequencies. However when the windows are at
+                       similar frequencies, or perhaps even abutting,
+                       then it is better to perform a single fit over all
+                       windows simultaneously. The "nowindow" option
+                       causes uvlin to do a single fit over all windows.
+           lpropc      The line shape is constant throughout the
+                       data-set, and the intensity is proportional to the
+                       continuum strength. This cannot be used together
+                       with the 'twofit' option.
+           relax       Normally UVLIN attempts to avoid overfitting the
+                       data by reducing the order of the fit. It does
+                       this if a significant number of channels are
+                       flagged (more than 40% bad) or if it believes
+                       there is inadequate data to perform the fit (less
+                       than 5*(order+1) channels). You can overwrite this
+                       conservatism, if you know what you are doing, with
+                       the `relax' option.
+        The following options can be used to turn off calibration
+        corrections.
+        The default is to apply any calibration present.
+           nocal       Do not apply the gains table.
+           nopass      Do not apply bandpass corrections. It is unwise
+                       to turn off bandpass correction, as the continuum
+                       estimation process will be confused by a bandpass
+                       which is not flat.
+           nopol       Do not apply polarization corrections.

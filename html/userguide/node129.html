@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Recomputing Velocity Information</TITLE>
+<META NAME="description" CONTENT="Recomputing Velocity Information">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node130.html">
+<LINK REL="previous" HREF="node128.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node130.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3017"
+  HREF="node130.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3013"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3007"
+  HREF="node128.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3015"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3018"
+  HREF="node130.html">Setting the Rest Frequency</A>
+<B>Up:</B> <A NAME="tex2html3014"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3008"
+  HREF="node128.html">Listing and Plotting Velocity</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001660000000000000000"></A><A NAME="4266"></A><A NAME="4267"></A>
+<BR>
+Recomputing Velocity Information
+</H1>
+Although <A NAME="tex2html568"
+  HREF="../doc/atlod.html">atlod</A>
+or <A NAME="tex2html569"
+  HREF="../doc/fits.html">fits</A>
+is the best place to set the velocity
+information, this
+can also be handled by the task <A NAME="tex2html570"
+  HREF="../doc/uvredo.html">uvredo</A>. This task recomputes
+a number of the `derived' quantities (such as observatory radial velocity)
+which are stored in a visibility dataset. You have to select
+<A NAME="tex2html571"
+  HREF="../doc/uvredo.html">uvredo</A>'s <TT>velocity</TT> option, and set the keyword <TT>velocity</TT>
+to indicate the rest frame to be used. Typical inputs are:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVREDO</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=line.uv</TD>
+<TD ALIGN="LEFT">Input dataset name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=line2.uv</TD>
+<TD ALIGN="LEFT">Output dataset name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=velocity</TD>
+<TD ALIGN="LEFT">Recompute velocity information</TD>
+</TR>
+<TR><TD ALIGN="LEFT">velocity=lsr</TD>
+<TD ALIGN="LEFT">Use the LSR as the rest frame</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

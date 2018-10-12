@@ -1,0 +1,36 @@
+.TH impoly 1
+.SH NAME
+impoly - Flat field subtraction using a 2D polynomial fit
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+map combination
+.SH DESCRIPTION
+IMPOLY (IMage POLYnomial subtraction) is a MIRIAD task that
+performs a least squares polynomial fit to a specified region
+of each plane of a cube and subtracts this fit from the entire
+plane.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image.  No default.
+.TP
+\fIout\fP
+The output image.  No default.
+.TP
+\fIorder\fP
+The degree of the highest term of the polynomial fit.  It is not
+possible to have a different order of the polynomial in X and Y.
+Default is zero (i.e. fit a constant).
+.TP
+\fIcoeffs\fP
+A logical, specifying whether you want to see fitted polynomial
+coefficients.  Note: the coefficients are defined w.r.t. the
+reference pixel, and are in pixel units.  Default is not.
+.TP
+\fIregion\fP
+Full region specifications are supported.  Defaults to the
+entire image.
+.sp
+.SH REVISION
+1.5, 2013/08/30 01:49:21 UTC

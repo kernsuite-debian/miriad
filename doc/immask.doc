@@ -1,0 +1,82 @@
+%N immask
+%D mask an image dataset
+%P pjt
+%: image analysis
+%B
+      PROGRAM immask
+ 
+    IMMASK is a MIRIAD task which allows you to mask an image
+    dataset, or find out the number of masked pixels in an image.
+ 
+    Masking is directly done to the ``mask'' item of an image dataset, i.e.
+    the actual image data are not modified, only the mask.
+    A pixel with a TRUE mask value is considered a good pixel.
+ 
+    To set all pixels in an image to FALSE:
+        immask in=ngc_289_6cm flag=false logic=and
+ 
+    To mask out the pixels in a region:
+        immask in=ngc_289_20cm region=@cgcurs.region flag=false logic=and
+ 
+    To undo all masking, delete the mask item from the header:
+        delhd in=ngc_289_6cm/mask
+ 
+    To mask all the pixels EXCEPT a chosen region (eg you want to blank out
+    the nasty-looking edges of a CCD image)
+        immask in=myimage flag=good region=@good.region logic=not
+ 
+    To change the masking, you must specify a value for the LOGIC keyword.
+    Otherwise IMMASK merely reports the current numbers of masked and
+    unmasked pixels.
+ 
+    See also MATHS for other ways to set the image mask, but note
+    that un-masking a pixel may then expose a value that is incorrect
+    or unexpected, e.g. maths will have written 0s for pixels that were
+    masked in the process.
+ 
+%A in
+    The name of the input image dataset. No default.
+ 
+%A region
+    Regions which will be masked with the ``flag'' value (see below).
+    Full region descriptions are supported.
+    Note that missing image planes will be automatically masked
+    to the opposite value set by the ``flag'' keyword below.
+    Default: whole image.
+ 
+%A logic
+    The logic of the masking operation. It can have a value of ``AND'',
+    `OR'' or ``NOT'' which determines how the selected region(s) from the
+    region= keyword are masked with the existing mask item in the image:
+        OR:     region .OR.   mask
+        AND:    region .AND.  mask
+        EQV:    region .EQV.  mask
+        XOR:    region .XOR.  mask
+        NOT:    if (region) .NOT.mask
+    If no value provided, the program will simply report on the
+    total number of pixels already flagged good and bad.
+    Caution: although XOR is not a valid fortran expression, the
+    EQV and NEQV boolean operators come close. OR and XOR belong
+    together: OR=inclusive OR, XOR=exclusive OR.
+    No default.
+ 
+%A flag
+    The value of the mask inside the selected regions. Can be ``true''
+    or ``false''. Outside selected region it will be its opposite.
+    A ``true'' value is considerd a good pixel.
+    Default: true.
+ 
+%A history
+    Specifies whether the history should be updated. This should
+    normally never be set to false, though some scripts prefer
+    to do this manually via ADDHIS, and set this parameter to FALSE.
+    In reporting mode (no ``logic'' operation supplied) the history
+    is not updated.
+    Default: TRUE
+ 
+%A options
+    Valid options:
+       datamin      flag all values with `flag' when they equal the
+                    value of the 'datamin' keyword in the image header.
+    Default: none.
+ 

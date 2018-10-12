@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Conditional Compilation Directives</TITLE>
+<META NAME="description" CONTENT="Conditional Compilation Directives">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="previous" HREF="node57.html">
+<LINK REL="up" HREF="node54.html">
+<LINK REL="next" HREF="node59.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1013"
+  HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1007"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1003"
+  HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html1009"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html1011"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1014"
+  HREF="node59.html">Image Items</A>
+<B>Up:</B> <A NAME="tex2html1008"
+  HREF="node54.html">RATTY</A>
+<B> Previous:</B> <A NAME="tex2html1004"
+  HREF="node57.html">Optimization Directives</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00524000000000000000">
+Conditional Compilation Directives</A>
+</H2>
+When coding a task for several machines, it is sometimes desirable that
+different code is executed for different machines. For example, to
+achieve good efficiency,
+the inner loops may need to be different on a scalar and vector
+machine.
+
+<P>
+The basic syntax is the same as the optimization directives (i.e.
+`c#' or `#' starting a line, followed by the directive). However,
+as code using conditional compilation will have to be passed through
+RATTY to produce the correct code, the `#' form is preferred.
+This will be seen as an error by a standard compiler, thus preventing
+code from accidently no being passed through the preprocessor.
+
+<P>
+There are four directives of interest, namely <TT>ifdef, ifndef,
+else</TT> and <TT>endif</TT>. Like the cpp preprocessor, <TT>ifdef</TT> and
+<TT>ifndef</TT> pass the following section of code to the compiler
+if a particular ``symbol'' is defined or not.  Currently there
+are only one or two symbols that are defined. Firstly
+a symbol with the compiler target name is defined (the target compiler name
+is gained from the command line -s flag). Secondly a symbol
+``vector'' is defined if the target computer is a vector
+machine. For example the command line:
+<PRE>
+   % ratty -s cft input output
+</PRE>
+causes the symbol `cft' and `vector' to become defined.
+Then, given the following code
+fragment from ``input'', the first section is copied to ``output'', whereas the
+second is discarded.
+<PRE>
+     #ifdef cft
+        .
+        .  Use this code on the Cray.
+        .
+     #else
+        .
+        .  This code on all other machines.
+        .
+     #endif
+</PRE>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1013"
+  HREF="node59.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1007"
+  HREF="node54.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1003"
+  HREF="node57.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html1009"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html1011"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1014"
+  HREF="node59.html">Image Items</A>
+<B>Up:</B> <A NAME="tex2html1008"
+  HREF="node54.html">RATTY</A>
+<B> Previous:</B> <A NAME="tex2html1004"
+  HREF="node57.html">Optimization Directives</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

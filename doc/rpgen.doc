@@ -1,0 +1,45 @@
+%N rpgen
+%D Generate an RPFITS file based on the input parameters
+%P rjs
+%: data transfer
+%B
+        RPGEN is a MIRIAD task which generates a file in RPFITS
+        format. An RPFITS file consists of a number of scans, each with
+        a complete header that describes the data following. RPGEN
+        currently supports writing multiple scans, but all scans will have
+        the same frequency setup. You can concatenate rpfits files to
+        generate more complex observations.
+ 
+%A out
+        Name of the output RPFITS file. No default.
+%A source
+        List of source names, default='scp'
+%A radec
+        List of phase centers corresponding to each source. Each center is
+        specified as a pair of numbers (ra and dec), specified in
+        hh:mm:ss,dd:mm:ss format, or as decimal hours and decimal
+        degrees. The default is 0,-90.
+%A scan
+        List of scan integration times for each source, in minutes.
+%A time
+        The start time of the observation, followed by the duration in h.
+        This is in the form
+          yymmmdd.ddd,hh.h
+        or
+          yymmmdd:hh:mm:ss.s,hh.h
+        The default is 08JAN01.0,1.0. A function of the start time
+        is also used as a seed for the random number generator.
+        The sources ares reused, with specified integration time, until
+        the start time + duration is reached.
+%A inttime
+        The correlator integration time in seconds
+%A spwin
+        Number of spectral windows, followed by a triple of
+        number of channels, frequency in GHz, bandwidth in GHz
+        for each spectral window
+%A stokes
+        List of stokes parameters, default is xx,xy,yx,yy
+%A options
+        cabb - interpret spwin to match CABB output (combine overlaps)
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

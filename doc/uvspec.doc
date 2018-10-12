@@ -1,0 +1,106 @@
+%N uvspec
+%D Plot averaged spectra of a visibility dataset.
+%P rjs
+%: uv analysis
+%B
+        UVSPEC plots averaged spectra of a visibility dataset. Averaging can
+        be in both time and frequency
+%A vis
+        The name of the input uv data sets. Several can be given (wild
+        cards are supported). No default.
+%A select
+        The normal uv selection commands. The default is plot everything.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels (or all wide channels if there are no
+        spectral channels).
+%A stokes
+        The Stokes/polarization types to be plotted. The default is to
+        plot those polarizations present in the input files. Note that
+        stokes=q,u is adopted when the X axis is RM or the Y axis is polang,
+        regardless of Stokes input given.
+%A interval
+        Time averaging interval, in minutes. The default is 0 (i.e. no
+        averaging).
+%A hann
+        Hanning smoothing width (an odd integer).  Smoothing is
+        applied after averaging. Default is 1 (no Hanning smoothing).
+%A offset
+        An offset (in arcsec) to shift the data. Positive values result in
+        the data center being shifted to the North and East. Two values
+        should be given, being the shift in the RA and DEC directions.
+        The default is 0,0 (i.e. no shift).
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           'nocal'       Do not apply the gains file. By default, UVSPEC
+                         applies the gains file in copying the data.
+           'nopass'      Do not apply bandpass corrections. By default,
+                         UVSPEC corrects for the bandpass shape if the
+                         required information is available.
+           'nopol'       Do not apply polarization corrections. By default
+                         UVSPEC corrects for polarization corss-talk.
+           'ampscalar'   When plotting amplitude, this causes it to perform
+                         scalar averaging. By default it does vector averaging.
+           'rms'         When plotting amplitude, this causes it to plot
+                         the rms amplitude. By default it does vector averaging.
+                         Ignored for xaxis=rm
+           'mnoise'      When plotting noise, plot the error in the mean.
+           'sdo'         Plot the difference between bin 2 and bin 1 (these
+                         contain the CABB noise cal source on and off
+                         autocorrelations, giving the Synchr. Detected Ouput)
+                         Ignored for xaxis=rm
+           'nobase'      Plot all the baselines on one plot.
+           'avall'       Average all the baselines together before plotting.
+           'dots'        Plot phases with dots instead of filled circles.
+           'flagged'     Plot flagged data instead of unflagged data. The
+                         default is to plot only unflagged data.
+           'all'         Plot both flagged and unflagged data.
+           'hdr'         Use high dynamic range scaling for amplitude plots:
+                         log(1+amp). This works well for RFI affected data.
+                         Ignored for xaxis=rm
+           'timelog'     In any log file, output the time of the spectrum before
+                         each spectrum is written out.
+%A axis
+        This gives two strings, which determine the X and Y axes of each plot.
+        The values can be abbreviated to uniqueness.
+        Possible values for the X axis are:
+           channel       X-axis is channel number.
+           frequency     X-axis is the sky frequency, in GHz.
+           dfrequency    X-axis is the Doppler-corrected frequency, in GHz.
+           velocity      X-axis is velocity in radio convention, in km/sec.
+           felocity      X-axis is velocity in optical convention, in km/sec.
+           lag           X-axis is lag number.
+           rm            X-axis is Faraday depth, in rad/m^2. When this
+                         is selected, the RMTF is plotted as a dashed line,
+                         and +/-1 sigma are plotted as dot-dashed lines
+           lambda2       X-axis is (wavelength)^2, in m^2.
+        Possible values for the Y axis are:
+           amplitude     Plot amplitude.
+           phase         Plot phase.
+           real          Plot real part of the data.
+           imaginary     Plot imaginary part of the data.
+           noise         Plot the standard deviation of the data
+           polang        Plot the polarisation angle of Q and U for the data
+ 
+        The default is axis=channel,amplitude.
+        If axis=rm is selected, the value input for the Y axis is ignored and
+        axis=rm,real is adopted.
+%A xrange
+        The min and max range along the x axis of the plot. The default
+        is to autoscale.
+%A yrange
+        The min and max range along the y axis of the plots. The default
+        is to autoscale.
+%A device
+        PGPLOT plot device/type. No default.
+%A nxy
+        Number of plots in the x and y directions. The default is
+        determined from the number of antennae in the data-sets.
+%A log
+        Log file into which the spectra are dumped in the order in which
+        they are plotted.  Really only useful if your plot is quite simple.
+ 
+%R 1.17, 2018/06/25 21:08:49 UTC

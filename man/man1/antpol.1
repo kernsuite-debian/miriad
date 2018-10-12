@@ -1,0 +1,30 @@
+.TH antpol 1
+.SH NAME
+antpol - Calculate instrumental polarization from averaged uv-data.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ANTPOL - Calculate instrumental polarization from averaged uv-data.
+ANTPOL does not apply the gains, bandpass, or polarization corrections.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input UV dataset name. No default.
+.TP
+\fIselect\fP
+This selects the data to be processed, using the standard uvselect
+format. Default uses all the data.
+.TP
+\fIline\fP
+this gives the linetype that is used, in the
+form:
+.nf
+  type,nchan,start,width,step
+.fi
+where type can be `channel' (default), `wide' or `velocity'.
+Default is channel,1,1,1,1
+.TP
+\fIlog\fP
+The list output file name. The default is the terminal.

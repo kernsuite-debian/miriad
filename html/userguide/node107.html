@@ -1,0 +1,361 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Computation</TITLE>
+<META NAME="description" CONTENT="Computation">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node106.html">
+<LINK REL="up" HREF="node101.html">
+<LINK REL="next" HREF="node108.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2732"
+  HREF="node108.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2728"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2724"
+  HREF="node106.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2730"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2733"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+<B>Up:</B> <A NAME="tex2html2729"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2725"
+  HREF="node106.html">CLEAN Stripes</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001426000000000000000">
+Computation</A>
+</H2>
+
+<P>
+<I>Miriad</I>'s CLEAN task - surprisingly called <A NAME="tex2html404"
+  HREF="../doc/clean.html">clean</A>
+- implements
+the H&#246;gbom, Clark and SDI algorithms.  Given an input dirty image and
+beam, it produces an output CLEAN component image which has flux density units
+of Jy/pixel.  This CLEAN component image is CLEAN's best guess at what
+the source really looks like.  Invariably its extrapolation at high
+spatial frequencies is very poor (and probably a reason why AIPS does
+not make it easy to view it).  To reduce the undesirable effects of this
+extrapolation, and to add in any emission remaining in the residuals, you
+will need to use the task <A NAME="tex2html405"
+  HREF="../doc/restor.html">restor</A>.  This gives you what is
+normally thought of as the `CLEAN' or restored image.
+
+<P>
+The various input parameters to <A NAME="tex2html406"
+  HREF="../doc/clean.html">clean</A>
+are:
+
+<P>
+
+<UL>
+<LI><TT>map, beam</TT>: These keywords give the names of the input image and beam
+datasets - as generally produced by <A NAME="tex2html407"
+  HREF="../doc/invert.html">invert</A>.
+
+<P>
+</LI>
+<LI><TT>out</TT>: This gives the name of the output CLEAN component image.
+
+<P>
+</LI>
+<LI><TT>mode</TT>: <I>Miriad</I> <A NAME="tex2html408"
+  HREF="../doc/clean.html">clean</A>
+can perform either H&#246;gbom, Clark or SDI
+CLEANs. The <code>mode</code> parameter can be set to indicate the particular
+algorithm to use. Possible values are `hogbom', `clark', `steer' or
+`any' (the default). With `any', <A NAME="tex2html409"
+  HREF="../doc/clean.html">clean</A>
+determines what it believes is
+the best algorithm for your particular image. In this case, <A NAME="tex2html410"
+  HREF="../doc/clean.html">clean</A>
+can
+switch between different algorithms, as the nature of the residuals change.
+This is particularly useful when CLEANing a large image which contains some
+strong point sources and much lower brightness extended emission. In this case,
+<A NAME="tex2html411"
+  HREF="../doc/clean.html">clean</A>
+may well switch from a Clark or H&#246;gbom algorithm to the SDI
+algorithm when it finds that the residuals are becoming very smooth.
+
+<P>
+Generally you can allow <A NAME="tex2html412"
+  HREF="../doc/clean.html">clean</A>
+to choose the algorithm. Task <A NAME="tex2html413"
+  HREF="../doc/clean.html">clean</A>
+will override your choice if you attempt to use the H&#246;gbom
+algorithm on an image that is too big.
+
+<P>
+</LI>
+<LI><TT>region</TT>: As noted above, it is important in <A NAME="tex2html414"
+  HREF="../doc/clean.html">clean</A>
+to limit the CLEAN region to an area one quarter that of the beam, and
+to make it fit snugly around the real emission. The
+<code>region</code> parameter can be used to describe quite complex CLEANing
+regions.  See Section&nbsp;<A HREF="node43.html#s:region">6.3</A> on how to specify this.
+Alternatively, you can use task <A NAME="tex2html415"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+to describe
+the region interactively from a display of an image on a PGPLOT device.
+Task <A NAME="tex2html416"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+(see Chapter&nbsp;<A HREF="node138.html#s:pgplot">17.3</A>) can produce a text file,
+<code>cgcurs.region</code>, describing the region selected, which you can then
+input to <A NAME="tex2html417"
+  HREF="../doc/clean.html">clean</A>
+(see Section&nbsp;<A HREF="node18.html#s:atfile">2.5</A>).  For example:
+
+<P>
+<PRE>
+     region=@cgcurs.region
+</PRE>
+The default CLEAN region is the largest region (centred on the
+dirty image centre) that can be safely deconvolved.
+
+<P>
+</LI>
+<LI><TT>gain</TT>: A good number for the loop gain is <I>0.1</I> (the default).  If
+CLEAN stripes occur, then try lowering the loop gain by a factor of
+about 10.
+
+<P>
+</LI>
+<LI><TT>cutoff, niters, options=negstop</TT>: You can tell <A NAME="tex2html418"
+  HREF="../doc/clean.html">clean</A>
+when to stop in
+three ways.  You can tell it to quit once the brightest pixel (in an
+absolute sense) in the residual image reaches some cut-off.  This is
+typically some multiple of the rms noise level (3-sigma or so).
+Specify this level with the parameter <code>cutoff</code>. Alternatively, you
+can tell <A NAME="tex2html419"
+  HREF="../doc/clean.html">clean</A>
+to stop when it encounters the first
+negative component, by using the <TT>options=negstop</TT> switch. Otherwise,
+CLEANing will proceed until <TT>niters</TT> CLEAN iterations have been
+performed.  When CLEANing a cube, <code>niters</code> is the number of
+iterations per plane.  For small and simple sources, a few hundred
+iterations are usually sufficient.  For complicated and large sources,
+you can CLEAN forever.
+
+<P>
+You can set all three of <TT>cutoff, options=negstop</TT> and <TT>niters</TT>.
+Task <A NAME="tex2html420"
+  HREF="../doc/clean.html">clean</A>
+will stop when any one of these stopping criteria
+are satisfied.
+
+<P>
+</LI>
+<LI><TT>phat</TT>: This gives Cornwell's Prussian helmet parameter, which
+is the value of
+the spike to add to the central lobe of the beam. Using this parameter may
+give some success at eliminating CLEAN stripes. When using a Prussian helmet,
+typical values are 0.3 or so. Note that the loop gain should also be reduced
+when using Prussian helmets.
+
+<P>
+</LI>
+<LI><TT>model</TT>: If you CLEAN an image, and find that you need to CLEAN some more,
+<A NAME="tex2html421"
+  HREF="../doc/clean.html">clean</A>
+can be restarted from where you left off.  Do this by
+setting the <code>model</code> parameter to the name of the old output CLEAN component
+image, and setting the <code>out</code> parameter to a new name. Actually the
+<code>model</code> image need not have been produced by <A NAME="tex2html422"
+  HREF="../doc/clean.html">clean</A>
+- it can be
+any image with units of Jy/pixel. Of course, it should be a representation of
+your source.
+
+<P>
+</LI>
+<LI><TT>speed</TT>: The `speedup factor' is a knob for the Clark algorithm which
+controls how often major
+cycles are performed.   The more major cycles, the closer a Clark CLEAN
+is to a H&#246;gbom CLEAN. For point sources, this can be about 1.  For
+extended sources, or if you are having trouble with CLEAN stripes, set
+<code>speed</code> to some small negative number - typically -1 is good.
+The default is 0.
+
+<P>
+</LI>
+<LI><TT>minpatch</TT>: For Clark CLEANs, the parameter <code>minpatch</code> is the
+minimum full width (<EM>not</EM> half-width, as it is in AIPS) of the beam patch
+used in the minor cycle. The default is 51. However, for ATCA work, where
+the beam can often have large distant sidelobes, and so this value may be too
+small.
+Setting <code>minpatch</code> to larger values will slow the
+algorithm, but may avoid CLEAN striping problems. The maximum value that
+<A NAME="tex2html423"
+  HREF="../doc/clean.html">clean</A>
+will accept is 257 - larger values will be trimmed back to
+257.
+
+<P>
+</LI>
+<LI><TT>clip</TT>: For SDI CLEANs, this parameter gives the `clip level'.
+During an SDI iteration, all pixels greater than <code>clip</code> times the
+peak flux density are considered to represent true structure, and so are taken
+as components for that iteration.  Typically the clip level is 0.9.  The
+default that <A NAME="tex2html424"
+  HREF="../doc/clean.html">clean</A>
+computes is image dependent, and will be a
+function of how many pixels there are across the beam.  The default
+value is usually adequate.
+
+<P>
+</LI>
+<LI><TT>options</TT>, as usual, gives several processing options. Possible
+values are
+<DL>
+<DT><STRONG><TT>negstop</TT></STRONG></DT>
+<DD>Stop CLEANing when the first negative component is
+encountered.
+</DD>
+<DT><STRONG><TT>positive</TT></STRONG></DT>
+<DD>Apply a positivity constraint. This constrains the
+component image to be non-negative. A side-effect of this is that CLEAN will
+stop iterating if it cannot continue to ensure this. This does not have
+any effect with SDI iterations. This option does not seem to produce
+as much improvement as one might hope.
+</DD>
+<DT><STRONG><TT>asym</TT></STRONG></DT>
+<DD>Normally <A NAME="tex2html425"
+  HREF="../doc/clean.html">clean</A>
+assumes that the beam has a 180
+degree rotational symmetry, which is the norm in radio interferometry.
+Making such an assumption allows some optimisations. You should instruct
+<A NAME="tex2html426"
+  HREF="../doc/clean.html">clean</A>
+if this is not the case, by using the <TT>asym</TT> switch.
+</DD>
+<DT><STRONG><TT>pad</TT></STRONG></DT>
+<DD>Double the beam size by padding it with zeros. This will
+give better stability with Clark and Steer modes if you are daring enough
+to CLEAN an area which is more than a quarter of the beam area.
+</DD>
+</DL>
+
+<P>
+</LI>
+</UL>
+
+<P>
+Typical inputs are given below:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CLEAN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=vela.imap</TD>
+<TD ALIGN="LEFT">Dirty image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=vela.ibem</TD>
+<TD ALIGN="LEFT">Dirty beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.icmp</TD>
+<TD ALIGN="LEFT">Output CLEAN component image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Algorithm used - let CLEAN decide</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Defaults to max area safely CLEANed.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">gain=0.1</TD>
+<TD ALIGN="LEFT">Loop gain</TD>
+</TR>
+<TR><TD ALIGN="LEFT">phat</TD>
+<TD ALIGN="LEFT">Unset means no Prussian helmet</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cutoff=0</TD>
+<TD ALIGN="LEFT">Terminate CLEAN at this residual level or</TD>
+</TR>
+<TR><TD ALIGN="LEFT">niters=500</TD>
+<TD ALIGN="LEFT">Specify total number of CLEAN components</TD>
+</TR>
+<TR><TD ALIGN="LEFT">speed</TD>
+<TD ALIGN="LEFT">Speedup factor; -1 for extended</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">sources, +1 for point sources</TD>
+</TR>
+<TR><TD ALIGN="LEFT">minpatch=127</TD>
+<TD ALIGN="LEFT">Minimum beam size for minor cycles</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clip</TD>
+<TD ALIGN="LEFT">SDI clip level</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The total CLEANed flux density (<I>i.e.</I> the cumulative sum of the CLEAN
+components) should eventually settle down to a roughly constant number.
+This indicates that you
+are just picking up noise, and that there are no sidelobes left to
+remove.  If the total CLEANed flux density starts to decrease again, this
+usually indicates that you have been a bit heavy handed, and CLEANed too
+much.  You might also look at the result and see if you can see any
+sidelobes left over.
+
+<P>
+Having completed <A NAME="tex2html427"
+  HREF="../doc/clean.html">clean</A>, you will almost certainly want to ``restore''
+your image - see Section&nbsp;<A HREF="node112.html#s:restor">14.6</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2732"
+  HREF="node108.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2728"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2724"
+  HREF="node106.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2730"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2733"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+<B>Up:</B> <A NAME="tex2html2729"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2725"
+  HREF="node106.html">CLEAN Stripes</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

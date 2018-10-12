@@ -1,0 +1,85 @@
+.TH velmodel 1
+.SH NAME
+velmodel - Make a model image for a theoretical velocity pattern.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+VELMODEL generates a MIRIAD image for a theoretical velocity
+pattern specified by model input paramaters. The default option
+is to make an image of the line-of-sight velocity corresponding
+to a rotating disk model:
+.nf
+  velocity = vsys +
+        (vrot*cos(theta-pa)+vrad*sin(theta-pa))*sin(incline)
+.fi
+The output image can be combined with an intensity
+image to make a 3D model using the task VELIMAGE.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Input image name used as template for the output image.
+.TP
+\fIregion\fP
+Region of image to be used.  The default region is the entire
+image.  See documentation of region for details.  All pixels
+within the bounding box are used; pixel masking is ignored.
+.TP
+\fIcenter\fP
+The rotation center in arcsec from the center pixel, measured
+in the directions of RA and DEC. Default=0,0.
+.TP
+\fIpa\fP
+Position angle of the major axis in degrees.  Default is 0
+(north).
+.TP
+\fIincline\fP
+Inclination angle of the disk in degrees.  Default is 0 (face
+on).
+.TP
+\fIradius\fP
+Sample points along major axis in arcsecs.  Need not be evenly
+spaced.  At least one point must be given.
+.TP
+\fIvrot\fP
+Rotation curve in the plane of the disk specified by a power
+law:
+.nf
+        rotation velocity = vrot(1)*(r/radius(1))**vrot(2)
+.fi
+At least one point must be given.  For options=sample, vrot
+gives the rotation velocity sampled at the radius points above,
+and is interpolated between the sample points, with zero
+velocity at zero radius, and not extrapolated beyond the last
+point.  Units are km/s.
+.TP
+\fIvrad\fP
+Radial velocity in plane of disk specified by a power law:
+.nf
+        radial velocity = vrad(1)*(r/radius(1))**vrad(2)
+.fi
+Default=0,0. If only one value given then vrad = vrad(1)
+Units are km/s.
+.TP
+\fIvsys\fP
+Systemic velocity of the disk. Units are km/s. Default=0.
+For options=rms, vsys is a constant rms along the line of sight.
+.TP
+\fIz\fP
+Thickness of disk, and power law: z' = z(1)*(r/radius(1))**z(2)
+Default=0,0.  If only one value given then z' = z(1).  The units
+of z(1) are the same as arcsec along major axis of disk.
+.TP
+\fIout\fP
+The output image. No default.
+.TP
+\fIoptions\fP
+rms     The output image is the rms calculated from vsys and
+.nf
+        the rms velocity along the line of sight, computed by
+        integrating through the disk thickness given by z.
+.fi
+sample  The rotation velocity is specified by values vrot
+.nf
+        sampled at the radius values. Default is power law.

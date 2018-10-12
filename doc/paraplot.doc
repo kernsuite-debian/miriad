@@ -1,0 +1,18 @@
+%N paraplot
+%D Plot parallactic and elevation angle for a source.
+%P rjs
+%: utility
+%B
+        PARAPLOT plots parallactic angle and elevation as a function of
+        hour angle.
+%A lat
+        Observatory latitude, in degrees. The default is the AT's latitude.
+%A elev
+        Elevation limit, in degrees. Default is 15 degrees.
+%A dec
+        Source declination, in degrees. Default is the same declination
+        as the observatory.
+%A device
+        PGPLOT device. Default is no plot.
+%A log
+        Log file. Default is no log file.

@@ -1,0 +1,61 @@
+%N mopfix
+%D Recalculate (u,v,w) in a Mopra RPFITS file
+%P tw
+%: analysis
+%B
+        MOPFIX reads in an RPF file and a table of (t,RA,DEC) values
+        from RPFREAD.  The position table is interpolated onto the
+        spectral timestamps and a corrected RPFITS file is produced.
+        MOPFIX can also be used to resample in frequency (by spline
+        interpolation), flag data over a certain time range, and convert
+        BUNIT to 'K' (it does the last of these automatically).
+ 
+        Addendum Feb 9 2011 / ind006: Spoke with Tony Wong about the
+        purpose of this program in MOPS years. There appears to be no
+        practical reason why this should be used by any observers to
+        reduce their data from 2007 onwards. Originally, it changed
+        position timestamps in OTF mapping to correspond to the
+        spectral timestamps. Latency used to be too large for livedata
+        to handle this properly in one pass. This however was fixed
+        many years ago. The other functions as described above
+        might still potentially be beneficial hence this remains
+        included in miriad.
+%A in
+        Input RPFITS file.  No default.
+%A out
+        Output RPFITS file.  Default name has 'ix' appended (i.e.
+        2004-06-24_2300.rpf --> 2004-06-24_2300.rpfix).  The program
+        will exit with an error if the output fil already exists.
+%A postab
+        Table of positions, default is pos.tab.  If the file does not
+        exist, the position correction is not done.  The table can be
+        created with RPFREAD using the posout= keyword.
+%A maxgap
+        Maximum position jump in arcmin for interpolation.  If the
+        distance between the flanking position stamps exceeds this, the
+        spectrum is flagged.  Default: 1 arcmin.
+%A flagtime
+        Up to four time ranges to flag spectra.  Give up to four pairs
+        of values in UT hh:mm:ss format separated by commas.  Default is
+        no flagging.  If a pair is in reverse time order, it is assumed
+        that the time range wraps around a UT day boundary.
+%A flagscan
+        Up to four scan ranges to flag spectra.  Give up to four pairs
+        of values numbered starting from 1.  RPFREAD options=brief can
+        be used to list all the scans in a file (including offs and
+        paddles).  Default is no flagging.
+%A resample
+        Factor (>0) to change the channel width by.  Total bandwidth is
+        approximately preserved while the number of channels changes (a
+        spline interpolation is performed).  Default is not to change
+        this.
+%A options
+        Extra processing options.
+        'keepflag'  Preserve online flagging.  By default all spectra
+                    are unflagged and only flagged based on maxgap
+                    above.
+        'doextrap'  Use linear extrapolation if gap between flanking
+                    position stamps exceeds maxgap.
+        'noref'     Eliminate the reference scans from the file.
+ 
+%R 1.13, 2013/08/30 01:49:21 UTC

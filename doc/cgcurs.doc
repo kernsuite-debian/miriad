@@ -1,0 +1,197 @@
+%N cgcurs
+%D Read quantities with cursor from images on a PGPLOT device
+%P nebk
+%: plotting
+%B
+        CGCURS displays an image via a contour plots or a pixel map
+        representation (formerly called a "grey scale") on a PGPLOT
+        device. The cursor is then used to read image values, or to
+        evaluate image statistics in a polygonal region, or to write
+        a polygonal region definition to a text file.
+ 
+        Manipulation of the device colour lookup table is available
+        when you display with a pixel map representation.
+ 
+        When using cursor options, generally, click the right button
+        (enter X) to exit the function, click the left button (enter A)
+        to add a location, and click the middle button (enter D) to
+        delete a location.
+ 
+%A in
+        One or two input images may be specified.  If two, and
+        TYPE=both, then the first is used as the background image, and
+        the second for a contour overlay.  They must match in size.
+%A type
+        Specifies the type of the image(s) in the IN keyword.  Minimum
+        match is supported:
+ 
+          "pixel": pixel map (formerly "grey" which is still supported),
+        "contour": contour plot,
+           "both": first input image is pixel map, the second is contour
+                   overlay.  If only one input image was specified it is
+                   used for both.
+ 
+        Default is "pixel" if one input image is specified, else "both".
+%A region
+        Region of interest.  Choose only one spatial region (bounding
+        box only supported), but as many spectral regions (i.e.,
+        multiple IMAGE specifications) as you like.  If you display a
+        3-D image, the cursor options are activated after each sub-plot
+        (channel or group of channels; see CHAN below) is drawn.
+        Default is full image
+%A xybin
+        Up to 4 values.  These give the spatial increment and binning
+        size in pixels for the x and y axes to be applied to the
+        selected region.  If the binning size is not unity, it must
+        equal the increment.  For example, to bin up the image by 4
+        pixels in the x direction and to pick out every third pixel in
+        the y direction, set XYBIN=4,4,3,1.
+        Defaults are 1,XYBIN(1),XYBIN(1),XYBIN(3)
+%A chan
+        2 values. The first is the channel increment, the second is
+        the number of channels to average, for each sub-plot.  Thus
+        CHAN=5,3  would average groups of 3 channels together, starting
+        5 channels apart such as: 1:3, 6:8, 11:13 ...   The channels
+        available are those designated by the REGION keyword.  A new
+        group of channels (sub-plot) is started if there is a
+        discontinuity in the REGION selected channels (such as
+        IMAGE(10,20),IMAGE(22,30).
+ 
+        Defaults are 1,1
+%A slev
+        2 values.   First value is the type of contour level scale
+        factor.  "p" for percentage and "a" for absolute.   Second
+        value is the level to scale LEVS by.  Thus  SLEV=p,1  would
+        contour levels at LEVS * 1% of the image peak intensity.
+        Similarly, SLEV=a,1.4e-2   would contour levels at LEVS * 1.4E-2
+        Default is no additional scaling of LEVS
+%A levs
+        Levels to contour for first image, are LEVS times SLEV
+        (either percentage of the image peak or absolute).
+        Defaults try to choose something sensible
+%A range
+        3 values. The pixel map range (background to foreground), and
+        transfer function type.  The transfer function type can be one
+        of "lin" (linear), "log" (logarithmic), "heq" (histogram equal-
+        ization), and "sqr" (square root).  See also OPTIONS=FIDDLE
+        which is in addition to the selections here.
+ 
+        Default is linear between the image minimum and maximum
+        If you wish to just give a transfer function type, set
+        range=0,0,heq   say.
+%A device
+        The PGPLOT plot device, such as plot.plt/ps. No default.
+%A nxy
+        Number of sub-plots in the x and y directions on the page.
+        Defaults choose something sensible
+%A labtyp
+        Two values.  The spatial label type of the x and y axes.
+        Minimum match is active.  Select from:
+ 
+        "hms"       the label is in H M S (e.g. for RA)
+        "dms"       the label is in D M S (e.g. for DEC)
+        "arcsec"    the label is in arcsecond offsets
+        "arcmin"    the label is in arcminute offsets
+        "absdeg"    the label is in degrees
+        "reldeg"    the label is in degree offsets
+                    The above assume the  pixel increment is in radians.
+        "abspix"    the label is in pixels
+        "relpix"    the label is in pixel offsets
+        "abskms"    the label is in Km/s
+        "relkms"    the label is in Km/s offsets
+        "absghz"    the label is in GHz
+        "relghz"    the label is in GHz offsets
+        "absnat"    the label is in natural coordinates as defined by
+                    the header.
+        "relnat"    the label is in offset natural coordinates
+ 
+        All offsets are from the reference pixel.
+        Defaults are "abspix", LABTYP(1) unless LABTYP(1)="hms"
+        whereupon LABTYP(2) defaults to "dms" (for RA and DEC).
+%A options
+        Task enrichment options.  Minimum match is active.
+ 
+        "abspix" means write the region of interest in absolute integer
+          pixels instead of arcseconds relative to the reference pixel.
+        "box" When in "CURSOR" mode, rather than listing the value of
+          the of the pixel under the cursor, list the peak value in a
+          5x5 pixel box centred on the pixel under the cursor.
+        "cgspec"  With OPTIONS=CURSOR and LOGFILE, the output log file
+          is is one with commands appropriate for input to CGSPEC's OLAY
+          keyword.
+        "cgdisp"  With OPTIONS=CURSOR and LOGFILE, the output log file
+          is one with commands appropriate for input to CGDISP's OLAY
+          keyword.
+ 
+          Note that if you specify both CGSPEC and CGDISP then lines
+          appropriate to both these programs are written into the log
+          file.  You can then copy the log file and retain the CGDISP
+          lines in one file, and the CGSPEC lines in the other.
+        "cursor" means that after drawing each sub-plot, a cursor will
+          be displayed; striking any key or clicking the relevant mouse
+          button (left) causes the location and value of the pixel under
+          the cursor to be listed on the terminal.   On terminals, enter
+          "x" to exit the cursor.  On workstations, click the relevant
+          button (generally the right one).
+        "fiddle" means enter a routine to allow you to interactively
+          change the display lookup table.  You can cycle through b&w
+          and colour displays, as well as alter the transfer function by
+          the cursor location, or by selecting predefined transfer
+          functions such as histogram equalization, logarithmic, and
+          square root.
+        "grid" means draw a coordinate grid on the plot rather than just
+          ticks.
+        "logfile"  When the "cursor" or "stats" are activated, then this
+          writes the results to log files (cgcurs.curs and cgcurs.stat)
+          as well as the screen.
+        "mark" When in "CURSOR" mode, mark the locations selected. If
+          OPTIONS=STATS is activated, mark the minimum and maximum pixel
+          locations too.
+        "nearest"  When the cursor is used to select a location, force
+          that location to be the nearest image pixel, rather than the
+          default which allows fractional pixel locations.
+        "noerase"  Don't erase a snugly fitting rectangle into which the
+          "3-axis" value string is written.
+        "region" means use the cursor to define a polygonal region that
+          gets gets written to a log file as the REGION keyword.  The
+          cursor behaves as described above for the "stats" option.  You
+          can the use this in other programs as "region=@filename"
+        "stats"  means that after drawing each sub-plot, you get the
+          opportunity to define a polygonal region with the cursor (A to
+          add a vertex, D to delete the previous vertex, X to exit; or
+          use the three mouse buttons) inside of which image statistics
+          are evaluated.
+        "trlab" means label the top and right axes as well as the bottom
+          and left ones.  This can be useful when non-linear coordinate
+          variation across the field makes the ticks misaligned
+        "unequal" means draw plots with unequal scales in x and y. The
+          default is that the scales are equal.
+        "wedge" means that if you are drawing a pixel map, also draw
+          and label a wedge to the right of the plot, showing the map
+          of intensity to colour
+        "3value"  means label each sub-plot with the appropriate value
+          of the third axis (e.g. velocity or frequency for an xyv
+          ordered cube, position for a vxy ordered cube).
+        "3pixel"  means label each sub-plot with the pixel value of the
+          the third axis.   Both "3pixel" and "3value" can appear, and
+          both will be written on the plot.  They are the average values
+          when the third axis is binned up with CHAN.  If the third axis
+          is not velocity or frequency, the units type for "3VALUE" will
+          be chosen to be the complement of any like axis in the first
+          two.  E.g., the cube is in vxy order and LABTYP=ABSKMS,ARCSEC
+          the units for the "3VALUE" label will be arcsec.  If
+          LABTYP=ABSKMS,HMS the "3VALUE" label will be DMS (if the third
+          [y] axis is declination).
+%A 3format
+        If you ask for "3value" labelling, this keyword allows you
+        specify the FORTRAN format of the labelling.  I have given
+        up trying to invent a decent algorithm to choose this. Examples
+        are "1pe12.6", or "f5.2" etc   If you leave this blank cgdisp
+        will try something that you probably won't like.
+%A csize
+        Two values.  Character sizes in units of the PGPLOT default
+        (which is ~ 1/40 of the view surface height) for the plot axis
+        labels and the velocity/channel labels.
+        Defaults choose something sensible.
+ 
+%R 1.15, 2015/03/05 04:23:49 UTC

@@ -1,0 +1,35 @@
+.TH maxfit 1
+.SH NAME
+maxfit - Fits a 2-D parabola to a 3x3 region of an image
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+MAXFIT finds the maximum value of a region of an image.
+This region may be three dimensional.  It then fits a
+parabola to a 3x3 array extracted from the first two
+dimensions of the image and centred on the maximum pixel
+in the specified region.  MAXFIT then returns the location
+and value of the maximum pixel and the fitted pixel.
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image.
+.TP
+\fIregion\fP
+Region of interest in which to search for the maximum pixel.
+The default is the whole image.
+.TP
+\fIoptions\fP
+"abs"  means that MAXFIT search for the maximum absolute
+.nf
+       pixel value rather than the default, which is just
+       the maximum pixel value.
+.TP
+\fIlog\fP
+.fi
+Write results to this log file as well as screen.
+.sp
+.SH REVISION
+1.7, 2012/02/20 07:36:21 UTC

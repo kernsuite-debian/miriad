@@ -1,0 +1,33 @@
+.TH atwvr 1
+.SH NAME
+atwvr - Correct phases using WVR data
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ATWVR applies phase corrections derived from WVR measurements
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file to correct. No default.
+.TP
+\fIout\fP
+The output corrected file. No default.
+.TP
+\fIwvrphase\fP
+A text file containing the phase corrections.
+Format : time (yymmmdd:hh:mm:ss), phase (6x).
+Prepending a '-' to the file name will negate the phases.
+.TP
+\fIoffset\fP
+Offset of phase correction time stamps vs data time stamps.
+.TP
+\fIuvrange\fP
+Range of uv distance to apply the corrections over in meters(!).
+Defaults to all data. First value defaults to zero,
+second value defaults to infinity.
+.TP
+\fIlog\fP
+Name of log file. If specified it will list the phases
+applied to each baseline

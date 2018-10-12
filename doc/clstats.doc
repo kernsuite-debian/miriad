@@ -1,0 +1,62 @@
+%N clstats
+%D Calculate dispersions, masses, etc for each clump from clfind file
+%P pjt
+%: utility
+%B
+   The mass is calculated in the following way;
+   we define X such that,
+ 
+   X * (sum T) * delv = column density of molecular hydrogen
+                        in units of 10^20 cm-2
+ 
+   which implies that to convert to a mass, multiply by
+ 
+   10^20 * meanmol * m(H_2) * Area
+ 
+%A in
+        file name of data cube
+        (no default)
+ 
+%A dist
+        the distance to the object in pc
+        (no default)
+ 
+%A disterr
+        multiplicative error in the distance
+        eg disterr=2 means dist is uncertain by a factor of 2
+        (default=1)
+ 
+%A x
+        the X-factor to convert between column density of the
+        species observed to the column density of molecular hydrogen
+        --- see above. (Note that this includes any corrections for
+        abundance, excitation temperature, CMBR, antenna efficiency,etc.)
+        (In units of 10^20, default=2.4)
+ 
+%A xerr
+        multiplicative error in X -- from uncertainties in
+        abundances, excitation temperature, efficiency, etc.
+        (default=1)
+ 
+%A meanmol
+        the mean molecular weight of the gas
+        (default=1.38, corresponding to n(He)/n(H)=0.1)
+ 
+%A jyperk
+        the number of Jansky's per Kelvin for these observations
+        (default=1)
+ 
+%A xy
+        "rel" or "abs" for the clump positions - v is always absolute
+        (default=relative)
+ 
+%A rms
+        optional input to specify the rms error in temperature
+        for each pixel in the map (used to calcuate errors in
+        the masses). Otherwise 0.5*DeltaT, where DeltaT is the
+        clfind contour interval.
+ 
+%A nmin
+        each clump must contain at least nmin pixels to be
+        written out to output file
+        (default=4)

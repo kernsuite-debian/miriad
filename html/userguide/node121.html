@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Input Parameters to the Self-Calibration Tasks</TITLE>
+<META NAME="description" CONTENT="Input Parameters to the Self-Calibration Tasks">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node122.html">
+<LINK REL="previous" HREF="node118.html">
+<LINK REL="up" HREF="node114.html">
+<LINK REL="next" HREF="node122.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2912"
+  HREF="node122.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2908"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2902"
+  HREF="node120.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2910"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2913"
+  HREF="node122.html">Summary</A>
+<B>Up:</B> <A NAME="tex2html2909"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2903"
+  HREF="node120.html">Multi-Frequency Models</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001515000000000000000">
+Input Parameters to the Self-Calibration Tasks</A>
+</H2>
+
+<P>
+We now describe the input parameters to the self-calibration tasks. Given
+the similarity of the two tasks, we will describe them together, noting
+any differences as we go.
+
+<P>
+
+<UL>
+<LI><TT>vis</TT>: This gives the name of the input dataset to be
+self-calibrated.
+</LI>
+<LI><TT>model</TT>: This gives the names of the input models. Several
+models can be given. Task <A NAME="tex2html528"
+  HREF="../doc/selfcal.html">selfcal</A>
+can take models from different
+pointings and frequency ranges. Task <A NAME="tex2html529"
+  HREF="../doc/gpscal.html">gpscal</A>
+can take
+models from different polarisations only.
+
+<P>
+</LI>
+<LI><TT>interval</TT>: This gives the self-calibration solution interval time,
+in minutes. This time must be long enough to integrate an appreciable
+signal-to-noise ratio (5 or more) on visibilities. On the other hand, it
+should be short enough so that the gains can be approximated as being constant
+during this interval. The default is 5 minutes.
+
+<P>
+</LI>
+<LI><TT>select</TT>: This selects the <I>u-v</I> data to be used in the self-calibration
+process. For <A NAME="tex2html530"
+  HREF="../doc/selfcal.html">selfcal</A>, you need not perform <TT>source</TT>, <TT>dra</TT>, or
+<TT>ddec</TT> selection if you use the <TT>selradec</TT> option (see below).
+</LI>
+<LI><TT>minants</TT>: The minimum number of antenna that must be present
+before the tasks will attempt to find a solution. The default is 3 for
+phase self-calibration, or 4 for amplitude self-calibration.
+</LI>
+<LI><TT>refant</TT>: The reference antenna (<I>i.e.</I> the antenna which has
+zero phase) to be used in the solution process. If this is not specified,
+<A NAME="tex2html531"
+  HREF="../doc/selfcal.html">selfcal</A>
+chooses a default for each solution. <A NAME="tex2html532"
+  HREF="../doc/gpscal.html">gpscal</A>, however,
+uses antenna 3 as the default reference antenna.
+</LI>
+<LI><TT>line</TT>: The standard <TT>line</TT> parameter, as described in
+Section&nbsp;<A HREF="node35.html#s:line">5.4</A>. This parameter is described in some detail above.
+</LI>
+<LI><TT>clip</TT>: This parameter allows you to set the limit of the faintest
+believable flux density in the model. For Stokes I or parallel-hand correlations, this
+is a maximum limit - flux densities below this limit are assumed to be
+noise or error.
+For Stokes Q, U and V, this is an absolute limit - flux densities less that
+<!-- MATH
+ $|\hbox{\tt clip}|$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="46" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img70.png"
+ ALT="$\vert\hbox{\tt clip}\vert$"></SPAN> are assumed to be noise or error.
+</LI>
+<LI><TT>offset</TT>: The self-calibration tasks can be run assuming a
+point-source model. A point-source model will be assumed if no <TT>model</TT>
+parameter is given. In this case, <TT>offset</TT> gives the offset, in arcsec, from the
+observation centre, of the point source. The default is to assume that the point
+source is at the observation centre. Note that you should generally also
+give the <TT>line</TT> parameter when self-calibrating multi-channel data
+with a point-source model.
+
+<P>
+</LI>
+<LI><TT>flux</TT>: For <A NAME="tex2html533"
+  HREF="../doc/selfcal.html">selfcal</A>, when using a point-source model, this
+gives the Stokes I flux density. The default is 1.
+For <A NAME="tex2html534"
+  HREF="../doc/gpscal.html">gpscal</A>, when using a point-source model, this
+parameter gives the flux density of I, Q, U and V. The default is 1,0,0,0.
+Also see the <TT>noscale</TT> option below.
+</LI>
+<LI><TT>options</TT>: The <TT>options</TT> parameter, as usual, gives a number
+of extra processing options.
+Options common to <A NAME="tex2html535"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html536"
+  HREF="../doc/gpscal.html">gpscal</A>
+are:
+
+<P>
+<DL>
+<DT><STRONG><TT>amplitude</TT></STRONG></DT>
+<DD>and <TT>phase</TT>: This determines whether
+the self-calibration tasks solve for just phase (<TT>options=phase</TT>, which
+is the default) or amplitude and phase solution (<TT>options=amplitude</TT>).
+</DD>
+<DT><STRONG><TT>mfs</TT>:</STRONG></DT>
+<DD>This option is described in the section on frequency handling
+(see above).
+</DD>
+<DT><STRONG><TT>noscale</TT>:</STRONG></DT>
+<DD>Normally the self-calibration tasks
+scale the gains so that their
+rms amplitude is 1. This preserves your primary flux density calibration.
+The <TT>noscale</TT> option prevents this scaling, thus allowing the absolute
+flux density scale to be changed by the self-calibration process. You <EM>will want</EM>
+to allow the flux density scale to change if you are self-calibrating several
+datasets of the same source (i.e. using the same model) separately. For example,
+you may have several datasets containing different configurations or
+frequencies of the one source, and yet all these datasets are used to produce
+the one output image. Using <TT>noscale</TT>
+ensures that the flux density scales resulting from the different
+self-calibrations are the same.
+</DD>
+</DL>
+
+<P>
+Options specific to <A NAME="tex2html537"
+  HREF="../doc/selfcal.html">selfcal</A>
+are:
+
+<P>
+<DL>
+<DT><STRONG><TT>relax</TT>:</STRONG></DT>
+<DD>This relaxes the convergence criteria of gain solutions
+somewhat, and may be helpful if there are a large number of solutions which
+fail to converge. This option will be useful when the model is particularly
+poor. This will be so in the early self-calibration iterations when
+the primary calibration was quite poor.
+
+<P>
+</DD>
+<DT><STRONG><TT>mosaic</TT>:</STRONG></DT>
+<DD>This causes <A NAME="tex2html538"
+  HREF="../doc/selfcal.html">selfcal</A>
+to select only those
+visibilities whose observing centre is within plus or minus three
+pixels of the model reference pixel. This is needed if the input visibility
+dataset contains multiple pointings or sources. By default, no observing
+centre selection is performed.
+</DD>
+</DL>
+
+<P>
+Task <A NAME="tex2html539"
+  HREF="../doc/gpscal.html">gpscal</A>
+takes a few options to dictate how it handles
+<I>XY</I> phases:
+
+<P>
+<DL>
+<DT><STRONG><TT>noxy</TT>:</STRONG></DT>
+<DD>Do not attempt to solve for <I>XY</I> phase. By default
+<A NAME="tex2html540"
+  HREF="../doc/gpscal.html">gpscal</A>
+solves for a constant <I>XY</I> phase on all antennas except
+the reference antenna.
+</DD>
+<DT><STRONG><TT>xyref</TT>:</STRONG></DT>
+<DD>Solve for the <I>XY</I> phase of the reference antenna
+(as well as the <I>XY</I> phase of the other antennas). This cannot
+be used together with the <TT>noxy</TT> option.
+To use this option, the source should be strongly polarised
+(at least 5%), and Stokes Q and/or Stokes U models should be given.
+</DD>
+<DT><STRONG><TT>xyvary</TT>:</STRONG></DT>
+<DD>Solve for a variable <I>XY</I> phase. It is
+recommended that you use this option, although this option does not
+work for phase-only self-calibration. If used with<TT>options=xyref</TT>
+then <A NAME="tex2html541"
+  HREF="../doc/gpscal.html">gpscal</A>
+additionally solves for a variable <I>XY</I> phase on
+the reference antenna.
+</DD>
+</DL>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2912"
+  HREF="node122.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2908"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2902"
+  HREF="node120.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2910"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2913"
+  HREF="node122.html">Summary</A>
+<B>Up:</B> <A NAME="tex2html2909"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2903"
+  HREF="node120.html">Multi-Frequency Models</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

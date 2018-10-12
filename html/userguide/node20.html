@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Writing Shell Scripts</TITLE>
+<META NAME="description" CONTENT="Writing Shell Scripts">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node4.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1619"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1615"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1611"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1617"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1620"
+  HREF="node21.html">Plotting Concepts</A>
+<B>Up:</B> <A NAME="tex2html1616"
+  HREF="node4.html">The User Interface</A>
+<B> Previous:</B> <A NAME="tex2html1612"
+  HREF="node19.html">Host Command-Line Interface</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00270000000000000000">
+Writing Shell Scripts</A>
+</H1>
+As <I>Miriad</I> commands can be invoked directly from the command line, scripts
+and command procedures to run a sequence of <I>Miriad</I> commands can be
+developed using the normal host's facilities. This is a somewhat
+advanced topic - you will probably want to be familiar with the shell
+scripts and <I>Miriad</I> before you attempt to develop your own script.
+
+<P>
+There are numerous
+books written of shell programming or the like - a manual like
+this cannot be expected to cover the subject in the depth that these books
+go into. Instead a simple annotated example will be given using the
+C-Shell commonly used on UNIX systems. To aid description,
+line numbers are given on the left side of each line (these line numbers are
+<EM>not</EM> part of the shell script).
+<PRE>
+  1:  #!/bin/csh
+  2:
+  3:  # Delete any datasets called "multi.uv".
+  4:
+  5:  rm -rf multi.uv
+  6:
+  7:  fits in=MULTI.UV op=uvin out=multi.uv
+  8:
+  9:  foreach srcnam ( 1934-638 0823-500 vela )
+ 10:    uvaver vis=multi.uv "select=source(${srcnam})" out=${srcnam}.uv
+ 11:  end
+ 12:
+ 13:  mfcal vis=1934-638.uv interval=10 refant=3
+ 14:  gpcal vis=1934-638.uv interval=10 options=xyvary refant=3
+ 15:  gpcopy vis=1934-638.uv out=0823-500.uv
+ 16:
+ 17:  gpcal vis=0823-500.uv interval=10 \
+ 18:                 options=nopol,xyvary,qusolve refant=3
+ 19:
+ 20:  gpboot vis=0834-500.uv cal=1934-638.uv
+ 21:  uvplt vis=0823-500 stokes=i,q,u,v axis=real,imag device=0823.ps/ps
+ 22:
+ 23:  lpr 0823.ps
+</PRE>
+
+<UL>
+<LI>Line 1: C-shell scripts <EM>must always</EM> start with the rather
+cryptic <code>#!/bin/csh</code>. This allows the system to determine the
+appropriate interpreter for the script (i.e. the C-shell).
+</LI>
+<LI>Line 3: Comments are introduced by a hash character.
+</LI>
+<LI>Line 5: Delete a <I>Miriad</I> dataset called <code>multi.uv</code>. The
+<code>r</code> flag (recursive) is needed to delete a directory (which is
+how <I>Miriad</I> stores a dataset). The <code>f</code> (force) flags causes <code>rm</code> to
+work in non-interactive mode.
+</LI>
+<LI>Line 7: Execute the <I>Miriad</I> task <A NAME="tex2html20"
+  HREF="../doc/fits.html">fits</A>. This reads a visibility
+FITS disk file (<code>MULTI.UV</code>), and saves it as a <I>Miriad</I> dataset
+(<code>multi.uv</code>).
+</LI>
+<LI>Lines 9 and 11: This is the C-shell's equivalent of a DO-loop. The
+values listed inside the brackets (source names in this instance) are
+progressively assigned to the control variable of the loop (<TT>srcnam</TT>
+here). The net result is that this loop will be executed three times,
+with <TT>srcnam</TT> being successively set to <TT>1934-638</TT>, <TT>0823-500</TT>
+and <TT>vela</TT>. The ``things'' inside the brackets are separate by spaces - the
+C-shell generally likes spaces to separate different components of a command.
+</LI>
+<LI>Line 10: The body of the loop. The <TT>uvaver</TT> command will be
+executed three times. The shell substitutes the string <code>${srcnam}</code> 
+with the current value of the <code>srcnam</code> variable.
+Thus the <TT>select</TT> parameter being successively
+set with <TT>source(1934-638)</TT>, <TT>source(0823-500)</TT> and
+<TT>source(vela)</TT> on the three times through the loop. The output dataset of the command also changes.
+Note that the <TT>select</TT> parameter is quoted (<code>"select=</code>...
+<code>"</code>).
+This is as brackets (<code>()</code>) are special to the shell. Quoting them
+prevents this interpretation. Note however that the <code>${srcnam}</code> is
+still treated as special, even though it is in quotes (software does not have
+to be consistent!).
+</LI>
+<LI>Lines 13-15: Execute various <I>Miriad</I> commands on data-sets produced
+by line 10.
+</LI>
+<LI>Lines 17-18: Yet another command. However this one was too long to
+fit on one line. In the C-shell, a line can be continued onto the next by
+ending it with a backslash.
+</LI>
+<LI>Lines 20 and 21: More of the same. Generate a postscript output
+file, <TT>0823.ps</TT>, using task <A NAME="tex2html21"
+  HREF="../doc/uvplt.html">uvplt</A>.
+</LI>
+<LI>Line 23: Spool this postscript file to the laser printer.
+</LI>
+</UL>
+
+<P>
+On UNIX systems, after having developed a script, you will need
+to change the ``file mode'' of the script to indicate that the script is
+executable. For example, to mark the shell script <TT>calibrate</TT> as
+executable, use the UNIX command
+<PRE>
+     % chmod +x calibrate
+</PRE>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1619"
+  HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1615"
+  HREF="node4.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1611"
+  HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1617"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1620"
+  HREF="node21.html">Plotting Concepts</A>
+<B>Up:</B> <A NAME="tex2html1616"
+  HREF="node4.html">The User Interface</A>
+<B> Previous:</B> <A NAME="tex2html1612"
+  HREF="node19.html">Host Command-Line Interface</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,62 @@
+.TH opplt 1
+.SH NAME
+opplt - Plot opacity and sky brightness.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+miscellaneous
+.SH DESCRIPTION
+Opplt plots model opacity and atmospheric brightness temperatures
+given site information. These quantities can be plotted as a function
+of frequency or elevation.
+.sp
+To plot as a function of frequency, give two values for the
+freq key and one for the el key.
+.sp
+To plot as a function of elevation, give two values for the
+el key and one for the freq key.
+.sp
+You must give two values for either freq or el.
+.sp
+.SH PARAMETERS
+.TP
+\fIfreq\fP
+Frequency range of interest, in GHz. One or two values can be given.
+If two values are given, then the plot is as a function of frequency,
+and the values are the limits for the plot.
+The default is 22 GHz.
+.TP
+\fIel\fP
+Elevation angle, in degrees. One or two values can be given.
+If two values are given, then the plot is as a function of elevation,
+and the values are the limits for the plot.
+The default is 90 degrees (i.e. zenith).
+.TP
+\fIdevice\fP
+Plot device. Default is not to plot anything.
+.TP
+\fIlog\fP
+Output log file. The default is not to create one.
+.TP
+\fIoptions\fP
+Extra processing options. Currently there is only a single option.
+.nf
+  airmass  When plotting as a function of elevation, express the
+           x-axis as cosec(elevation), which is also known as the
+           airmass.
+.TP
+\fIt\fP
+.fi
+Temperature, in Kelvin. Default is 300.
+.TP
+\fIz\fP
+Observatory altitude, in m. Default is 200 (i.e. the
+altitude of Narrabri).
+.TP
+\fIp\fP
+Sea-level atmospheric pressure, in hPa (i.e. millibars). The default
+is 1013 hPa.
+.TP
+\fIh\fP
+Relative humidity, as a percentage. The default is 20%.
+.sp

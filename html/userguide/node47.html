@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>FITS Tapes and Miriad</TITLE>
+<META NAME="description" CONTENT="FITS Tapes and Miriad">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node48.html">
+<LINK REL="previous" HREF="node46.html">
+<LINK REL="up" HREF="node45.html">
+<LINK REL="next" HREF="node48.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1963"
+  HREF="node48.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1959"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1953"
+  HREF="node46.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1961"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1964"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<B>Up:</B> <A NAME="tex2html1960"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1954"
+  HREF="node46.html">ATLOD: Reading RPFITS Files</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00820000000000000000"></A><A NAME="1996"></A><A NAME="s:fits"></A>
+<BR>
+FITS Tapes and <I>Miriad</I>
+</H1>
+<I>Miriad</I> has a single task, <A NAME="tex2html88"
+  HREF="../doc/fits.html">fits</A>, to read and write FITS files -
+both visibility and image data. One significant shortcoming of <A NAME="tex2html89"
+  HREF="../doc/fits.html">fits</A>
+is that it cannot work directly from a tape device - the FITS file <EM>must</EM>
+be on disk. The <I>Miriad</I> utility, <A NAME="tex2html90"
+  HREF="../doc/tpcp.html">tpcp</A>, is needed to copy FITS files
+between
+disk and tape, whereas the UNIX command <A NAME="tex2html91"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=mt">mt</A>
+might been needed to position
+the tape. See the appropriate <I>Miriad</I> help or UNIX <A NAME="tex2html92"
+  HREF="/cgi-bin/miriad/mirman.pl?topic=man">man</A>
+pages on these
+commands. However,
+to copy from tape to disk, one would use
+<BLOCKQUOTE>
+<TT>% tpcp </TT><I>device fits-file</I>
+
+</BLOCKQUOTE>
+Here <I>device</I> is the tape device. Typically it is something like
+<code>/dev/nrst0</code>. Note that you should always use the ``raw, non-rewinding
+devices'' - that is devices whose names start with <TT>nr</TT>. The output is
+<I>fits-file</I>.
+
+<P>
+To write a FITS file to tape, use
+<BLOCKQUOTE>
+<TT>% tpcp -b 2880 </TT><I>fits-file device</I>
+
+</BLOCKQUOTE>
+This causes an unblocked FITS file to be written (record length of 2880 bytes).
+
+<P>
+To move the tape to the end-of-tape, use
+<BLOCKQUOTE>
+<TT>% mt -f </TT><I>device </I><TT>eom</TT>
+
+</BLOCKQUOTE>
+To skip forward <I>n</I> files, use
+<BLOCKQUOTE>
+<TT>% mt -f </TT><I>device </I><TT>fsf </TT><I>n</I>
+
+</BLOCKQUOTE>
+and to rewind, use
+<BLOCKQUOTE>
+<TT>% mt -f </TT><I>device </I><TT>rewind</TT>
+
+</BLOCKQUOTE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1963"
+  HREF="node48.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1959"
+  HREF="node45.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1953"
+  HREF="node46.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1961"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1964"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<B>Up:</B> <A NAME="tex2html1960"
+  HREF="node45.html">Getting Data In and</A>
+<B> Previous:</B> <A NAME="tex2html1954"
+  HREF="node46.html">ATLOD: Reading RPFITS Files</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

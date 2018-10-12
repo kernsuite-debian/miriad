@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>UV Variables</TITLE>
+<META NAME="description" CONTENT="UV Variables">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node61.html">
+<LINK REL="previous" HREF="node59.html">
+<LINK REL="up" HREF="progguide.html">
+<LINK REL="next" HREF="node61.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1041"
+  HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1035"
+  HREF="progguide.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1029"
+  HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html1037"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html1039"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1042"
+  HREF="node61.html">Index</A>
+<B>Up:</B> <A NAME="tex2html1036"
+  HREF="progguide.html">progguide</A>
+<B> Previous:</B> <A NAME="tex2html1030"
+  HREF="node59.html">Image Items</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00700000000000000000"></A>
+<A NAME="app:uvvars"></A>
+<BR>
+UV Variables
+</H1>
+
+<P>
+A <I>Miriad</I> uv dataset is composed of a collection of items and `<I>u-v</I> variables'.
+The variables are parameters that are known at the time of the observation,
+and include measured data, and the description of the observation
+set up (<I>e.g.</I> correlator set up and observing centres).
+
+<P>
+Table&nbsp;<A HREF="#t:vis-items">B.1</A> gives a list of the items that are used to build up a
+<I>Miriad</I> uv dataset.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="t:vis-items"></A>
+<DIV ALIGN="CENTER">
+<A NAME="2866"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table:</STRONG>
+<I>Miriad</I> items in a uv visibility dataset</CAPTION>
+<TR><TD ALIGN="LEFT">Item name</TD>
+<TD ALIGN="LEFT">Type</TD>
+<TD ALIGN="LEFT">Description</TD>
+</TR>
+<TR><TD ALIGN="LEFT">obstype</TD>
+<TD ALIGN="LEFT">ascii</TD>
+<TD ALIGN="LEFT">value: `<TT>cross</TT>', `<TT>auto</TT>' or `<TT>mixed</TT>'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">history</TD>
+<TD ALIGN="LEFT">text</TD>
+<TD ALIGN="LEFT">history text file (in principle editable)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vartable</TD>
+<TD ALIGN="LEFT">text</TD>
+<TD ALIGN="LEFT">lookup table for all uv variables (do not edit!)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">visdata</TD>
+<TD ALIGN="LEFT">mixed</TD>
+<TD ALIGN="LEFT">data stream of uv variables</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flags</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">optional flags for narrowband data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">wflags</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">optional flags for wideband data</TD>
+</TR>
+<TR><TD ALIGN="LEFT">gains</TD>
+<TD ALIGN="LEFT">mixed</TD>
+<TD ALIGN="LEFT">antenna gain table</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nfeeds</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">number of feeds on each antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ntau</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">Number of delay/spectral index terms per antenna</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">in `gains'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nsols</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">number of records in `gains'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ngains</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">number of antenna gains in each record of `gains'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">gain interpolation time tolerance (days)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">leakage</TD>
+<TD ALIGN="LEFT">complex</TD>
+<TD ALIGN="LEFT">polarization leakage parameters</TD>
+</TR>
+<TR><TD ALIGN="LEFT">freq0</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="LEFT">reference frequency for delay terms</TD>
+</TR>
+<TR><TD ALIGN="LEFT">freqs</TD>
+<TD ALIGN="LEFT">mixed</TD>
+<TD ALIGN="LEFT">frequency set up description table for `bandpass'</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bandpass</TD>
+<TD ALIGN="LEFT">complex</TD>
+<TD ALIGN="LEFT">bandpass function gains</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nspect0</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">number of windows in the bandpass function</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nchan0</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="LEFT">total number of channels in the bandpass function</TD>
+</TR>
+</TABLE>
+</DIV>
+</DIV>
+<BR>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1041"
+  HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1035"
+  HREF="progguide.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1029"
+  HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html1037"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html1039"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1042"
+  HREF="node61.html">Index</A>
+<B>Up:</B> <A NAME="tex2html1036"
+  HREF="progguide.html">progguide</A>
+<B> Previous:</B> <A NAME="tex2html1030"
+  HREF="node59.html">Image Items</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

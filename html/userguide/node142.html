@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Statistics and Histograms</TITLE>
+<META NAME="description" CONTENT="Image Statistics and Histograms">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node143.html">
+<LINK REL="previous" HREF="node141.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node143.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3182"
+  HREF="node143.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3178"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3172"
+  HREF="node141.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3180"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3183"
+  HREF="node143.html">Listing Image Values</A>
+<B>Up:</B> <A NAME="tex2html3179"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3173"
+  HREF="node141.html">Image Analysis</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001810000000000000000"></A><A NAME="11604"></A><A NAME="11605"></A><A NAME="11606"></A><A NAME="11607"></A>
+<BR>
+Image Statistics and Histograms
+</H1>
+
+<P>
+
+<UL>
+<LI>Task <A NAME="tex2html641"
+  HREF="../doc/histo.html">histo</A>
+is a fairly commonly used task, giving a number of
+image statistics and a simple histogram.  Apart from the input image
+(keyword <TT>in</TT>), it can take a region of interest (<TT>region</TT>), a
+range to determine the histogram over (<TT>range</TT>), and the number of
+bins in the histogram (<TT>nbins</TT>). 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>HISTO</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.imap</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Select region of interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">range=-0.1,1</TD>
+<TD ALIGN="LEFT">Range for histogram. Default is image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">min and max.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nbins=#</TD>
+<TD ALIGN="LEFT">Number of bins in the histogram</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">Unset for default of 20</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>If you do not like <A NAME="tex2html642"
+  HREF="../doc/histo.html">histo</A>, or you would like a PGPLOT plot of
+the histogram, you could use the task <A NAME="tex2html643"
+  HREF="../doc/imhist.html">imhist</A>
+instead.  This task
+will also optionally draw, on the histogram, a Gaussian with the same
+mean, rms and integral as the actual histogram.  This task, and its
+friend <A NAME="tex2html644"
+  HREF="../doc/imstat.html">imstat</A>
+use the <TT>options</TT> keyword atypically to input
+numeric (rather than just logical) information - see the help file and
+the example below. 
+
+<P>
+Here we plot the histogram with 20 bins with a connected line style.  We
+also do not allow any values below zero to contribute to this histogram. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMHIST</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.imap</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=#</TD>
+<TD ALIGN="LEFT">Select region of interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=nbin,20,style,connect</TD>
+<TD ALIGN="LEFT">Specify desired options</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cutoff=0.0</TD>
+<TD ALIGN="LEFT">Discard negative pixels</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on X window</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>Complementing <A NAME="tex2html645"
+  HREF="../doc/imhist.html">imhist</A>
+is <A NAME="tex2html646"
+  HREF="../doc/imstat.html">imstat</A>.  This task gives you
+statistics about your image in the selected region.  It computes the
+statistic either over a row or a plane of data.
+
+<P>
+
+<OL>
+<LI>For example, let us look at the rms value of a cube computed over each
+RA-DEC plane.  Note that it does
+not matter what order the cube is in.  For example, it might be in vxy
+order.  <A NAME="tex2html647"
+  HREF="../doc/imstat.html">imstat</A>
+will average over the xy planes regardless.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMSTAT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=zeeman.vcub</TD>
+<TD ALIGN="LEFT">Input image cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=image(50,450)</TD>
+<TD ALIGN="LEFT">Select region of interest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">plot=rms</TD>
+<TD ALIGN="LEFT">Plot rms</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axes=ra,dec</TD>
+<TD ALIGN="LEFT">Compute statistic over RA-DEC plane</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cutoff</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Plot on X window</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=numbers.log</TD>
+<TD ALIGN="LEFT">Write numbers to log file</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>By setting the <TT>axes</TT> keyword to a single axis, <A NAME="tex2html648"
+  HREF="../doc/imstat.html">imstat</A>
+will compute the statistic over a single row. Be warned that this
+can produce a lot of output.
+For example,
+if you wanted to see the sum along the velocity axis
+plotted as a function of RA and DEC position in
+your cube you could do
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMSTAT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=zeeman.vcub</TD>
+<TD ALIGN="LEFT">Input image cube</TD>
+</TR>
+<TR><TD ALIGN="LEFT">plot=sum</TD>
+<TD ALIGN="LEFT">Compute the sum.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axes=velocity</TD>
+<TD ALIGN="LEFT">Compute statistic over the velocity axis.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</OL>
+
+<P>
+</LI>
+<LI>You may wish to integrate your image in concentric ellipses, thus
+producing an azimuthally averaged profile.  You can do this with
+<A NAME="tex2html649"
+  HREF="../doc/ellint.html">ellint</A>.  Each plane of a cube is integrated separately.  There is
+no graphical output, just some tables of numbers which you can
+optionally write to a log file and plot with your favourite plotting
+program.  In this example, we integrate 10 circular rings from 0 to
+100&nbsp;arcsec centred on a pixel offset from the reference pixel by -5
+and 10.3&nbsp;arcsec in RA and DEC.  We also make a primary beam correction
+and write the results to a log file. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>ELLINT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ngc1313.mom0</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Full region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">center=-5,10.3</TD>
+<TD ALIGN="LEFT">Offset from reference pixel</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa</TD>
+<TD ALIGN="LEFT">Unset for face-on</TD>
+</TR>
+<TR><TD ALIGN="LEFT">incline</TD>
+<TD ALIGN="LEFT">circular rings</TD>
+</TR>
+<TR><TD ALIGN="LEFT">radius=0,100,10</TD>
+<TD ALIGN="LEFT">Radii of rings</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=pbcorr</TD>
+<TD ALIGN="LEFT">Correct for primary beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log=rings.1313</TD>
+<TD ALIGN="LEFT">Write the results to log file</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3182"
+  HREF="node143.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3178"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3172"
+  HREF="node141.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3180"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3183"
+  HREF="node143.html">Listing Image Values</A>
+<B>Up:</B> <A NAME="tex2html3179"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3173"
+  HREF="node141.html">Image Analysis</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

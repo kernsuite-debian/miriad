@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Computation</TITLE>
+<META NAME="description" CONTENT="Computation">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node132.html">
+<LINK REL="up" HREF="node132.html">
+<LINK REL="next" HREF="node134.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3064"
+  HREF="node134.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3060"
+  HREF="node132.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3056"
+  HREF="node132.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3062"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3065"
+  HREF="node134.html">Imaging and Image Velocity</A>
+<B>Up:</B> <A NAME="tex2html3061"
+  HREF="node132.html">Continuum Subtraction</A>
+<B> Previous:</B> <A NAME="tex2html3057"
+  HREF="node132.html">Continuum Subtraction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001691000000000000000">
+Computation</A>
+</H2>
+For a relatively simple program to drive, <A NAME="tex2html586"
+  HREF="../doc/uvlin.html">uvlin</A>
+has a rather large
+number of input parameters. Task <A NAME="tex2html587"
+  HREF="../doc/uvlin.html">uvlin</A>
+behaves somewhat like a
+copying program, taking an input dataset (selecting, calibrating and
+performing Stokes conversion, as appropriate), performing the continuum
+subtraction, and writing out a resultant dataset. Input parameters are:
+
+<UL>
+<LI><TT>vis</TT>: The name of the input dataset.
+</LI>
+<LI><TT>select</TT>: The subset of data to select.
+</LI>
+<LI><TT>line</TT>: The normal line parameter.
+</LI>
+<LI><TT>chans</TT>: This gives the set of channels to be used in the fitting
+process. It consists of a number of pairs giving the start and end range
+of the channels to include in the fitting process. Note that there channel
+numbers are <EM>relative</EM> to the channels selected with the <TT>line</TT>
+parameter.
+</LI>
+<LI><TT>out</TT>: The output dataset.
+</LI>
+<LI><TT>order</TT>: The fit order. The default is 1.
+</LI>
+<LI><TT>offset</TT>: An offset to be applied to the data before the fit, and
+``deapplied'' after the fit. The net result is that the phase centre of the
+data is unchanged. However the fitting process is better behaved if
+the phase centre during the fitting process is located at (or near) the
+dominant continuum emission. The default is to do no shifting.
+</LI>
+<LI><TT>mode</TT>: This determines what form of data are written to the output
+dataset. Normally you will want to write the <TT>line</TT> data (the data
+after continuum subtraction). However you can also write out the fitted
+continuum (<TT>mode=continuum</TT>) or a fitted channel-0 dataset
+(<TT>mode=chan0</TT>). Task <A NAME="tex2html588"
+  HREF="../doc/uvlin.html">uvlin</A>
+also has a option where it can solve
+for line shape (see <TT>options=lpropc</TT> below). In this case, you can
+also write out the fitted line (<TT>mode=fit</TT>).
+
+<P>
+</LI>
+<LI><TT>options</TT>: The <TT>options</TT> parameter gives the normal
+ability to turn off calibration. Note that
+you will generally want calibration
+to be applied, as a copy of the dataset is being formed. It is particularly
+important to apply bandpass correction. There are a few extra switches in
+addition to the calibration switches:
+<DL>
+<DT></DT>
+<DD><TT>sun</TT>: With this option, the <TT>offset</TT> keyword is ignored,
+and a shift appropriate for the Sun is determined instead. Thus,
+if your continuum is dominated by the Sun, this will help eliminate it.
+You will normally want to use the ``<code>twofit</code>'' option with this (see
+below).
+Also see <A NAME="tex2html589"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1995A%26AS..109..593S">Sault &amp; Noordam (1995)</A>
+(A&amp;AS 109, 593) for information and an example.
+</DD>
+<DT></DT>
+<DD><TT>twofit</TT>: If an ``<code>offset</code>'' is given, or if the ``<code>sun</code>''
+option is used, <A NAME="tex2html590"
+  HREF="../doc/uvlin.html">uvlin</A>
+normally fits for continuum just at the
+offset or solar position. By using the ``<code>twofit</code>'' option, <A NAME="tex2html591"
+  HREF="../doc/uvlin.html">uvlin</A>
+will fit for continuum at both the phase centre and the offset/solar
+position.
+</DD>
+<DT></DT>
+<DD><TT>relax</TT>: Normally <A NAME="tex2html592"
+  HREF="../doc/uvlin.html">uvlin</A>
+attempts to avoid overfitting the
+data if it finds a significant number of flagged continuum channels (more
+than 40% bad). If it does find a large number of flagged channels, it starts
+reducing its fit order. The <TT>relax</TT> option tells <A NAME="tex2html593"
+  HREF="../doc/uvlin.html">uvlin</A>
+to fit
+the order you ask for regardless of large numbers of flagged channels.
+</DD>
+<DT></DT>
+<DD><TT>lpropc</TT>: In recombination line experiments, it might be a good
+approximation that the line strength is proportional to the continuum. Using
+this extra constraint, <A NAME="tex2html594"
+  HREF="../doc/uvlin.html">uvlin</A>
+can simultaneously fit for both a
+continuum spectrum (varies from visibility to visibility) and a line
+spectrum (which is a function of the continuum strength). This results in
+an iterative algorithm, which can take an appreciable time, with unfortunately
+only modest improvement in results. You probably do not want to use this
+option.
+</DD>
+</DL>
+</LI>
+</UL>
+
+<P>
+Typical inputs to <A NAME="tex2html595"
+  HREF="../doc/uvlin.html">uvlin</A>
+are:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVLIN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=line.uv</TD>
+<TD ALIGN="LEFT">Input dataset before continuum subtraction.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset to select all data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Leave unset to select all channels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">chans=1,100,300,512</TD>
+<TD ALIGN="LEFT">Channels 1 to 100, and 300 to 512 inclusive</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">contain only continuum emission.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=line.sub</TD>
+<TD ALIGN="LEFT">The output continuum subtracted dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">order=1</TD>
+<TD ALIGN="LEFT">Use first order fit (which is the default).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">offset</TD>
+<TD ALIGN="LEFT">The offset to apply. Probably leave unset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode</TD>
+<TD ALIGN="LEFT">Leave unset to get line data after</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">continuum subtraction.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Probably leave it unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3064"
+  HREF="node134.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3060"
+  HREF="node132.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3056"
+  HREF="node132.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3062"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3065"
+  HREF="node134.html">Imaging and Image Velocity</A>
+<B>Up:</B> <A NAME="tex2html3061"
+  HREF="node132.html">Continuum Subtraction</A>
+<B> Previous:</B> <A NAME="tex2html3057"
+  HREF="node132.html">Continuum Subtraction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,222 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Deconvolution with maximum entropy algorithms</TITLE>
+<META NAME="description" CONTENT="Deconvolution with maximum entropy algorithms">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node110.html">
+<LINK REL="previous" HREF="node101.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node109.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2744"
+  HREF="node109.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2740"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2734"
+  HREF="node107.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2742"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2745"
+  HREF="node109.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2741"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2735"
+  HREF="node107.html">Computation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001430000000000000000"></A>
+<A NAME="s:mem"></A><A NAME="3801"></A><A NAME="3802"></A><A NAME="3803"></A>
+<BR>
+Deconvolution with maximum entropy algorithms
+</H1>
+
+<P>
+This discussion was lifted from Tim Cornwell's article in the NRAO imaging
+workshop (1988).
+
+<P>
+CLEAN approaches the deconvolution problem by using a <I>procedure</I> which
+selects a plausible image from the set of feasible images. This makes a noise
+analysis of CLEAN very difficult.  The Maximum Entropy Method (MEM) is not
+procedural.   The image selected is that which fits the data, to within the
+noise level, and also has maximum entropy. This has <I>nothing</I> to do with
+physical entropy, it is just something that when maximised, produces a positive
+image with a compressed range of pixel values.   The latter aspect forces the
+MEM image to be smooth, and the positivity forces super-resolution on bright,
+isolated objects.
+
+<P>
+One general-purpose definition of entropy (championed by Gull and Skilling) is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+H = - \sum_k I_k \log \left (I_k \over {M_k}\right)
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="165" HEIGHT="50" BORDER="0"
+ SRC="img43.png"
+ ALT="\begin{displaymath}
+H = - \sum_k I_k \log \left (I_k \over {M_k}\right)
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img44.png"
+ ALT="$I_k$"></SPAN> is the brightness of the <I>k</I>th pixel, and <SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img45.png"
+ ALT="$M_k$"></SPAN> is some
+default image.  An example might be a low-resolution image of the object.
+This allows <I>a priori</I> information to be incorporated into the problem.
+An alternate form, suggested by Cornwell (sometimes call the `maximum
+emptiness' criterion) is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+H = - \sum_k \log( \cosh({I_k \over M_k})).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="182" HEIGHT="49" BORDER="0"
+ SRC="img46.png"
+ ALT="\begin{displaymath}
+H = - \sum_k \log( \cosh({I_k \over M_k})).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+This second form does not enforce positivity, and so can be used for
+Stokes parameters other than <I>I</I>.
+
+<P>
+The requirement that each visibility be fitted exactly by the model
+usually invalidates the positivity constraint.  Therefore, data are incorporated
+with the constraint that the fit, <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.png"
+ ALT="$\chi^2$"></SPAN>, of the predicted visibility
+to that observed, be close to the expected value:
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\chi^2 = \sum_r {|V(u_r,v_r) - \hat V(u_r,v_r)|^2 \over
+                {\sigma_{V(u_r,v_r)}^2}}.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="232" HEIGHT="52" BORDER="0"
+ SRC="img48.png"
+ ALT="\begin{displaymath}
+\chi^2 = \sum_r {\vert V(u_r,v_r) - \hat V(u_r,v_r)\vert^2 \over
+{\sigma_{V(u_r,v_r)}^2}}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+Maximising <I>H</I> subject to the constraint that <SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img47.png"
+ ALT="$\chi^2$"></SPAN> be equal to
+its expected value leads to an image which fits the long spacings too well,
+and the zero and short spacings poorly. To remedy this, an added constraint
+can be added to the problem. Typically this is a flux constraint, which
+ensures that the flux density in the maximum entropy image is correct. That is,
+the flux density of the maximum entropy image,
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+F = \sum_k I_k,
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="78" HEIGHT="45" BORDER="0"
+ SRC="img49.png"
+ ALT="\begin{displaymath}
+F = \sum_k I_k,
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+is constrained to equal the known flux density for the source. This is quite a
+useful constraint. Although the maximum entropy task, described below, does
+not force you to give a flux constraint, you should attempt to, if at all
+possible.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2746"
+  HREF="node109.html">Computation</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2744"
+  HREF="node109.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2740"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2734"
+  HREF="node107.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2742"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2745"
+  HREF="node109.html">Computation</A>
+<B>Up:</B> <A NAME="tex2html2741"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2735"
+  HREF="node107.html">Computation</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

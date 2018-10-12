@@ -1,0 +1,235 @@
+%N regrid
+%D regrid an image dataset
+%P rjs
+%: map analysis
+%B
+        REGRID any combination of the first three axes of an image using
+        cubic interpolation, with exclusion of blanked input pixels.
+        The output coordinate system may be specified via a template
+        image or axis descriptors.
+ 
+        REGRID handles conversion
+          - between different map projections,
+          - between different map centres (reference points),
+          - between B1950 and J2000 equatorial coordinates,
+          - between equatorial and galactic coordinates,
+          - between radio and optical velocity definitions,
+          - between LSR and barycentric velocity frames.
+ 
+        Nearest neighbour interpolation is used for axes smaller than
+        five pixels in extent.
+ 
+        REGRID supports the FITS Celestial World Coordinate System
+        (WCS) standard as defined in "WCS Paper II",
+        Calabretta & Greisen (2002), A&A 395, 1077.
+%A in
+        The input image name.  In the first instance, coordinate
+        descriptors for the output image are copied from the input.
+        They may then be overridden by other parameters as described
+        below.  No default.
+%A out
+        The output image name.  No default.
+%A axes
+        Specify the axes to which 'tin' and 'desc' refer.  For example,
+        axes=1,2 resets descriptors for axes 1 and 2.  Likewise,
+        axes=2,3 resets descriptors for axes 2 and 3.  In each case, it
+        is still possible that another axis will be regridded due to the
+        effect of other parameters such as 'rotate', etc.  Note that the
+        output always contains the same number of axes as the input.
+        The default is all axes.
+%A tin
+        Template image.  If present, coordinate descriptors for the axes
+        to be regridded, as selected by keyword 'axes', are taken from
+        the template image rather than the input image.  These axes must
+        exist in the template image.
+%A desc
+        This optionally specifies the reference value (CRVAL), reference
+        pixel (CRPIX), coordinate increment (CDELT), and number of
+        pixels (respectively) for each and every axis of the output
+        image selected by keyword 'axes'.  Thus, if there are any, then
+        there must be 4 x naxes values, separated by commas, where naxes
+        is the number of axes specified by 'axes'.  These values are not
+        changed by any options other than 'offset'.
+ 
+        Note that for celestial axes (RA/DEC, GLON/GLAT, etc.), the
+        reference values (CRVAL) and increments (CDELT) are in degrees.
+ 
+        The axis types themselves (CTYPE), including the equatorial
+        coordinate system (B1950 or J2000), are taken from the template
+        image, if given, else from the input image, subject to
+        modification by 'project' and 'options' (see below).
+%A rotate
+        Set the rotation between the sky and the image to be this angle,
+        in degrees.  A positive value of the angle gives an eastward
+        rotation of the sky grid relative to the pixel grid.  If the
+        celestial axis descriptors came from the template image then the
+        default rotation comes from that, else the input image.
+%A lonpole
+        The native longitude (deg), and...
+%A latpole
+        ...the native latitude (deg) of the celestial pole, being the
+        same as the celestial latitude of the native pole.  Normally
+        set by the LONPOLEa and LATPOLEa keywords in FITS, or else by
+        PVi_3a and PVi_4a which have precedence, where i is the
+        longitude axis number.  Normally only lonpole is needed.
+        Together with the two angles specified by CRVAL, these provide
+        the third Euler angle for a spherical coordinate transformation
+        between celestial spherical coordinates and the projection's
+        "native" spherical coordinates as defined by WCS Paper II.  You
+        should rarely need to set these.
+ 
+        Defaults are taken from the template image if the projection
+        (see below) defaulted from CTYPE in the template image.  Else
+        from the input image if the projection defaulted from that.
+        Else default values depend on the projection.
+%A phi0
+        The native longitude (deg), and...
+%A theta0
+        ...the native latitude (deg) of the fiducial point of the
+        projection (i.e. the point whose celestial coordinates are given
+        by CRVAL), as defined by WCS Paper II.  Fiddling with these is
+        "courageous" in the sense of Sir Humphrey Appleby
+        (http://en.wikiquote.org/wiki/Yes,_Minister).  Set by the PVi_1a
+        and PVi_2a keywords in FITS, where i is the longitude axis.
+ 
+        Defaults are taken from the template image if the projection
+        (see below) defaulted from CTYPE in the template image.  Else
+        from the input image if the projection defaulted from that.
+        Else default values depend on the projection.
+%A xyzero
+        A logical value.  If true, apply an offset so that the origin of
+        Cartesian coordinates in the plane of projection corresponds to
+        the fiducial point - i.e. (x,y) = (0,0) at (phi0,theta0).  This
+        is always the case if (phi0,theta0) assume their default values,
+        it only has effect if they are reset (see above).  In FITS this
+        logical is set by the PVi_0a keyword, where i is the longitude
+        axis.
+ 
+        The default is taken from the template image if the projection
+        (see below) defaulted from CTYPE in the template image.  Else
+        from the input image if the projection defaulted from that.
+        Else false.
+%A project
+        Three-letter code for the output map projection.  Projection
+        codes follow the FITS WCS standard where they are encoded in the
+        CTYPE keyword.
+ 
+          Zenithals:
+            AZP  Zenithal/azimuthal perspective (2,C?,D?,d)
+            SZP  Slant zenithal perspective (3,C?,D?,d)
+            TAN  Gnomonic (0,D)
+            STG  Stereographic (0,C,D)
+            SIN  Orthographic/synthesis (2,d)
+            NCP  North celestial pole (0,D,d) - an important special
+                 case of the SIN projection, divergent at the equator
+            ARC  Zenithal/azimuthal equidistant (0,G)
+            ZPN  Zenithal/azimuthal polynomial (30*,G|d)
+            ZEA  Zenithal/azimuthal equal area (0,E,G)
+            AIR  Airy (1,D)
+          Cylindricals:
+            CYP  Cylindrical perspective (2,G|D)
+            CEA  Cylindrical equal area (1,E,G)
+            CAR  Plate carrée (aka Cartesian) (0,G) - please note that
+                 this is NOT the same as the simple linear system used
+                 previously unless the reference coordinates (CRVAL)
+                 are (0,0)
+            MER  Mercator (0,C,D) - note that the variant defined by
+                 AIPS memo 46 is not supported.
+          Pseudo-cylindricals:
+            SFL  Sanson-Flamsteed (0,E,G)
+            GLS  Global sinusoid (0,E,G) - old implementation of Sanson-
+                 Flamsteed.  Do not use unless to match an existing map.
+            PAR  Parabolic (0,E,G)
+            MOL  Mollweide (0,E,G)
+          Conventional:
+            AIT  Hammer-Aitoff (0,E,G) - note that the variant defined
+                 by AIPS memo 46 is not supported.
+          Conics:
+            COP  Conic perspective  (2*,D)
+            COE  Conic equal area   (2*,E,G)
+            COD  Conic equidistant  (2*,G)
+            COO  Conic orthomorphic (2*,C,D)
+          Polyconics:
+            BON  Bonne (1*,E,G)
+            PCO  Polyconic (0,G)
+          Quad-cubes:
+            TSC  Tangential spherical cube (0,G)
+            CSC  COBE spherical cube (0,G)
+            QSC  Quadrilateralized spherical cube (0,E,G)
+          Hybrid:
+            HPX  HEALPix (2,E,G)
+ 
+        The number of projection parameters is indicated in parentheses.
+        These may be set in the pv array (below).  An asterisk indicates
+        that the projection has at least one non-defaulting parameter.
+        Refer to WCS Paper II for the mathematical definition of the
+        projection parameters and their default values.
+ 
+        The letters in parentheses provide a terse summary of the
+        projection's special properties:
+          - C  conformal
+          - C? conformal for particular projection parameters
+          - D  divergent
+          - D? divergent for particular projection parameters
+          - d  degenerate (parts of the sphere overlap in the map plane)
+          - E  equi-areal
+          - G  global (capable of mapping the whole sphere)
+        Some projections may be divergent, degenerate, or global
+        depending on the projection parameters.
+ 
+        The default is taken from CTYPE in the template image if given,
+        else from the input image.
+ 
+        NOTE that if any value is specified for project, even if the
+        same as in the template or input image, then defaults for
+        lonpole, latpole, phi0, theta0, and pv will not be taken from
+        the template or input image.
+%A pv
+        Array of up to 30 projection parameters as per the above.  Set
+        by the PVi_ma keywords in FITS, where i is the latitude axis
+        number.  Note that at least one non-zero parameter must be given
+        for ZPN, COP, COE, COD, COO, and BON.
+ 
+        If no parameters are given, defaults are taken from the template
+        image if the projection (see above) defaulted from CTYPE in the
+        template image.  Else from the input image if the projection
+        defaulted from that.  Else default values, where applicable,
+        depend on the projection as per WCS Paper II.
+%A options
+        Extra processing options that alter the axis description defined
+        by the template image, axis descriptors, or input image.
+        Several can be given, separated by commas, with minimum-match.
+          altprj    Interpret a CAR (plate carée) projection in the
+                    input ot template image as a simple linear
+                    coordinate system with an additional 1/cos(lat0)
+                    scaling factor applied when computing the longitude,
+                    e.g.
+                       RA = (p1 - CRPIX1)*CDELT1/cos(CRVAL2).
+                    This interpretation differs significantly from the
+                    FITS standard when lat0 (i.e. CRVAL2) is non-zero.
+          noscale   Produce a cube where the RA/DEC cell size does not
+                    scale with frequency/velocity.
+          offset    The coordinate system described by the template or
+                    descriptors is modified (shift and expansion or
+                    contraction) by an integral number of pixels so that
+                    it completely encloses the input.
+          equisw    Switch the output coordinate system between J2000
+                    and B1950 equatorial.  The output map will be
+                    reoriented so that north is upwards, though the
+                    coordinate graticule may be oblique nonetheless.
+          galeqsw   Switch the output coordinate system between galactic
+                    and equatorial.  Galactic switches implicitly to
+                    equatorial J2000.  The output map will be reoriented
+                    so that the north pole (equatorial or galactic) is
+                    upwards, though the coordinate graticule may be
+                    oblique nonetheless.
+          nearest   Use nearest neighbour interpolation rather than the
+                    default cubic interpolation.
+        If the equatorial coordinate system is not specified in the
+        header (via the 'epoch' item), then J2000 is assumed.
+%A tol
+        Interpolation tolerance.  Tolerate an error of the specified
+        amount in converting pixel locations in the input to the output.
+        Must be less that 0.5.  The default is 0.05.
+ 
+%R 1.18, 2017/05/11 00:08:56 UTC

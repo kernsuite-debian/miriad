@@ -1,0 +1,48 @@
+%N zeestat
+%D Fits Zeeman parameters to I and V cubes
+%P nebk
+%: model fitting
+%B
+        ZEESTAT is a Miriad task that fits Zeeman parameters to a region of
+        input I and V cubes. Zeestat also analyses the noise correlations
+        to determine a factor used in correcting the sigma estimates.
+%A iin
+        Input I cube in vxy order. Wild card expansion is supported. No default.
+%A vin
+        Input V cube in vxy order. Wild card expansion is supported. No default.
+%A beam
+        The beam of the observation. This is used in determining the sigma
+        correction factor. The default is a delta function. You should
+        give the beam if you want an accurate estimate of sigma.
+        Wild card expansion is supported.
+%A rho
+        The channel-to-channel correlation coefficient. This is used in
+        determining the sigma correction factor. The default is 0.
+%A freq
+        Frequency (GHz) of splitting. No default.
+%A mode
+        This is a character string that determines the algorithm used in the
+        fitting process. It consists of several flags, which can be:
+          m Use maximum likelihood technique.
+          l Include a leakage term in the fitting.
+          2 Use a two sided derivative estimate.
+          x Perform extra checks for better solutions when using the maximum
+            likelihood technique.
+        The default is ' ' i.e., least squares and 1.
+%A aveop
+        If 'a' then the spectra specified by the spatial window are
+        averaged before being passed to the fitting routine.  Otherwise,
+        and by default, all spectra are passed to the fitting routine
+        and "spatial summing" (as defined by SKLZ) is performed.
+%A chan
+        Channel range. Default is all channels.
+%A blc
+        Bottom left corner of spatial region to examine. Default is (1,1).
+%A trc
+        Top right corner of spatial region to examine. Default is all
+        of image.
+%A log
+        This is the name of an output logfile, which shows how the error
+        estimate varies with the alpha parameter.
+%A out
+        Output results to this file as well as screen

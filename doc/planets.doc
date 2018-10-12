@@ -1,0 +1,23 @@
+%N planets
+%D Print ephemerides of planets and the Sun.
+%P rjs
+%: utility
+%B
+        PLANETS is a MIRIAD task to report some parameters on solar system
+        objects. An approximate builtin ephemeris is also available.
+ 
+%A source
+        This can be "sun" or the name of a major planet (excluding the Earth).
+        Some of the moons of Jupiter and Saturn are also recognized, the parent
+        planet will remain to control the output, but an additional line will
+        report the diameter of that moon.
+        No default.
+%A epoch
+        The time (UTC) for which information is required, in standard
+        Miriad time format (yymmmdd.ddd or yymmmdd:hh:mm:ss.s).
+        For example 11DEC25:18:02:01.2
+        No default.
+%A telescop
+        The name of an observatory used in computing rise and set times.
+        The default is not to compute these. See telepar for a list of
+        observatories that Miriad knows about.

@@ -1,0 +1,240 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Arithmetic - MATHS</TITLE>
+<META NAME="description" CONTENT="Image Arithmetic - MATHS">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node147.html">
+<LINK REL="previous" HREF="node145.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node147.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3230"
+  HREF="node147.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3226"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3220"
+  HREF="node145.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3228"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3231"
+  HREF="node147.html">Smoothing Images</A>
+<B>Up:</B> <A NAME="tex2html3227"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3221"
+  HREF="node145.html">Copying, Reordering and Regridding</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001850000000000000000"></A><A NAME="11807"></A><A NAME="11808"></A><A NAME="s:maths"></A>
+<BR>
+Image Arithmetic - MATHS
+</H1>
+
+<P>
+The task <A NAME="tex2html681"
+  HREF="../doc/maths.html">maths</A>
+evaluates a mathematical expression at each pixel
+of a set of input images.  The expression (given by the <TT>exp</TT>
+keyword) is given in a FORTRAN-like syntax, using all the normal
+FORTRAN operators, real-valued functions (using the FORTRAN generic,
+rather than specific, names), brackets and real constants.  Logical
+operators are also handled with a number zero or less being <TT>.FALSE.</TT>, and a positive number being interpreted as <TT>.TRUE.</TT> (the
+results of a logical expression are always zero or one).  Dataset names
+take the place of FORTRAN variables, and the expression is each pixel of
+the input images.  For example, <A NAME="tex2html682"
+  HREF="../doc/maths.html">maths</A>
+can evaluate expressions
+such as
+<PRE>
+      exp=sqrt(vela.qmap**2+vela.umap**2)
+</PRE>
+This will cause <A NAME="tex2html683"
+  HREF="../doc/maths.html">maths</A>
+to take the squares of the pixels in <TT>vela.qmap</TT> and <TT>vela.umap</TT>, add them, and then take the square root. 
+
+<P>
+Note that when there are multiple input datasets, <A NAME="tex2html684"
+  HREF="../doc/maths.html">maths</A>
+insists
+that they are <EM>exactly</EM> the same size. However it does not
+check whether they align, or indeed whether they use the same axis system.
+Task <A NAME="tex2html685"
+  HREF="../doc/maths.html">maths</A>
+does not check coordinate types.
+
+<P>
+There are some restrictions on dataset names, however. To start with,
+<A NAME="tex2html686"
+  HREF="../doc/maths.html">maths</A>
+treats the names <TT>x</TT>, <TT>y</TT> and <TT>z</TT> as special
+(see below). Also there are some 
+inherent ambiguities. For
+example, <A NAME="tex2html687"
+  HREF="../doc/maths.html">maths</A>
+will think <TT>1934-638</TT> is a subtraction of two
+integers (not a dataset named after a source). Avoid dataset names which
+start with numerics, or those containing special characters (e.g. plus
+and minus signs). Also avoid extensions like <TT>.not</TT> (there are situations
+where this can introduce ambiguities). If you follow the normal FORTRAN
+or C rules for variable names, ambiguities will not arise. If you insist on
+using names which could be ambiguous, you can bracket them inside angular
+braces. For example, <A NAME="tex2html688"
+  HREF="../doc/maths.html">maths</A>
+will interpret <code>&lt;1934-638&gt;</code> as a dataset
+<TT>1934-638</TT> (not a subtraction operation).
+
+<P>
+Another useful (or indeed needed) keyword is <TT>mask</TT>. This gives a second
+expression (generally a logical expression) indicating where the
+expression given by <TT>exp</TT> is to be evaluated. For example,
+<PRE>
+      exp=sqrt(vela.imap)
+      mask=vela.imap.gt.1e-3
+</PRE>
+indicates to take the square root of an image <EM>only</EM> when the image
+value is greater than <SPAN CLASS="MATH"><IMG
+ WIDTH="37" HEIGHT="17" ALIGN="BOTTOM" BORDER="0"
+ SRC="img88.png"
+ ALT="$10^{-3}$"></SPAN>. Note that <A NAME="tex2html689"
+  HREF="../doc/maths.html">maths</A>
+believes it is
+your responsibility to protect against illegal mathematical operations
+(square roots or logs of negative numbers, divide by zero, etc). You must
+protect any potentially dangerous operations by appropriate masking.
+
+<P>
+As mentioned above, <A NAME="tex2html690"
+  HREF="../doc/maths.html">maths</A>
+treats the names <TT>x</TT>, <TT>y</TT> and
+<TT>z</TT> in a special manner. They are taken to represent variables that
+vary linearly across the image, in the x, y and z directions respectively.
+The values that they take are set with the keywords <TT>xrange</TT>,
+<TT>yrange</TT> and <TT>zrange</TT>. Expressions can potentially be constructed
+with no input datasets. In this case, a image size needs to be given
+via the <TT>imsize</TT> keyword. For example, to generate a two
+dimensional Gaussian in the range <I>[-2,2]</I> on both the <I>x</I> and <I>y</I> axes, use
+<PRE>
+      exp=exp(-(x**2+y**2))
+      xrange=-2,2
+      yrange=-2,2
+      imsize=128,128
+</PRE>
+The only remaining keywords are <TT>out</TT> (the output dataset) and <TT>region</TT>
+(region-of-interest in the input datasets).
+
+<P>
+Here is a simple example of how to use <A NAME="tex2html691"
+  HREF="../doc/maths.html">maths</A>
+to make a
+spectral-index image from two total intensity images.  For example,
+consider two images (<TT>i1</TT> and <TT>i2</TT>) at frequencies 4.8 and
+8.4&nbsp;GHz.  You can compute the spectral-index image (<!-- MATH
+ $S_{\nu} \propto
+\nu^{\alpha}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="61" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img89.png"
+ ALT="$S_{\nu} \propto
+\nu^{\alpha}$"></SPAN>) from
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MATHS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">exp=log(i1/i2)/log(4.8/8.4)</TD>
+<TD ALIGN="LEFT">Divide log ratios</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mask=(i1.gt.1e-4).and.(i2.gt.1e-4)</TD>
+<TD ALIGN="LEFT">Blank below these values</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Leave unset to do full image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=4.8-8.4.spin</TD>
+<TD ALIGN="LEFT">Output spectral index image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">imsize</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xrange</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yrange</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">zrange</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+In this example, we have computed the output image
+only when both the input image pixel intensities
+were above 0.1&nbsp;mJy/beam (this might be 5-sigma or
+the like).  
+
+<P>
+Alternatively, if you were very keen, you could also get <A NAME="tex2html692"
+  HREF="../doc/maths.html">maths</A>
+to
+create an error image by inserting the appropriate expression (from
+propagation of errors).  Then you could make the spectral index image
+and blank it according to the value of the error in the spectral-index
+image via the <TT>mask</TT> keyword. 
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3230"
+  HREF="node147.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3226"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3220"
+  HREF="node145.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3228"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3231"
+  HREF="node147.html">Smoothing Images</A>
+<B>Up:</B> <A NAME="tex2html3227"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3221"
+  HREF="node145.html">Copying, Reordering and Regridding</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

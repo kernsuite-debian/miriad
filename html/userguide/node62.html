@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>General Miriad Flagging - UVFLAG</TITLE>
+<META NAME="description" CONTENT="General Miriad Flagging - UVFLAG">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node61.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node63.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2157"
+  HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2153"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2149"
+  HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2155"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2158"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B>Up:</B> <A NAME="tex2html2154"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2150"
+  HREF="node61.html">Interactive Channel/Baseline Flagging -</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001013000000000000000"></A><A NAME="s:uvflag"></A><A NAME="2467"></A><A NAME="2468"></A>
+<BR>
+General <I>Miriad</I> Flagging - UVFLAG
+</H2>
+
+<P>
+In <A NAME="tex2html195"
+  HREF="../doc/uvflag.html">uvflag</A>, you use the standard selection keywords to
+select visibilities, or parts of visibilities for flagging.  The main
+keywords are <TT>select</TT> and <TT>line</TT>.  <A NAME="tex2html196"
+  HREF="../doc/uvflag.html">uvflag</A>
+can also be
+used to unflag correlations, and to list the correlations that meet
+the selection criteria without actually flagging the data.  There is a
+keyword, <TT>edge</TT>, that
+provides a way to select the same group of channels in spectral-windows
+(IFs).  This cannot be done with the standard <TT>line</TT> and <TT>select</TT> keywords owing to the way spectral-windows are
+stored (for more information, issue the command <TT>help windows</TT>).
+Read the <TT>uvflag</TT> help file if you need this facility.  It is
+unlikely that you will.
+
+<P>
+The following example flags some correlations between 1 and 2 hours on
+all days involving all baselines with antenna 6 in channel 25 for all
+polarizations and spectral-window (IF) 1.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=ant(6),time(1:00,2:00),win(1)</TD>
+<TD ALIGN="LEFT">Select correlations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line=channel,1,25,1</TD>
+<TD ALIGN="LEFT">Select channel</TD>
+</TR>
+<TR><TD ALIGN="LEFT">edge</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flagval=flag</TD>
+<TD ALIGN="LEFT">Flag selected correlations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=brief</TD>
+<TD ALIGN="LEFT">Summarise what happened</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=noapply</TD>
+<TD ALIGN="LEFT">Summarise what could happen</TD>
+</TR>
+<TR><TD ALIGN="LEFT">log</TD>
+<TD ALIGN="LEFT">Unset to report information to screen</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2157"
+  HREF="node63.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2153"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2149"
+  HREF="node61.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2155"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2158"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B>Up:</B> <A NAME="tex2html2154"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2150"
+  HREF="node61.html">Interactive Channel/Baseline Flagging -</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

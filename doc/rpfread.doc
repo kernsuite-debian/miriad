@@ -1,0 +1,29 @@
+%N rpfread
+%D Output information about an ATNF RPFITS file
+%P tw
+%: utilities
+%B
+        RPFREAD summarises basic information about an RPFITS file.  Less
+        information is reported for ATCA data, which is detected based
+        on the "INSTRUMENT" card.
+ 
+%A in
+        Input RPFITS file.  No default.
+%A tformat
+        Time format, choose "hms" for HH:MM:SS.S or "raw" for decimal.
+        Default is decimal.
+%A posout
+        Optional text file to write out (u,v,w) values (Mopra/PKS only).
+        These contain the UT time (seconds), RA & DEC position stamps
+        for OTF mapping.  Default is not to write this file.
+%A tsysout
+        Optional text file to write out Tsys values (Mopra/PKS only).
+        These contain the UT time (seconds), systemps, SDO, and GTP
+        values.  Default is not to write this file.  Cannot be used with
+        options=brief or options=header.
+%A options
+        Extra processing options.
+        'brief'  Output a one-line summary for each scan.
+        'header' Output only the source/frequency header information.
+ 
+%R 1.12, 2010/09/21 23:49:07 UTC

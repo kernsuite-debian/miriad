@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Using xmtv</TITLE>
+<META NAME="description" CONTENT="Using xmtv">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node218.html">
+<LINK REL="previous" HREF="node216.html">
+<LINK REL="up" HREF="node216.html">
+<LINK REL="next" HREF="node218.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html4142"
+  HREF="node218.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4138"
+  HREF="node216.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4132"
+  HREF="node216.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4140"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4143"
+  HREF="node218.html">The Control Panel</A>
+<B>Up:</B> <A NAME="tex2html4139"
+  HREF="node216.html">Using xmtv and xpanel</A>
+<B> Previous:</B> <A NAME="tex2html4133"
+  HREF="node216.html">Using xmtv and xpanel</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002910000000000000000">
+Using xmtv</A>
+</H1>
+TV-related tasks use the <TT>server</TT> keyword to indicate the TV
+type and its host. For <code>xmtv</code>, this is given in the form:
+<BLOCKQUOTE>
+<code>xmtv@</code><I>host</I>
+
+</BLOCKQUOTE>
+Here <I>host</I> is
+the host name of the workstation running <TT>xmtv</TT>.
+For example
+<PRE>
+   server=xmtv@tucana
+</PRE>
+indicates that <TT>xmtv</TT> is running on the machine <code>tucana</code>.
+
+<P>
+The TV server display can be resized, zoomed, panned and also offers the
+capability to change the lookup table and transfer function.  However,
+the current <I>Miriad</I> TV server implementation is not very well
+integrated with concepts such as extracting quantitative information
+from the display.
+
+<P>
+Note that the computer where you are running <I>Miriad</I> tasks may differ
+from the computer running <TT>xmtv</TT> (e.g. you may be running <I>Miriad</I> tasks on a compute server such as <code>kaputar</code> or <code>raptor</code>, and running <TT>xmtv</TT> on
+your local workstation).
+The <EM>host</EM> part of the <code>server</code> parameter is the machine
+running <TT>xmtv</TT>.
+
+<P>
+As <TT>xmtv</TT> uses a specific internet port, normally only a single instance of
+<TT>xmtv</TT> can run on a given machine at a given time. This is why you should start <TT>xmtv</TT>
+on your <EM>local</EM> workstation, rather than a compute server.
+If this is not possible, then you should attempt to run it on the compute server.
+If you get a message such as:
+<PRE>
+XMTV:MakeLink - bind error (INET): Address already in use
+initializeSocket - MakeLink error: Address already in use
+</PRE>
+then the internet port is already in use. In this case, you can tell <TT>xmtv</TT> to use
+a different port (e.g. port 5001) with
+<PRE>
+   % xmtv -port 5001 &amp;
+</PRE>
+(substitute another number for 5001 if it still fails). If you use a port number other than
+the default, you will need to give this in the <TT>server</TT> keyword, e.g. for port 5001 on
+machine <code>tucana</code>, use
+<PRE>
+   server=xmtv:5001@tucana
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html4142"
+  HREF="node218.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4138"
+  HREF="node216.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4132"
+  HREF="node216.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4140"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4143"
+  HREF="node218.html">The Control Panel</A>
+<B>Up:</B> <A NAME="tex2html4139"
+  HREF="node216.html">Using xmtv and xpanel</A>
+<B> Previous:</B> <A NAME="tex2html4133"
+  HREF="node216.html">Using xmtv and xpanel</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,82 @@
+.TH mfspin 1
+.SH NAME
+mfspin - Compute spectral index from a MFCLEAN model.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+deconvolution
+.SH DESCRIPTION
+MFSPIN is a MIRIAD task that computes spectral index and
+possibly rotation measure images, given models produced by
+MFCLEAN.  It does this by convolving both the flux and "flux
+time spectral index" planes of the models by a Gaussian, and
+then performing a division.
+.sp
+It can also handle 'pre-convolved' images with flux and flux
+times spectral index planes such as those produced by restor
+with options=mfs or linmos with options=alpha.
+.sp
+It has two modes of operation.  One is to give a single input
+model (Stokes I or V even) which consists of two planes.  MFSPIN
+will then compute the spectral index image from that.  The
+second mode requires both Stokes Q and U models.  MFSPIN will
+then compute a linearly polarized intensity spectral index and
+optionally a rotation measure image.
+.SH PARAMETERS
+.TP
+\fImodel\fP
+The model produced by MFCLEAN.  No default.  Normally this will
+be a single image such as a model for Stokes I or V.  However,
+you can also give it two models, one for Stokes Q and one for
+Stokes U (see the discussion above). If the input already has
+units of 'JY/BEAM' (e.g. output from restor with options=mfs)
+the convolution step is skipped.
+.sp
+.TP
+\fIbeam\fP
+The input dirty beam.  This is only required to determine the
+beam size.  If the fwhm parameter is given, or the input is
+already convolved, the beam will not be used.
+.TP
+\fIclip\fP
+The division clip level.  One or two numbers can be given.  If
+two values are given, then flux pixel values in this range are
+flagged as bad before the division (but after the convolution!).
+If a single value is given, then for Stokes I images (or images
+for which the Stokes parameter is unknown), all pixel values
+less than the specified clip are flagged.  If one value is given
+and the image is of Stokes Q, U, or V, then pixels are flagged
+when their absolute value is less than the clip level.
+The default is 0.
+.TP
+\fIfwhm\fP
+The size, in arcsec, of the gaussian beam to convolve with.
+This will normally be two numbers, giving the
+full-width at half-maximum of the major and minor axes of the
+gaussian. If only one number is given, the gaussian will have
+equal major and minor axes. If no values are given, they are
+computed by fitting a gaussian to the given dirty beam.
+.TP
+\fIpa\fP
+The position angle, in degrees, of the Gaussian, measured east
+from north.  The default is determined from the dirty beam fit
+(The value for PA is ignored, if no value is given for FWHM).
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is used. Possible options are:
+.nf
+  pbcorr   Correct the spectral index for primary beam effects.
+           By default, this is not performed.
+.TP
+\fIout\fP
+.fi
+The output image names.  No default.  Normally this will be a
+single output, being the spectral index.  If the input consists
+of a Q and a U model, the output can be two names.  The first is
+the linearly polarized intensity spectral index image, and the
+second will receive an estimate of the rotation measure (units
+of rad/m**2).
+.sp
+.SH REVISION
+1.10, 2013/10/22 03:34:26 UTC

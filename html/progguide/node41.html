@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Low Level I/O Routines</TITLE>
+<META NAME="description" CONTENT="Low Level I/O Routines">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node42.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html761"
+  HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html755"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html749"
+  HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html757"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html759"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html762"
+  HREF="node42.html">Numeric Routines</A>
+<B>Up:</B> <A NAME="tex2html756"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html750"
+  HREF="node40.html">History Item</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004140000000000000000"></A><A NAME="793"></A>
+<BR>
+Low Level I/O Routines
+</H1>
+All i/o routines described above are built on top of a set of
+low level routines. In <I>Miriad</I>, a ``data set'' is a collection of 
+named items. Each item is an unstructured, byte addressable collection of data.
+It is up
+to the higher level software to impose some structure to the data items, and
+to provide a better interface for the high level programmer.
+The higher level routines should be adequate for most
+programmers. Though direct use of the following low level routines is
+discouraged, there are some instances where they may be needed.
+<PRE>
+      subroutine hopen(tno,dataname,status,iostat)
+      subroutine hclose(tno,iostat)
+      subroutine haccess(tno,item,itemname,status,iostat)
+      subroutine hdaccess(item,iostat)
+      subroutine hdelete(tno,itemname,iostat)
+      integer function hsize(item)
+
+      subroutine hreada(item,buffer,iostat)
+      subroutine hreadb(item,buffer,offset,length,iostat)
+      subroutine hreadj(item,buffer,offset,length,iostat)
+      subroutine hreadi(item,buffer,offset,length,iostat)
+      subroutine hreadr(item,buffer,offset,length,iostat)
+      subroutine hreadd(item,buffer,offset,length,iostat)
+
+      subroutine hwritea(item,buffer,iostat)
+      subroutine hwriteb(item,buffer,offset,length,iostat)
+      subroutine hwritej(item,buffer,offset,length,iostat)
+      subroutine hwritei(item,buffer,offset,length,iostat)
+      subroutine hwriter(item,buffer,offset,length,iostat)
+      subroutine hwrited(item,buffer,offset,length,iostat)
+</PRE>
+Only two operations can be performed on a data set as a whole, namely to
+open and to close it. The routines to perform these are
+<TT>hopen</TT> and <TT>hclose</TT>. Here <TT>tno</TT> is a handle passed back
+by <TT>hopen</TT>, <TT>dataname</TT> is a string giving the name of the data set,
+and <TT>status</TT> is either <TT>'old'</TT> (when accessing an old data set)
+or <TT>'new'</TT> (when creating a data set). <TT>Iostat</TT> is a error
+indicator, being zero if the operation was successful. Because of
+buffering performed by the i/o routines, it is very 
+important to close a data set when it is no longer needed.
+
+<P>
+Before any item can be read or written, it must be ``opened'' with the
+<TT>haccess</TT> routine. The inputs to this are: <TT>tno</TT> (the handle passed
+back by <TT>hopen</TT>); <TT>itemname</TT>, a string giving the item name;
+<TT>status</TT>, a string which can be <TT>'read'</TT>, <TT>'write'</TT> <TT>'append'</TT>
+or <TT>'scratch'</TT> (if an item is opened with <TT>status='scratch'</TT>, an item
+is created, but then destroyed when the item is closed). The outputs from
+<TT>haccess</TT> are firstly a handle, <TT>item</TT>, which is used to perform i/o on
+the item, and secondly a status return, <TT>iostat</TT>. All items should be
+closed down, with <TT>hdaccess</TT>, before the data set as a whole is closed. 
+
+<P>
+The <TT>hdelete</TT> subroutine deletes an item.
+The integer function <TT>hsize</TT> returns the size of an item in bytes.
+
+<P>
+There are a group of i/o routines provided to read and write items. Because
+items are stored in a machine independent format, there are separate i/o
+routines for each data type.  Each i/o routine performs the conversion between
+the external (disk) format and the hosts internal format. For example, the
+<TT>hreadr</TT> routine reads real numbers. On disk, <I>Miriad</I> reals are stored
+as IEEE floating point numbers. Internally, however, reals are stored in the
+hosts machines ``real number format''. The <TT>hreadr</TT> routine performs the
+conversion. The read/write
+routines know nothing about the type of the data it is accessing. The
+caller must know this, and call the appropriate read/write routine.
+
+<P>
+All read/write routines take the handle <TT>item</TT> (passed back by
+<TT>haccess</TT>) as their first argument, and pass back an i/o status as the last
+argument. The second argument is a buffer, which can be either a character
+string (<TT>hreada, hwritea, hreadb, hwriteb</TT>), an integer array (<TT>hreadj,
+hwritej, hreadi, hwritei</TT>), real (<TT>hreadr, hwriter</TT>) or double precision
+(<TT>hreadd, hwrited)</TT>. <TT>Hreada</TT> and <TT>hwritea</TT> read/write a text file,
+performing i/o on a line at a time. Text files are stored using a line-feed
+character to delimit the end of a line (i.e. the normal UNIX convention, or the
+VMS Stream_LF convention). The routines <TT>hreadb</TT> and <TT>hwriteb</TT> perform
+i/o on bytes, no conversion being performed - these routines should rarely be
+needed). The routines <TT>hreadj</TT> and <TT>hwritej</TT> assume the integers are
+externally stored as 16 bit quantities, whereas <TT>hreadi</TT> and <TT>hwritei</TT>
+assume the integers are externally stored as 32 bit quantities. Internally,
+integers are always stored in the hosts standard integer format (<TT>int</TT>
+in C, and an <TT>INTEGER</TT> in FORTRAN. Real and double
+precision values are externally stored in IEEE 32 bit and 64 bit floating point
+format. All read/write routines (except <TT>hreada</TT> and <TT>hwritea</TT>) take
+(as inputs) a byte <TT>offset</TT> and byte <TT>length</TT> as their third and fourth
+arguments. Both <TT>offset</TT> and <TT>length</TT> must be a multiple of the size
+of the data type being accessed (e.g. they must be a multiple of 4 for
+reals, or 8 for double precision numbers). Apart from this alignment
+restriction, data items can be read in a random fashion.
+
+<P>
+All I/O routines pass back an i/o status indicator. A value of zero
+indicates success, -1 indicates end-of-file, and any other values indicate
+some other error (that is system dependent).
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html761"
+  HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html755"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html749"
+  HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html757"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html759"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html762"
+  HREF="node42.html">Numeric Routines</A>
+<B>Up:</B> <A NAME="tex2html756"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html750"
+  HREF="node40.html">History Item</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

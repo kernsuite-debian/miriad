@@ -1,0 +1,188 @@
+.TH uvedit 1
+.SH NAME
+uvedit - Editing of the baseline of a UV data set.
+.SH PERSON RESPONSIBLE
+jm
+.SH CATEGORIES
+calibration, uv-data
+.SH DESCRIPTION
+program uvedit
+implicit none
+.sp
+UVEDIT is a MIRIAD task which allows baseline editing of a UV
+data set.  As a result of the editing, certain header variables
+of the data set are changed.  The headers `corr' and `wcorr'
+are always changed since they are the data themselves.  The
+headers `coord(2)' are the baseline coordinates and, as a
+result, are also always changed (except with the option nouv).
+The UV variable headers `lst', `ut', and `time' are updated
+whenever a time offset is entered.  The headers `ra', `dec',
+`obsra', and `obsdec' are changed whenever a positional
+correction is entered with the ra or dec input.  Finally,
+antenna coordinate corrections will cause the header `antpos'
+to be corrected.
+.sp
+NOTE: There can be NO select keyword for this routine!  If
+one includes the select option, then data that is not selected
+will not be copied!
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input UV data set.  At least one file name must
+be supplied.  Up to 50 visibility files are currently allowed.
+.sp
+.TP
+\fIsource\fP
+The name of the source to apply corrections to if more than
+one source is present in a UV data set.  All UV data that does
+not correspond to the input source name is copied without being
+edited.  If this keyword is not set (the default), then all
+sources are edited.  Only one source name may be input.
+Note: it probably doesn't make sense to use this keyword with
+any other options except the ra and dec keywords.  If any other
+editing (except ra/dec) is requested along with this keyword,
+a warning message will be issued but the editing will proceed.
+.sp
+.TP
+\fIapfile\fP
+The name of a file that contains the absolute antenna positions
+entered in increasing antenna order.  Only one antenna position
+file is permitted.  The first line of the file is ALWAYS skipped
+and the remaining lines MUST contain three entries corresponding
+to the X, Y, and Z equatorial coordinates, respectively, in units
+of nanoseconds.  The function of this keyword is identical to the
+``antpos'' keyword except that there is no way to specify a
+subset of antennae; every antenna up to and including the largest
+antenna number must be present in the file.
+NOTE: You may only specify at most one of the ``apfile'',
+.nf
+      ``antpos'', or ``dantpos'' keywords.
+.fi
+.sp
+.TP
+\fIantpos\fP
+Inputs are the absolute equatorial coordinates entered in the
+following order (NO checking is done for consistency):
+.nf
+     antpos = A1,X1,Y1,Z1,A2,X2,Y2,Z2,A3,X3,Y3,Z3,....
+.fi
+The input values are the antenna number and the three equatorial
+coordinates (entered in units of nanoseconds).  Note that A1 does
+not necesarily have to correspond to Antenna 1; it is used to
+represent the variable containing the antenna number.  Antenna
+(and the corresponding coordinates) not included in the input
+listing do not have their coordinates changed.
+NOTE: An antenna position value of zero is not possible.  If
+an antenna value is set to zero, the current value from the
+data is used.  To force an antenna position value to be zero,
+use the keyword ``dantpos''.
+NOTE: You may only specify at most one of the ``apfile'',
+.nf
+      ``antpos'', or ``dantpos'' keywords.
+.fi
+.sp
+.TP
+\fIdantpos\fP
+Inputs are the equatorial coordinate offsets entered in the
+following order (NO checking is done for consistency):
+.nf
+     dantpos = A1,X1,Y1,Z1,A2,X2,Y2,Z2,A3,X3,Y3,Z3,....
+.fi
+The input values are the antenna number and the three equatorial
+coordinate offsets (entered in units of nanoseconds).  These input
+values are added to the absolute coordinates read from the data.
+Note that A1 does not necesarily have to correspond to Antenna 1;
+it is used to represent the variable containing the antenna
+number.  Antenna present in the data but not included in the
+input value list are treated as having a zero coordinate offset.
+NOTE: You may only specify at most one of the ``apfile'',
+.nf
+      ``antpos'', or ``dantpos'' keywords.
+.fi
+NOTE: The dantpos keyword is the usually used when correcting antenna
+position errors in a VLA observation. The  coordinate system used by
+Miriad and the VLA are the same, and the baseline changes provided
+by the VLAIS system need only be changed from units of meters to nanosec
+when using uvedit (1 nanosec = 0.2997 meters).
+.TP
+\fIra\fP
+Input is either an absolute or delta right ascension of the
+phase tracking center.  If one value is present, it is considered
+as a offset position and is to be entered as time seconds.
+Otherwise, three values are expected and are to be entered in
+the following order:
+.nf
+     ra = HH,MM,SS.S
+.fi
+The right ascension (offset) is relative to the epoch coordinates.
+The default value is 0 seconds offset (no change).
+.sp
+.TP
+\fIdec\fP
+Input is either an absolute or delta declination of the phase
+tracking center.  If only one value is present, it is considered
+as a offset position and is to be entered in arcseconds.
+Otherwise, three values are expected and are to be entered in
+the following order:
+.nf
+     dec = DD,MM,SS.S
+.fi
+The declination (offset) is relative to the epoch coordinates.
+The default value is 0 arcseconds offset (no change).  If the
+absolute declination is negative but the DD value is 0, then make
+the MM value negative.  If MM is also 0, then make SS.S negative.
+.sp
+.TP
+\fItime\fP
+Input is a time offset (in seconds) to be added to the clock time.
+The default value is 0 seconds offset (no change).
+.sp
+.TP
+\fIdelay\fP
+Inputs are the delay error corrections for each antenna.
+The inputs are the delay values for each antenna entered in the
+following order (in units of nanoseconds):
+.nf
+     delay = D1,D2,D3,....
+.fi
+If no value for delay is specified, the array of antenna values
+are set to 0 nanoseconds offset.  Also, a resulting difference
+(D[i]-D[j]) of less than 0.05 nanoseconds is ignored (no change).
+If a difference exists, the digital wide band data will be
+reconstructed.  All previously flagged narrow band data will
+be ignored in the reconstruction.  Also, the two (2) end
+channels of each window will be ignored in the reconstruction.
+.sp
+.TP
+\fIout\fP
+The name of the output visibility file.  This parameter is
+ignored when more than one visibility file is given.  If no value
+for ``out'' is given or more than one visibility file is input,
+then the output file name(s) will be the same as the input file
+name(s) but with an "_c" appended to the file name
+(ie. "Vis = saturn,jupiter" will result in output files "saturn_c"
+and "jupiter_c").
+.sp
+.TP
+\fIoptions\fP
+Task enrichment options.  Minimum match is active.
+.nf
+  nouv     Do not recompute the u and v variables (coord(1) and
+           coord(2), respectively).  This option should, in
+           principle, only be used with the delay correction;
+           all other corrections should recompute u and v.
+  dra
+           Multiply the dra values by a cos(obsdec) correction.
+           This is used to correct the dra value in the uv
+           dataset for MINT data taken at Hat Creek before
+           11dec93.  Before that date, the 1/cos(obsdec)
+           correction was not applied to the dra in the grid
+           file, so that the pointing was incorrect (instead
+           of dra arcseconds offsets, the offsets were
+           dra*cos(obsdec) arcseconds).
+           NOTE:  The obsdec used is the "old" obsdec.  If there
+           is a correction in declination, this is NOT applied
+           in computing the cos(obsdec).
+.fi
+.sp

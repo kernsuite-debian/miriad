@@ -1,0 +1,38 @@
+.TH uvdflag 1
+.SH NAME
+uvdflag - Flags a visibility dataset on uvdistance in klambda.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVZFLAG is a MIRIAD task which flags correlations in a
+visibility dataset the uvdistance is in a certain range.
+This task is needed because the standard uv select keyword
+only selects on the uv coordinates of the first channel.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility datasets to be flagged. No default. Several
+datasets can be given. Wildcards are supported.
+.TP
+\fIselect\fP
+Normal visibility selection, which is applied to the template
+dataset. See the help on "select" for more information.
+.TP
+\fIuvrange\fP
+Two values, giving the range of uv distances in klambda to flag.
+A single value will flag all correlations with larger uv distance.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is supported. Possible values are:
+.nf
+  noapply Do not apply the flagging, just report the statistics
+          about what would be flagged.
+  invert  Invert the selection - flag correlations outside the
+          specified uvrange
+.fi
+.sp
+.SH REVISION
+1.1, 2014/02/20 21:39:29 UTC

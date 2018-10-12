@@ -1,0 +1,186 @@
+.TH gpcal 1
+.SH NAME
+gpcal - Gain/phase/polarization calibration of dual feed data.
+.SH PERSON RESPONSIBLE
+rjs nebk
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+Gpcal is a MIRIAD task that determines calibration corrections
+(both antenna gains and instrumental polarisation
+characteristics) for an array with dual feeds, from an
+observation of a point source.  The source can be polarised,
+with unknown polarisation characteristics.  Though the source
+may be strongly polarized, the instrumental polarisation errors
+are assumed to be small (of order at most a few percent).
+.sp
+Normally GPCAL writes the solutions as a gains table (item
+'gains') and a polarization leakage table (item 'leakage').
+.sp
+With nfbin>1, GPCAL writes additional tables 'gainsf' and
+'leakagef' with solutions for frequency binned data.
+Not many other tasks currently read these tables, but
+they will be applied in preference to the single frequency
+versions if present.
+.sp
+GPCAL can handle either dual linear or dual circular feeds.
+However by default it expects dual linears -- you must use
+options=circular so switch it to circular mode.  Also the
+terminology in this document is aimed at linears (e.g. we talk
+of "XY phase" -- for dual circulars this is really "RL phase").
+.sp
+Note that the user specifies which parameters are to be solved
+for.  In the case of leakages and xyphases, GPCAL will check for
+the existence of items "leakage" and "gains" in the input data-
+set.  If present, these will be used as the initial estimates of
+these parameters.  If you are not solving for these parameters,
+they will be held at their initial value through the solution
+process.  After converging on a solution, and if the xyphase
+offsets or leakage parameters have been modified, GPCAL will
+write out their current values to the appropriate items.
+.sp
+Conventions: Unfortunately there has been a number of changes in
+the "sign conventions" used within Miriad.  For a discussion of
+the conventions, past sign errors and how they affect you, see
+the memo "The Sign of Stokes-V, etc." by Bob Sault.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility data file. The data should be either raw linear
+or raw circular polarisations. No default. The visibility data
+must be in time order.
+.TP
+\fIselect\fP
+Standard uv selection. Default is all data.
+.TP
+\fIline\fP
+Standard line-type specification.  Multiple channels can be
+given.  Generally it is better to give multiple channels, rather
+than averaging them into a "channel-0".  The default is all the
+channel data (or all the wide data, if there is no channel
+data).
+.TP
+\fIflux\fP
+The values of the I,Q,U,V Stokes parameters. If no values are
+given, and it is a source known to GPCAL, GPCAL uses its known
+flux as the default.  If GPCAL does not know the source, the
+flux is determined by assuming that the rms gain amplitude is 1.
+If the option "qusolve" is used, the given fluxes for Q and U
+are used as the initial estimates.  Also see the "oldflux"
+option. You may specify an I,Q,U,V flux density for each of the
+nfbins that you request, but all values must be present. If you
+set nfbins higher than 1, then any bins without information
+provided here will use the values from the first bin. If you
+want to use spec to describe the Stokes I flux density, then
+you only need to put the flux density at the reference frequency
+as the first parameter here, while all other I values are
+ignored.
+.TP
+\fIspec\fP
+The reference frequency (GHz), spectral index and up to two
+higher order terms. Only used if nfbin>1. The spectral index
+terms default to zero.
+.TP
+\fIrefant\fP
+The reference antenna.  Default is 3.  The reference antenna
+must be present throughout the observation.  Any solution
+intervals where the reference antenna is missing are discarded.
+.TP
+\fIminants\fP
+The minimum number of antenna that must be present before a
+solution is attempted. Default is 2.
+.TP
+\fIinterval\fP
+This gives one or two numbers, both given in minutes, both being
+used to determine the extents of an amplitude calibration
+solution interval.  The first gives the max length of a solution
+interval.  The second gives the max gap size in a solution
+interval.  A new solution interval is started when either the
+max time length is exceeded, or a gap larger than the max gap is
+encountered.  The default is max length is 5 minutes, and the
+max gap size is the same as the max length.  The polarisation
+characteristics are assumed to be constant over the observation.
+.TP
+\fInfbin\fP
+The number of frequency bins. The default is 1. Use nfbin>1 to
+solve for variation across the band in the gain and leakage
+parameters.
+Works best for uv files with a single spectral window, i.e.,
+after uvsplit.
+.TP
+\fItol\fP
+Error tolerance. The default is 0.001 which should be adequate.
+.TP
+\fIxyphase\fP
+Generally the use of this parameter has been superceded.
+.sp
+Initial estimate of the XY phase of each antenna. The default is
+0 for all antennas. If the XY phase has not been applied to the
+data, then it is important that this parameter is set correctly,
+particularly for the reference antenna.
+.TP
+\fIoptions\fP
+These options determine what GPCAL solves for.  There are many
+permutations, the more obscure or useless of which are not
+supported.  The option values are used to turn on or off some of
+the solvers.  Several options can be given, separated by commas.
+Minimum match is used.  Some combinations of these options are
+not supported.
+.nf
+  xyvary     The XY phase varies with time.  By default the XY
+             phase is assumed to remain constant.
+  qusolve    Solve for Q and U fluxes. Good parallactic
+             angle coverage is required for this.
+  oldflux    This causes GPCAL to use the pre-August 1994 ATCA
+             flux density scale below 11 GHz and the
+             pre-May 2016 mm fluxscale above 11 GHz.
+             See the help on "oldflux" for more information.
+  nopol      Do not solve for the instrumental polarisation
+             leakage characteristics. The default is to solve
+             for the polarisation leakages on all feeds except
+             the X feed of the reference antenna.
+  noxy       Do not solve for any XY phase offset.  The default
+             is to solve for the XY phase offset on all antennas
+             except for the reference antenna.
+  nopass     Do not apply bandpass correction. The default is
+             to apply bandpass correction if possible. This is
+             rarely useful. Use with caution.
+  noamphase  Do not solve for the amplitude and phase. The
+             default is to solve for amplitude and phase. This
+             option is rarely useful.
+  linear     Expect/handle data from feeds that are linearly
+             polarised. This is the default.
+  circular   Expect/handle data from feeds that are circularly
+             polarised.
+.fi
+.sp
+The following are options for advanced users, and should be used
+with forethought and caution.
+.nf
+  reset      If calibration tables (leakage and gains) are
+             present within the input dataset, GPCAL usually
+             uses these in determining default XY phases,
+             leakages and flux scale.  This is usually the
+             desired behaviour.  The "reset" option suppresses
+             this behaviour, and starts GPCAL with a clean
+             slate.
+  xyref      Solve for the XY phase of the reference antenna.
+             To do this, the source must be linearly polarized
+             and you must have reasonable parallactic angle
+             coverage.  This option can be used with "noxy", in
+             which case GPCAL solves for the offset of the
+             reference antenna.
+  polref     Solve for the instrumental polarization leakage of
+             the X feed on the reference antenna.  This can be
+             combined with "nopol", in which case GPCAL solves
+             for X feed of the reference antenna only.
+  vsolve     Solve for the Stokes-V of the source.  This is only
+             possible for linear feeds and a preliminary leakage
+             solution for the observation already exists.  This
+             preliminary solution must be formed from a
+             calibrator with known Stokes-V.
+.fi
+.sp
+.SH REVISION
+1.22, 2016/05/01 22:31:05 UTC

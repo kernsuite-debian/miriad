@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Determining UV Variables and Their Characteristics</TITLE>
+<META NAME="description" CONTENT="Determining UV Variables and Their Characteristics">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node24.html">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html510"
+  HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html504"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html498"
+  HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html506"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html508"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html511"
+  HREF="node24.html">Keeping Track of UV</A>
+<B>Up:</B> <A NAME="tex2html505"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html499"
+  HREF="node22.html">UVNEXT</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00458000000000000000"></A>
+<A NAME="sect:uvprobvr"></A>
+<BR>
+Determining UV Variables and Their Characteristics
+</H2>
+Routine <TT>uvprobvr</TT> checks for the existence of a variable, and
+returns information about it. The string <TT>varname</TT>, the variable name,
+is input. The single character <TT>type</TT> is output, being either
+`a', `r', `d', `c', `i', `j' or ` ' (a blank), which indicates (respectively)
+that the variable is of type string (ascii),
+real, double precision, complex, integer, short integer or (in the case of the
+blank) that the variable is not present in the data-set.
+The output integer <TT>length</TT>
+gives the number of elements in the variable, and the output logical
+<TT>update</TT> indicates whether the variable has been updated `recently' (see
+Section&nbsp;<A HREF="node25.html#sect:uvchanges">2.5.10</A>).
+Both <TT>length</TT> and <TT>update</TT> have no meaning if the variable is not
+present in the data-set. Before a variable is first read,
+<TT>length</TT> will be zero, and <TT>update</TT> will be <TT>.false.</TT>.
+
+<P>
+There is no special routine to return a complete list of the variables
+present in a uv data set, however this information is present in the 
+item ``<TT>vartable</TT>''. This is a text file with each line
+consisting of two fields separated by a blank. The first is the ``type''
+(either a, r, d, c, i or j) of the variable, the second is the variables name.
+The following section of FORTRAN lists the variables present in a
+uv data set.
+<PRE>
+       character var*12,name*(?)
+       integer iostat,tno,item
+
+       call uvopen(tno,name,'old')
+       call haccess(tno,item,'vartable','read',iostat)
+       call hreada(item,var,iostat)
+       dowhile(iostat.eq.0)
+         call output(var(3:10))
+         call hreada(item,var,iostat)
+       enddo
+       call hdaccess(item,iostat)
+       call uvclose(tno)
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html510"
+  HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html504"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html498"
+  HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html506"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html508"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html511"
+  HREF="node24.html">Keeping Track of UV</A>
+<B>Up:</B> <A NAME="tex2html505"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html499"
+  HREF="node22.html">UVNEXT</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

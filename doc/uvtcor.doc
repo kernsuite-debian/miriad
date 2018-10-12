@@ -1,0 +1,31 @@
+%N uvtcor
+%D Redo the Tsys correction, using a median smoothed Tsys curve
+%P nebk
+%: calibration
+%B
+      UVTCOR redoes the Tsys correction by constructing a median
+      smoothed Tsys curve for each specified mosaiced field,
+      polarization, antenna and frequency.
+ 
+%A vis
+        Input visibility file. No default.
+%A out
+        Output visibility file.  No default.
+%A freq
+        Band centre frequencies of interest in MHz. No default.
+%A source
+        Root name of mosaiced field.  E.g. "cena_" with fields like
+        cena_1, cena_12  etc.  No default.
+%A fields
+        Integer range of fields such as 1,20  No default.
+%A device
+        PGPLOT device.  No default.
+%A options
+        tsysm   means when undoing the Tsys correction, use the "xtsysm"
+          and "ytsysm" variables instead of "xtsys" and "ytsys".  This
+          would be appropriate if you have already run UVTCOR once, and
+          want to redo something.  It will always median smooth the
+          "xtsys"  and "ytsys" variables
+ 
+        first   means automatically edit out the first cycle of each
+          visit to each field before determining the median Tsys curve

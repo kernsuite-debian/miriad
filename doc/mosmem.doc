@@ -1,0 +1,137 @@
+%N mosmem
+%D Maximum Entropy deconvolution for a mosaiced image
+%P rjs
+%: deconvolution
+%B
+        MOSMEM is a MIRIAD task that performs a maximum entropy
+        deconvolution of a mosaiced image.  Optionally it can also
+        perform a joint deconvolution of a mosaic and single dish image.
+ 
+        MOSMEM will also work correctly on a single-pointing observation
+        interferometric observation.  In this case, it will be less
+        efficient than MAXEN, but it could be used when combining single
+        dish data with a single pointing.
+ 
+        MOSMEM spits out some information as it goes:
+ 
+        RMSFAC is the ratio (actual rms)/(theoretical rms).  It measures
+        the residuals (i.e. the difference between the dirty image and
+        the model modified by the point spread function).  RMSFAC should
+        converge to 1.
+ 
+        NormGrd is normalised gradient in the maximisation process.
+        Convergence requires this to be less than 0.05
+ 
+        Flux is the sum of all the pixel values in the model.
+ 
+%A map
+        One or perhaps two input dirty images (or cubes).  These should
+        have units of Jy/beam.  The first should be produced by INVERTs
+        mosaic mode.  The optional second dirty map can be a single-dish
+        image.  It must be on exactly the same pixel grid as the first
+        image.  If necessary, use REGRID to make this so.  If two inputs
+        are given, then a joint deconvolution of the two is performed.
+%A beam
+        One or perhaps two input dirty beams.  The first, corresponding
+        to the first input dirty map, will be produced by INVERTs mosaic
+        mode.  There is no default.  The second dirty beam (which must
+        be given if there are two dirty map inputs) gives the point-
+        spread function of the single dish dirty map.  This second dirty
+        beam need not be the same image size as the input dirty maps,
+        and may be appreciably smaller.  This single-dish beam is
+        assumed to be position-independent, but it need not be
+        symmetric.
+%A model
+        An initial estimate of the deconvolved image.  For point
+        sources, giving a good initial model may help convergence.  In
+        principle, this only helps convergence, but should not affect
+        the final solution.  The model could be the output from a
+        previous run of MOSMEM or any other deconvolution task.  It must
+        have flux units of Jy/pixel.  The default is a flat estimate,
+        with the correct flux.
+%A default
+        The default image.  This is the image that the final solution
+        will tend towards.  The final result will be influenced by this
+        default if the constrains that the data put on the solution are
+        weak.  The default is a flat estimate, with the correct flux.
+%A out
+        The name of the output map.  The units of the output will be
+        Jy/pixel.  It can be input to RESTOR to produce a restored
+        image, or alternatively to MOSMEM, as a model, to continue the
+        deconvolution process.
+%A niters
+        The maximum number of iterations.  The default is 30.
+%A region
+        This specifies the region to be deconvolved.  See the User's
+        Manual for instructions on how to specify this.  The default is
+        the entire image.
+%A measure
+        The entropy measure to be used, either "gull" (-p*log(p/e)) or
+        "cornwell" (-log(cosh(p)) -- also called the maximum emptiness
+        criteria).  Using the maximum emptiness criteria is not
+        recommended.
+%A tol
+        Tolerance of solution.  There is no need to change this from the
+        default of 0.01.
+%A q
+        One or two values (corresponding to the mosaic and single dish
+        observations).  These give estimates of the number of points per
+        beam.  MOSMEM can usually come up with a good, image-dependent
+        estimate.
+%A rmsfac
+        MOSMEM must be able to the theoretical rms noise of the input
+        dirty map(s), and will, by default, attempt to reduce the
+        residuals to have the same rms as this.  If the true rms noise
+        is different from the theoretical, you may give the factor to
+        multiply by to convert from theoretical to true rms noise.
+ 
+        The theoretical rms will usually be an optimistic estimate of
+        the true noise level.  The true noise will be increased by
+        calibration errors, confusion, poorly understood distant
+        sidelobes, etc.  The rmsfac factor gives some "fudge factor"
+        (usually greater than 1) to scale the theoretical noise estimate
+        by.  Either one or two values can be given, with the second
+        value corresponding to the single dish input.
+ 
+        For a mosaic, the theoretical rms is position dependent, and is
+        determined from information save by INVERT (the mostable table).
+        For a single dish image, the rms is assumed to be constant
+        across the field, and given by the "rms" item in the image.  If
+        the single dish input does not contain this item, then this must
+        be added before using MOSMEM.  This is easily done: for image
+        xxxx, use
+          puthd in=xxxx/rms value=????
+        where "????" is the rms noise in Jy/beam.
+%A factor
+        The flux calibration factor.  This is only relevant when doing a
+        joint deconvolution of a mosaic and a single-dish image.  It
+        gives the factor which the single-dish data should be multiplied
+        by to convert it to the same flux units as the mosaic.  The
+        default is 1.  If the "dofactor" options is used (see below),
+        MOSMEM solves for this parameter.
+%A flux
+        An estimate of the integrated flux of the source.  This
+        parameter is generally not useful if there is an input single
+        dish image.  Giving MOSMEM a good value for the integrated flux
+        will help it find a good solution.  On the other hand, giving a
+        poor value may do harm.  Normally MOSMEM will NOT constrain the
+        integrated flux to be this value, but see the "doflux" option
+        below.  The default is image-dependent for measure=gull, and
+        zero for measure=cornwell.  A value can be given for each plane
+        being deconvolved.
+%A options
+        Task enrichment parameters.  Several can be given, separated by
+        commas.  Minimum match is used.  Possible values are:
+          doflux     Constrain the solution to have the correct
+                     integrated flux (normally the integrated flux is
+                     not constrained).  The integrated flux is
+                     determined from the "flux" parameter or (if no flux
+                     parameter is given) from the default image.  This
+                     option cannot be used if a single dish input map is
+                     also given.
+          dofactor   Solve for the flux calibration factor.
+          verbose    Give lots of messages during the iterations.  The
+                     default is to give a one line message at each
+                     iteration.
+ 
+%R 1.8, 2016/07/14 02:15:13 UTC

@@ -1,0 +1,45 @@
+%N ellplt
+%D Plot points in elliptical annuli.
+%P rjs
+%: image analysis
+%B
+        ELLPLT plots the values of a Miriad image along ellipses.
+%A in
+        Input image name. No default.
+%A region
+        Region of image to be displayed. See the help on "region" for
+        more information.
+%A center
+        The offset of the center of the annuli in arcsec (or natural
+        units if options=natural is used) offset from the reference
+        pixel.
+%A pa
+        Position angle of ellipse major axis in degrees.  Default is 0
+        (north).
+%A incline
+        The ellipse is assumed to be a circular structure that appears
+        elliptical because it is viewed at some inclination.  The
+        "incline" parameter gives this inclination angle in degrees.
+        Default=0. (face on)
+%A radius
+        This gives one or two values, determining the radii of the major
+        axis of the annulus of interest. If one value is given, then
+        this is taken as the radius at the center of the annulus, and
+        the annulus is 5% wide.  If two values are given these are taken
+        as the inner and outer radii of the annulus.  The units are (by
+        default) arcsec, but can be natural units if options=natural is
+        used.  No default.
+%A range
+        Min and max greyscale values for the greyscale plot.  The
+        default is the image minimum and maximum.
+%A device
+        Plotting device. See the help on "device" for more information.
+        The default is not to make a plot.
+%A log
+        Output log file. The default is not to make a log file.
+%A options
+        Task enrichment options.  Minimum match is active.
+          natural   Assume keywords "center" and "radius" are in natural
+                    units rather than arcsec.
+ 
+%R 1.6, 2014/05/21 04:34:59 UTC

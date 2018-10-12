@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node101.html">
+<LINK REL="previous" HREF="node99.html">
+<LINK REL="up" HREF="node99.html">
+<LINK REL="next" HREF="node101.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2644"
+  HREF="node101.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2640"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2634"
+  HREF="node99.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2642"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2645"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2641"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2635"
+  HREF="node99.html">Image Deconvolution</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001410000000000000000">
+Introduction</A>
+</H1>
+Because synthesis arrays sample the <I>u-v</I> plane at discrete locations, there is
+incomplete knowledge about the Fourier transform of the source intensity
+distribution.   The measured visibility data can be thought of as the true
+distribution, <I>V(u,v)</I>, in the <I>u-v</I> plane multiplied by some sampling function,
+<I>S(u,v)</I>.    The convolution theorem states that the Fourier transform of
+the sampled distribution (the dirty image, <SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img37.png"
+ ALT="$I_D$"></SPAN>) is equal to the convolution of
+the Fourier transform of the true source visibility distribution (the true image,
+<I>I</I>) and the Fourier transform of the sampling function (the dirty beam,
+<SPAN CLASS="MATH"><IMG
+ WIDTH="23" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img38.png"
+ ALT="$B_0$"></SPAN>):
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+I_D(\ell,m) = I(\ell,m) \ast B_0(\ell,m) \rightleftharpoons V(u,v) \times S(u,v)
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="342" HEIGHT="28" BORDER="0"
+ SRC="img39.png"
+ ALT="\begin{displaymath}
+I_D(\ell,m) = I(\ell,m) \ast B_0(\ell,m) \rightleftharpoons V(u,v) \times S(u,v)
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+
+<P>
+where <SPAN CLASS="MATH"><IMG
+ WIDTH="12" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img40.png"
+ ALT="$\ast$"></SPAN> indicates convolution, and <!-- MATH
+ $\rightleftharpoons$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="20" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img41.png"
+ ALT="$\rightleftharpoons$"></SPAN> indicates
+the Fourier transform.  Deconvolution algorithms attempt to account for
+the UN-sampled regions of the <I>u-v</I> plane.  If it was fully sampled, there
+would be no sidelobes, since the sampling function would be a constant,
+and the Fourier transform of a constant is a delta function; a perfect
+beam.  Thus, deconvolution tries to remove the sidelobes of the dirty
+beam that are present in the image.  It is important to realize that in
+doing so, the algorithm is guessing at what the visibilities are in the
+UN-sampled part of the <I>u-v</I> plane.  The solution to the convolution
+equation is not unique, and the problem of image reconstruction is
+reduced to that of choosing a plausible image from the set of possible
+solutions.
+
+<P>
+You should be extremely cautious when deconvolving images formed from a
+small number of snapshots.  In these cases, there will be large areas of
+the <I>u-v</I> plane that are unsampled because of the poor instantaneous <I>u-v</I>
+coverage of the ATCA.  If the source is complicated, the deconvolution
+algorithm may go badly wrong in its guess of what the source really
+looks like in the gaps.  The best way to make a decent image of an
+object is to observe it, not to allow a deconvolution algorithm to guess
+what it looks like.
+
+<P>
+If you are using multi-frequency synthesis (MFS) in a situation where spectral index
+effects are
+significant (i.e. when the fractional spread in frequencies is <SPAN CLASS="MATH"><IMG
+ WIDTH="50" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img42.png"
+ ALT="$&gt;10\%$"></SPAN> and/or
+images with dynamic ranges better than a few hundred are required), then
+the simple convolution relationship no longer applies - see Section&nbsp;<A HREF="node110.html#s:mfclean">14.4</A>.
+
+<P>
+There are two techniques used commonly in radio astronomy; CLEAN and
+maximum entropy (MEM).  CLEAN is rarely used outside of radio astronomy,
+but MEM is more far reaching.  For detailed discussion on the `pros'
+and `cons' of these algorithms, see the NRAO imaging workshops and
+references therein.  Much blood has been spilt over their relative
+merits in the last decade or so.
+
+<P>
+It is probably fair to say that in general, CLEAN is easier to drive than MEM,
+although using MEM can result in reduced processing times for large problems.
+All dirty images produced by <A NAME="tex2html392"
+  HREF="../doc/invert.html">invert</A>
+(continuum, line, MFS, any Stokes
+parameters)
+can be deconvolved with either <A NAME="tex2html393"
+  HREF="../doc/clean.html">clean</A>
+(CLEAN) or <A NAME="tex2html394"
+  HREF="../doc/maxen.html">maxen</A>
+(MEM).
+However to deconvolve an MFS image where spectral index effects are important,
+a special version of CLEAN is used, <A NAME="tex2html395"
+  HREF="../doc/mfclean.html">mfclean</A>.
+
+<P>
+After the deconvolution is finished, you have produced a the model of the
+source. CLEAN produces a CLEAN component image (a collection of delta
+functions), whereas MEM produces some more smooth model. The output images
+of both CLEAN and MEM are in units of Jy/pixel, and are super-resolved
+(i.e. they contain spatial frequencies beyond those measured).
+Looking at the CLEAN component image is a sobering
+experience.  While the MEM output is more visually appealing, it will generally
+contain a positive bias. To improve the qualitative appearance of the models
+produced by the deconvolution tasks, and to
+suppress what is essentially unmeasured high spatial frequency structure,
+it is common (essentially universal with CLEAN) to follow the
+deconvolution by a `restore' step.  This step involves convolving the model
+sky with a Gaussian.  This convolved image is then added to
+the residual image.  The Gaussian is chosen to match the main lobe of
+the dirty beam, and it is generally called the CLEAN beam (regardless of
+whether CLEAN or MEM was used) or the restoring beam.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2644"
+  HREF="node101.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2640"
+  HREF="node99.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2634"
+  HREF="node99.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2642"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2645"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2641"
+  HREF="node99.html">Image Deconvolution</A>
+<B> Previous:</B> <A NAME="tex2html2635"
+  HREF="node99.html">Image Deconvolution</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

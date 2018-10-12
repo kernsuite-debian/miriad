@@ -1,0 +1,475 @@
+%N sfind
+%D Automatically or interactively find sources in images
+%P amh
+%: plotting
+%B
+        SFIND has been updated to incorporate a new statistically
+        robust method for detecting source pixels, called FDR (which
+        stands for "False Discovery Rate"), as an alternative to
+        simple sigma-clipping, which formed the basis of the original
+        implementation. Details of the FDR method can be found in
+        Hopkins et al 2001, (astro-ph/0110570) and references
+        therein. The original implementation of sfind has been
+        preserved, and can be applied by specifying the option
+        "oldsfind".  In addition, when using SFIND in the new 'FDR'
+        mode, several new features are available. SFIND now provides the
+        option of outputing
+          1: a 'normalised' image (options=normimg) created by
+             subtracting a background and dividing by sigma (the
+             standard deviation),
+          2: a 'sigma' image (options=sigmaimg), created by sigma-
+             clipping the normalised image at a user-specified sigma
+             value,
+          3: an 'fdr' image (options=fdrimg) created similarly to the
+             sigma-image by clipping the normalised image at the FDR-
+             defined threshold.
+ 
+        In 'FDR' mode (the default), no interactive source detection
+        is possible, as is the case with the original version.  Instead,
+        the detected sources are drawn from a distribution of pixels
+        with a robustly known chance of being falsely drawn from the
+        background, thus more reliably characterising the fraction of
+        expected false sources than is possible with a sigma-clipping
+        criterion.
+        The process of source detection and measurement is slightly
+        different in 'FDR' mode compared to the original SFIND
+        implementation (see below).  In 'FDR' mode, the following steps
+        are performed:
+          1: The image is first normalised by estimating the background
+             (mean) and standard deviation (sigma) for the whole image
+             in uniformly distributed regions of size 'rmsbox' (a user
+             input).  This is done by fitting a gaussian to the pixel
+             histogram, (as is done in the task 'imsad') - if the fit is
+             poor, an interative method is used instead.  With these
+             values known, the image has the mean subtracted and is
+             divided by sigma to create a normalised image.  This is the
+             same as saying the normalised image has a gaussian mean of
+             0 and sigma of 1.  The normalised image is output as a
+             Miriad image called sfind.norm if 'options=normimg' is set.
+             The rms noise measured over the image can also be output as
+             sfind.rms if 'options=rmsimg' is set.
+          2: From the normalised image a sigma-clipped image (called
+             sfind.sig) may be output (if 'options=sigmaimg').  This is
+             simply an image with pixel values set to 100 if the pixel
+             value in the normalised image is greater than the user
+             specified value of 'xrms,' or 0 otherwise.
+          3: The FDR method is implemented using the normalised image.
+             Each pixel is assigned a p-value, a probability that it was
+             drawn from the background, and a cutoff p-value is
+             established based on the percentage of false rejections
+             (source pixels) that the user specifies with the parameter
+             'alpha'.  If 'options=fdrimg' is set, this cutoff p-value
+             threshold is used to create an 'fdr' image (called
+             sfind.fdr) in the same way as the sigma image above is
+             created.
+          4: With the FDR cutoff threshold established, sources may now
+             be detected and measured. Each pixel with a p-value lying
+             *below* the cutoff p-value (i.e. a low chance of being
+             drawn from the background) may be part of a source.  For
+             each such 'FDR-detected' pixel, a hill-climbing routine
+             finds a local peak from adjacent FDR-selected pixels.  This
+             is then used as the starting point for a routine that
+             selects contiguous monotonically decreasing adjacent pixels
+             from the FDR-selected ones, and to which a 2-D elliptical
+             gaussian is fit in the same way as the original SFIND (see
+             below).  The same parameters are returned as in the
+             original implementation, and the logfile has the same
+             format (see below).
+        Also, in FDR mode 'option=auto' from the original implementation
+        is assumed automatically, regardless of user input. This means
+        the inputs for 'type,' 'range,' 'device' etc are not relevant
+        and are ignored.
+ 
+        In the original implementation, SFIND displays an image via a
+        contour plot or a pixel map representation on a PGPLOT device.
+        The user is then provided with the opportunity to interactively
+        flag sources as real or not (indicated by a Y or N flag in a
+        log file).
+ 
+        Source positions are calculated by an algorithm which searches
+        for pixels brighter than the surrounding 24 pixels and then bi-
+        parabolically fitting positions and flux densities.  Once a
+        source such as this is detected, SFIND checks to see whether it
+        is brighter than the user set multiple of the background rms.
+        If so, a 2D elliptical gaussian fit is performed (using the same
+        routine as IMFIT) and the source parameters are displayed on the
+        terminal (and written to a log file after user input to
+        determine a flag, Y or N, to attach). The source parameters are
+        (in order):
+ 
+                  Quantity                        Notes
+               --------------                  -----------
+        Position                       RA and Dec. in standard Miriad
+                                       hms,dms format
+        Formal errors in RA and Dec.   (arcsec; treat judiciously)
+        Peak flux density              (mJy)
+        Formal error in peak flux      in mJy (generally not a good
+        density                        estimate of the true error)
+        Integrated flux density        (mJy)
+        Major and minor axes and       (arcseconds for axes, degrees for
+                                       PA)
+        position angle of source       Warning: these are not
+                                       deconvolved from the synthesized
+                                       beam
+        Local background rms (sigma)   (mJy) calculated from a Gaussian
+                                       fit to the pixel histogram, as
+                                       per imsad
+        rms of gaussian fit
+ 
+ 
+        Manipulation of the device colour lookup table is available
+        when you display with a pixel map representation.
+ 
+%A in
+        The input image.
+%A type
+        Specifies the type of the image in the IN keyword. Minimum match
+        is supported.   Choose from:
+ 
+        "contour"   (contour plot)
+        "pixel"     (pixel map)
+ 
+        It is strongly suggested that pixel maps be used for source
+        finding, as contour plots may be deceiving.  Default is "pixel".
+        Ignored in 'FDR' mode (the default).
+ 
+%A region
+        Region of interest.  Choose only one spatial region (bounding
+        box only supported), but as many spectral regions (i.e.,
+        multiple IMAGE specifications) as you like.  If you display a
+        3-D image, the cursor options are activated after each sub-plot
+        (channel or group of channels; see CHAN below) is drawn.
+        Default is full image.
+%A xybin
+        Upto 4 values.  These give the spatial increment and binning
+        size in pixels for the x and y axes to be applied to the
+        selected region.   If the binning size is not unity, it must be
+        equal to the increment.  For example, to bin up the image by 4
+        pixels in the x direction and to pick out every third pixel in
+        the y direction, set XYBIN=4,4,3,1.
+        Defaults are 1,XYBIN(1),XYBIN(1),XYBIN(3)
+%A chan
+        2 values. The first is the channel increment, the second is
+        the number of channels to average, for each sub-plot.  Thus
+        CHAN=5,3  would average groups of 3 channels together, starting
+        5 channels apart such as: 1:3, 6:8, 11:13 ...   The channels
+        available are those designated by the REGION keyword.  A new
+        group of channels (sub-plot) is started if there is a
+        discontinuity in the REGION selected channels (such as
+        IMAGE(10,20),IMAGE(22,30).
+ 
+        Defaults are 1,1
+%A slev
+        2 values.   First value is the type of contour level scale
+        factor.  "p" for percentage and "a" for absolute.   Second
+        value is the level to scale LEVS by.  Thus  SLEV=p,1  would
+        contour levels at LEVS * 1% of the image peak intensity.
+        Similarly, SLEV=a,1.4e-2   would contour levels at LEVS * 1.4E-2
+        Default is no additional scaling of LEVS.
+        Ignored in 'FDR' mode (the default).
+%A levs
+        Levels to contour for first image, are LEVS times SLEV
+        (either percentage of the image peak or absolute).
+        Defaults try to choose something sensible
+        Ignored in 'FDR' mode (the default).
+%A range
+        3 values. The pixel map range (background to foreground), and
+        transfer function type.  The transfer function type can be one
+        of "lin" (linear), "log" (logarithmic), "heq" (histogram equal-
+        ization), and "sqr" (square root).  See also OPTIONS=FIDDLE
+        which is in addition to the selections here.
+ 
+        Default is linear between the image minimum and maximum
+        If you wish to just give a transfer function type, set
+        range=0,0,heq   say.
+        Ignored in 'FDR' mode (the default).
+%A cutoff
+        Flux density below which possible sources are ignored.
+        Default is zero.
+        Ignored in 'FDR' mode (the default).
+%A rmsbox
+        In 'FDR' mode (the default) this is the size of the 'smoothing'
+        box used when estimating the background and standard deviation
+        of the image. It is suggested that this be several to many times
+        the beam size to prevent sources from artificially skewing the
+        background estimates. This may require some experimentation,
+        and 'options=normimg' may be useful in determining the
+        effectiveness of a particular rmsbox size.
+ 
+        In the original implementation (options=oldsfind), it is the
+        size (in pixels) of a box centred on each source within which
+        the background rms is calculated.  Only pixels outside the "beam
+        exclusion radius" (1.5 x BMAJ) are used in this calculation.
+        Default is 20 pixels.
+%A alpha
+        This (real) number is the *percentage* of false *pixels* which
+        can be accepted when applying the FDR method.  Alpha determines
+        the threshold set in selecting pixels which belong to sources
+        (as an alternative to a simple sigma-cut), prior to the source-
+        fitting and measuring step.  Must be a positive number.
+        Default is 2.0 percent.  Ignored if options=oldsfind.
+%A xrms
+        In 'FDR' mode (the default) this parameter defines the sigma-
+        cutoff for the creation of the image sfind.sig if
+        'options=sigmaimg' is set.  If not, it is ignored.  It has no
+        role in the detection or measurement of sources.  No default.
+        In the original implementation (options=oldsfind), it is the
+        multiple of the background rms value above which a source must
+        be before the user is given the choice of verifying it.
+        No default.
+%A device
+        The PGPLOT plot device, such as plot.plt/ps. No default.
+        Ignored in 'FDR' mode (the default).
+%A nxy
+        Number of sub-plots in the x and y directions on the page.
+        Defaults choose something sensible
+        Ignored in 'FDR' mode (the default).
+%A labtyp
+        Two values.  The spatial label type of the x and y axes.
+        Minimum match is active.  Select from:
+ 
+        "hms"       the label is in H M S (e.g. for RA)
+        "dms"       the label is in D M S (e.g. for DEC)
+        "arcsec"    the label is in arcsecond offsets
+        "arcmin"    the label is in arcminute offsets
+        "absdeg"    the label is in degrees
+        "reldeg"    the label is in degree offsets
+             The above assume the  pixel increment is in radians.
+        "abspix"    the label is in pixels
+        "relpix"    the label is in pixel offsets
+        "abskms"    the label is in Km/s
+        "relkms"    the label is in Km/s offsets
+        "absghz"    the label is in GHz
+        "relghz"    the label is in GHz offsets
+        "absnat"    the label is in linear coordinates as defined by
+                    the header.  You might call this the natural axis
+                    label.
+        "relnat"    the label is in offset natural coordinates
+ 
+        All offsets are from the reference pixel.
+        Defaults are "abspix", LABTYP(1) unless LABTYP(1)="hms"
+        whereupon LABTYP(2) defaults to "dms" (for RA and DEC).
+        Ignored in 'FDR' mode (the default).
+%A logfile
+        Log file name, default 'sfind.log'.
+%A options
+        Task enrichment options.  Minimum match is active.
+ 
+        "fiddle" means enter a routine to allow you to interactively
+          change the display lookup table.  You can cycle through b&w
+          and colour displays, as well as alter the transfer function by
+          the cursor location, or by selecting predefined transfer
+          functions such as histogram equalization, logarithmic, &
+          square root.
+        "wedge" means that if you are drawing a pixel map, also draw
+          and label a wedge to the right of the plot, showing the map
+          of intensity to colour
+ 
+        "3value"  means label each sub-plot with the appropriate value
+          of the third axis (e.g. velocity or frequency for an xyv
+          ordered cube, position for a vxy ordered cube).
+        "3pixel"  means label each sub-plot with the pixel value of the
+          the third axis.   Both "3pixel" and "3value" can appear, and
+          both will be written on the plot.  They are the average values
+          when the third axis is binned up with CHAN.  If the third axis
+          is not velocity or frequency, the units type for "3VALUE" will
+          be chosen to be the complement of any like axis in the first
+          two.  E.g., the cube is in vxy order and LABTYP=ABSKMS,ARCSEC
+          the units for the "3VALUE" label will be arcsec.  If
+          LABTYP=ABSKMS,HMS the "3VALUE" label will be DMS (if the third
+          [y] axis is declination).
+ 
+        "grid" means draw a coordinate grid on the plot rather than just
+          ticks.
+ 
+        "noerase"  Don't erase a snugly fitting rectangle into which the
+         "3-axis" value string is written.
+ 
+        "unequal" means draw plots with unequal scales in x and y. The
+         default is that the scales are equal.
+ 
+        "mark" When source has been found, and user has agreed that it
+          is real, mark it with a cross.
+ 
+        "nofit" Prevents the program from fitting elliptical gaussians
+          to each source.  The data given on each source will be that
+          from a bi-parabolic fit, as per the earlier version of sfind.
+          Note that flux densities from this fit are bi-parabolically
+          fitted *peak* flux densities, and the positions are to the
+          peak flux density position (which will always be within 1
+          pixel of the brightest pixel in the source).  This option is
+          useful for providing a starting point for groups of sources
+          which the gaussian fitting procedure hasn't taken a liking to.
+ 
+        "asciiart" During the interactive section of the program, an
+          ascii picture of each source is displayed, showing which
+          pixels have been used in the gaussian fitting procedure.  The
+          brightest pixel in the source is symbolised by a "O", the rest
+          by asterisks.  This option is ignored if "nofit" is being
+          used.
+ 
+        "auto" The interactive section of the program is bypassed, and
+          all detected sources are flagged as real. The image is not
+          displayed.
+          This is set automatically in 'FDR' mode (the default) and it
+          is only necessary to select it manually if using
+          'options=oldsfind' (see below).
+ 
+        "negative" The map is inverted before source detection and
+          fitting, i.e., positive pixels become negative and vice versa.
+          This is to enable detection of negative sources without
+          recourse to MATHS.  This feature may be used for detecting
+          sources in polarisation maps.
+ 
+        "pbcorr" Corrects the flux density value calculated for each
+          source for the effect of the primary beam attenuation.  This
+          is dealt with correctly for mosaics as well as single
+          pointings.
+ 
+        "oldsfind" Use this to run SFIND as the original implementation
+          for the interactive interface, or just consistency with
+          earlier measurements.
+ 
+        "fdrimage" An output image called sfind.fdr will be created
+          with pixel values of 100, if their p-values are below the FDR
+          threshold, or 0 otherwise.
+          Ignored if 'oldsfind' is present.
+ 
+        "sigmaimg" An output image called sfind.sig will be created
+          with pixel values of 100, if their sigma-values are above
+          the user specified threshold from 'xrms,' or 0 otherwise.
+          Ignored if 'oldsfind' is present.
+ 
+        "rmsimg" An output image called sfind.rms will be created
+          where the pixel values correspond to the rms noise level
+          calculated when normalising the image.
+          Ignored if 'oldsfind' is present.
+ 
+        "normimg" An output image called sfind.norm will be created
+          by subtracting a background mean from the input image and
+          dividing by the standard deviation. The mean and sigma are
+          calculated in regions of size 'rmsbox' tiled over the image.
+          Ignored if 'oldsfind' is present.
+ 
+        "kvannot" As well as the regular log file (always written)
+          create a kview format annotation file, called 'sfind.ann'
+          containing one ellipse per object, with the appropriate
+          location, size, and position angle.
+ 
+        "fdrpeak" The default for source measurement is to use only
+          pixels above the FDR threshold in measuring the properties of
+          sources. (This is analogous, in SExtractor, for example,
+          to having the detect and analyse thresholds at the same
+          level.) In some cases it may be desirable to allow fitting of
+          sources where the peak pixel is above the FDR threshold, but
+          other source pixels are not required to be. This is the case
+          for obtaining reasonable measurements of sources close to the
+          threshold. Selecting 'fdrpeak' allows this. If 'fdrpeak'
+          is selected, source pixels are still required to be contiguous
+          and monotonically decreasing from the peak pixel, but not
+          necessarily to be above the FDR threshold.
+ 
+        "allpix" Rather than selecting pixels for the gaussian fitting
+          by requiring they be monotonically decreasing away from the
+          peak pixel, this option allows all FDR-selected pixels
+          contiguous with the peak pixel to be fit for a source.
+          If this option is selected, the fdrpeak option is ignored.
+ 
+        "psfsize" Restricts the minimum fitted size of a detected source
+          to the size of the sythesised beam, i.e., the PSF.  Any source
+          fitted to have a smaller size than this has its FWHM and PA
+          set to those of the synthesised beam, and is refit for the
+          position and amplitude only.
+ 
+        "bright" If your sources are too bright for the default format
+          using this option will shift the decimal point right one digit
+ 
+        Some common combinations of options I have used (for examples):
+        options=kva,fdri,norm,sig
+        options=old,mark,ascii
+        options=old,auto
+%A csize
+        Two values.  Character sizes in units of the PGPLOT default
+        (which is ~ 1/40 of the view surface height) for the plot axis
+        labels and the velocity/channel labels.
+        Defaults choose something sensible.
+        Ignored in 'FDR' mode (the default).
+ 
+   Known Bugs:
+        In FDR mode the code has problems with very large images.  I
+        think this is dependent on the available memory of the machine
+        running Sfind, but need to do more testing to be certain.  I
+        have confirmed that on a machine with 256MB of memory and 256MB
+        swap space, an image of 3600x3600 pixels will be analysed
+        correctly.  For larger images, the code will halt
+        unceremoniously at the first call to memfree in subroutine fdr.
+        I don't understand why this happens, although I am guessing it
+        may have to do with the call to memfree trying to free more
+        memory than is available.
+ 
+        The output is designed to print source fluxes in FORTRAN format
+        f8.3 and f9.3 for peak and integrated flux densities
+        respectively.  This means that if your source's peak flux
+        is > 9999.999 mJy, (i.e. 10 Jy) or its integrated flux
+        is > 99999.999 mJy (i.e., 100 Jy), then it will not be
+        displayed properly. For people detecting very bright sources -
+        use options=bright to use f8.2 and f9.2 instead.
+ 
+        If 'options=fdrimg', 'sigmaimg', or 'normimg' are used with a
+        subregion of the image (specified by the 'region' keyword), the
+        output images are made the size of the *full* input image.  This
+        retains the original masking information, has zeroes outside the
+        regular bounding box of the selected region of interest, and the
+        relevant output within.  This does not affect the analysis
+        (which is all performed within the bounding box of the regular
+        region of interest), only the output images.
+ 
+        The following comments refer to the original SFIND
+        implementation.  The FDR implementation is much more robust to
+        finding faint sources close to bright sources, however since the
+        gaussian fitting process is the same, the comments about noise
+        or morphology are still relevant.
+ 
+        The gaussian fitting procedure can at times be temperamental.
+        If the source lies in a noisy region of the map, or close to
+        another bright source, or is simply of a morphology poorly
+        suited to being fit by gaussians, firstly the source may not be
+        detected at all, and if it is, the quoted errors on position and
+        flux density can be extremely high (often displayed in the
+        output as a row of asterisks due to the vagaries of FORTRAN).
+ 
+        In many of these cases, the given values of flux density and
+        position are still quite reasonable, (perhaps with errors an
+        order of magnitude larger than would otherwise be typical), but
+        user discretion is advised.  No responsibility is taken by the
+        programmer(s) for loss of life or property caused by taking the
+        results of this program under these conditions too seriously, or
+        by frustration generated by the use of this program under any
+        conditions.
+ 
+        Additionally, for unresolved sources, the "integrated" flux
+        density quoted may be less than the peak flux density.  (This
+        occurs if the fitted size of the source, proportional to
+        bmaj x bmin, is a smaller gaussian volume than that of the
+        beam.)  In this situation it is suggested that the peak flux
+        density be used.
+ 
+      Suggestions for believing in a source or not:
+        If a source is close to being indistinguishable by eye from the
+        background there are a few rules of thumb to help determine
+        whether the gaussian fit is telling the truth about a source, or
+        whether the source is even real.
+        1) If the pixels used in the fit are widely scattered (as
+           opposed to comprising a nice contiguous group) the fit will
+           probably not be very good and/or will not be a good
+           description of the source.
+        2) Check the fwhms and the position angle, and compare it to the
+           pixels used in the fit.  (Remember these values are in arcsec
+           for the FWHM and degrees for the PA, while the ascii picture
+           is in pixels).  If these obviously do not agree, then the fit
+           was poor and the source is probably not real.
+        3) Check the rms of the background. If this is high then firstly
+           the fit may not be good (as per 1), and secondly the source
+           is in a noisy area and should be treated with caution anyway.
+ 
+%R 1.20, 2017/03/09 01:37:11 UTC

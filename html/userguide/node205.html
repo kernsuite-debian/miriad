@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Information on planets</TITLE>
+<META NAME="description" CONTENT="Information on planets">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node204.html">
+<LINK REL="up" HREF="node196.html">
+<LINK REL="next" HREF="node206.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3996"
+  HREF="node206.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3992"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3988"
+  HREF="node204.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3994"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3997"
+  HREF="node206.html">Handling large spectral bandwidths</A>
+<B>Up:</B> <A NAME="tex2html3993"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3989"
+  HREF="node204.html">Flux density bootstrapping</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002326000000000000000">
+Information on planets</A>
+</H2>
+Given the observing time and frequency, task <A NAME="tex2html1078"
+  HREF="../doc/plplt.html">plplt</A>
+plots the
+expected visibility function for a planet.
+You will most likely want to check this visibility function
+before observing and discovering that the planet is resolved out!
+<B>NOTE</B> that <A NAME="tex2html1079"
+  HREF="../doc/mfboot.html">mfboot</A>
+and <A NAME="tex2html1080"
+  HREF="../doc/plplt.html">plplt</A>
+do not include the effect of the
+ATCA's primary beam - the planet is implicitly (and silently) assumed to be
+small compared with the primary beam. This may not be the case at 3-mm. 
+If there is a significant change in the visibility function between baseline
+lengths of 0 and 22&nbsp;metres,
+then primary beam effects are important, and you probably do not
+want to use the planet (most likely it would be resolved out anyway).
+
+<P>
+Task <A NAME="tex2html1081"
+  HREF="../doc/planets.html">planets</A>
+can give you basic information about a planet, including
+rise and set times (but note these are quoted at the horizon, not the ATCA's
+elevation limit), the planet's angular size at a particular time, and its 
+RA and DEC (note that the
+ephemeris used for RA and DEC is not sufficiently accurate to point or
+phase track the telescope).
+
+<P>
+Information on using the ATCA to observe a planet is available
+<A NAME="tex2html1082"
+  HREF="http://www.narrabri.atnf.csiro.au/observing/sched/solsys.html">on-line</A>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3996"
+  HREF="node206.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3992"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3988"
+  HREF="node204.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3994"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3997"
+  HREF="node206.html">Handling large spectral bandwidths</A>
+<B>Up:</B> <A NAME="tex2html3993"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3989"
+  HREF="node204.html">Flux density bootstrapping</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

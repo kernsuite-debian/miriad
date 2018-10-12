@@ -1,0 +1,225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The UVDAT routines</TITLE>
+<META NAME="description" CONTENT="The UVDAT routines">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node32.html">
+<LINK REL="previous" HREF="node30.html">
+<LINK REL="up" HREF="node10.html">
+<LINK REL="next" HREF="node32.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html620"
+  HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html614"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html608"
+  HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html616"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html618"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html621"
+  HREF="node32.html">Image Data Sets</A>
+<B>Up:</B> <A NAME="tex2html615"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html609"
+  HREF="node30.html">UV Selection - SelInput</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00470000000000000000"></A><A NAME="518"></A><A NAME="519"></A>
+<BR>
+The UVDAT routines
+</H1>
+The <TT>uvdat</TT> routines are a layer of routines which sit on top of the <TT>uvio</TT>
+routines. They are used to read old uv data-sets. They perform a number of
+functions commonly used in handling uv data. The services include:
+
+<UL>
+<LI>Retrieve a number of standard task parameters (dealing with uv files) from the
+user. These include the <TT>vis</TT>, <TT>line</TT>, <TT>select</TT>, <TT>stokes</TT> and
+<TT>ref</TT> keywords. The uvDat routines support processing of several visibility
+files, and simplifies the book-keeping involved in tracking the several files.
+</LI>
+<LI>Apply antenna gain solutions to the data on the fly, if applicable.
+</LI>
+<LI>Perform polarization conversion steps, if required.
+</LI>
+</UL>
+
+<P>
+The <TT>uvdat</TT> routines still allow the programmer to use most of the <TT>uvio</TT>
+routines, to get the best of both worlds.
+Routines available are:
+<PRE>
+      subroutine uvDatInp(key,flags)
+      logical function uvDatOpn(tno)
+      subroutine uvDatCls()
+      subroutine uvDatRd(preamble,data,flags,n,nread)
+      subroutine uvDatWRd(data,flags,n,nread)
+      subroutine uvDatGti(object,ival)
+      subroutine uvDatGtr(object,rval)
+      subroutine uvDatGta(object,aval)
+      subroutine uvDatSet(object,ival)
+      logical function uvDatPrb(object,dval)
+</PRE>
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="537"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.7:</STRONG>
+Flag Values for the uvDatInp Call</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Flag	</B></TH>
+<TH ALIGN="LEFT"><B>Meaning </B></TH>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'r'</code></TD>
+<TD ALIGN="LEFT">Get reference linetype specification (keyword <code>'ref'</code>).</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'s'</code></TD>
+<TD ALIGN="LEFT">Get Stokes/polarisations (keyword <code>'stokes'</code>).</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'d'</code></TD>
+<TD ALIGN="LEFT">Perform input selection (keyword <code>'select'</code>).</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'l'</code></TD>
+<TD ALIGN="LEFT">Get data linetype specification (keyword <code>'line'</code>).</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'p'</code></TD>
+<TD ALIGN="LEFT">Apply planet rotation and scaling.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'w'</code></TD>
+<TD ALIGN="LEFT">Return u and v in wavelengths.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'1'</code></TD>
+<TD ALIGN="LEFT">Default number of channels is 1.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'c'</code></TD>
+<TD ALIGN="LEFT">Apply selfcal gain solutions.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'x'</code></TD>
+<TD ALIGN="LEFT">Data must be cross-correlation data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'a'</code></TD>
+<TD ALIGN="LEFT">Data must be auto-correlation data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><code>'b'</code></TD>
+<TD ALIGN="LEFT">Input must be a single file.</TD>
+</TR>
+</TABLE>
+
+<A NAME="t:uvdatinp"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+The <TT>uvDatInp</TT> routine is called to setup the uvDat routines, and to
+retrieve the user parameters. The <TT>key</TT> argument (a character string)
+gives the name of the keyword to use to retrieve the input visibility
+data-set name. Normally it will be <TT>'vis'</TT>. The <TT>flags</TT> argument
+specifies what processing steps are to be
+performed, and which user parameters to retrieve. The <TT>flags</TT> argument is a
+character string, each character representing a processing step or parameter
+retrieval request. The legitimate characters are given in
+Table&nbsp;<A HREF="#t:uvdatinp">2.7</A>.
+
+<P>
+The <TT>uvDatInp</TT> subroutine should be called when retrieving task parameters
+(i.e. between calls to <TT>keyini</TT> and <TT>keyfin</TT>. It does not open any files.
+
+<P>
+The logical function <TT>uvDatOpn</TT> is responsible for opening the requested
+uv data-set, and performing most of the initialization steps (e.g. calling
+uvio routines to set the selection, linetype and planet processing options
+requested by its caller and by the user). <TT>uvDatOpn</TT> returns <TT>.true.</TT>
+if a visibility file was successfully opened. Otherwise it returns <TT>.false.</TT>,
+indicating that there are no more files to process. <TT>uvDatOpn</TT> also returns
+the handle of the opened uv data-set, in the variable <TT>tno</TT>. The routine
+<TT>uvDatCls</TT> closes the opened uv data-set. When dealing with several files,
+the caller will go through the sequence: <TT>uvDatOpn</TT>, read data, <TT>uvDatCls</TT>,
+until <TT>uvDatOpn</TT> returns <TT>.false.</TT> (indicating no more files).
+
+<P>
+After opening, the <TT>uvDatRd</TT> routine can be used to read through the data.
+The arguments are the same as the <TT>uvread</TT> call, except that the file handle
+(<TT>tno</TT>) is not required. The routine <TT>uvDatWRd</TT> is equivalent to the
+<TT>uvwread</TT> routine - that is it reads the ``wide'' channels, ignoring the
+current linetype.
+
+<P>
+The <TT>uvDatGt</TT> routines are a set of inquiry routines, for the caller to
+determine what is going on inside the <TT>uvdat</TT> routines. Blurb-blurb.
+
+<P>
+The <TT>uvDatSet</TT> routine is used for the caller to instruct <TT>uvdat</TT> on what to
+do. Blurb-blurb
+
+<P>
+The <TT>uvDatPrb</TT> routine is used in exactly the same way (with the same
+restrictions) as the <TT>SelProbe</TT> routine - it is used to
+determine information about the selection criteria in force. Its arguments are the
+same as the <TT>SelProbe</TT> routine, except that the <TT>sels</TT> array is not needed
+(this array is stored internally in the <TT>uvdat</TT> routines.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html620"
+  HREF="node32.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html614"
+  HREF="node10.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html608"
+  HREF="node30.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html616"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html618"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html621"
+  HREF="node32.html">Image Data Sets</A>
+<B>Up:</B> <A NAME="tex2html615"
+  HREF="node10.html">Miriad Subroutine Library</A>
+<B> Previous:</B> <A NAME="tex2html609"
+  HREF="node30.html">UV Selection - SelInput</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

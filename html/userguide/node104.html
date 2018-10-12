@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Region-of-Interest Considerations</TITLE>
+<META NAME="description" CONTENT="Region-of-Interest Considerations">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node105.html">
+<LINK REL="previous" HREF="node103.html">
+<LINK REL="up" HREF="node101.html">
+<LINK REL="next" HREF="node105.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2698"
+  HREF="node105.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2694"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2688"
+  HREF="node103.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2696"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2699"
+  HREF="node105.html">The Cotton-Schwab CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2695"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2689"
+  HREF="node103.html">The SDI CLEAN</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001423000000000000000">
+Region-of-Interest Considerations</A>
+</H2>
+Note that the H&#246;gbom, Clark, and SDI versions of CLEAN can only
+properly deconvolve a region a quarter the area of your beam.
+If your
+the image and beam are the same size, which is the default behaviour of
+<A NAME="tex2html400"
+  HREF="../doc/invert.html">invert</A>, you can deconvolve only a quarter of
+the image.  For example, consider images that
+are 256 pixels in size (one dimension will do), with a point source
+located at pixel 192.  A beam image centred on that point source will
+extend only to pixel 64, so that the full image cannot be CLEANed.
+
+<P>
+However there is a switch in <A NAME="tex2html401"
+  HREF="../doc/invert.html">invert</A>, <TT>options=double</TT>, to make
+the beam
+four times the area (twice the linear extent) of your image. In this
+way, you can CLEAN to the edge of your image (you should make the
+image at least 5 pixels larger in each direction than the real emission).
+
+<P>
+In practise, you can sometimes violate the above rule that the beam must be
+four times the area of the CLEAN region, especially
+if the field is very sparse (e.g. a central source, and some simple
+confusing sources at a modest distance away).
+Generally the H&#246;gbom CLEAN will be more forgiving if you attempt to use a
+CLEAN region larger than a quarter the area of the beam. However
+there is a switch
+(<TT>options=pad</TT>) in <A NAME="tex2html402"
+  HREF="../doc/clean.html">clean</A>
+to improve the stability for
+Clark and SDI CLEANs as well.
+
+<P>
+Apart from restricting the area CLEANed to a quarter of the area of the
+beam, CLEAN works much better if the region being CLEANed snugly
+encompasses the real emission in the image.  At first, you may not know
+where this is.  However, after some quick and dirty (sic) CLEANing, you
+could redo it properly with a better idea of the CLEAN region.
+Essentially, you are giving CLEAN <I>a priori</I> information about the
+source, which better constrains the deconvolution problem.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2698"
+  HREF="node105.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2694"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2688"
+  HREF="node103.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2696"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2699"
+  HREF="node105.html">The Cotton-Schwab CLEAN</A>
+<B>Up:</B> <A NAME="tex2html2695"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2689"
+  HREF="node103.html">The SDI CLEAN</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

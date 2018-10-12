@@ -1,0 +1,747 @@
+.TH cgdisp 1
+.SH NAME
+cgdisp - displays and overlays images on a PGPLOT device
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+plotting
+.SH DESCRIPTION
+CGDISP displays/overlays images via contour plots, pixel map
+representations, vectors and scaled boxes on a PGPLOT device.
+Upto 3 contour plots, one pixel map, one vector plot and one box
+display may be overlaid in multi-panel plots of multi-channel
+images.  In addition overlay locations (plotted as crosses,
+boxes, circles, lines or see-through) may be specified from an
+ascii text file.
+.sp
+Manipulation of the device colour lookup table is available
+when you display with a pixel map representation (formerly
+called a "grey scale")
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+You may input up to seven images.  Up to three of these can
+be displayed via contour plots and one can be displayed via a
+colour pixel map representation.  One vector amplitude image and
+one vector position angle image (degrees; positive N -> E) can
+together be used to display a vector map (e.g. polarization
+vectors).  One image can be displayed as small scaled boxes (see
+below) and one image may be used as a mask.
+.sp
+The "box" image is displayed by drawing little boxes (solid and
+hollow for positive and negative pixels) at the location of each
+selected pixel.  The size of the box scales with the value of
+the pixel.  This is a useful way to display rotation measure
+images for example. The mask image blanking mask is logically
+ANDed to all the other image masks before they are displayed.
+The mask image is not displayed.
+.sp
+If more than one image is specified, they must have identical
+first and second dimensions.  However, you can overlay
+combinations of 2-D with 3-D images (e.g. multi-channel images
+with a continuum image) provided all the 3-D images have the
+same third dimension.  These images can be input in any order
+(see TYPE).  Wild card expansion is supported.  No default.
+.TP
+\fItype\fP
+Specifies the type of each image, respectively, listed in the IN
+keyword. Minimum match is supported (note that "pixel" was
+formerly "grey" [which is still supported]).   Choose from:
+.sp
+.nf
+ "contour"   (contour;            up to 3 of these)
+ "pixel"     (pixel map;          up to 1 of these)
+ "amplitude" (vector amplitude;   up to 1 of these)
+ "angle"     (vector pos'n angle; up to 1 of these)
+ "box"       (box;                up to 1 of these)
+ "mask"      (mask;               up to 1 of these)
+.fi
+.sp
+You can't give one of "amplitude" or "angle" without the other.
+Default is "pixel" for one image, "contour" if more than one.
+.TP
+\fIregion\fP
+Region of interest.  Choose only one spatial region (bounding
+box only supported), but as many spectral regions (i.e. multiple
+IMAGE specifications) as you like.   Each channel (or group of
+channels; see CHAN below) is drawn on a new sub-plot.
+NOTE: the region specification applies equally to all the
+input images.
+Default is full image
+.TP
+\fIxybin\fP
+Upto 4 values.  These give the spatial increment and binning
+size in pixels for the x and y axes to be applied to the
+selected region.  If the binning size is not unity, it must
+equal the increment.  For example, to bin up the image by 4
+pixels in the x direction and to pick out every third pixel in
+the y direction, set XYBIN=4,4,3,1
+Defaults are 1,XYBIN(1),XYBIN(1),XYBIN(3)
+.TP
+\fIchan\fP
+2 values. The first is the channel increment to step through the
+image in, the second is the number of channels to average, for
+each sub-plot.  Thus CHAN=5,3  would average groups of 3
+channels together, starting 5 channels apart such as: 1:3, 6:8,
+11:13 ...  The channels available are those designated by the
+REGION keyword.  A new group of channels (sub-plot) is started
+if there is a discontinuity in the REGION selected channels
+(such as IMAGE(10,20),IMAGE(22,30).  The combination of REGION
+and CHAN determines how many sub-plots there will be.
+.sp
+In the case that you have input some combination of 2-D and 3-D
+images, CHAN refers to the 3-D image(s). Note that a channel
+is defined to be a pixel on the third axis of a cube, regardless
+of the cube's order (xyv or vxy say).
+Defaults are 1,1
+.TP
+\fIslev\fP
+Up to 3 pairs of values, one for contour image. First value is
+the type of contour level scale factor.  "p" for percentage and
+"a" for absolute.   Second value is the factor to scale LEVS by.
+Thus, SLEV=p,1  would contour levels at LEVS * 1% of the image
+peak intensity.  Similarly, SLEV=a,1.4e-2 would contour levels
+at LEVS * 1.4E-2
+Default is no additional scaling of LEVS (i.e., "a",1.0)
+.TP
+\fIlevs1\fP
+The levels to contour for the first specified contour image are
+LEVS1 times SLEV (either percentage of the image peak or
+absolute).
+Defaults try to choose something vaguely useful.
+.TP
+\fIlevs2\fP
+Levels for the second contour image.
+.TP
+\fIlevs3\fP
+Levels for the third contour image.
+.TP
+\fIcols1\fP
+PGPLOT colours for LEVS1 contours.  If one value is given it is
+used for all contours.  PGPLOT colour indices are
+.nf
+   0: background colour (black or white)
+   1: foreground colour (white or black)
+   2: red           3: green           4: blue
+   5: cyan          6: magenta         7: yellow
+   8: orange        9: lime           10: spring green
+  11: azure        12: violet         13: rose
+  14: dark grey    15: light grey
+.TP
+\fIcols2\fP
+.fi
+Colours for the second contour image.  Defaults to those for the
+first image.
+.TP
+\fIcols3\fP
+Colours for the third contour image.  Defaults to those for the
+first image.
+.TP
+\fIrange\fP
+Up to N groups of four values, one group per sub-plot, where N
+is the maximum number of channels allowed by Miriad (currently
+32768).  The four values are
+.nf
+  - MINimum image intensity to display
+  - MAXimum image intensity to display
+  - Transfer function type:
+      lin: linear
+      sqr: square root
+      log: logarithmic
+      heq: histogram equalization
+  - Colour lookup table:
+        1: b&w
+        2: rainbow
+        3: linear pseudo colour
+        4: floating zero colour contours
+        5: fixed zero colour contours
+        6: rgb
+        7: background
+        8: heat
+        9: absolute b&w
+       10-19: cubehelix (by D. Green, google cubehelix for info)
+    Negate the table number to reverse the lookup table.
+.fi
+.sp
+The transfer function changes available with OPTIONS=FIDDLE
+are in addition to (on top of) the selections here, but the
+colour lookup table selections will replace those selected here.
+.sp
+All subplots following the last one with a specified "range"
+will use the "range" settings from the previous subplot. In
+this way, one group of settings can be applied to all the
+subplots if desired.  The multiple subplot capability is useful
+if you have used IMCAT to put unlike images into planes of
+a cube and you wish to display them together.
+.sp
+Default is linear between the image minimum and maximum with
+a b&w lookup table.   You can default the intensity range with
+zeros, viz. "range=0,0,log,-2" say.
+.TP
+\fIvecfac\fP
+3 or 4 values.  A scale factor to multiply the vector image
+lengths (or box image widths) by, the x and y increments (in
+pixels) across the image at which to plot the vectors (or
+boxes), and optionally the length of the scale-bar vector
+(unset for no scale-bar). If you have set non unit values of
+XYBIN, the increments here refer to the binned pixels.  When
+VECFAC(1)=1, the vectors (boxes) are scaled so that the maximum
+amplitude (width) takes 1/20 of the (sub)plot size.
+.sp
+The scale-bar gives a graphical representation of the vector
+lengths, which makes vector plots easier to interpret.  The
+scale-bar is drawn in the corner specified by the BEAMTYP key
+(defaulting to bottom-left if BEAMTYP is not specified). If
+VECFAC(4)=0, the scale bar is drawn the length of the longest
+vector; you can find out what this is using OPTIONS=FULL. For a
+fractional polarization vector map, setting VECFAC(4)=1
+corresponds to 100 per cent polarization. If VECFAC(1) >> 1,
+this will give a very long vector. For polarization intensity
+images, VECFAC(4) is specified in flux density.
+.sp
+Defaults are 1.0, 2, VECFAC(2)
+Default is not to draw a scale-bar.
+.TP
+\fIboxfac\fP
+3 values.  A scale factor to multiply the box image widths by,
+and the x and y increments (in pixels) across the image at which
+to plot the boxes).  If have set non unit values of XYBIN, the
+increments here refer to the binned pixels.  When BOXFAC(1)=1,
+the boxes are scaled so that there is a little bit of space
+between adjacent boxes.
+Defaults are 1.0, 2, BOXFAC(2)
+.TP
+\fIdevice\fP
+The PGPLOT plot device, such as plot.plt/ps
+No default.
+.TP
+\fInxy\fP
+Number of sub-plots in the x and y directions on the page.
+Defaults choose something depending on your telescope.
+.TP
+\fIlabtyp\fP
+Up to 2 values.  The spatial label type of the x and y axes.
+Minimum match is active.  Select from:
+.sp
+.nf
+ "hms"       the label is in H M S.S (e.g. for RA)
+ "dms"       the label is in D M S.S (e.g. for DEC)
+ "arcsec"    the label is in arcsecond offsets
+ "arcmin"    the label is in arcminute offsets
+ "arcmas"    the label is in milli-arcsec offsets
+ "absdeg"    the label is in degrees
+ "reldeg"    the label is in degree offsets
+             The above assume the pixel increment is in radians.
+ "abspix"    the label is in pixels
+ "relpix"    the label is in pixel offsets
+ "abskms"    the label is in km/s
+ "relkms"    the label is in km/s offsets
+ "absghz"    the label is in GHz
+ "relghz"    the label is in GHz offsets
+ "absnat"    the label is in natural coordinates as defined by
+             the header.
+ "relnat"    the label is in offset natural coordinates
+ "none"      no label and no numbers or ticks on the axis
+.fi
+.sp
+All offsets are from the reference pixel.
+Defaults are "relpix", LABTYP(1)   except if LABTYP(1)="hms"
+when LABTYP(2) defaults to "dms" (to give RA and DEC)
+.TP
+\fIbeamtyp\fP
+Up to 6 values. Set if you want a small polygon to be drawn to
+represent the beam FWHM. Setting beamtyp to "b,l" is sufficient to
+draw a solid beam; "b,l,4" will result in a cross-hatched
+beam.  Use 'n' if you don't want a beam at all.
+The six parameters are:
+.sp
+- Beam vertical positioning: can be "t" (top), or "b" (bottom). No
+default.
+- Beam horizontal positioning: can be "l" (left), or "r"
+(right). Default "l"
+.sp
+The next four parameters apply only to the first image specified
+with the "in" keyword.  If there are multiple, different beams to
+draw (for example, if different uv data were used to produce
+images with different beam shapes), all subsequent beams are drawn
+as open polygons.
+.sp
+- Hatching style:
+.nf
+ 1    solid (default)
+ 2    outline
+ 3    hatched
+ 4    cross-hatched
+.fi
+- Hatching angle (default 45 degrees).
+- Hatching line separation (default 1).
+- Line-width for outlines, hatching and cross-hatching (default 1)
+.TP
+\fIoptions\fP
+Task enrichment options. Minimum match of all keywords is
+active.
+.sp
+"abut" means don't leave any white space between subplots.  The
+.nf
+  default is to leave a little bit between subplots, and
+  OPTIONS=GAPS leaves a lot of space and labels eacg subplot
+  separately.
+.fi
+"beamAB", where "A" is one of "b" or "t" and
+.nf
+                "B" is one of "l" or "r"
+  means draw the beam FWHM on the plot in the corner indicated
+  by the "AB" location. This option is deprecated: use the
+  keyword "beamtyp" instead.
+.fi
+"blacklab" means that, if the device is white-background, draw
+.nf
+  the axis labels in black. Default is red.
+.fi
+"conlabel" means label the contour values on the actual
+.nf
+  contours.  The PGPLOT routine that does this is not very
+  bright.  You will probably get too many labels.  If you bin
+  the image up with keyword XYBIN, say, by a factor of 2, you
+  will get about 1/2 as many labels.  If desperate use the
+  overlay facility (keyword OLAY) to manually label contours.
+.fi
+"fiddle" means enter a routine to allow you to interactively
+.nf
+  change the display lookup table.  You can cycle through a
+  variety of colour lookup tables, as well as alter a linear
+  transfer function by the cursor location, or by selecting
+  predefined transfer functions (linear, square root,
+  logarithmic, histogram equalization)
+.fi
+.sp
+.nf
+  For hard copy devices (e.g. postscript), a keyboard driven
+  fiddle is offered; you can cycle through different colour
+  tables and invoke the predefined transfer functions, but the
+  linear fiddler is not available.   Note that if you are using
+  "cgdisp" from a script, so that interactive fiddling is not
+  appropriate, you can use the "range" keyword to specify the
+  transfer function and colour lookup tables.
+.fi
+"full" means do full plot annotation with contour levels, pixel
+.nf
+  displa range, file names, reference values, etc.  Otherwise
+  more room for the plot is available.
+.fi
+"gaps" means leave large gaps between subplots and individually
+.nf
+  label the axes of each subplot. By default, the subplots will
+  have a small amount of white space between each subplot and
+  they will only be labelled around the borders of the full
+  page.  See also OPTIONS=ABUT to eliminate the small amount of
+  white space.
+.fi
+"grid" means draw a coordinate grid on the plot rather than just
+.nf
+  ticks
+.fi
+"mirror" causes all specified contour levels for all images
+.nf
+  to be multiplied by -1 and added to the list of contours
+.fi
+"nodistort" means that angularly-defined overlays do not distort
+.nf
+  with the coordinate grid.  If you are displaying a large area
+  of the sky, such that the non-linearities in the coordinate
+  system can be seen, then by default, the overlays (keyword
+  OLAY) will distort with the coordinate grid if you are using
+  angular units for the overlay locations and half sizes.  Thus
+  star overlays will rotate and stretch, circles will distort
+  similarly.  Overlays given in non-angular units will always be
+  undistorted.
+.fi
+"noepoch" means don't write the epoch value into the axis labels
+"noerase" means don't erase a rectangle into which the "3-axis"
+.nf
+  values and the overlay ID strings are written.
+.fi
+"nofirst" means don't write the first x-axis label on any
+.nf
+  subplots except for the left-most one. This may avoid label
+  overwrite.
+.fi
+"corner" means only write labels in the lower left corner of any
+.nf
+  subplot
+.fi
+"relax" means issue warnings when image axis descriptors are
+.nf
+  inconsistent (e.g. different pixel increments) instead
+  of a fatal error.  Use at your peril.
+.fi
+"rot90" rotates vectors by an extra 90 degrees.  Useful
+.nf
+  to convert E-vectors into B-vectors
+.fi
+"signs"  Normally, when plotting vectors, CGDISP assumes that
+.nf
+  North is up and East to the left.  If OPTIONS=SIGNS, then
+  it assumes that E and N are in the direction of increasing
+  X and Y.
+.fi
+"single" means that when you have selected OPTIONS=FIDDLE and
+.nf
+  you have more than one subplot per page, activate the fiddle
+  option after each subplot rather than the default, which is
+  to fiddle only at the end.  In the latter case, the histogram
+  equalization, if invoked, will have been computed with the
+  image in the last subplot only.
+.fi
+"solneg1" means make negative contours solid and positive
+.nf
+  contours dashed for the first contour image. The default,
+  and usual convention is the reverse.
+.fi
+"solneg2" SOLNEG1 for the second contour image.
+"solneg3" SOLNEG1 for the third contour image.
+"trlab" means label the top and right axes as well as the bottom
+.nf
+  and left ones.  This can be useful when non-linear coordinate
+  variation across the field makes the ticks misaligned
+.fi
+"unequal" means draw plots with unequal scales in x and y
+.nf
+  so that the plot surface is maximally filled.  The default
+  is for equal scales in x and y.
+.fi
+"wedge" means that if you are drawing a pixel map, also draw
+.nf
+  and label a wedge to the right of the plot, showing the map
+  of intensity to colour.
+.fi
+"3pixel" means label each sub-plot with the pixel value of
+.nf
+  the third axis.
+.fi
+"3value" means label each sub-plot with the appropriate
+.nf
+  value of the third axis (e.g. velocity or frequency for an
+  xyv ordered cube, position for a vxy ordered cube).
+  Both "3pixel" and "3value" can appear, and both will be
+  written on the plot.  They are the average values when
+  the third axis is binned up with CHAN.  If the third axis
+  is not velocity or frequency, the units type for "3VALUE"
+  will be chosen to be the complement of any like axis in the
+  first 2. E.g. the cube is in vxy order and
+  LABTYP=ABSKMS,ARCSEC the units for the "3VALUE" label will be
+  arcsec.  If LABTYP=ABSKMS,HMS the "3VALUE" label will be DMS
+  (if the third [y] axis is declination).  See also keyword
+  "3format" where you can input the format for the "3value"
+  labelling.
+.TP
+\fI3format\fP
+.fi
+If you ask for "3value" labelling, this keyword allows you
+specify the FORTRAN format of the labelling.  I have given
+up trying to invent a decent algorithm to choose this. Examples
+are "1pe12.6", or "f5.2" etc   If you leave this blank cgdisp
+will try something that you probably won't like.
+.TP
+\fIlines\fP
+Up to 6 values.  The line widths for the axes, each contour
+image (in the order of TYPE), the vector image, and any
+overlays.  If there are less than 3 contour images or no vector
+image, the vector image/overlay line widths shift left.
+Line widths must be integers.
+Defaults are 1,1,1,1,1,1
+.TP
+\fIbreak\fP
+Up to 3 values. The intensity levels for the break between
+solid and dashed contours for each contour image.
+Defaults are 0.0,0.0,0.0
+.TP
+\fIcsize\fP
+Up to 4 values.  Character sizes in units of the PGPLOT default
+(which is ~ 1/40 of the view surface height) for the plot axis
+labels, the velocity/channel label, the overlay ID string
+(if option "write" in OLAY used) label, and the contour
+value labels (see options=conlab).
+Defaults try to choose something sensible.  Use 0.0 to default
+any particular value. E.g., 1.4, 0, 0, 0.5
+.TP
+\fIscale\fP
+Up to 2 values.  Scales in natural axis units/mm with which to
+plot in the x and y directions.  For example, if the increments
+per pixel are in radians, then this number would be radians/mm
+(note that for RA axes you give radians on the sky per mm).
+Although this choice of unit may be cumbersome, it makes no
+assumptions about the axis type, so is more flexible.   If you
+also chose OPTIONS=EQUAL then one of your scales, if you set
+both and differently, would be over-ruled.  If you give only
+one value, the second defaults to that.
+Defaults choose scales to fill the page optimally. To default
+the first but the second, use 0.0,scale(2)
+.TP
+\fIcomment1\fP
+A comment line to add at the bottom of the plot, use quotes
+if the comment includes spaces. The comments will not appear
+when options=full is specified.
+.TP
+\fIcomment2\fP
+A comment line to add at the bottom of the plot, use quotes
+if the comment includes spaces.
+.TP
+\fIcomment3\fP
+A comment line to add at the bottom of the plot, use quotes
+if the comment includes spaces.
+.TP
+\fIcomment4\fP
+A comment line to add at the bottom of the plot, use quotes
+if the comment includes spaces.
+.TP
+\fIcomment5\fP
+A comment line to add at the bottom of the plot, use quotes
+if the comment includes spaces.
+.TP
+\fIolay\fP
+The name of a file containing a list of overlay descriptions.
+Wild card expansion is active and the default is no overlays.
+.sp
+Miriad task CGCURS OPTIONS=CURSOR,LOG,CGDISP  can be used to
+make an overlay file.
+.sp
+Entries in the overlay file can be white space or comma
+delimitered or both.  All lines beginning with # are ignored.
+.sp
+.nf
+                **** DO NOT USE TABS ****
+.fi
+.sp
+Double quotes " are used below to indicate a string.  The "
+should not be put in the file.   For all the string parameters
+discussed below, you can abbreviate them with minimum match.
+.sp
+.sp
+Each line describes an overlay and should be as follows:
+.sp
+.nf
+ ##### The first 5 parameters in each line must be
+.fi
+.sp
+.nf
+  1      2       3     4    5
+ --------------------------------
+ OFIG  XOTYPE  YOTYPE  ID  WRITE
+.fi
+.sp
+where
+.sp
+OFIG is the type of overlay; choose from
+.nf
+ "sym"     pgplot symbol number (give centre, symbol, and size)
+ "star"    star (i.e. cross; give centre and half-sizes)
+ "box"     box (give centre and half-sizes)
+ "line"    line segment (give ends)
+ "vector"  directed line segment (give centre, length, and
+           position angle)
+ "circle"  filled in circle (give centre and radius)
+ "ocircle" open circle (give centre and radius)
+ "ellipse" filled-in ellipse (give centre, half axes and p.a.)
+ "oellipse open ellipse (give centre, half axes and p.a.)
+ "clear"   nothing, so you can write the overlay ID string (see
+           below) without the overlay
+.fi
+.sp
+You can specify a directive on a line of its own, it applies to all
+overlays that follow, or until overwritten by another directive:
+.nf
+ "colour n"  Change colour of marker, specify pgplot colour index
+ "lwid w"    Change linewidth, specify a value from 1-201
+ "offset"    See below for details.
+.fi
+.sp
+XOTYPE and YOTYPE  give the units of the overlay location (and
+overlay half-sizes) contained in the file for the x- and y-
+directions, respectively.  Choose from:
+.nf
+ "hms", "dms", "arcsec", "arcmin", "absdeg", "reldeg", "abspix",
+ "relpix", "absnat", "relnat", "absghz", "relghz",
+ "abskms", & "relkms"  as described in the keyword LABTYP.
+.fi
+Note that OTYPE does not depend upon what you specified for
+LABTYP.
+.sp
+ID is an identifying overlay string which can be optionally
+written on the overlay; it MUST be in the overlay file whether
+you write it on the plot or not).  The ID string is written in
+the corner for "star" and "box", at the end for "line", and in
+the centre for "circle" and "clear".  The underscore character
+"_" is treated a special case and is replaced by a blank before
+plotting.  In this way, you can write several words as the
+overlay ID; you connect them with underscores in the overlay
+file, and cgdisp strips them out before plotting.
+.sp
+WRITE is "yes" or "no" to specify if the overlay ID is to be
+written in the overlay figure or not.
+.sp
+.sp
+.nf
+ ##### Parameters beyond number 5 depend upon OFIG, XOTYPE, and
+ YOTYPE
+.fi
+.sp
+.nf
+ 6   7    8   9  10  11  12  13  14  15          OFIG
+ --------------------------------------   -----------------
+ X   Y   SY  SS  CS  CE                   sym
+ X   Y   XS  YS  CS  CE                   star, box
+ X1  Y1  X2  Y2  CS  CE                   line
+ X   Y   VL  PA  SS  A1  A1  A3  CS  CE   vector
+ X   Y   R   CS  CE                       circle,  ocircle
+ X   Y   R1  R2  PA  CS  CE               ellipse, oellipse
+ X   Y   CS  CE                           clear
+.fi
+.sp
+X,Y defines the center of the overlay in the nominated OTYPE
+coordinate system (X- and Y-OTYPE can be different).
+(X1,Y1) & (X2,Y2) are the end points of the line segment in the
+nominated OTYPE (mixed OTYPEs are supported here too).
+For %OTYPE = "abspix ", "relpix", "arcsec", "arcmin", "absdeg",
+.nf
+             "reldeg", "absghz", "relghz", "abskms", "relkms",
+             "absnat" & "relnat" X,Y,X1,Y1,X2,Y2 are single
+             numbers.
+.fi
+.sp
+For %OTYPE = "hms" or "dms", the X and/or Y location is/are
+replaced by three numbers such as HH MM SS.S or DD MM SS.S.
+Thus, if XOTYPE = hms and YOTYPE = dms then the file for
+OFIG=box, say, should have lines like
+.sp
+.nf
+  HH MM SS.S   DD MM SS.S   XS   YS  CHAN
+.fi
+.sp
+XS, YS are the overlay half-sizes in the following units:
+%OTYPE = "abspix" and "relpix" in pixels
+.nf
+         "hms"    and "dms"    in arcseconds
+         "arcsec"              in arcseconds
+         "arcmin"              in arcminutes
+         "absdeg" and "reldeg" in degrees
+         "absghz" and "relghz" in GHz
+         "abskms" and "relkms" in km/s
+         "absnat" and "relnat" in natural coordinates
+.fi
+XS, YS are optional for OFIG="box" and "star".  The defaults
+are XS = 2, YS = XS pixels.
+.sp
+CS to CE is the channel range (image planes) on which to put the
+overlays.  If you specify only CS than the overlay is put on
+that channel.  If CS = 0 the overlays are put on all channels.
+In all cases, CS and CE are optional and the default is 0 (all
+channels)
+.sp
+SY is the pgplot symbol to use for "sym".
+.sp
+SS is the pgplot character height to use for "sym" and "vector".
+May be set to zero for vectors to omit the arrowhead.  Default
+is the character height used for overlay string.
+.sp
+VL is the length of the vector in pixels.
+.sp
+PA is the position angle in degrees, positive N -> E.
+.sp
+A1, A2, and A3 are the PGPLOT arrowhead style parameters:
+A1 is the fill-style, 1 (default) for filled or anything else
+.nf
+   for outline.
+.fi
+A2 is the acute angle of the arrow point, in degrees.  Default
+.nf
+   45.0.
+.fi
+A3 is the fraction of the triangular arrowhead that is cut away
+.nf
+   from the back.  Default 0.3.
+.fi
+.sp
+R is the radius of circle overlays in the units given in the
+above list according to XOTYPE only.
+.sp
+R1 and R2 are the ellipse major and minor axes half-widths,
+both in units according to XOTYPE.
+.sp
+.sp
+##### OFIG = COLOUR (or COLOR)
+.sp
+A COLOUR directive can be included at any point in the overlay
+file in the format
+.sp
+.nf
+  COLOUR   INDEX
+.fi
+.sp
+where the literal "COLOUR" or "COLOR" (without the quotes)
+starts in column 1, followed by the PGPLOT colour index.  This
+changes the graphics overlay colour until the next COLOUR
+directive is processed.  PGPLOT colour indices are listed above
+for the cols1 parameter.  The default colour index is 9.
+.sp
+##### OFIG = LWID
+.sp
+An LWID directive can be included at any point in the overlay
+file in the format
+.sp
+.nf
+  LWID   WIDTH
+.fi
+.sp
+where the literal "LWID" (without the quotes) starts in column
+1, followed by the PGPLOT line width in units of 0.005 inch
+(about 0.13 mm) and must be an integer in the range 1-201.  This
+changes the graphics line width until the next LWID directive is
+processed.  The default width is 1.
+.sp
+##### OFIG = OFFSET
+.sp
+An OFFSET directive can be included at any point in the overlay
+file in the format
+.sp
+.nf
+  OFFSET   XOFF   YOFF
+.fi
+.sp
+where the literal "OFFSET" (without the quotes) starts in
+column 1, followed by X and Y offsets which are applied to all
+succeeding overlay file locations.
+.sp
+.nf
+       X = X + XOFF;   Y = Y + YOFF
+.fi
+.sp
+These offsets must be in the same units as the %OTYPE of
+succeeding directives.  It is intended so that your overlay
+locations can be in, say, arcsec relative to some location which
+is not the reference pixel of the image (which is what CGDISP
+ultimately wants).   You then specify, with the OFFSET
+directive, the offsets between the reference pixel of the
+contour/pixel map images and the actual reference location of
+your overlay locations.
+.sp
+You can have as many OFFSET directive as you like in the file.
+All succeeding directives will apply these offsets until new
+ones are defined.  If the directive does not appear, naturally
+no additional offsets are added.
+.sp
+The OFFSET directive is not applied to ANY position fields in
+succeeding directives that have %OTYPEs that are "hms" or "dms".
+I am too lazy to code it.
+.sp
+Example olay file with colour changes:
+# default colour is green
+ocircle hms dms green_circle no 09 02 34.81 -46 14 00.05 150.0 0 0
+color 2
+ocircle hms dms red_circle no 09 02 14.0 -46 24 36.0 828.0 0 0
+color 4
+ocircle hms dms blue_circle no 09 01 01.593  -46 38 55.498  439.09 0 0
+.sp
+.SH REVISION
+1.27, 2015/07/09 23:25:48 UTC

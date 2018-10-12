@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Polarimetric Analysis Tasks</TITLE>
+<META NAME="description" CONTENT="Polarimetric Analysis Tasks">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node150.html">
+<LINK REL="previous" HREF="node148.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node150.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3266"
+  HREF="node150.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3262"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3256"
+  HREF="node148.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3264"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3267"
+  HREF="node150.html">Miscellaneous Analysis Tasks</A>
+<B>Up:</B> <A NAME="tex2html3263"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3257"
+  HREF="node148.html">Modifying Images by Models</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001880000000000000000">
+Polarimetric Analysis Tasks</A>
+</H1>
+
+<P>
+<A NAME="11959"></A><A NAME="11960"></A><A NAME="11961"></A>
+
+<P>
+In this section we see how to make total polarised intensity and position
+angle images (task <A NAME="tex2html713"
+  HREF="../doc/impol.html">impol</A>), fractional polarisation images,
+and rotation measure images (task <A NAME="tex2html714"
+  HREF="../doc/imrm.html">imrm</A>).
+
+<P>
+
+<UL>
+<LI>Task <A NAME="tex2html715"
+  HREF="../doc/impol.html">impol</A>
+is used to generate images such as the
+total linearly polarised intensity and position angle (in degrees North
+through East; see also <TT>options=radians</TT>) from the primary Stokes <I>Q</I>
+and <I>U</I> images that you produced with <A NAME="tex2html716"
+  HREF="../doc/invert.html">invert</A>.  It can also be used
+to make the fractional polarisation image if you input the Stokes <I>I</I>
+image as well.    It is convenient to make this image with <A NAME="tex2html717"
+  HREF="../doc/impol.html">impol</A>
+rather
+than, say, <A NAME="tex2html718"
+  HREF="../doc/maths.html">maths</A>, because <A NAME="tex2html719"
+  HREF="../doc/impol.html">impol</A>
+can be used to
+generate error images as well.
+
+<P>
+It is generally necessary to deconvolve the <I>Q</I> and <I>U</I> images in
+the same way that you do the Stokes <I>I</I> image before combining them. 
+Note however, that negative values in these images are as valid as
+positive values; it just depends upon the position angle of the
+polarised emission.  <A NAME="tex2html720"
+  HREF="../doc/impol.html">impol</A>
+can optionally (and by default) debias
+the total polarised intensity image with a first order algorithm (see
+help file).  A polarised intensity image is positive definite
+(<!-- MATH
+ $\sqrt{(Q^2+U2)}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="92" HEIGHT="38" ALIGN="MIDDLE" BORDER="0"
+ SRC="img90.png"
+ ALT="$\sqrt{(Q^2+U2)}$"></SPAN>), even with no signal and the intensities of its
+pixels follow the Ricean distribution.  At high signal-to-noise ratios,
+this is the normal distribution.  At low signal-to-noise ratios, it is
+skewed biased distribution. 
+
+<P>
+The ability of <A NAME="tex2html721"
+  HREF="../doc/impol.html">impol</A>
+to produce error images is very important to
+assist you in assessing what is real and what is not.  These are computed
+via a simple propagation of errors, and you must specify the rms level
+of the input image (<SPAN CLASS="MATH"><IMG
+ WIDTH="34" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img91.png"
+ ALT="$\sigma_{QU}$"></SPAN> is also needed for debiasing the
+polarised intensity).  Tasks <A NAME="tex2html722"
+  HREF="../doc/histo.html">histo</A>
+(see above) or <A NAME="tex2html723"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+(see Chapter&nbsp;<A HREF="node135.html#c:display">17</A>) can give you estimates of the relevant
+statistical information of an image. 
+
+<P>
+<A NAME="tex2html724"
+  HREF="../doc/impol.html">impol</A>
+offers the opportunity to blank the output images based
+upon the signal-to-noise ratio of the polarised intensity image (keyword
+<TT>sncut</TT>), and also on the absolute value of the position angle error
+images (keyword <TT>pacut</TT>).
+
+<P>
+Interpreting polarised intensity images below about 2-sigma is pretty
+deadly because the debiasing becomes inaccurate.  In general, it is
+recommended that you blank the output images in the ways provided.  You
+have the choice of whether you blank the polarised intensity images (not
+the position-angle image) with zeros or via a bit in a mask.  It is
+important that you use zero if you are planning to evaluate statistics
+over a region that encompasses the blanked pixels.  This is because zero
+is generally a better estimate of the polarised intensity of a blanked
+pixel (which has a small signal) than just not contributing to the sums
+with that pixel. 
+
+<P>
+A case where debiasing and blanking is not appropriate is a detection
+polarisation experiment.    You should ignore <A NAME="tex2html725"
+  HREF="../doc/impol.html">impol</A>
+when it implores you to blank and debias in this case.
+
+<P>
+<A NAME="tex2html726"
+  HREF="../doc/impol.html">impol</A>
+can also make a plot showing the effect of bias in the
+polarised intensity; see the help file for details.  You can access this
+plot even if you do not input any images.  The plot is made via a Monte
+Carlo simulation.  It may take a while to run so be patient; just fill
+in the <TT>device</TT> to activate this option.  For extra discussion of
+debiasing and blanking see the VLA scientific memorandum no 161.  by
+Patrick Leahy. 
+
+<P>
+The following example takes CLEANed <I>Q</I>, <I>U</I> and <I>I</I> images and
+their rms noise value (assumed the same for <I>Q</I> and <I>U</I>), and
+computes images of the linearly polarised position angle, the debiased
+total polarised intensity, the fractional polarisation and their
+associated errors.  These images are <EM>all</EM> blanked when the error in
+the position angle image is greater than 10 degrees <EM>or</EM> when the
+signal-to-noise ratio in the polarised intensity image is less than three.
+Note that the error image for the polarised intensity is constant (and
+equal the rms of the <I>Q</I> and <I>U</I> images that you input) so that
+there is no output polarised intensity error blanking option.  The
+choice of the blanking levels depends upon your particular data; do not
+treat the ones given below as being necessarily appropriate.  
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMPOL</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=qcln,ucln,icln</TD>
+<TD ALIGN="LEFT">Input <I>Q</I>, <I>U</I> and <I>I</I> images respectively</TD>
+</TR>
+<TR><TD ALIGN="LEFT">poli=p,ep</TD>
+<TD ALIGN="LEFT">Polarised intensity and  error images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">polm=m,em</TD>
+<TD ALIGN="LEFT">Fractional polarisation and error images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa=pa,epa</TD>
+<TD ALIGN="LEFT">Position-angle and error images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sigma=0.003,0.004</TD>
+<TD ALIGN="LEFT">Set standard deviation of noise in <I>Q</I> or <I>U</I> and <I>I</I>in Jy/beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sncut=3</TD>
+<TD ALIGN="LEFT">Blank below 3-sigma</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pacut=10</TD>
+<TD ALIGN="LEFT">Blank when p.a. error greater than 10 degrees</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=zero</TD>
+<TD ALIGN="LEFT">If evaluating  area statistics</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rm</TD>
+<TD ALIGN="LEFT">Leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device</TD>
+<TD ALIGN="LEFT">No bias plot</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>The position-angle image you generated with <A NAME="tex2html727"
+  HREF="../doc/impol.html">impol</A>
+is the
+orientation of the electric vectors following the traversal of the
+photons through the interstellar medium.  The position angle is defined
+to be positive North through East.  You can be sure that some Faraday
+rotation of the electric vectors will have occurred in that
+magneto-ionic medium.  We are ultimately interested in the orientation
+of the magnetic field before Faraday rotation.  <A NAME="tex2html728"
+  HREF="../doc/imrm.html">imrm</A>
+<A NAME="12015"></A> <A NAME="12016"></A> can be used to
+generate rotation measure (<I>RM</I>) and zero-wavelength position-angle
+(<SPAN CLASS="MATH"><IMG
+ WIDTH="21" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img92.png"
+ ALT="$\chi_0$"></SPAN>) images by fitting the equation <!-- MATH
+ $\chi = \chi_0 + RM\lambda^2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="118" HEIGHT="34" ALIGN="MIDDLE" BORDER="0"
+ SRC="img93.png"
+ ALT="$\chi = \chi_0 + RM\lambda^2$"></SPAN>
+to a series of position-angle images (in degrees) at different
+frequencies.  The more frequencies that you can give it the better. 
+
+<P>
+By default, <A NAME="tex2html729"
+  HREF="../doc/imrm.html">imrm</A>
+tries to remove <SPAN CLASS="MATH"><IMG
+ WIDTH="28" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img94.png"
+ ALT="$N\pi$"></SPAN> ambiguities with the
+assumption that there are none between the angles of the <I>first two</I>
+given images (note this has changed from an earlier algorithm).  The
+details of the algorithm are given in the help file.  Basically, it
+estimates the rotation measure from these two images, and then estimates
+the position angle expected at the other frequencies.  It then adds or
+subtracts integral multiples of <SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img95.png"
+ ALT="$\pi$"></SPAN>&nbsp;radians to make the measured values
+as close to the predicted values as possible.  Then a least squares fit
+is done to solve for the rotation measure. 
+
+<P>
+You can set <TT>options=ambiguous</TT> to turn this ambiguity removing off,
+but you should read the help file carefully, and examine the results
+carefully (you should do this anyway) if you do this.  In principle,
+if there are no ambiguities, the ambiguity removing algorithm should not
+find any.
+
+<P>
+The units of the rotation measure, <I>RM</I>, and position-angle images are
+rad/m/m and degrees, respectively. 
+
+<P>
+The keyword <TT>rmi</TT> is very useful.  It enables you to specify an
+initial estimate of the rotation measure.  For example, you may know the
+Galactic contribution in the direction of your source.  Angle
+appropriate to this amount is subtracted from the data before any
+attempt to compute the rotation measure is made.  If it is substantial,
+it will help quite substantially to reduce ambiguity problems. 
+
+<P>
+<A NAME="tex2html730"
+  HREF="../doc/imrm.html">imrm</A>
+offers three blanking options for the output images (all of
+the blanking criteria are applied equally to the rotation measure and
+position angle images).  First, you can blank the output images if any
+of the input error images exceeds a certain value.  Second, you can
+blank the images if the output errors exceed a certain value, and third
+you can blank the images if the goodness of fit is less than a certain
+value.  You should think about what these values should be.  Remember
+that you are now generating a tertiary image, and that the errors
+compound rapidly.  Unfortunately, it makes no sense to blank rotation
+measure and position-angle images based upon a measure of the output
+signal-to-noise ratio; a rotation measure or position angle of zero does
+not necessarily imply little signal.  Probably blanking with the input
+position-angle errors (keyword <TT>errcut</TT>) is the best way to blank
+the output. 
+
+<P>
+You can only compute the goodness of fit if you have position angle
+images at more than two frequencies, <EM>and</EM> if you input their error
+images.  If it cannot be computed, the goodness of fit is assumed to be
+unity so that if you have more than 2 frequencies, but do not input the
+error images, the output errors are computed with this assumption
+(that is, you cannot get independent estimates of the
+the output errors  and the goodness of fit).  
+
+<P>
+If the goodness of fit is above about 0.1, then the fit is
+believable.  If it is as low as 0.001, the fit may be believable if
+you have non-normally distributed errors in the position angle images. 
+If it is below 0.001, the fit should probably be rejected; this is the
+default value for the keyword <TT>qcut</TT>.  Note that the distribution of
+the noise in the position angle images is indeed non-normal at low
+signal-to-noise ratios.  Below <!-- MATH
+ $P/\sigma \approx 2$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="62" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img96.png"
+ ALT="$P/\sigma \approx 2$"></SPAN> they are seriously
+non-normal (but pixels such as these should already have been blanked in
+<A NAME="tex2html731"
+  HREF="../doc/impol.html">impol</A>).  Above <!-- MATH
+ $P/\sigma \approx 5$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="62" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img97.png"
+ ALT="$P/\sigma \approx 5$"></SPAN>, the noise is approximated by
+a normal distribution.  The grey area is between 2- and 5-sigma. 
+
+<P>
+If you set the keyword <TT>device</TT>, then <A NAME="tex2html732"
+  HREF="../doc/imrm.html">imrm</A>
+will draw some
+plots showing the fits to the data.  The plots show the data that the
+least squares fit was done on (i.e.  with turns removed as needed), but
+with the initial estimate <TT>rmi</TT> added back in.   Set 
+<TT>options=accumulate</TT> to put all the plots on one panel, else
+use <TT>nxy</TT> to specify the number of sub-plots per page, with
+each sub-plot containing the data fit for one spatial pixel.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMRM</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=pa.f1,pa.f2,pa.f3,pa.f4</TD>
+<TD ALIGN="LEFT">Input p.a. images at different frequencies</TD>
+</TR>
+<TR><TD ALIGN="LEFT">inerr=epa.f1,epa.f2,epa.f3,epa.f4</TD>
+<TD ALIGN="LEFT">Error images associated with the p.a. images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rmi=35</TD>
+<TD ALIGN="LEFT">A priori estimate of RM</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rm=rm</TD>
+<TD ALIGN="LEFT">Output RM image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pa0=pa0</TD>
+<TD ALIGN="LEFT">Output <SPAN CLASS="MATH"><IMG
+ WIDTH="43" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img98.png"
+ ALT="$\lambda=0$"></SPAN> position-angle image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">qcut=#</TD>
+<TD ALIGN="LEFT">Blank if goodness of fit below this value</TD>
+</TR>
+<TR><TD ALIGN="LEFT">errcut=#</TD>
+<TD ALIGN="LEFT">Blank if any input errors greater than this</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rmcut=#</TD>
+<TD ALIGN="LEFT">Blank if  <I>RM</I> error greater than this</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pacut=#</TD>
+<TD ALIGN="LEFT">Blank if position angle error greater than this</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Draw plots please</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nxy=10,10</TD>
+<TD ALIGN="LEFT">100 subplots per page</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3266"
+  HREF="node150.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3262"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3256"
+  HREF="node148.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3264"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3267"
+  HREF="node150.html">Miscellaneous Analysis Tasks</A>
+<B>Up:</B> <A NAME="tex2html3263"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3257"
+  HREF="node148.html">Modifying Images by Models</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

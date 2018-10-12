@@ -1,0 +1,134 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Flagging Near a Set-Up Change - QVACK</TITLE>
+<META NAME="description" CONTENT="Flagging Near a Set-Up Change - QVACK">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node66.html">
+<LINK REL="previous" HREF="node64.html">
+<LINK REL="up" HREF="node63.html">
+<LINK REL="next" HREF="node66.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2197"
+  HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2193"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2187"
+  HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2195"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2198"
+  HREF="node66.html">Flagging Based on a</A>
+<B>Up:</B> <A NAME="tex2html2194"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2188"
+  HREF="node64.html">AIPS Flagging and Miriad-</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001022000000000000000">
+Flagging Near a Set-Up Change - QVACK</A>
+</H2>
+
+<P>
+<A NAME="2511"></A>
+Another handy task is <A NAME="tex2html203"
+  HREF="../doc/qvack.html">qvack</A><A NAME="2513"></A>
+(derivative of the AIPS task
+<A NAME="tex2html204"
+  HREF="../doc/quack.html">quack</A>
+and so named for obscure reasons) for flagging a
+number of correlations after the observing set-up has changed (i.e.,
+the source changed, the pointing centre changed, or
+the frequency changed).  For example, it might be used if some evil-minded
+child turned on the family microwave oven for 30&nbsp;seconds every time s/he
+saw the antennas start to move.  If you were observing at 13&nbsp;cm, here is
+how to get rid of such data.   Getting rid of the child would be the
+best long-term solution.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>QVACK</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=multi.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=freq(2.699,2.829)</TD>
+<TD ALIGN="LEFT">Select correlations in this range</TD>
+</TR>
+<TR><TD ALIGN="LEFT">interval=0.5</TD>
+<TD ALIGN="LEFT">Flag data for 30&nbsp;s after change</TD>
+</TR>
+<TR><TD ALIGN="LEFT">force</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mode=source</TD>
+<TD ALIGN="LEFT">Flag when source changes</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+<A NAME="tex2html205"
+  HREF="../doc/qvack.html">qvack</A>
+also has a keyword called <TT>force</TT>.  This can be used
+if the observing setup has not changed, but you still wish to periodically
+flag some data.  For example, you may have split out
+your observation and so
+you are left with a file with no observing change, but with
+a distinct ``scan'' based regularity.  This keyword lets you flag
+some data after a certain time has elapsed.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2197"
+  HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2193"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2187"
+  HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2195"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2198"
+  HREF="node66.html">Flagging Based on a</A>
+<B>Up:</B> <A NAME="tex2html2194"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2188"
+  HREF="node64.html">AIPS Flagging and Miriad-</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

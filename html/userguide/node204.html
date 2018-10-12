@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Flux density bootstrapping</TITLE>
+<META NAME="description" CONTENT="Flux density bootstrapping">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node205.html">
+<LINK REL="previous" HREF="node203.html">
+<LINK REL="up" HREF="node196.html">
+<LINK REL="next" HREF="node205.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3986"
+  HREF="node205.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3982"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3976"
+  HREF="node203.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3984"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3987"
+  HREF="node205.html">Information on planets</A>
+<B>Up:</B> <A NAME="tex2html3983"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3977"
+  HREF="node203.html">Bandpass and antenna gain</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002325000000000000000">
+Flux density bootstrapping</A>
+</H2>
+The best task to correct the flux scale of an observation is <A NAME="tex2html1061"
+  HREF="../doc/mfboot.html">mfboot</A>
+-
+<A NAME="tex2html1062"
+  HREF="../doc/mfboot.html">mfboot</A>
+performs an analagous function to <A NAME="tex2html1063"
+  HREF="../doc/gpboot.html">gpboot</A>. Task
+<A NAME="tex2html1064"
+  HREF="../doc/mfboot.html">mfboot</A>
+also supercedes the now obsolete task <A NAME="tex2html1065"
+  HREF="../doc/plboot.html">plboot</A>.
+It works by scaling the antenna gain table so that the flux density
+scale of the observed data agrees with some model.
+
+<P>
+Task <A NAME="tex2html1066"
+  HREF="../doc/mfboot.html">mfboot</A>
+models a planet as a simple disk with constant brightness 
+temperature. It has built-in ephemerides of the planets, and so
+knows their apparent size and orientation. It also has a model
+of the brightness temperature variation with frequency. Hence <A NAME="tex2html1067"
+  HREF="../doc/mfboot.html">mfboot</A>
+can generate a nominal visibility function of a planet.
+This model for Mars is not
+sophisticated, but should be accurate to better than 10% if appropriately
+used.
+
+<P>
+Task <A NAME="tex2html1068"
+  HREF="../doc/mfboot.html">mfboot</A>
+can also be used when bootstrapping from a point
+source. Although <A NAME="tex2html1069"
+  HREF="../doc/mfboot.html">mfboot</A>
+contains models for sources such as 1934-638,
+these models are not relevant for 3mm observers. If using a point source,
+generally the user would need to give <A NAME="tex2html1070"
+  HREF="../doc/mfboot.html">mfboot</A>
+the flux density of the source.
+
+<P>
+It is implicitly assumed in the bootstrapping approach described here
+that the flux density calibrator is observed near simultaneously and at
+the same elevation as the secondary calibrator.  This is required
+because the antenna gain changes with both elevation and with thermal
+changes.  The most reliable approach to tying the secondary and the flux
+density calibrators flux scales together is through observations with
+the same elevation and thermal environment. 
+
+<P>
+Task <A NAME="tex2html1071"
+  HREF="../doc/mfboot.html">mfboot</A>
+will apply the bandpass and antenna gain
+solutions to the observed data before it does a comparison with the 
+models. While it is not generally important that the flux density calibrator
+data is phase calibrated, it is important that it has the antenna amplitude
+calibration, derived from the secondary, is applied. This is critical in
+tying the flux density scales of secondary and flux density calibrator.
+
+<P>
+We will discuss the various input parameters for <A NAME="tex2html1072"
+  HREF="../doc/mfboot.html">mfboot</A>:
+
+<UL>
+<LI><TT>vis</TT>: These give the input visibility dataset.
+</LI>
+<LI><TT>select</TT> and <TT>line</TT>: This selects the data to be used as the
+flux density calibrator.
+</LI>
+<LI><TT>flux</TT>: If using a point source as a flux density calibrator, use
+this parameter to set the flux density of the source (in Jansky). If using
+a planet, you may set this parameter (in Kelvin) 
+to override the brightness temperature
+value that
+<A NAME="tex2html1073"
+  HREF="../doc/mfboot.html">mfboot</A>
+would use by default.
+</LI>
+<LI><TT>mode</TT>: The comparison between the model and observed
+data can be done using
+either the scalar average (effectively the amplitude of the data), 
+the vector average (effectively the
+real part of the data), or the triple product of the data. The amplitude and
+triple product are insensitive to phase errors, and so are normally the
+most appropriate. The default is to use the triple product for point
+sources and the amplitude for planets. For planets that are not
+worse than mildly resolved, you might consider using the triple product
+for planets.
+
+<P>
+When using scalar mode with significantly resolved planets, where there is
+little flux on long spacings, you might consider using the <TT>clip</TT>
+parameter so as to exclude data that would simply contribute
+noise bias.
+
+<P>
+</LI>
+<LI><TT>clip</TT>:
+If Mars is used as a flux density calibrator, you will want to ignore
+those visibilities where the deviation of the visibility function from
+a simple disk model is significant. In practise, it is best to ignore
+the visibility data outside the main central lobe of the visibility
+function. The way to do this is by using the <TT>clip</TT>
+parameter.
+For Mars it is recommended that you set <code>clip=0.4</code>, which 
+will ignore
+data where the visibility function model is less than 40% of the
+model zero spacing value.
+
+<P>
+</LI>
+<LI><TT>device</TT>: <A NAME="tex2html1074"
+  HREF="../doc/mfboot.html">mfboot</A>
+can produce a plot of the the data
+(after bootstrapping) and model visibilities to give you a quantitative
+feel for the quality of the fit.
+</LI>
+<LI><TT>options</TT>: The only available option is <TT>noapply</TT>, which causes
+<A NAME="tex2html1075"
+  HREF="../doc/mfboot.html">mfboot</A>
+to perform all steps <EM>except</EM> applying the bootstrap
+factor.
+</LI>
+</UL>
+
+<P>
+In the general case, to use <A NAME="tex2html1076"
+  HREF="../doc/mfboot.html">mfboot</A>
+with the calibration scheme 
+recommended above is
+straightforward enough: you simply run <A NAME="tex2html1077"
+  HREF="../doc/mfboot.html">mfboot</A>
+on the dataset, having
+selected the flux density calibrator. For example:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MFBOOT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.fixed.uv</TD>
+<TD ALIGN="LEFT">Input multi-source, dual-band dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=source(uranus)</TD>
+<TD ALIGN="LEFT">Select flux density calibrator.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3986"
+  HREF="node205.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3982"
+  HREF="node196.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3976"
+  HREF="node203.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3984"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3987"
+  HREF="node205.html">Information on planets</A>
+<B>Up:</B> <A NAME="tex2html3983"
+  HREF="node196.html">Practical loading and calibration</A>
+<B> Previous:</B> <A NAME="tex2html3977"
+  HREF="node203.html">Bandpass and antenna gain</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

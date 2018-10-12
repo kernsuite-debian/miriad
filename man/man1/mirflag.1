@@ -1,0 +1,148 @@
+.TH mirflag 1
+.SH NAME
+mirflag - Automated flagging of a UV data set.
+.SH PERSON RESPONSIBLE
+Emil Lenc
+.SH CATEGORIES
+calibration, uv-data
+.SH DESCRIPTION
+MIRFLAG is a MIRIAD task which allows automated
+flagging of a UV data set. The task scans UV data
+on a baseline-dependent and channel-dependent basis
+to find bad data and flag them accordingly.
+
+Four flagging modes may be specified via options amp,
+rms, short and long.
+
+Amplitude-based flagging is performed when the "amp"
+option is supplied. On a per-baseline basis the median
+amplitude for a designated "good" channel is determined
+over the course of the observation, this is the
+channel-median. An effective noise measure for the "good"
+channel is made by taking the median of the absolute
+difference between channel-median and the channel
+amplitude throughout the course of the observation, this
+is the channel-diff-median. The "badness" of an amplitude
+measure in another channel is determined by how far it
+deviates from the channel-median with respect to the
+channel-diff-median and a user defined "cutoff" scaling.
+This provides a number of threshold points:
+
+.nf
+     -2*thresh    -thresh    Median    +thresh   +2*thresh
+.fi
+<---------+----------+----------+----------+----------+--------->
+.nf
+ Probably | Possibly | Probably | Probably | Possibly | Probably 
+   Bad    |   Bad    |    OK    |    OK    |   Bad    |   Bad
+.fi
+
+Where the threshold is defined as cutoff * channel-diff-median.
+Visibilities marked as "Probably Bad" will be flagged
+immediately. NOTE: To apply amplitude-based flagging
+on small clusters visibilities marked as "Possibly Bad"
+the "short" option must also be provided.
+
+RMS-based flagging is performed when the "rms" option
+is supplied. In this task the amplitude RMS is measured on a
+per-baseline and per-scan basis for a designated "good" channel
+(Note: a scan will be split up if the length of the scan
+exceeds the value specified by the "gap" parameter). The median
+of these RMS values is taken as a reference. If the RMS of
+another channel (for a particular scan/baseline) exceeds the
+reference RMS by more than a factor of "rmscut" then the entire
+scan is flagged. 
+
+Short cluster flagging, as specified with the short option,
+flags short (+/- 60 s) sections around bad points.
+
+Large cluster flagging, as specified with the long option,
+searches for and flags larger clusters of bad points using
+a running sum window with length specified by the "int"
+parameter. The flagging threshold is specified with the
+"thres" option.
+
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input UV data set.  A visibility file name
+must be supplied.  Only one file may be edited at a time.
+
+.TP
+\fIstokes\fP
+Specifies which stokes parameter/polarization to read and
+analyse (first value) and which polarizations to flag
+(subsequent values). For example, one can read and analyse
+rr and use the results to flag both rr and ll by specifying
+stokes rr,rr,ll. Defaults to read Stokes I and to flag all
+available polarizations.
+
+.TP
+\fIgap\fP
+Used in conjunction with the "rms" option.
+Time in seconds which defines a scan gap (source changes
+also define scans). Defaults to 150 s.
+
+.TP
+\fIrmscut\fP
+Used in conjunction with the "rms" option.
+Factor by which the RFI-free channel's scan-by-scan rms is
+to be multiplied and above which data is considered bad.
+Defaults to 3.
+
+.TP
+\fIgoodch\fP
+Number of a good (relatively RFI-free) channel to which the
+other channels are to be compared. By default, mirflag will
+attempt to find the channel with the lowest median noise.
+
+.TP
+\fIcutoff\fP
+Used in conjunction with the "amp" option.
+Multiples of median of difference to median in data, above
+which data are suspicious. Will be multiplied by two to
+obtain a threshold above which data are certainly bad.
+Defaults to 7.
+
+.TP
+\fIint\fP
+Used in conjunction with the "long" option.
+Width of running sum window in seconds in which to
+calculate fraction of flagged visibilities.
+1200 is reasonable for weak sources, 600 for calibrator
+observations. Defaults to 1200.
+
+.TP
+\fIthres\fP
+Used in conjunction with the "long" option.
+Fraction of maximum of running sum, defines threshold above
+which data are deemed bad in search for large clusters of
+bad points. Defaults to 0.15.
+
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Possible values are:
+.nf
+  ignore  Ignore existing flags in data set, default is to
+          read them.
+  replace Replace existing flags in the data set with new
+          ones, default is to add to existing flags.
+  noapply Run only the analysis and provide a summary of the
+          flagging but do not flag the data.
+  amp     Switch on amplitude-based flagging (used in
+          combination with the short option).
+  rms     Switch on rms-based flagging.
+  short   Flag short (+/- 60 s) sections around bad points.
+          Without this option amplitude-based flagging is
+          effectively turned off because amplitude-
+          based flagging does not generate flags directly.
+  long    Search for larger clusters of points.
+  medsed  Subtract channel median to remove effects of a
+          residual SED or poor bandpass calibration.
+  medtcal Subtract bandpass median at each time-stamp to
+          remove effects of poor secondary calibration.
+.fi
+
+.SH REVISION
+mirflag version 0.1.2

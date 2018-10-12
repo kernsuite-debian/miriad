@@ -1,0 +1,45 @@
+%N imtab
+%D Tabulate image data
+%P pjt
+%: map analysis
+%B
+        IMTAB is a Miriad task which tabulates selected regions of
+        an image in a format suitable for programs like UVGEN.
+        Different output modes can be selected:
+ 
+        The UVGEN format outputs, in (8f10.4) format:
+            FLUX,DRA,DDEC,WMAJ,WMIN,WPA,POLN,POLPA
+        where the last 5 parameters are set to 0.0. DRA and DDEC are
+        given in arcsec w.r.t. the reference pixel if the axis
+        type is a recognized astronomical one.
+ 
+        The NEMO format outputs, in (3g16.9) format:
+            DRA, DDEC, FLUX
+ 
+%A in
+      The input file name. No default.
+%A region
+      The region of interest of the input. Default is the entire input.
+      Full region specifations are supported.
+    * Note: 3D datacubes do not display their 3rd coordinate.
+%A clip
+      Only tabulate scaled (see SCALE=) image data above the clip value.
+      Default: all data.
+%A scale
+      Scale factor with which the image data is multiplied
+      before output and clip test (see CLIP=). Default:  1.0.
+%A mode
+      Output mode. Currently accepted are: uvgen, nemo.
+      Default: nemo.
+%A format
+      Override the default mode-dependant output format. Default: none.
+      Note: The format specification must be a legal fortran
+      format, including the parenthesis; e.g. ``format=(3F20.10)''
+%A units
+      Units of the output axes. Valid options are absolute and relative
+      (with respect to the reference pixel).
+      If an axis is a known astronomical coordinate system, the units are
+      displayed in arcsecs.
+      Default: relative.
+%A log
+      The output log file. The default is the terminal.

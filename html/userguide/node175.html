@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Some Additional Tools</TITLE>
+<META NAME="description" CONTENT="Some Additional Tools">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node174.html">
+<LINK REL="up" HREF="node171.html">
+<LINK REL="next" HREF="node176.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3606"
+  HREF="node176.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3602"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3598"
+  HREF="node174.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3604"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3607"
+  HREF="node176.html">The Individual Approach</A>
+<B>Up:</B> <A NAME="tex2html3603"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3599"
+  HREF="node174.html">Self-Calibration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION002164000000000000000"></A><A NAME="s:mostools"></A>
+<BR>
+Some Additional Tools
+</H2>
+We briefly describe some other useful tools.
+
+<UL>
+<LI>Mosaic Coverage - MOSLST:<A NAME="14361"></A>
+In doing a mosaic observation, you will want to good Fourier sampling (coverage)
+as well as even sampling of the different pointing centres. Task <A NAME="tex2html916"
+  HREF="../doc/moslst.html">moslst</A>
+produces a simple plot of LST vs point number for mosaiced visibility
+files. In doing this, it required that you follow the <EM>field naming
+convention</EM> mentioned earlier (see Section&nbsp;<A HREF="node168.html#s:fnc">21.3</A>).
+</LI>
+<LI>Listing Mosaic Tables - IMLIST:<A NAME="14366"></A>
+Task <A NAME="tex2html917"
+  HREF="../doc/invert.html">invert</A>
+stores information concerning its linear mosaic
+operation in the item <code>mostable</code> (stored in both the <code>map</code>
+and <code>beam</code> datasets). The table can be printed
+by <A NAME="tex2html918"
+  HREF="../doc/imlist.html">imlist</A>, using <code>options=mosaic</code>.
+</LI>
+<LI>Mosaic Point-Spread Function - MOSPSF:<A NAME="14370"></A>
+It is occasionally instructive to look at the point-spread function at
+a particular position in a mosaic experiment. Task <A NAME="tex2html919"
+  HREF="../doc/mospsf.html">mospsf</A>
+can compute
+this. Apart from the input beam data-set, the user must specify a position and
+frequency of interest (the point-spread function is also frequency
+dependent).
+</LI>
+<LI>Mosaic Sensitivity and Gain Images - MOSSEN:<A NAME="14373"></A>
+Just as the point-spread function varies, so does the expected noise
+level in an output mosaiced image. Additionally, as mentioned above,
+<A NAME="tex2html920"
+  HREF="../doc/invert.html">invert</A>
+does not attempt to completely correct for the primary
+beam attenuation where there is too little data (i.e. some primary
+beam attenuation is in the output image). The task <A NAME="tex2html921"
+  HREF="../doc/mossen.html">mossen</A>
+can produce images of the expected rms noise and the remaining
+primary beam attenuation given a mosaiced image.
+</LI>
+<LI>MOSTESS: <A NAME="tex2html922"
+  HREF="../doc/mostess.html">mostess</A>
+implements a mosaicing algorithm
+identical to the AIPS <A NAME="tex2html923"
+  HREF="../doc/VTESS.html">VTESS</A>
+program. It is more cumbersome
+to use, and produces results which are no better than <A NAME="tex2html924"
+  HREF="../doc/mosmem.html">mosmem</A>. Its
+use is not recommended.
+</LI>
+<LI>PMOSMEM: <A NAME="tex2html925"
+  HREF="../doc/pmosmem.html">pmosmem</A>
+can be used to do a joint deconvolution
+of a polarimetric mosaic. The ``joint'' in this case applies to both
+jointly processing the multiple Stokes parameters as well as
+processing the different pointings. With polarised emission being potentially
+positive and negative valued, the entropy measure for this is different
+from a simple total intensity deconvolution. See
+<A NAME="tex2html926"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1999A%26AS..139..387S">Sault et al. (1999)</A>
+(A&amp;A 139, 387) for more background on joint polarimetric deconvolution.
+</LI>
+<LI>MOSCSDI: <A NAME="tex2html927"
+  HREF="../doc/moscsdi.html">moscsdi</A>, where the 'c' stands for 'Complex', does a
+joint deconvolution of the combination of linear Stokes parameters Q+iU. 
+This approach avoids bias due to the position angle of the linear polarisation 
+and gives better results than mossdi for extended emission. See
+<A NAME="tex2html928"
+  HREF="http://arxiv.org/abs/1606.01482">Pratley and Johnston-Hollitt (2016)</A>
+for the details of the algorithm.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3606"
+  HREF="node176.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3602"
+  HREF="node171.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3598"
+  HREF="node174.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3604"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3607"
+  HREF="node176.html">The Individual Approach</A>
+<B>Up:</B> <A NAME="tex2html3603"
+  HREF="node171.html">The Joint Approach</A>
+<B> Previous:</B> <A NAME="tex2html3599"
+  HREF="node174.html">Self-Calibration</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

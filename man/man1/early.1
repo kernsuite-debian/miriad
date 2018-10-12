@@ -1,0 +1,58 @@
+.TH early 1
+.SH NAME
+early - Flag data which has early/normal problems.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration, uv analysis
+.SH DESCRIPTION
+EARLY is a Miriad task which flags visibility data that it suspects
+contains early/normal problems. The input must be a multi-channel
+dataset (NOT channel 0). Early works by comparing the scatter of
+data within a visibility record with that expected because of thermal
+noise. If the scatter exceeds some number of sigmas, then the data
+are assumed to be affected by the early/normal problem, and the
+entire record is flagged.
+.sp
+Several assumptions about the data are make:
+Firsly there is significant signal in the visibility
+record so that the phase slope across the band causes a substantial
+increase in the scatter. This will not be true if the signal is
+weak, and the visibility records are noise dominated. If the signal
+is noise dominated, no early/normal problems can be detected, and
+the data will not be flagged.
+.sp
+Secondly the data have been bandpass calibrated. EARLY always applies
+a bandpass correction to the data if there is one present.
+.sp
+Thirdly that the noise level is fairly constant across the band,
+.sp
+Fourthly that any end channels that might be bad have already been
+flagged.
+.sp
+Fifthly there is no substantial variation of the signal across
+the band. This will be true for continuum, but not spectral
+line work.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility data-set to flag. Several files can be
+given. Wildcards are supported. No default.
+.TP
+\fIselect\fP
+Normal uv selection. This selects which data to check for early/normal
+problems.
+.TP
+\fIsigma\fP
+Number of sigmas. Default is 10.
+.TP
+\fIlog\fP
+Output log file for messages. The default is the terminal.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by commas.
+Possible values are:
+.nf
+  noapply    Do not do any flagging -- just check the data, and
+             produce the appropriate messages.
+  verbose    Give details about what is (or would be) flagged.

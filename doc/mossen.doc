@@ -1,0 +1,26 @@
+%N mossen
+%D Determine the rms and gain in a mosaiced image.
+%P rjs
+%: map combination
+%B
+        MOSSEN determines the rms and gain of a mosaiced image.  Both
+        of these parameters are a function of position (and also mildly
+        frequency dependent).
+ 
+%A in
+        The input map of interest. No default.
+%A region
+        The standard region of interest parameter, giving the region
+        where the sensitivity function is to be determined. The default
+        is the entire input image.
+%A sen
+        The output image giving the rms as a function of position.
+        The default is that this image is not created.
+%A gain
+        The output image giving the gain to a unit point source as a
+        function of position. To avoid noise amplification at the
+        edge of mosaiced regions, Miriad does not normally totally
+        correct for the primary beam beyond a certain point. The default
+        is that no gain image is formed.
+ 
+%R 1.4, 2010/11/22 05:33:56 UTC

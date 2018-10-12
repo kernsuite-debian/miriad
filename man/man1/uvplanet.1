@@ -1,0 +1,141 @@
+.TH uvplanet 1
+.SH NAME
+uvplanet - Fiddle planetary and solar system data.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+uvplanet is a Miriad task used to fiddle visibility datasets
+from planetary (and other solar system) observations. It can:
+.nf
+  - Add planet orientation parameters (plmaj,plmin,plangle) to
+    the dataset. uvplanet recognises planets by their source name,
+    and knows their orientations as a function of time.
+  - Apply a time-varying phase shift to track the object.
+  - Subtract a thermal disk.
+  - Subtract background sources, accounting for a moving phase centre.
+.fi
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input uv datasets. Several can be given
+Wildcards are supported. No default.
+.TP
+\fIout\fP
+The name of the output uv data-set. There is no default name.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is to select everything.
+.TP
+\fIpltb\fP
+Parameters for planets only, which determine model for the planetary
+disk to be subtracted off. It consists of one or two values. The
+first is the blackbody temperature of the disk, in Kelvin.
+The second is the limb darkening parameter. The limb darkening
+parameter is a value between 0 and 1. The apparent brightness of
+the disk falls off as cos(theta)**limb.
+uvplanet has built-in ephemerides and models of the planets which
+gives their apparent sizes and shapes.
+The default is 0 for both parameters (i.e. do not subtract off a disk).
+.TP
+\fIoptions\fP
+This gives extra processing options. Several options can be given,
+each separated by commas. They may be abbreviated to the minimum
+needed to avoid ambiguity. Possible options are:
+.nf
+   replace     Replace the data with the blackbody disk and point
+               sources (the normal behaviour is to subtract the
+               blackbody disk and point sources).
+   pparam      Normally uvplanet uses its own ephemerides to determine
+               planet major and minor axes and position angle to model
+               the planets disk. The pparam option causes uvplanet to use
+.fi
+.sp
+.nf
+   magnetic    For Jupiter only: The magnetic axis is used to
+               set planet orientation parameters. This overrides the
+               normal behaviour of using the spin axis.
+   arcane      The format for the pmotion text files is the
+               "arcane" format (see below).
+.fi
+The following options can be used to turn off calibration corrections.
+The default is to apply any calibration present.
+.nf
+   nocal       Do not apply the gains table.
+   nopass      Do not apply bandpass corrections.
+   nopol       Do not apply polarization corrections.
+.TP
+\fIsources\fP
+.fi
+This gives the position and flux of point sources to be subtracted
+from the visibility dataset. Many sources can be given. Each
+source is specified by three numbers:
+.nf
+  ra dec flux
+.fi
+The RA and DEC are in normal Miriad format, and the flux is in Jy.
+.TP
+\fIpmotion\fP
+This parameter allows phase shifts to be applied to the data to
+make the phase centre track the object of interest. Assuming that
+the object has significant proper motion, this can
+correct for phase tracking errors (e.g. wrong ephemeris) or perhaps
+no tracking at all. One or two tracking files can be given. The first
+file gives the centre of the object (as a function of time). The second
+gives the phase centre of the observation (as a function of time).
+If both files are given, the data are phase shifted to the centre
+of the object (i.e. corrects for tracking errors). If only one file
+is given, then the RA and DEC in the dataset are taken as the
+phase centre of the telescope.
+.sp
+The "pmotion" parameter can also be used to correct the RA and DEC
+stored in the dataset. If these are incorrect (e.g. many telescopes
+and the FITS format, do not store the time-varying RA/DEC, even though
+they track time varying RA/DEC), then giving the one text file
+twice will cause the RA and DEC to be corrected and no shifts being
+applied.
+.sp
+The text files contain potentially many lines, with each line
+giving a sky position at a given time.
+Two formats for the text files are possible (if there are
+two input files, both must be in the same format). The normal format
+consists of 3 values per line, being
+.sp
+.nf
+  time ra dec
+.fi
+.sp
+with "time" (UTC), "ra" and "dec" being the position of the object at
+a given time. The time, ra and dec are in the normal Miriad formats.
+The times should be in increasing order. Linear interpolation
+is used to estimate positions between the given times.
+.sp
+A convenient way to develop this file is through the JPL ``Horizons''
+service. This is accessed through
+.sp
+.nf
+  telnet ssd.jpl.nasa.gov 6775
+.fi
+.sp
+Using a text reformating tool (e.g. PERL), the output from Horizons
+is readily converted to the format required by uvplanet.
+Documentation on the Horizons system is available from
+.sp
+.nf
+  http://ssd.jpl.nasa.gov/horizons.html
+.fi
+.sp
+The other possible format is the ``arcane'' format, which will be
+expected if "options=arcane" is given. This format is provided for
+obscure historical support. It consists of 6 values per line, being
+.sp
+.nf
+  start_time time ra dec dra ddec
+.fi
+.sp
+The times are in modifed Julian days, ra and dec are in turns,
+and the rate parameters, "dra" and "ddec", are in turns/day. The
+record is considered valid after "start_time", and the rates
+are used to estimate positions between given times.

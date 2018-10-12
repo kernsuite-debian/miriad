@@ -1,0 +1,42 @@
+.TH uvfstats 1
+.SH NAME
+uvfstats - Print flagging statistics.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+UVFSTATS prints statistics about flagged visibilities.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility file. Several can be given. Wildcards are
+supported. No default.
+.TP
+\fIline\fP
+Normal line parameter. The default is all channels.
+.TP
+\fIselect\fP
+Normal visibility selection parameter. The default is to select
+all visibilities.
+.TP
+\fImode\fP
+This determines what the flagging statitics are determined as
+a function of. Possible values are:
+.nf
+  stokes    Determine statistics by Stokes/pol'n parameter.
+            This is the default.
+  overall   Give a single overall statistic.
+  baseline  Determine statistics by baseline number.
+  antenna   Determine statistics by antenna number.
+  channel   Determine statistics by channel number.
+.TP
+\fIoptions\fP
+.fi
+Task enrichment parameters. Possible values are
+.nf
+  absolute  Give flagged correlations as an absolute number
+            rather than a percentage.
+  unflagged Give statistics about the unflagged (rather than
+            flagged) correlations.

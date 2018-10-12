@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Combining Pre- and Post-August 1994 Data</TITLE>
+<META NAME="description" CONTENT="Combining Pre- and Post-August 1994 Data">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node92.html">
+<LINK REL="up" HREF="node84.html">
+<LINK REL="next" HREF="node94.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2545"
+  HREF="node94.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2541"
+  HREF="node84.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2537"
+  HREF="node92.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2543"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2546"
+  HREF="node94.html">Imaging</A>
+<B>Up:</B> <A NAME="tex2html2542"
+  HREF="node84.html">Calibration Strategies</A>
+<B> Previous:</B> <A NAME="tex2html2538"
+  HREF="node92.html">High precision polarimetric calibration</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001260000000000000000"></A><A NAME="s:1934flux"></A>
+<BR>
+Combining Pre- and Post-August 1994 Data
+</H1>
+In August 1994, the nominal flux density of the ATCA's primary flux
+calibrator, 1934-638, was revised to give better agreement between
+the ATCA's flux density scale and the flux scales used in the northern
+hemisphere (the VLA in particular). For more discussion, see John
+Reynolds' memo <A NAME="tex2html355"
+  HREF="http://www.atnf.csiro.au/observers/memos/d96783~1.pdf">``A revised flux scale for the AT
+Compact Array''</A>
+(AT Memo 39.3/040).
+
+<P>
+This introduces a problem when mixing data (either combining or
+just comparing) calibrated before and after this change. By default
+<I>Miriad</I> tasks use the new flux scale. However if you use the option
+`oldflux' in <A NAME="tex2html356"
+  HREF="../doc/gpcal.html">gpcal</A>
+and <A NAME="tex2html357"
+  HREF="../doc/mfcal.html">mfcal</A>
+when calibrating 1934-638,
+the old flux scale will be propagated to the calibrated data.
+In this way, new data can be calibrated
+to have the old flux scale, and so can be combined/compared
+directly with data calibrated before the revision.
+
+<P>
+
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

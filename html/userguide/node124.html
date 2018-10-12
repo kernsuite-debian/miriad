@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Velocities in Miriad</TITLE>
+<META NAME="description" CONTENT="Velocities in Miriad">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node125.html">
+<LINK REL="previous" HREF="node123.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node125.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2957"
+  HREF="node125.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2953"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2947"
+  HREF="node123.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2955"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2958"
+  HREF="node125.html">ATCA Spectral Line Correlator</A>
+<B>Up:</B> <A NAME="tex2html2954"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2948"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001610000000000000000"></A><A NAME="4187"></A>
+<BR>
+Velocities in <I>Miriad</I>
+</H1>
+Because of the Doppler effect, the observed frequency of a spectral line
+can be related to the radial velocity between the
+observer and the source. The relativistic
+expression relating frequency to radial velocity is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+v = c\frac{\nu_0^2 -\nu^2}{\nu_0^2+\nu^2},
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="95" HEIGHT="45" BORDER="0"
+ SRC="img71.png"
+ ALT="\begin{displaymath}
+v = c\frac{\nu_0^2 -\nu^2}{\nu_0^2+\nu^2},
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <I>v</I> is the radial velocity, <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.png"
+ ALT="$\nu$"></SPAN> the observed frequency, <SPAN CLASS="MATH"><IMG
+ WIDTH="19" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img4.png"
+ ALT="$\nu_0$"></SPAN>
+the rest frequency, and <I>c</I> is the speed of light.
+For various reasons, astronomers usually approximate
+this formula. There are two common approximations - the ``radio
+definition'',
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+v_{\rm radio}=c(1-\frac{\nu}{\nu_0}),
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="127" HEIGHT="37" BORDER="0"
+ SRC="img73.png"
+ ALT="\begin{displaymath}
+v_{\rm radio}=c(1-\frac{\nu}{\nu_0}),
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+and the ``optical definition'',
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+v_{\rm optical}=c(\frac{\nu_0}{\nu}-1).
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="136" HEIGHT="35" BORDER="0"
+ SRC="img74.png"
+ ALT="\begin{displaymath}
+v_{\rm optical}=c(\frac{\nu_0}{\nu}-1).
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+The radio definition has the advantage that points sampled at equal increments
+in frequency translate to equal increments
+in velocity. However the radio definition is now deprecated by the IAU.
+
+<P>
+In defining a velocity, a rest frame must also be given. Because of the
+Earth's diurnal and annual motion (spin on its axis, and rotation around the
+Sun), the Earth's surface is
+not a good rest frame. The diurnal and annual motion have maximum
+velocity components of approximately 0.5 km/s and 30 km/s respectively.
+Two commonly used rest frames are the solar system barycentre (the
+dynamical centre of the solar system) and the local standard of rest (LSR)
+(which accounts for motion of the solar system relative to a
+collection of local stars). The local standard of rest is generally
+used as the rest frame for Galactic astronomy, whereas the barycentric
+frame (often misnamed heliocentric frame - which is slightly different)
+is generally used for extragalactic work. <I>Miriad</I> uses the ``definition''
+of the LSR that the solar system barycentre is moving at 20 km/s  in the
+direction of (RA,DEC) = 18 hours,+30 degrees (B1900) (this is a so-called
+``kinematic'' definition of the LSR).
+
+<P>
+Because of the Earth's motion, the frequency that corresponds to a
+particular velocity of an astronomical source will change with time. When
+observing spectral lines, many observatories continuously change the
+observing frequency to account for the effect of the Earth motion,
+and thus make a particular
+source velocity correspond to a single channel. This is known as
+Doppler tracking.
+
+<P>
+<EM>Note, however, that the ATCA does not Doppler track.</EM>
+
+<P>
+This means that the channel that a particular source line corresponds to
+varies with time. If the velocity resolution is coarse compared to the
+diurnal velocity component of the Earth ( <SPAN CLASS="MATH"><IMG
+ WIDTH="41" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img75.png"
+ ALT="$&lt; 0.5$"></SPAN> km/s), and only
+a single configuration of data is being used, this effect can be ignored.
+However when high velocity resolution is required or multiple configurations
+are being combined, account must be made of the way the line wanders between
+channels. That is, account must be taken of the changing radial velocity
+of the observatory.
+
+<P>
+For a dataset from an observatory that does
+Doppler track (i.e. <EM>not</EM>  the ATCA), the frequency descriptors in a
+dataset <EM>should</EM> vary with time. This will be the case with some
+datasets, but not others - the time varying Doppler frequency component has
+been lost somewhere. Although this loss will affect the calculation of
+<I>u-v</I> coordinates, the error that it introduces is generally negligible
+(see the discussion in the spectral-line processing chapter of Neil Killeen's
+<A NAME="tex2html544"
+  HREF="http://www.atnf.csiro.au/computing/software/atca_aips/atcal_html.html">``Analysis of Australia Telescope Compact Array Data''</A>).
+
+<P>
+Regardless of whether or not the observatory Doppler tracks, <I>Miriad</I> stores
+the radial velocity of the observatory (with respect to the rest frame)
+to account for the Earth's motion when determining source velocities.
+This is stored in the visibility
+variable <code>veldop</code>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2957"
+  HREF="node125.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2953"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2947"
+  HREF="node123.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2955"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2958"
+  HREF="node125.html">ATCA Spectral Line Correlator</A>
+<B>Up:</B> <A NAME="tex2html2954"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html2948"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

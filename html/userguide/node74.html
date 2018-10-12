@@ -1,0 +1,252 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Some Theory</TITLE>
+<META NAME="description" CONTENT="Some Theory">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node75.html">
+<LINK REL="previous" HREF="node73.html">
+<LINK REL="up" HREF="node73.html">
+<LINK REL="next" HREF="node75.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2311"
+  HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2307"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2301"
+  HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2309"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2312"
+  HREF="node75.html">Calibration Methods</A>
+<B>Up:</B> <A NAME="tex2html2308"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2302"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001110000000000000000"></A><A NAME="2838"></A><A NAME="2839"></A>
+<A NAME="2840"></A>
+<BR>
+Some Theory
+</H1>
+
+<P>
+Much of the theory here has been borrowed from the memo
+<A NAME="tex2html250"
+  HREF="http://www.atnf.csiro.au/observers/memos/d97b7f~1.pdf">`AT Polarisation Calibration'</A>
+(AT Memo 39.3/015).
+See that memo for more details.
+A more detailed description of polarimetric interferometry can be found in
+<A NAME="tex2html251"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1996A%26AS..117..137H">Hamaker, Bregman &amp; Sault (1996)</A>
+and <A NAME="tex2html252"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1996A%26AS..117..149S">Sault, Hamaker &amp; Bregman (1996)</A>
+(A&amp;AS 117, 137 and A&amp;AS 117, 149).
+
+<P>
+Recall from Chapter&nbsp;<A HREF="node31.html#c:visconcepts">5</A> that <I>Miriad</I> models a feed
+as having a composite gain of
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+g(t)g_{P}(\nu)	\exp(i2\pi\tau(t)(\nu-\nu_0))
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="210" HEIGHT="28" BORDER="0"
+ SRC="img15.png"
+ ALT="\begin{displaymath}
+g(t)g_{P}(\nu) \exp(i2\pi\tau(t)(\nu-\nu_0))
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+where <I>g(t)</I> is a time variable complex number (often loosely called the
+antenna gain), <SPAN CLASS="MATH"><IMG
+ WIDTH="44" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img16.png"
+ ALT="$g_{P}(\nu)$"></SPAN> is the bandpass function, and <SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="14" ALIGN="BOTTOM" BORDER="0"
+ SRC="img17.png"
+ ALT="$\tau$"></SPAN> is a
+time-varying delay term.
+
+<P>
+Additionally, we have to consider the response of the feeds to polarised
+emission.
+Whether a feed is linearly or circularly polarised, its instantaneous
+response to a signal is a linear combination of two of the four Stokes
+parameters that describe the wave.  In the equatorial frame of the
+source, ideal linear feeds respond according to
+
+<P>
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+XX &=& I + Q \\
+YY &=& I - Q \\
+XY &=& U + iV \\
+YX &=& U - iV, \\
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="124" HEIGHT="119" BORDER="0"
+ SRC="img18.png"
+ ALT="\begin{eqnarray*}
+XX &amp;=&amp; I + Q \\
+YY &amp;=&amp; I - Q \\
+XY &amp;=&amp; U + iV \\
+YX &amp;=&amp; U - iV, \\
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+where the <I>X</I> and <I>Y</I> feeds are at position angles 0 and 90 degrees,
+respectively.  Perfect circular feeds respond according to
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+RR &=& I + V \\
+LL &=& I - V \\
+RL &=& Q + iU \\
+LR &=& Q - iU \\
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="118" HEIGHT="119" BORDER="0"
+ SRC="img19.png"
+ ALT="\begin{eqnarray*}
+RR &amp;=&amp; I + V \\
+LL &amp;=&amp; I - V \\
+RL &amp;=&amp; Q + iU \\
+LR &amp;=&amp; Q - iU \\
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+These equations show immediately why it is harder to calibrate an
+instrument with linear feeds, such as the ATCA, compared with an
+instrument with circular feeds, such as the VLA.  In the latter case,
+one can make the excellent assumption that the calibrators, which are
+used to determine the antenna gains, are not circularly polarised.
+Thus, the <I>RR</I> and <I>LL</I> visibilities are a direct measure of <I>I</I>, for
+which we have a good model (<I>i.e.</I> a point source of known flux density).
+Consequently they can be used to calibrate the gains with time.  On the
+other hand, it is not necessarily a good assumption that a calibrator is
+not linearly polarised, so that <I>XX</I> and <I>YY</I> correlations cannot always
+be used as a direct measure of <I>I</I>.
+
+<P>
+In addition, for `alt-az' telescopes, the feeds rotate with respect to the
+equatorial frame.  This causes the actual response of ideal linearly
+polarised feeds to vary with the angle between the ``sky'' and the feed -
+<SPAN CLASS="MATH"><IMG
+ WIDTH="14" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img20.png"
+ ALT="$\chi$"></SPAN> (which
+varies with time, although non-linearly), according to
+
+<P>
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{eqnarray*}
+XX &=& I + Q \cos(2\chi) + U \sin(2\chi) \\
+YY &=& I - Q \cos(2\chi) - U \sin(2\chi) \\
+XY &=& iV - Q \sin(2\chi) + U \cos(2\chi) \\
+YX &=& -iV - Q \sin(2\chi) + U \cos(2\chi) \\
+\end{eqnarray*}
+ -->
+<IMG
+ WIDTH="274" HEIGHT="119" BORDER="0"
+ SRC="img21.png"
+ ALT="\begin{eqnarray*}
+XX &amp;=&amp; I + Q \cos(2\chi) + U \sin(2\chi) \\
+YY &amp;=&amp; I - Q \cos...
+...U \cos(2\chi) \\
+YX &amp;=&amp; -iV - Q \sin(2\chi) + U \cos(2\chi) \\
+\end{eqnarray*}"></DIV>
+<BR CLEAR="ALL"><P></P>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+So far we have assumed that the feeds are ideal.  This is never the
+case, and their departure from the ideal can be characterised by
+leakage terms.  <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img22.png"
+ ALT="$D_{\rm x}$"></SPAN> is the leakage of the <I>y</I> component of the
+electric field into the <I>X</I> feed, and <SPAN CLASS="MATH"><IMG
+ WIDTH="25" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img23.png"
+ ALT="$D_{\rm y}$"></SPAN> is the leakage of the <I>x</I>
+component of the electric field into the <I>Y</I> feed.  Another way of
+thinking of them is the combination of the ellipticity and error in the
+position angle of the polarisation ellipses of each feed.
+
+<P>
+Incorporating these leakage terms results in fairly gory equations - see
+<A NAME="tex2html253"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1996A%26AS..117..137H">Hamaker, Bregman &amp; Sault (1996)</A>
+and <A NAME="tex2html254"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1996A%26AS..117..149S">Sault, Hamaker &amp; Bregman (1996)</A>
+(A&amp;AS 117, 137 and A&amp;AS 117, 149) for more details.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2311"
+  HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2307"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2301"
+  HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2309"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2312"
+  HREF="node75.html">Calibration Methods</A>
+<B>Up:</B> <A NAME="tex2html2308"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2302"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

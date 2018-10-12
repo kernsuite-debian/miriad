@@ -1,0 +1,25 @@
+.TH uvswap 1
+.SH NAME
+uvswap - Relabel polarizations in uvdata.
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+UVSWAP relabels RL correlations as LR and LR correlations as RL.
+XY are relabeled YX and YX correlations as XY.
+RR, LL, XX and YY  are left unchanged.  The data are copied in their
+raw form only, gain, polarization and bandpass tables are
+neither applied nor copied.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility data file. No default
+.TP
+\fIout\fP
+Output visibility data file name. No default.
+.TP
+\fIoptions\fP
+xyswap  swap X and Y pols.
+XX to YY, YY to XX, XY to YX and YX to XY.

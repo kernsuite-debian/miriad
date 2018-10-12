@@ -1,0 +1,31 @@
+.TH gperror 1
+.SH NAME
+gperror - Add dummy gains to a visibility file.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+GPERROR is a Miriad task which adds a gains table to a uv dataset.
+This gain table consists of random phase and amplitude errors.
+GPERROR's use is in simulating such phase and amplitude errors in
+the data. See also UVGEN's GNOISE and PNOISE parameters.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file. This is used to determine the number
+of antennas and the time range.
+No default.
+.TP
+\fIinterval\fP
+Averaging time interval, over which variations will occur,
+in minutes.
+Default is 5.
+.TP
+\fIpnoise\fP
+Anntena based rms phase noise, in degrees.
+Default is 0.
+.TP
+\fIgnoise\fP
+Antenna based rms gain noise, given as a percentage.
+Default is 0.

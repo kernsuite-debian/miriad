@@ -1,0 +1,160 @@
+<title> Documentation on uvgains </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on uvgains</h1>
+<pre>
+
+Task: uvgains
+Purpose: Create baseline-based channel gains from averaged uv-data
+Categories: uv analysis
+
+        UVGAINS averages uv-data, and creates channel gains for each
+        baseline for either spectral line or wideband channels. The
+        channel gains are written into the output averaged uv-data and
+        are used to correct for bandpass or closure errors in the data.
+        UVGAINS can also be used to make autocorrelation ON/OFF scans,
+        and fit polynomials to spectral baselines.
+        The channel gains are applied when copying or imaging the uv-data.
+        To apply the channel gains to another uv-data file, use COPYHD to
+        copy the channel gains items (cgains, ncgains, ncbase) or wideband
+        gains items (wgains, nwgains, nwbase) into the other uv-data file.
+        The channel or wideband gains should only be transfered if the
+        uv-data files use the same correlator configuration.
+        In general the gains are applied automatically by Miriad tasks when
+        plotting (uvplt, uvspec), copying (uvcat, uvcal, uvaver, uvgains),
+        or imaging (invert). The channel gains and wideband gains are not
+        interpolated and can only be applied if all the channels are used,
+        i.e. in plotting, or imaging all the channels. To plot or process
+        other line types the channel gains must first be applied by copying
+        the channel gains into the Miriad dataset to be corrected (copyhd),
+        and writing all the channels into a new Miriad dataset (uvcat, uvcal).
+ 
+        Examples:
+ 
+        To derive the channel gains relative to the 1st wideband channel:
+            uvgains vis=mars.12apr out=pass interval=1000 ref=wide,1
+ 
+        To apply the gains to another file:
+            copyhd in=pass out=omc1.12apr items=ncgains,cgains,ncbase
+        (gpcopy can also be used to copy the channel gains)
+ 
+        To plot the passband corrected spectra (must plot all channels):
+            uvspec vis=omc1.12apr device=/xw
+ 
+        To plot the spectra without the passband correction:
+            uvspec vis=omc1.12apr device=/xw options=nopass
+ 
+        To process other line types, first write a corrected dataset:
+            uvcal vis=omc1.12apr out=omc1.12apr.pass options=nowide
+        (items nwgains,nwbase,wgains are needed to correct the wideband)
+ 
+        To make ON/OFF scans for autocorrelation data:
+            uvgains vis=off out=passband
+            gpcopy vis=passband out=on
+ 
+        The entire ON/OFF scan can be plotted:
+            uvspec vis=on device=/xw
+ 
+        The passband must be applied before further processing:
+            uvcat vis=on out=on-off
+ 
+        To fit the spectral baselines in autocorrelation data:
+            uvgains vis=on-off  options=window,polyfit device=/xw
+                badchan=(where the spectral lines are) out=
+
+Key: <a name="vis"><a href="vis.html">vis</a>
+        The name of the input uv-data file.
+
+Key: <a name="select"><a href="select.html">select</a>
+        The normal uv selection commands. The default is use everything.
+        See the help on <a href="select.html">select</a> for more details.
+
+Key: <a name="line"><a href="line.html">line</a>
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        See the help on <a href="line.html">line</a> for more details.
+        The default is all channels (or all wide channels if there are no
+        spectral channels). The output will consist of only spectral or
+        wideband data (but not both).
+        The data to be corrected must use the same line type.
+        Only un-averaged channel data can be used with options=polyfit.
+
+Key: <a name="ref">ref
+        The normal reference linetype, in the form:
+          line,start,width
+        The channel or wideband gains can be determined relative to the
+        reference line before averaging the data. This may be the best method
+        in the case of high SNR or rapid antenna gain fluctuations. In this
+        case no gain corrections should be applied: options=nocal,nopol
+        Using a reference line and applying gains does not make sense.
+        The default is no reference line.
+
+Key: <a name="stokes"><a href="stokes.html">stokes</a>
+        If a value is given, uvgains converts the input into the required
+        polarizations before writing to the output. Default is to copy
+        across the polarizations present in the input files.
+
+Key: <a name="interval">interval
+        Time averaging interval, in minutes. The default is 0. (i.e. no
+        averaging). The channel gains are derived from the first average.
+        The uv-data can be averaged into several intervals to see how
+        cgains or wgains change with time. A large interval averages each
+        occurance of each 'source'.
+
+Key: <a name="out"><a href="out.html">out</a>
+        The name of the output uv data set. No default.
+
+Key: <a name="options"><a href="options.html">options</a>
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           'nocal'      Do not apply the gains file. By default, UVGAINS
+                        applies the gains file in copying the data.
+           'nopol'      Do not apply polarization corrections. By default
+                        UVGAINS corrects for polarization cross-talk.
+           'dopass'     Apply bandpass corrections. By default UVGAINS
+                        does not correct for the shape of the bandpass.
+           'polyfit'    Use polynomial fits to the averaged data to derive
+                        the channel gains.
+           'window'     Fit polynomial to each spectral window.
+                        Default is to fit all channels.
+           'dsb'        Fit polynomial to each sideband for double sideband
+                        spectra. 'dsb' and 'window' are mutually exclusive.
+           'scalar'     Fit polynomial to amplitude and phase. Default is
+                        to fit (real,imag).
+           'unwrap'     Attempt to extend phases beyond -180 to 180 degrees
+                        for 'scalar' polynomial fit.
+           'noamp'      Re-normalize the gains to the average amplitude on
+                        each baseline. i.e. do not force amplitude closure.
+                        The default normalizes the gains to obtain unit
+                        amplitude on all baselines. i.e. amplitude closure.
+
+Key: <a name="device"><a href="device.html">device</a>
+        PGPLOT device for polynomial fits. The default is to ask user.
+
+Key: <a name="nxy">nxy
+        Two values. Number of plot windows in x and y, Default nx=1, ny=nx.
+
+Key: <a name="npoly">npoly
+        Two values to specify the order of the Lagrange polynomial fit to
+        the real &amp; imaginary, or amplitude &amp; phase of the averaged uv-data.
+        Different values can be given for each window.
+        The maximum is 8th order polynomial. Default 0,0,0,0,0,0,0,0,0,0,0,0
+        If just two values are given, these values are used for each window.
+
+Key: <a name="badchan">badchan
+        For options=polyfit
+        Number of ranges of bad channels followed by list of up to 20 pairs
+        of numbers to specify range of channels to exclude in polyfit.
+        e.g. to exclude 2 center channels in eight 64-channel windows, use:
+        badchan=8,32,33,96,97,160,161,224,225,288,289,352,353,416,417,480,481
+
+Key: <a name="endchan">endchan
+        For options=polyfit
+        Number of channels to drop from window edges in polyfit. Default=4.
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Mosaicing Observing Strategies</TITLE>
+<META NAME="description" CONTENT="Mosaicing Observing Strategies">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node169.html">
+<LINK REL="previous" HREF="node167.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node169.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3520"
+  HREF="node169.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3516"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3510"
+  HREF="node167.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3518"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3521"
+  HREF="node169.html">Visibility Processing</A>
+<B>Up:</B> <A NAME="tex2html3517"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3511"
+  HREF="node167.html">Mosaicing</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002130000000000000000"></A><A NAME="s:mosobs"></A><A NAME="14107"></A>
+<BR>
+Mosaicing Observing Strategies
+</H1>
+The job of planning a mosaic experiment requires extra thought over
+a simple conventional observation. Issues that you must decide in
+the planning of an experiment include:
+
+<P>
+
+<UL>
+<LI>Pointing grid pattern: In a mosaic experiment, you observe
+a number of pointings - possibly a few to several hundred, depending
+on the size of the source of interest. To consider how dense the
+sampling grid needs to be, consider the primary beam of an antenna.
+In the <I>u-v</I> plane, the Fourier transform
+of the primary beam pattern is just the cross-correlation between
+two antenna illumination patterns. For the 22-m ATCA dishes, the
+Fourier transform of the primary beam pattern will be of finite and circular
+extent, having a diameter of 44-m. Because it is of finite extent,
+Nyquist's sampling theorem indicates that, provided we do not sample
+in the sky domain coarser than some limit (i.e. provided the pointing
+grid pattern is sufficiently fine), all information can be retrieved.
+Assuming a standard, rectangular grid, the sky plane Nyquist sampling limit is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\theta_{\rm rect} = \frac{\lambda}{2D}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="74" HEIGHT="39" BORDER="0"
+ SRC="img106.png"
+ ALT="\begin{displaymath}
+\theta_{\rm rect} = \frac{\lambda}{2D}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+(<SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img107.png"
+ ALT="$\lambda$"></SPAN> is the wavelength, and <I>D</I> is the dish diameter). For a
+well-illuminated dish, this spacing corresponds roughly to
+half-power point spacing between field centres. Because
+the extent of the transform is circular, we can do somewhat better than
+this, by using a so-called hexagonal grid. This grid places pointing
+centres at the vertices of equilateral triangles - packing six triangles
+together gives a hexagon. An extension of Nyquist's theorem indicates that
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\theta_{\rm hex} = \frac{2}{\sqrt{3}}\frac{\lambda}{2D}.
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="102" HEIGHT="43" BORDER="0"
+ SRC="img108.png"
+ ALT="\begin{displaymath}
+\theta_{\rm hex} = \frac{2}{\sqrt{3}}\frac{\lambda}{2D}.
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+So a hexagonal grid allows a given area of the sky to be covered
+in a smaller number of pointings (it does also require slightly longer drive
+times between pointings - see below - which may occasionally be a
+consideration).
+Table&nbsp;<A HREF="#t:mosgrid">21.1</A> gives this
+grid spacing for ATCA dishes.
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="t:mosgrid"></A>
+<DIV ALIGN="CENTER">
+<A NAME="14121"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table 21.1:</STRONG>
+Mosaic grid spacing for ATCA dishes</CAPTION>
+<TR><TD ALIGN="CENTER">Frequency</TD>
+<TD ALIGN="CENTER">Pointing Spacing</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><SPAN CLASS="MATH"><IMG
+ WIDTH="13" HEIGHT="13" ALIGN="BOTTOM" BORDER="0"
+ SRC="img72.png"
+ ALT="$\nu$"></SPAN> (GHz)</TD>
+<TD ALIGN="CENTER"><!-- MATH
+ $\theta_{\rm hex}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="32" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img109.png"
+ ALT="$\theta_{\rm hex}$"></SPAN> (arcmin)</TD>
+</TR>
+<TR><TD ALIGN="CENTER">1.384</TD>
+<TD ALIGN="CENTER">19.6</TD>
+</TR>
+<TR><TD ALIGN="CENTER">2.496</TD>
+<TD ALIGN="CENTER">10.9</TD>
+</TR>
+<TR><TD ALIGN="CENTER">4.800</TD>
+<TD ALIGN="CENTER">5.6</TD>
+</TR>
+<TR><TD ALIGN="CENTER">8.640</TD>
+<TD ALIGN="CENTER">3.1</TD>
+</TR>
+</TABLE>
+</DIV>
+</DIV>
+<BR>
+
+<P>
+</LI>
+<LI>Dwell time: Most mosaiced experiments will continually switch
+between the different pointing centres (or a subset of them, if there
+are too many pointing centres to visit in a single observation). 
+Normally they will be visited in a raster scan fashion.  Switching to a
+new pointing centre typically results in 0.5 to 4 seconds of `lost' time
+while the antennas are slewing to the new pointing.  This time can be a
+significant consideration in some experiments - e.g.  if the
+integration time was 10 seconds, and the pointing centre was switched
+every integration, up to about 40% of the observing time could be lost. 
+To avoid this, you will want to dwell on a given pointing centre for as
+long as reasonable.  This must, however, be traded against loss of
+tangential <I>u-v</I> coverage that occurs when each pointing is not
+visited sufficiently frequently.  To determine the balance, recall that
+a correlation does not measure the value of a single point in the
+<I>u-v</I> plane, but a region corresponding to twice the diameter of the
+dishes.  At transit (when the projected baselines are changing fastest),
+the time taken for a baseline to rotate to a completely independent
+visibility point is
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+\tau = \frac{86400}{2\pi}\frac{2D}{L} \hbox{\rm\ seconds}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="157" HEIGHT="39" BORDER="0"
+ SRC="img110.png"
+ ALT="\begin{displaymath}
+\tau = \frac{86400}{2\pi}\frac{2D}{L} \hbox{\rm\ seconds}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+Here <I>L</I> is the maximum baseline length of interest when imaging
+and <I>D</I> is the dish diameter.
+Ideally you will want to sample twice as frequently as this, i.e. for
+<I>N</I> pointings, a dwell
+time of <SPAN CLASS="MATH"><IMG
+ WIDTH="43" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img111.png"
+ ALT="$\tau/2N$"></SPAN> would be best. You may, however,
+decide to suffer tangential holes in the <I>u-v</I> coverage.
+
+<P>
+</LI>
+<LI>Field Naming Convention:<A NAME="s:fnc"></A> When preparing the observe files for an
+ATCA  mosaic experiment, you
+will create a `mosaic file'. This gives a field
+offset, integration time and field name for each pointing centre. To
+simplify a step in the reduction process (the splitting step only), it is 
+recommended that field names
+be composed of two parts, separated by an underscore character. This recommendation
+is purely to simplify some steps in the data reduction in <I>Miriad</I>. The first
+part should be common to all fields. Typically this will be the
+name of the object being mosaiced. The
+second part is unique to each field, typically being a field number. For
+example, the field name for pointing 123 for a Large Magellanic Cloud
+mosaic would be called <code>lmc_123</code>.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3520"
+  HREF="node169.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3516"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3510"
+  HREF="node167.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3518"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3521"
+  HREF="node169.html">Visibility Processing</A>
+<B>Up:</B> <A NAME="tex2html3517"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3511"
+  HREF="node167.html">Mosaicing</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

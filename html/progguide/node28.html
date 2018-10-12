@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Selection Steps Performed by UVREAD - UVSELECT</TITLE>
+<META NAME="description" CONTENT="Selection Steps Performed by UVREAD - UVSELECT">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html580"
+  HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html574"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html568"
+  HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html576"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html578"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html581"
+  HREF="node29.html">Getting Information After UVREAD</A>
+<B>Up:</B> <A NAME="tex2html575"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html569"
+  HREF="node27.html">Setting Up UVWRITE -</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004513000000000000000"></A><A NAME="411"></A>
+<BR>
+Selection Steps Performed by UVREAD - UVSELECT
+</H2>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="416"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.4:</STRONG>
+Arguments to UVSELECT</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+
+</DIV><TABLE CELLPADDING=3 BORDER="1">
+<TR><TH ALIGN="LEFT"><B>Object	</B></TH>
+<TH ALIGN="LEFT"><B>Units	</B></TH>
+<TH ALIGN="LEFT"><B>P1,P2 		</B></TH>
+</TR>
+<TR><TD ALIGN="LEFT">time</TD>
+<TD ALIGN="LEFT">Julian date</TD>
+<TD ALIGN="LEFT">tmin,tmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dra</TD>
+<TD ALIGN="LEFT">radians</TD>
+<TD ALIGN="LEFT">dramin, dramax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ddec</TD>
+<TD ALIGN="LEFT">radians</TD>
+<TD ALIGN="LEFT">ddecmin, ddecmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ra</TD>
+<TD ALIGN="LEFT">radians</TD>
+<TD ALIGN="LEFT">ramin, ramax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">dec</TD>
+<TD ALIGN="LEFT">radians</TD>
+<TD ALIGN="LEFT">decmin, decmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">uvrange</TD>
+<TD ALIGN="LEFT">wavelengths</TD>
+<TD ALIGN="LEFT">uvmin, uvmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">uvnrange</TD>
+<TD ALIGN="LEFT">nanoseconds</TD>
+<TD ALIGN="LEFT">uvmin, uvmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pointing</TD>
+<TD ALIGN="LEFT">arcseconds</TD>
+<TD ALIGN="LEFT">pntmin, pntmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">visibility</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">vismin, vismax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">increment</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">incr, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">on</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">state, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">polarization</TD>
+<TD ALIGN="LEFT">FITS code</TD>
+<TD ALIGN="LEFT">polval, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">amplitude</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">ampmin, ampmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">frequency</TD>
+<TD ALIGN="LEFT">GHz</TD>
+<TD ALIGN="LEFT">freqmin, freqmax</TD>
+</TR>
+<TR><TD ALIGN="LEFT">source</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">window</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">win, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">antennae</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">ant1, ant2</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">-, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">and</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">-, -</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clear</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">-, -</TD>
+</TR>
+</TABLE>
+
+<A NAME="t:uvselect"></A></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+Another function performed by <TT>uvread</TT> is skip or flag data that is not
+required. The routine <TT>uvselect</TT> is used to instruct <TT>uvread</TT> on
+which data are to be selected and rejected. Normally the programmer will
+not call <TT>uvselect</TT> directly, but will use the <TT>SelInput</TT> and
+<TT>SelApply</TT> routines (see Section&nbsp;<A HREF="node30.html#sect:select">2.6</A>). The Users Manual gives a description
+about the way the user normally interacts with these routines.
+
+<P>
+Generally <TT>uvselect</TT> will be
+called many times, each call giving a different selection or discard criteria.
+The routines <TT>SelInput</TT> and <TT>SelApply</TT> merely sequentially parse and pass
+the user-given
+criteria to <TT>uvselect</TT>. Hence the `grammar' of the sequence of calls to
+<TT>uvselect</TT> (i.e. use of ``or'', or multiple occurrences of
+criteria based on the same parameter) is the same as the `grammar' of the
+user-specified task parameter. The `grammar' will not be repeated here.
+
+<P>
+The argument <TT>object</TT> is a string giving the parameter on which a
+select/discard criteria is based. The
+arguments <TT>p1</TT> and <TT>p2</TT> (both double precision) give
+added numerical parameters. Generally <TT>p1,p2</TT> give a range of
+parameter values to select or discard. Note that the units of the values are
+consistent with the units of the underlying uv variables. These are not
+necessarily the most convenient units for the user, and so the user
+interface (given by SelInput and SelApply) performs some conversion
+between user-units and program-units.
+
+<P>
+There are a few additions objects, when compared with the <TT>SelInput</TT>
+and <TT>SelApply</TT>
+routines. These include the <TT>ra</TT> and <TT>dec</TT> objects, which give the
+pointing centre RA and DEC (after <TT>dra</TT> and <TT>ddec</TT> have been taken
+into account). Another is the <TT>and</TT> operator. <TT>Uvselect</TT> treates
+<TT>and</TT> and <TT>or</TT> as having identical precedence, and handles these
+operators in the order in which they are given. Beware of this lack of
+precedence.
+
+<P>
+The <TT>clear</TT> object causes the selection criteria to be reset to its
+default of selected everything.
+
+<P>
+The argument <TT>flag</TT> determines
+whether data which matches the associated criteria is to be selected
+(<TT>flag=.true.</TT>) or discarded (<TT>flag=.false.</TT>).
+
+<P>
+For example, to select data with Julian days 2444239.5 to 2444240.5 (i.e.
+data for 1 January, 1980), use:
+<PRE>
+     call uvselect(tno,'time',2444239.5d0,2444240.5d0,.true.)
+</PRE>
+To select all data, except for 1 January, 1980, use:
+<PRE>
+     call uvselect(tno,'time',2444239.5d0,2444240.5d0,.false.)
+</PRE>
+Note: In the <TT>'antennae'</TT> criteria, an antennae number of 0 is treated
+as a ``match-all'' number.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html580"
+  HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html574"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html568"
+  HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html576"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html578"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html581"
+  HREF="node29.html">Getting Information After UVREAD</A>
+<B>Up:</B> <A NAME="tex2html575"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html569"
+  HREF="node27.html">Setting Up UVWRITE -</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

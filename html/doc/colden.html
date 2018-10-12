@@ -1,0 +1,120 @@
+<title> Documentation on colden </title>
+<body bgcolor=white background=../hmiriad.gif>
+<a name="basic">
+<center>[ <a href="#basic">Basic Info</a> | <a href="../userguide/userhtml.html">User Guide</a> ]</center>
+<h1>Basic Information on colden</h1>
+<pre>
+
+Task: colden
+Purpose: calculates column densities for linear molecules
+Categories: map analysis
+
+        COLDEN is a MIRIAD task to calculate column densities.  The maps
+        must have the same dimensions.  The two images are compared on a
+        pixel by pixel basis, within a user defined region.
+
+Key: <a name="method">method
+        Three possibilities:
+          (1) Give one optically thin transition and the kinetic
+              temperature (Assumes tau=0).  Enter in1, in2, J1, B1, mu,
+              scale1.
+          (2) Give two optically thin transitions with different J.  The
+              calculation will assume LTE, calculate col. den. as in
+              (1), and fit to the best kinetic temperature and total
+              column density.  Enter in1, J1, b1, scale1, in2, J2,
+              scale2, and mu (b1=b2).
+          (3) Give one optically thick and one less thick transition.
+              Assumes Tex(thick)=Tex(thin) and calculates optical depth
+              of less thick transition.  Col. den. ensue.  Enter in1,
+              J1, b1, scale1, in2, b2, scale2, and mu (J1=J2).
+        Default=1.
+
+Key: in1
+        The first input image contains the most abundant isotope
+        (e.g. 12CO).   The first plane must contain the integrated
+        intensity of the line (K-km/s) for methods 1 and 2, and the peak
+        temperature of the line (K) for method 3.  No default
+
+Key: in2
+        For method 1, give the kinetic temperature in the first plane.
+        For method 2, this image contains the integrated intensity of
+        the second transition.
+        For method 3, the image contains the less abundant (thin)
+        isotope (e.g. 13CO).  It contains at least three planes: the
+        peak temperature of the line, its center position, and its FWHM
+        width.
+        Use the output from program Gaufit.  No default
+
+Key: <a name="region"><a href="region.html">region</a>
+        Region to select data to compare from....(not implemented)
+
+Key: <a name="out"><a href="out.html">out</a>
+        Output image.  It consists of 7 planes; the meaning of the first
+        three depend on the method used:
+          (1) the first two planes are blank, the third is the column
+              density of the upper level of the transition,
+          (2) the first is the kinetic temperature, the next two the
+              column densities of the upper levels of each transition,
+          (3) the first is the optical depth of the less abundant
+              isotope, the second is the excitation temperature of the
+              abundant isotope, and the third is the column density of
+              the upper level of the line analyzed.
+        The remaining four planes are:
+           -  the estimated total column density of the molecule,
+           -  the column density of H2 inferred,
+           -  the mass in each pixel, and
+           -  a last plane in which every unmasked pixel is set to 1.
+
+Key: <a name="cut">cut
+        Two values.  Cutoff applied to data (i.e. column densities will
+        not be calculate for input parameter values less than cutoff).
+        Default=0.1 K, 0.1 km/s.
+        There is also a cutoff for values of temp &gt; 1000K, v &gt; 100 km/s.
+        Additionally, values for column densities greater than 1.0e+27
+        are not written to the output file.
+
+Key: b1
+        Value of B (in GHz) for the optically thick isotope.
+        Default=57.6 (12CO).
+
+Key: b2
+        Value of B (in GHz) for the optically thin isotope.
+        Default=55.1 (13CO).
+
+Key: j1
+        the rotational number of the upper level. Default J=1
+
+Key: j2
+        the rotational number of the upper level. Default J=2
+
+Key: <a name="mu">mu
+        The dipole moment of the molecule (in Debye).
+        Default mu=0.112 (CO)
+
+Key: scale1
+        A constant that will multiply the peak temperatures in in1.
+        Default=1.0
+
+Key: scale2
+        A constant that will multiply the peak temperatures in in2.
+        Default=1.0
+
+Key: <a name="abund">abund
+        The abundance of the less abundant isotope, relative to H2.
+        This will be used to compute the H2 column density.
+        Default=2.0e-06 (appropriate for 13CO in dark clouds).
+
+Key: <a name="dist">dist
+        The distance of the source (in pc).  It will be used to compute
+        the mass in each pixel from the H2 column density.
+        Default: 500 pc.
+
+Key: <a name="options"><a href="options.html">options</a>
+        taulog: the optical depths are written as logs
+        collog: the column densities are written as logs
+        maslog: the masses are written as logs
+</pre>
+<hr>
+ 
+<address>Generated by <a href=mailto:miriad@atnf.csiro.au>miriad@atnf.csiro.au</a> on 21 Jun 2016 </address>
+</body>

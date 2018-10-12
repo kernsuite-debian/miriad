@@ -1,0 +1,19 @@
+%N doc
+%D Strip preamble comments out of miriad source files
+%P rjs
+%: tools
+%B
+  doc strips preamble ("doc") comments out of Miriad source files,
+  producing so-called ".doc" documentation files.
+
+    Usage:
+      doc [-O outdir] [-f] files ... [ > outfile ]
+
+    where
+
+      -O    Specify an output directory for the files.
+      -f    Pipe the output to standard output, rather than creating
+            output files.
+      -x    Generate "extra" help files as well.
+      -?    Give a brief usage message.
+

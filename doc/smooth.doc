@@ -1,0 +1,51 @@
+%N smooth
+%D Convolve an image (in the image domain) with a 2-D Gaussian
+%P nebk
+%: analysis
+%B
+        SMOOTH is a MIRIAD task that convolves an image by an elliptical
+        Gaussian or a boxcar the hard way.  The convolving Gaussian and
+        boxcar have peaks of unity.  Additional scaling is provided by
+        the keyword "scale"
+ 
+        By default, SMOOTH will mask pixels in the output image if
+        there are more masked pixels than unmaked pixels in the
+        Gaussian convolution area. This means that pixels which were
+        maked in the input may be unmasked in the output.
+%A in
+        The input image.  Wild card expansion is supported, no default.
+%A out
+        The output image.  No default.
+%A type
+        Specifies the type of function to convolve by.  Should
+        be one of
+          "gaussian"     Gaussian at arbitrary position angle
+          "boxcar"       Boxcar oriented in x and y directions. Note
+                         that the full width is rounded up to be an
+                         odd number of pixels.
+        Default is gaussian.  Minimum match is active.
+%A fwhm
+        The Gaussian FWHM along the major and minor axes or the boxcar
+        full widths in the x and y directions (all in arcseconds).
+        The image pixel increments are assumed to be in radians.
+        No default.
+%A pa
+        The position angle in degrees CCW from North of the major axis
+        of the Gaussian.  Not used for boxcar smoothing.
+        Default is 0.0.
+%A scale
+        If unset, then SMOOTH will attempt to make the units of the
+        smoothed image be Jy/beam for Gaussian convolution.  If 0.0,
+        then the convolution integral is scaled (multipled) by the
+        inverse of the volume of the convolving function. Otherwise,
+        the integral is scaled by "scale"
+%A options
+        "nocheck"   By default, blanked input pixels do not contribute
+           to the convolution sum.  If you set NOCHECK then blanked
+           input pixels are not checked for (but the output image is
+           blanked around the unconvolved edge, and wherever the input
+           image is blanked).
+        "force"     Force masking of pixels in the output image which
+           are masked in the input image.
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

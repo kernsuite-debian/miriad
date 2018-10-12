@@ -1,0 +1,97 @@
+.TH mfboot 1
+.SH NAME
+mfboot - Set the flux scale of a visibility dataset.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+MFBOOT is a MIRIAD program that corrects the flux scale in
+visibility datasets. In doing this, it assumes that the flux
+density scale is out by a constant scale factor. MFBOOT computes
+and applies a scale factor to the calibration tables of visibility
+datasets to account for this.
+.sp
+To determine this factor, MFBOOT compares the flux
+density of measured visibilities with models of the expected
+visibility. The visibilities can correspond to measurements of
+planets or point sources. For point sources, they can be either
+standard calibrators with known flux density, or others. In the
+latter case the user must specify its flux density.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility datasets. Several datasets can be given (wildcards
+are supported).  The scale factor will be applied uniformly to all
+datasets whether or not they contain the source used to determine it.
+.TP
+\fIline\fP
+Normal uv data "line" parameter, with the normal defaults. See
+the help on "line" for more information.
+.TP
+\fIselect\fP
+Normal uv-selection parameter. This selects the data in the input
+datasets to analyse. The data selected should consist of
+a single planet or point source. See the help on ``select'' for more
+information. For planets, you may wish to select just the shortest
+spacing, where the planet is strongest.
+.TP
+\fIflux\fP
+Three to five numbers, giving the source flux density, a reference
+frequency (in GHz), the source spectral index and optionally two
+higher order terms. The flux and spectral index are at the reference
+frequency. If no values are given, then MFBOOT checks whether the
+source is one of a set of known sources or a planet, and uses
+the appropriate flux variation with frequency.
+MFBOOT has built-in models for a few calibrators as well as the
+planets - see calplot and plplt.
+.sp
+For a point source, this parameter gives the flux density of the
+calibrator in Janskys. For a planet, this parameter gives the
+brightness temperature of the planet in Kelvin.
+.TP
+\fImode\fP
+MFBOOT can process the data in one of three modes: "triple", "scalar"
+and "vector". The default is "triple" for point sources and "scalar"
+for planets.
+.sp
+In "triple" mode, MFBOOT compares the triple product of the data
+and model. The advantage of comparing triple products is that the
+process is robust to phase errors, and the data do not need to be
+phase calibrated. Because planets can be significantly resolved,
+triple mode is often not appropriate for them. However if the
+resolution is modest on the selected baselines, triple mode can
+be used.
+.sp
+In "scalar" mode, the amplitude of the data and model are compared.
+This is also robust to phase errors, but will experience a noise
+bias when the signal to noise is poor. Planets are often sufficiently
+strong that noise bias is not an issue.
+.sp
+In "vector" mode, the real part of the data is compare with the model.
+The data need to be phase calibrated.
+.TP
+\fIclip\fP
+For planets, this parameter can be used to discard data for baselines
+that are significantly resolved. Data for a particular baseline will
+be discarded when the expected flux density on that baseline is
+less than the clip factor times the total flux density. The clip
+parameter takes on values between 0 to 1.0, with the default being 0
+(ie the default is to accept all data).
+.TP
+\fIdevice\fP
+PGPLOT device to plot the model data as well as the visibility
+data. The default is to not produce a plot. No plot is produced
+in triple mode.
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by commas.
+.nf
+  noapply Do not apply the scale factor - just evaluate it.
+  nospec Do not try to determine and correct the spectral index across
+         the band.
+.fi
+.sp
+.SH REVISION
+1.15, 2014/06/05 03:49:06 UTC

@@ -1,0 +1,35 @@
+%N boxspec
+%D Write spectra (from vxy cube) as text file
+%P nebk
+%: utility, plotting
+%B
+        BOXSPEC is a MIRIAD task to save spectra from a vxy image in
+        text files.
+%A in
+        Standard keyword in. See the help on "in" for more information.
+%A chan
+        The channel range to plot, default is all channels.
+%A aveop
+        If 'a' then the pixels enclosed in the x-y area specified
+        are averaged.  If 's' they are just summed.  Default is 'a'
+%A hann
+        Hanning smoothing length (an odd integer < 15) Default is
+        no smoothing.
+%A infile
+        List of locations and sizes for boxes in format
+                NPOS
+                IPOS  X  Y  XOFF  YOFF
+        where
+                NPOS   is the number of boxes to read
+                IPOS   is a number identifying each box, used in
+                       creating each output file name
+                X,Y    is the pixel location of each box
+                X,YOFF are the half sizes of the box in pixels so that
+                       each box is of size 2XOFF+1 in x and 2YOFF+1 in y.
+                X,YOFF are optional and default to 2
+%A log
+        Save each spectrum in a file with root name LOG.  The
+        rest of the file name is formed from ``IPOS'' so that
+        for example, for LOG=SPEC and IPOS=32 the output file name
+        is SPEC32
+        Each file contains  :   channel, velocity or freq, intensity

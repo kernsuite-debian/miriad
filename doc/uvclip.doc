@@ -1,0 +1,32 @@
+%N uvclip
+%D determine data to flag from channel-0 uv dataset
+%P njt
+%: uv analysis
+%B
+        UVCLIP flags UV channel 0 data set by statistical clipping
+%A vis
+        The input UV dataset name. No default.
+ 
+%A select
+        This selects the data to be processed, using the standard uvselect
+        format. Default is all data.
+ 
+%A options
+        noamp .... no visbility amplitude clipping
+        notrip ... no triple visibility phase closure clipping
+        doall .... include all data (flagged and unflagged)
+        noapply .. do not apply flagging
+ 
+%A interval
+        Data clipping interval in minutes. The maximum interval between
+        data points for continuous clipping.  Must be greater than the
+        integration time.  The default is infinite.
+ 
+%A clip
+        Clipping level.  Number of rms beyond which data is flagged.
+        Default is 3.
+ 
+%A log
+        The list output file name. The default is the terminal.
+ 
+%R 1.5, 2013/08/30 01:49:21 UTC

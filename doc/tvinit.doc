@@ -1,0 +1,11 @@
+%N tvinit
+%D Initialize a TV device
+%P rjs
+%: visual display
+%B
+        TVINIT is a MIRIAD/Werong task which initializes a TV device. These
+        initializations clear the screen, set pan, zoom and colour lookup
+        table to their defaults.
+%A server
+        The TV device. No default. See the Users Manual for information
+        on how to specify this.

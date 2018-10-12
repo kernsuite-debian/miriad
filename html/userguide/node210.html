@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Pulsar bin-mode observations</TITLE>
+<META NAME="description" CONTENT="Pulsar bin-mode observations">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node211.html">
+<LINK REL="previous" HREF="node209.html">
+<LINK REL="up" HREF="node207.html">
+<LINK REL="next" HREF="node211.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html4058"
+  HREF="node211.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4054"
+  HREF="node207.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4048"
+  HREF="node209.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4056"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4059"
+  HREF="node211.html">Tasks Specific to Pulsar</A>
+<B>Up:</B> <A NAME="tex2html4055"
+  HREF="node207.html">ATCA Bin Mode Observations</A>
+<B> Previous:</B> <A NAME="tex2html4049"
+  HREF="node209.html">High time resolution bin-mode</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002430000000000000000">
+Pulsar bin-mode observations</A>
+</H1>
+When observing pulsars with the ATCA, the correlator is capable of sampling
+synchronously with a pulsar. In this way, during a single integration,
+the correlator will produce a number of <EM>bins</EM>, each of which sample
+at a particular range in phase of the pulsar cycle. 
+Much of the time, when reducing a bin-mode experiment, you will want to process all
+the bins without regard to the bin number. In this case, to a large degree,
+processing a bin-mode
+observation differs little from a normal observation. In particular:
+
+<UL>
+<LI>No special action is needed in loading the data with <A NAME="tex2html1096"
+  HREF="../doc/atlod.html">atlod</A>.
+</LI>
+<LI>During the flagging process, tasks <A NAME="tex2html1097"
+  HREF="../doc/tvflag.html">tvflag</A>
+and <A NAME="tex2html1098"
+  HREF="../doc/blflag.html">blflag</A>
+will simply average together all the pulsar bins before display. When
+you flag a point on the display as bad, all the bins which are used to
+generate that point are flagged as bad.
+</LI>
+<LI>Generally the calibrators in such an experiment will be
+observed in a binning mode. The calibration software combines
+the different bins together before determining their calibration solutions.
+</LI>
+</UL>
+
+<P>
+Obviously, however, there are times that you will want to distinguish between
+the bins. The <TT>bin</TT> visibility selection sub-command is the main
+mechanism for this. The general form is:
+<BLOCKQUOTE>
+<TT>select=bin(</TT><I>n1,n2</I><TT>)</TT>
+
+</BLOCKQUOTE>
+This selects bins <I>n1</I> to <I>n2</I> inclusive. If only a single bin
+is given, then only that bin is selected - numbering of the bins
+starts at 1.
+
+<P>
+The most common places where you will want to select a subset of bins
+is in the imaging and possibly self-calibration steps (the pulsar,
+during its `on' phase, may make an excellent phase self-calibration source).
+
+<P>
+Although almost all visibility-data tasks support bin-mode observations,
+there are a few exceptions. These give warnings when they are used on
+bin-mode data. <EM>These warnings should be heeded!</EM>. The most notable task
+which fails to properly handle bin-mode experiments is <A NAME="tex2html1099"
+  HREF="../doc/uvaver.html">uvaver</A>
+when
+time averaging of the data is being performed.
+When used to time-average, <A NAME="tex2html1100"
+  HREF="../doc/uvaver.html">uvaver</A>
+will average all the bins
+together. Note, however, that <A NAME="tex2html1101"
+  HREF="../doc/uvaver.html">uvaver</A>
+works correctly (i.e. treating
+the bins as separate) when no time averaging is involved.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html4058"
+  HREF="node211.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4054"
+  HREF="node207.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4048"
+  HREF="node209.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4056"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4059"
+  HREF="node211.html">Tasks Specific to Pulsar</A>
+<B>Up:</B> <A NAME="tex2html4055"
+  HREF="node207.html">ATCA Bin Mode Observations</A>
+<B> Previous:</B> <A NAME="tex2html4049"
+  HREF="node209.html">High time resolution bin-mode</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

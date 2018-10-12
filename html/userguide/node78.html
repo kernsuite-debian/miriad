@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Determining Calibration Solutions</TITLE>
+<META NAME="description" CONTENT="Determining Calibration Solutions">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node79.html">
+<LINK REL="previous" HREF="node75.html">
+<LINK REL="up" HREF="node73.html">
+<LINK REL="next" HREF="node79.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2359"
+  HREF="node79.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2355"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2349"
+  HREF="node77.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2357"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2360"
+  HREF="node79.html">Determining Gains and Bandpass</A>
+<B>Up:</B> <A NAME="tex2html2356"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2350"
+  HREF="node77.html">Calibration of Data with</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001130000000000000000"></A><A NAME="2911"></A>
+<BR>
+Determining Calibration Solutions
+</H1>
+
+<P>
+There are currently four main tasks which solve for calibration parameters - each
+with their own strengths and weaknesses. These are:
+
+<P>
+
+<UL>
+<LI><A NAME="tex2html255"
+  HREF="../doc/mfcal.html">mfcal</A><A NAME="2914"></A>: This determines antenna gains, band passes
+and delays
+given a point-source calibrator.  Multi-frequency observations are
+supported.  Although it can handle dual polarisation data, it assumes
+the calibrator is unpolarised, and that the polarisation leakages are 0. This
+assumption does not affect the bandpass or delay that it finds.
+
+<P>
+</LI>
+<LI><A NAME="tex2html256"
+  HREF="../doc/gpcal.html">gpcal</A><A NAME="2916"></A>: This determines antenna gains and leakages given a
+point-source calibrator. The polarisation properties of the calibrator can
+be determined as part of the solution process. Gains and leakages are
+assumed to be independent of frequency.
+
+<P>
+</LI>
+<LI><A NAME="tex2html257"
+  HREF="../doc/selfcal.html">selfcal</A><A NAME="2918"></A>: This determines a single set of antenna gains
+given a model of the visibility data.  The antenna gains are assumed to
+be independent of all observing parameters other than time and antenna
+number.  Consequently, its handling of multi-frequency and polarisation data
+is fairly simple.  It can handle multiple pointings and sources (<I>e.g.</I>
+mosaiced observations).
+
+<P>
+</LI>
+<LI><A NAME="tex2html258"
+  HREF="../doc/gpscal.html">gpscal</A><A NAME="2921"></A>: This is useful when self-calibrating strongly
+polarised sources measured with a telescope with linear feeds (<I>e.g.</I>  the
+ATCA).  Given models of Stokes <I>I</I>, <I>Q</I>, <I>U</I>, and <I>V</I>, as well as the
+leakage parameters, this solves for the appropriate antenna gains.
+
+<P>
+</LI>
+</UL>
+
+<P>
+We will now describe <A NAME="tex2html259"
+  HREF="../doc/mfcal.html">mfcal</A>
+and <A NAME="tex2html260"
+  HREF="../doc/gpcal.html">gpcal</A>
+in some detail. This is
+largely for reference - the following chapter will give a step-by-step
+approach to the calibration process. The self-calibration tasks,
+<A NAME="tex2html261"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html262"
+  HREF="../doc/gpscal.html">gpscal</A>, are discussed in Chapter&nbsp;<A HREF="node113.html#c:selfcal">15</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2359"
+  HREF="node79.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2355"
+  HREF="node73.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2349"
+  HREF="node77.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2357"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2360"
+  HREF="node79.html">Determining Gains and Bandpass</A>
+<B>Up:</B> <A NAME="tex2html2356"
+  HREF="node73.html">Calibration, the ATCA, and</A>
+<B> Previous:</B> <A NAME="tex2html2350"
+  HREF="node77.html">Calibration of Data with</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

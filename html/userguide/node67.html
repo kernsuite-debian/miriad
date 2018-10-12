@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Flagging a Sector of Data - UVSECTOR</TITLE>
+<META NAME="description" CONTENT="Flagging a Sector of Data - UVSECTOR">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node66.html">
+<LINK REL="up" HREF="node63.html">
+<LINK REL="next" HREF="node68.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2219"
+  HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2215"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2211"
+  HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2217"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2220"
+  HREF="node68.html">Listing Visibilities</A>
+<B>Up:</B> <A NAME="tex2html2216"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2212"
+  HREF="node66.html">Flagging Based on a</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001024000000000000000"></A><A NAME="2539"></A>
+<BR>
+Flagging a Sector of Data - UVSECTOR
+</H2>
+The task <A NAME="tex2html207"
+  HREF="../doc/uvsector.html">uvsector</A>
+flags a set of visibilities based on their
+<I>u-v</I> position angle. To understand the utility of this, consider
+the samples measured in the <I>u-v</I> plane
+at a particular time instant. For an east-west array (i.e. the ATCA)
+the samples will lie on a spoke of an ellipse. If there is a
+glitch an a particular time, the bad data will
+cause a stripe pattern in the resultant image which is at right angles to
+the spoke. The position angle of
+the stripe can be used to determine the <I>u-v</I> plane position angle of
+the glitch. From this you could determine the offending time and then
+flag the appropriate data. Task <A NAME="tex2html208"
+  HREF="../doc/uvsector.html">uvsector</A>
+performs these operations
+for you.
+
+<P>
+Task <A NAME="tex2html209"
+  HREF="../doc/uvsector.html">uvsector</A>
+will flag a sector of visibility data with a given
+<I>u-v</I> position angle (or hour angle). While you can give the position angle
+of the sector to be flagged directly (via the <TT>angle</TT> parameter), it is
+more convenient to indicate the position angle indirectly via the stripe
+direction in an image. How do you specify a stripe direction? You do
+this by specifying a long, thin region in a image. Normally
+you will generate the region by using <A NAME="tex2html210"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+(see Section&nbsp;<A HREF="node138.html#s:pgplot">17.3</A> for more information on <A NAME="tex2html211"
+  HREF="../doc/cgcurs.html">cgcurs</A>). With <A NAME="tex2html212"
+  HREF="../doc/cgcurs.html">cgcurs</A>, you display a greyscale
+of the image, and then use a cursor to selection a long, thin, region
+containing the crest of a single stripe. The selected region is then written
+into a text file, <TT>cgcurs.region</TT>. While this may be a rather odd
+way to define a direction, it allows <A NAME="tex2html213"
+  HREF="../doc/uvsector.html">uvsector</A>
+to use the
+interactive facilities of <A NAME="tex2html214"
+  HREF="../doc/cgcurs.html">cgcurs</A>.
+
+<P>
+Typical inputs to use <A NAME="tex2html215"
+  HREF="../doc/cgcurs.html">cgcurs</A>
+are
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CGCURS</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.icln</TD>
+<TD ALIGN="LEFT">Input image (probably CLEANed).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">type=grey</TD>
+<TD ALIGN="LEFT">Greyscale plot.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">range=</TD>
+<TD ALIGN="LEFT">Set the range to highlight the stripes.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">PGPLOT device - Xwindows here.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=region</TD>
+<TD ALIGN="LEFT">Define a region of interest.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+The width of the sector that <A NAME="tex2html216"
+  HREF="../doc/uvsector.html">uvsector</A>
+flags
+is given as a angle (in degrees) via the <TT>width</TT> parameter.
+Remember that 1 degree is equivalent to 4 minutes of observing time, so
+do not set it to any value larger than you need.
+Normally you would set this to a few degrees, based on your confidence in
+the accuracy of the stripe direction. The default
+is 5 degrees.
+
+<P>
+As <A NAME="tex2html217"
+  HREF="../doc/uvsector.html">uvsector</A>
+flags a sector, if your
+input visibility data-set contains multiple configurations, data within that
+sector for all configurations will be flagged by default. Generally this is
+<EM>not</EM> what you are likely to want. If you know which configuration contains the
+bad data, you can use the <TT>select</TT> keyword to ensure just that
+configuration is affected. Selecting by <TT>time</TT> is probably the easiest.
+
+<P>
+The breadth of a stripe also contains useful information - a glitch in just
+the short baselines will cause a broad stripe, whereas a glitch in just the
+long baselines will cause a narrow stripe separation. A glitch in just one
+baseline will give a two dimensional sinusoid.
+Given the separation
+between stripes, you could make an approximate calculation of the corresponding
+<I>u-v</I> radius of the bad data.
+For a stripe separation (crest to crest) of <I>x</I> arcseconds, the corresponding
+<I>u-v</I> radius is
+<BR><P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay">
+<!-- MATH
+ \begin{displaymath}
+r = \frac{206}{x} {\rm kilowavelengths}
+\end{displaymath}
+ -->
+
+<IMG
+ WIDTH="164" HEIGHT="38" BORDER="0"
+ SRC="img9.png"
+ ALT="\begin{displaymath}
+r = \frac{206}{x} {\rm kilowavelengths}
+\end{displaymath}">
+</DIV>
+<BR CLEAR="ALL">
+<P></P>
+You may then use <TT>select=uvrange</TT> so that only data at the appropriate
+<I>u-v</I> radius is flagged. For example if the crest-to-crest separation is
+20 arcsec, we might flag data only with spacings of <SPAN CLASS="MATH"><IMG
+ WIDTH="47" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img10.png"
+ ALT="$10 \pm2$"></SPAN> kilowavelengths.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>UVSECTOR</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.uv</TD>
+<TD ALIGN="LEFT">Visibility data to be flagged.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">angle</TD>
+<TD ALIGN="LEFT">Leave unset if defining position</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">angle by a stripe direction.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=vela.icln</TD>
+<TD ALIGN="LEFT">The image containing stripes,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">used only for its coordinate information.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=@cgcurs.region</TD>
+<TD ALIGN="LEFT">A long, thin, region along the crest</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">of a stripe.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">width=3</TD>
+<TD ALIGN="LEFT">Flag data over 3 degrees (12 minutes of time)</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Leave unset  to flag all data in the sector,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">or</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=uvrange(8,12)</TD>
+<TD ALIGN="LEFT">Flag data within the sector and between 8 to 12</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">kilolambda.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2219"
+  HREF="node68.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2215"
+  HREF="node63.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2211"
+  HREF="node66.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2217"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2220"
+  HREF="node68.html">Listing Visibilities</A>
+<B>Up:</B> <A NAME="tex2html2216"
+  HREF="node63.html">Other Flagging Tasks</A>
+<B> Previous:</B> <A NAME="tex2html2212"
+  HREF="node66.html">Flagging Based on a</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

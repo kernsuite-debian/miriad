@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Reading and Writing Blanking Information</TITLE>
+<META NAME="description" CONTENT="Reading and Writing Blanking Information">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html705"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html699"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html695"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html701"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html703"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html706"
+  HREF="node38.html">Scratch Files</A>
+<B>Up:</B> <A NAME="tex2html700"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html696"
+  HREF="node36.html">Arbitrary Regions of Interest</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION004103000000000000000">
+Reading and Writing Blanking Information</A>
+</H2>
+Though the <TT>box</TT> routines are the preferred way to read blanking
+information, it is possible to read the blanking information associated with
+an image directly. Also a routine is needed to write blanking information.
+Blanking information can be read and written by two sets of routines.
+These routines are:
+<PRE>
+      subroutine xyflgrd(tno,index,mask)
+      subroutine xyflgwr(tno,index,mask)
+      subroutine xymkrd(tno,index,runs,n,nread)
+      subroutine xymkwr(tno,index,runs,n)
+</PRE>
+Here <TT>tno</TT> is the image handle returned by <TT>xyopen</TT>, <TT>index</TT> gives
+the row number (analogous to <TT>xyread</TT> and <TT>xywrite</TT>).
+Analogous to the working of <TT>xyread</TT> and <TT>xywrite</TT>, the plane of the
+masking file that the routines access is set with the <TT>xysetpl</TT> routine.
+
+<P>
+The <TT>xyflgrd</TT> and <TT>xyflgwr</TT> routines read and write the logical
+array <TT>mask</TT>. The <TT>mask</TT> array has a <TT>.true.</TT> value if the
+corresponding pixel is good, or <TT>.false.</TT> if it is bad (or blanked).
+
+<P>
+The <TT>xymkrd</TT> and <TT>xymkwr</TT> routines read and write a ``<TT>runs</TT>''
+array. The <TT>runs</TT> array is a table of the form:
+<PRE>
+    imin,imax
+</PRE>
+where pixels <TT>imin</TT> to <TT>imax</TT> are good (not blanked). Note that
+the size of <TT>runs</TT> is <TT>n</TT> integers of <TT>n/2</TT> pairs of
+ordinates. <TT>Runs</TT> is input to
+<TT>xywrite</TT> and output from <TT>xyread</TT>. For <TT>xyread</TT>, <TT>nread</TT>
+returns the number of elements of <TT>runs</TT> that have been filled in.
+
+<P>
+Because many images are completely good (i.e. no blanked pixels),
+it would be superfluous to always carry around blanking information.
+Hence the
+mask containing the blanking information need not exist. If it does not
+exist, the read routines described above will return indicating that all
+pixels are good.
+A programmer can check if the mask exists, using the logical function
+<TT>hdprsnt</TT>:
+<PRE>
+     logical exists
+     logical hdprsnt
+          .
+          .
+          .
+     exists = hdprsnt(tno,'mask')
+</PRE>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html705"
+  HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html699"
+  HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html695"
+  HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html701"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html703"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html706"
+  HREF="node38.html">Scratch Files</A>
+<B>Up:</B> <A NAME="tex2html700"
+  HREF="node34.html">Region of Interest and</A>
+<B> Previous:</B> <A NAME="tex2html696"
+  HREF="node36.html">Arbitrary Regions of Interest</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Combining Mosaics and Single Dish Data</TITLE>
+<META NAME="description" CONTENT="Combining Mosaics and Single Dish Data">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node176.html">
+<LINK REL="up" HREF="node165.html">
+<LINK REL="next" HREF="node182.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3678"
+  HREF="node182.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3674"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3670"
+  HREF="node180.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3676"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3679"
+  HREF="node182.html">Some Theory and Preparing</A>
+<B>Up:</B> <A NAME="tex2html3675"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3671"
+  HREF="node180.html">Miscellaneous</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002180000000000000000"></A><A NAME="14436"></A>
+<A NAME="14437"></A>
+<BR>
+Combining Mosaics and Single Dish Data
+</H1>
+For a good discussion of the theory and practice of combining single
+dish and mosaic data, see the 
+<A NAME="tex2html945"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2002sdra.conf..375S">paper by Snezana Stanimirovic</A>
+(ASP Conf. Series, vol 278, p 375).
+
+<P>
+One of the benefits of mosaicing is that it partially recovers
+spacings shorter than the shortest projected interferometer spacing. In principle,
+the shortest spacing present in a mosaic can be the projected interferometer
+spacing minus the antenna diameter, <I>D</I> (see the references mentioned earlier for the
+argument). When antennas are as closely packed as is physically possible,
+the minimum physical spacing will be <I>D</I>, and so in principle a mosaic can
+reduce the effective minimum spacing almost down to the zero spacing.
+In practise, mosaicing tends to reduce the effective minimum spacing by
+about <I>D/2</I>, rather than the theoretical <I>D</I>. For the ATCA observations
+of sources
+appreciable far south, the effective minimum spacing in a mosaic
+is about 20&nbsp;m (the minimum physical interferometer spacing is 31&nbsp;m).
+
+<P>
+So whereas mosaicing helps recover short spacings, there are invariably
+some short spacing missing. To fill these spacings,
+interferometer data must be augmented with single-dish data.
+Just as there are two approaches to mosaicing (the joint and individual
+approach), <I>Miriad</I> provides two approaches to single-dish
+combination - the linear and a non-linear
+methods, using tasks <A NAME="tex2html946"
+  HREF="../doc/immerge.html">immerge</A>
+and <A NAME="tex2html947"
+  HREF="../doc/mosmem.html">mosmem</A>
+respectively. Which
+method produces best results is quite problem specific, and indeed it
+is perhaps best to try both if possible. However,
+
+<UL>
+<LI>The non-linear combination method works on the dirty mosaic produced
+by <A NAME="tex2html948"
+  HREF="../doc/invert.html">invert</A>, whereas the linear method works from deconvolved
+images. Thus the non-linear method cannot be used with the ``individual''
+mosaicing approach.
+</LI>
+<LI>The linear method can be more robust to the single-dish data failing
+to satisfy some of the assumptions of the non-linear method.
+</LI>
+<LI>The non-linear technique can perform better when there is emission right
+to the edge of the sampled region of the sky.
+</LI>
+<LI>The linear method assumes that the single-dish point-spread function is
+a gaussian. For the non-linear method, you give a ``beam'' dataset, which can
+be an actual measurement of the single-dish point-spread function (which
+can be asymmetric).
+</LI>
+</UL>
+
+<P>
+Given that combining mosaic and single-dish data can be a bit of an art,
+its worth doing a few checks of the result:
+
+<UL>
+<LI>The simplest check is to see that the total flux agrees with what
+you expect. Task <A NAME="tex2html949"
+  HREF="../doc/histo.html">histo</A>
+is the simplest way of measuring the
+total flux in a continuum image (or plane of a spectral cube). Otherwise
+<A NAME="tex2html950"
+  HREF="../doc/imstat.html">imstat</A>
+can be used.
+</LI>
+<LI>The non-linear methods produce <EM>model</EM> outputs, that need to
+go through a restore step. Task <A NAME="tex2html951"
+  HREF="../doc/restor.html">restor</A>
+will also generate
+residual images. You probably want to look at the residuals for both
+the mosaic and single-dish images, which is readily done with
+<A NAME="tex2html952"
+  HREF="../doc/restor.html">restor</A>
+using <TT>mode=residual</TT>.
+</LI>
+</UL>
+
+<P>
+In general, to combine single dish and interferometer data, you need to image
+the complete region containing emission. In practise this means that
+sidelobes, from
+emission outside the region of interest, are not significant. This
+applies both to the single-dish and interferometric observations. Both
+observations should map the complete region of the emission.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3680"
+  HREF="node182.html">Some Theory and Preparing the Single-Dish Data</A>
+<LI><A NAME="tex2html3681"
+  HREF="node183.html">The Linear Method - IMMERGE</A>
+<LI><A NAME="tex2html3682"
+  HREF="node184.html">The Non-Linear Method - MOSMEM</A>
+<LI><A NAME="tex2html3683"
+  HREF="node185.html">Some Alternative Non-Linear Methods</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3678"
+  HREF="node182.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3674"
+  HREF="node165.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3670"
+  HREF="node180.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3676"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3679"
+  HREF="node182.html">Some Theory and Preparing</A>
+<B>Up:</B> <A NAME="tex2html3675"
+  HREF="node165.html">Primary Beams and Mosaicing</A>
+<B> Previous:</B> <A NAME="tex2html3671"
+  HREF="node180.html">Miscellaneous</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

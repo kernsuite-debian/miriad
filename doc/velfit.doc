@@ -1,0 +1,49 @@
+%N velfit
+%D Fit a theoretical velocity pattern to isovelocity image.
+%P mchw
+%: image analysis
+%B
+        VELFIT fits a theoretical velocity pattern to a MIRIAD
+        isovelocity image, weighted by the intensity image and a
+        geometric factor specified by model input paramaters.
+        The default option is to fit a rotation curve to an isovelocity
+        image of a rotating disk.  The rotation curve and rms for the
+        fit are printed out and can be used to find the best fit to the
+        other parameters.  For more details see paper by Warner, Wright
+        and Baldwin, 1973, MNRAS, 163,163.
+%A in
+        The input image names, separated by commas.  The first image is
+        the (x,y) intensity distribution integrated over the z-axis,
+        e.g. velocity-integrated image.  The second image is an (x,y)
+        model for the z-values, e.g. a mean velocity image.
+        No default for either.
+%A region
+        Region of image to be used in the fit.  See documentation on
+        region for details.  Only the bounding box is supported.
+        The default region is the entire image.
+%A center
+        The center of the annuli in arcsec from the center pixel,
+        measured in the directions of RA and DEC.
+        Default: mapcenter as defined by crpix.
+%A pa
+        Position angle of ellipse major axis in degrees.
+        Default is 0 (north).
+%A incline
+        Inclination angle in degrees.
+        Default=0 (face on).
+%A radius
+        Inner and outer radii and step size along major axis in arcsecs.
+        The default is the whole image in steps equal to the pixel size.
+%A vsys
+        Center value z-axis.  E.g. systemic velocity for rotation curve.
+        Default: 0
+%A frang
+        Free angle around the minor axis of points to ignore.  The total
+        angle will be 2*frang.  (1/cos(theta) problem)
+        Default: 0
+%A log
+        The output log file.  The default is the terminal.
+%A options
+        None yet.  Reserved for alternative models.
+ 
+%R 1.4, 2013/08/30 01:49:21 UTC

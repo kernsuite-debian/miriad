@@ -1,0 +1,233 @@
+%N gaufit
+%D Fit gaussians to profile
+%P bpw
+%: image-analysis
+%B
+        GAUFIT fits gaussians to a profile and can write the output to
+        a Miriad dataset, a logfile or the terminal.
+ 
+        The fitting is done using an adapted version of fitting routines
+        in numerical recipes.
+ 
+        Obligatory parameters are:
+          a) either or both of 'in=' and 'parinp='
+          b) 'rmsest='
+          c) and either 'estim=' or 'options=findestim'
+ 
+        The ease of fitting depends strongly on the initial estimates.
+        These can be given using the estim= keyword, or they can be
+        automatically found (options=findestim).  The latter is usually
+        preferable, though the former may be necessary in pathological
+        cases.
+ 
+        If multiple gaussians are fit but the fit is bad, another try is
+        made with one less gaussian. This is repeated until the fit
+        works.  A fit is considered bad if the rms of the residual is
+        higher than 1.8 times the rms estimate, or if the parameters lie
+        outside the range given by cutoff=, crange= and wrange=, or if
+        the fitting routine does not converge.  If after all possible
+        ways of retrying a fit the rms is between 1.8 and 5.4 times the
+        rms estimate, accept the fit after all; maybe a low-level
+        component increased the rms, or the profile is not perfectly
+        gaussian, but the fit is somewhat reasonable.
+ 
+        Automatic initial estimates are made by first finding the
+        velocity and amplitude of the peak.  An estimated width is found
+        by looking to both sides of the peak for the nearest zero of the
+        2nd derivative and at where the half-maximum lies.  The most
+        consistent combination gives the width estimate.  For low S/N
+        profiles the width is found from the integral out to the nearest
+        zero.  This estimated component is then subtracted from the
+        profile and the process is repeated until the maximum amplitude
+        is too low, or until the maximum number of gaussians has been
+        found.
+ 
+        If parinp= is used gaussian parameters are taken from this
+        dataset for all pixels outside the specified region.  Inside the
+        region new fits are made.  All results are written to the
+        params= dataset.  The number of fitted gaussians does not have
+        to be the same between the parinp= and params= datasets.  This
+        creation of an extra dataset is needed because Miriad very-deep-
+        down disallows opening an existing dataset for writing.  So it
+        is not possible to add new fits to an existing parameter set.
+ 
+        If parinp= is present, but in= is not, then no new fits are
+        made, but the gaussians in parinp are sorted as specified by the
+        cmpsort= keyword.  They can also be transformed as specified by
+        options=integral,fwhm,dispersion.
+ 
+%A in
+        Standard keyword in. See the help on "in" for more information.
+        Input dataset with spectra to be fit.
+ 
+%A region
+        Standard keyword region. See the help on "region" for more information.
+        Note: the region=mask option is not implemented.  The mask of
+        the input dataset is used however.  If there is one, the profile
+        value at masked datapoints is set to zero before doing the fit.
+ 
+%A rmsest
+        Give a value for the rms of the profile or a dataset from which
+        it can be read.  No default.  Used by the fitting procedure to
+        determine when convergence occurs.  If a single real value is
+        given, it is used for each profile.  If the name of a dataset is
+        given, the rms at each pixel is read from that dataset; this is
+        particularly useful when fitting a dataset created with linmos,
+        for which the rms will vary across the field.  Create the rms
+        dataset using 'linmos in=list options=sens out=rms' followed by
+        'maths exp=rms*<rmsvalue>'.  The value should be the rms of the
+        profile as found with imstat on signal-free regions.
+ 
+%A estim
+        Initial estimates.  Give an estimate for the amplitude, velocity
+        and fwhm for each component (if options=integral, pixels or
+        dispersion is used, give integral instead of amplitude etc.).
+        This is quite critical and should already be reasonably close.
+        The same initial estimate will be used for all profiles.  If
+        options=findestim is used, the initial estimates are determined
+        by gaufit and estim= is ignored
+ 
+%A ngauss
+        Maximum number of gaussian components to fit (maximum 10,
+        default 1).
+ 
+%A parinp
+        Optional input parameter dataset.  All fits outside the
+        specified region are read from this dataset.  If in= is not
+        present, the fits in the selected region are just sorted and
+        selected as specified by cmpsort, cutoff, vrange and wrange.
+        The fits outside the region are untouched.
+ 
+%A params
+        Optional output dataset to which the fit parameters can be
+        written.  For each fitted component six planes are written, one
+        with the amplitude (or integral), one with the position and one
+        with the fwhm (or dispersion), and three more with the errors.
+        The planes with errors come after the planes with all fit
+        results.  A final plane which contains the rms of the residual
+        is added.
+ 
+%A fitaxis
+        Axis along which profiles are taken.  Provide the axis name as
+        listed by PRTHD.  Alternatively, 'longitude' (or 'lon'),
+        'latitude' (or 'lat'), or 'spectral'; or 'x', 'y', 'z', or 'a'.
+        'ra', 'dec', 'freq', and 'vel' are also understood.  Default is
+        the spectral axis.
+ 
+%A smooth
+        First smooth the profile over 'smooth' pixels before fitting.
+ 
+%A options
+        Controls the output.  Defaults are the opposite of the action
+        specified by an option.  Possible options are:
+          nofit:      output the initial estimates, don't make fits
+          findestim:  let gaufit determine the initial estimates
+ 
+          noprint:    do not print the fit results on the terminal
+          supbad:     suppress results for fits outside ranges given
+                      by cutoff, crange and wrange and results for bad
+                      fits.
+          estimout:   print initial estimates
+          intermout:  print some intermediate results for multi-
+                      component fits
+          abspix:     x, y coordinates on output are relative to lower
+                      left, rather than relative to crpix
+          abscoo:     x, y coordinates on output are absolute
+                      coordinates
+          wrprof:     write out a file with the data and the fit so that
+                      it at least is possible to use plotting programs
+                      to compare them; a kludge until gaufit itself can
+                      plot.  filenames will be 'profile_at_$x_$y' (or
+                      given by prof=)
+          integral:   write out integral of gaussian instead of
+                      amplitude
+          dispersion: write out dispersion of gaussian instead of fwhm
+          pixel:      write center and width in pixels, not in axis
+                      units (for these three: also interpret input for
+                      cutoff, vrange, wrange and estim keywords as
+                      int/disp/pix)
+          average:    first make an average profile of the selected
+                      region and then fit one single gaussian to this
+                      profile
+          summed:     first make a summed profile of the selected region
+                      and then fit one single gaussian to this profile
+ 
+          negative    amplitudes may be both positive and negative,
+                      instead if just positive
+          fixvelo:    fix the velocities to the initial estimate during
+                      fit
+          fixwidth:   fix the width to the initial estimate while
+                      fitting (fixvelo and fixwidth can be combined)
+ 
+%A cmpsort
+        This parameter specifies how to sort the resulting components
+        The following options exist
+          velocity, amplitude, integral, width, vdiff, vrange
+        Option 'velocity' and 'fwhm' result in components sorted on
+        increasing velocity or width.
+        Option 'amplitude' and 'integral' result in components sorted on
+        decreasing amplitude or integral.
+        If vdiff is used, then a second parameter gives a center
+        velocity; components are sorted based on the difference between
+        the fitted velocity and this center velocity.
+        If vrange is used, the second and third parameter give a
+        velocity range.  If one component is within this range, it
+        becomes the first.  If none or more than one is within this
+        range, they are sorted on velocity.
+        Usually, cmpsort is applied for every pixel of the dataset.
+        This is wanted when originally fitting (in= used).  It is also
+        generally wanted when refitting part of the dataset (in= and
+        parinp= used), especially when more gaussians are to be added in
+        selected regions.  However, when only parinp= is present, the
+        sorting is done only in the selected region and everything
+        outside is left alone.
+ 
+%A model
+        Optional output dataset, to which theoretical (described by fit)
+        profiles can be written.
+ 
+%A residual
+        Optional output dataset, to which the difference between the
+        profile and the fit can be written
+ 
+%A prof
+        Optional filename for use with options=wrprof
+ 
+%A cutoff
+        Give a cutoff for the amplitude/integral.  Can be 1, 2 or 3
+        values, all in units of the rms.
+        If one value, fits with amplitude (integral if options=integral
+        set) below the given cutoff are not written out.  The absolute
+        value of the amplitude is used if options=negative was set.
+        If two values, fits with amplitude/integral in the specified
+        range are eliminated.
+        If three values, further eliminate fits for which the ratio of
+        amplitude to amplitude error is less than specified ratio
+        (default 1).  Default: cut off amplitudes below 3 times the rms
+        and with amp/err<2.
+ 
+%A cutval
+        When using options=average or summed, only average/sum pixels
+        whose intensity is above cutval (default: sum all)
+ 
+%A crange
+        Give a range (in units along profile) between which the center
+        should lie.  Fits that result in centers outside this range are
+        not written out.  A third value specifies to not write out fits
+        whose center is uncertain by more than that number of channels.
+        Default: cut off centers outside profile range and uncertain by
+        more than four channels.
+ 
+%A wrange
+        Give 1, 2 or 3 values: a lower limit, and/or a range, and/or a
+        S/N ratio for the width (fwhm or dispersion).  Fits giving
+        widths below the lower limit, outside the range, or with too
+        uncertain widths are not written out.
+        Default: cut off fwhms less than 1 pixel and larger than the
+        length of the profile, and with value/error less than 1.
+ 
+%A log
+        If the name of a file is given, the results of the fitting are
+        written to this file instead of to the terminal
+ 
+%R 1.13, 2013/01/29 03:09:28 UTC

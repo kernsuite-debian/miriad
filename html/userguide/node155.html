@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Overlaying spectra on images</TITLE>
+<META NAME="description" CONTENT="Overlaying spectra on images">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node154.html">
+<LINK REL="up" HREF="node151.html">
+<LINK REL="next" HREF="node156.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3338"
+  HREF="node156.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3334"
+  HREF="node151.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3330"
+  HREF="node154.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3336"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3339"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B>Up:</B> <A NAME="tex2html3335"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3331"
+  HREF="node154.html">Displaying spectra only</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001940000000000000000"></A><A NAME="13017"></A>
+<BR>
+Overlaying spectra on images
+</H1>
+
+<P>
+The final task in the <TT>cg</TT> suite is <A NAME="tex2html757"
+  HREF="../doc/cgspec.html">cgspec</A>.  It displays both
+images and spectra, but its primary aim is spectral.    You are referred
+to Section&nbsp;<A HREF="node139.html#s:cg_common">17.3</A> for extensive discussion of the many common
+keywords in the <TT>cg</TT> suite of software.
+
+<P>
+<A NAME="tex2html758"
+  HREF="../doc/cgspec.html">cgspec</A>
+allows you to display an image, and then overlay small
+plots of spectra at different locations on the image.  You can input up
+to five different 3-D images (cubes) from which the spectra are
+extracted (<I>e.g.</I> each one representing a different spectral-line),
+as well as up to three contour images and one pixel map representation
+image.  On colour devices, the spectra from different cubes are plotted
+in different colours.  The spectral cubes can be of any size and be in
+any order.  Neither do the pixel increments have to be the same between
+different cubes.  However, the 2-D contour and pixel map images do have
+to have the same axis descriptors.  The locations at which the spectra
+are drawn can be either on a regular grid or irregularly spaced at
+locations specified in a text file.  In addition, you can bin the
+spectra up over some spatial region centred on the given locations. 
+
+<P>
+<A NAME="tex2html759"
+  HREF="../doc/cgspec.html">cgspec</A>
+uses the value <TT>spectrum</TT> for the keyword <TT>type</TT>
+to indicate that spectra are to be extracted from that image listed in
+the keyword <TT>in</TT>.  For Zeeman enthusiasts, you can also plot the
+derivative of a spectrum image (with keyword <TT>type=dspectrum</TT>).  See
+the help file for details. 
+
+<P>
+The following example shows how to overlay spectra at irregular
+locations from two cubes (which happened to have different axis orders)
+on a grey scale.  Because spectra from different lines rarely have a
+similar range of intensities, you can use the keyword <TT>iscale</TT> to
+scale the spectra from each cube by some number to bring them into the
+same range.  Alternatively, you can normalise all spectra to a peak of
+1.0 (<TT>options=normalize</TT>).  You may need to specify the size of the
+spectra as a fraction of the plot window taken up by the spatial image
+(<I>i.e.</I> the grey scale and contour plots), as the defaults of 0.1
+may not be suitable.  
+
+<P>
+The only keyword amongst all the scaling keywords that there is no
+default for is <TT>stick</TT>.  This specifies the major tick mark
+increments on the velocity and intensity axes for the spectra; it is
+pretty much impossible to guess at a default. 
+
+<P>
+There are a variety of choices about to how you draw the spectra. 
+You can draw labelled borders around them or not (<TT>options=frame</TT>),
+you can mark their spatial location with a cross or not (<TT>options=mark</TT>; it can be hard to know sometime exactly which pixel the
+spectrum refers to), you can draw and label the <I>x=0</I> and <I>y=0</I> axes or
+not (<TT>options=noaxes</TT>), you can choose any of these axis options
+but not put any numeric labels on them (<TT>options=naked</TT>) as
+things can get pretty cluttered, and you can write a spectrum `number'
+in the corner of each spectrum (<TT>options=number</TT>) which reflects 
+the numeric location of the spectrum in the text file or the automatically
+generated grid.  There are a few more options too, so see the help file
+for more details.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>CGSPEC</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=oh.xyv,6cm.icln,hcn.vxy</TD>
+<TD ALIGN="LEFT">Input images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">type=s,g,s</TD>
+<TD ALIGN="LEFT">Images are spectrum, grey, spectrum</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=quarter</TD>
+<TD ALIGN="LEFT">Display central quarter of grey scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xybin</TD>
+<TD ALIGN="LEFT">Unset for no spatial binning</TD>
+</TR>
+<TR><TD ALIGN="LEFT">slev</TD>
+<TD ALIGN="LEFT">Unset; no contours</TD>
+</TR>
+<TR><TD ALIGN="LEFT">levs1</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">levs2</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">levs3</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">grange=#</TD>
+<TD ALIGN="LEFT">Grey scale range or unset for auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">vrange=#</TD>
+<TD ALIGN="LEFT">Velocity range or unset for auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">irange=#</TD>
+<TD ALIGN="LEFT">Spectrum intensity range or unset for auto-scale</TD>
+</TR>
+<TR><TD ALIGN="LEFT">iscale=#</TD>
+<TD ALIGN="LEFT">Specify a scale factor for each cube or leave unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">spsize=#</TD>
+<TD ALIGN="LEFT">Specify size of each spectrum. Default may be OK</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stick=100,0.5</TD>
+<TD ALIGN="LEFT">Ticks at 100&nbsp;km/s and 0.5 in intensity</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xd</TD>
+<TD ALIGN="LEFT">PGDISP server</TD>
+</TR>
+<TR><TD ALIGN="LEFT">labtyp=arcsec,arcsec</TD>
+<TD ALIGN="LEFT">Offset arcsecond labelling for images</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=mark,norm,num</TD>
+<TD ALIGN="LEFT">Mark location, normalize and number spectra</TD>
+</TR>
+<TR><TD ALIGN="LEFT">clines</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">slines</TD>
+<TD ALIGN="LEFT">Unset; set linewidths for spectra on non-colour devices</TD>
+</TR>
+<TR><TD ALIGN="LEFT">blines</TD>
+<TD ALIGN="LEFT">Unset; set linewidths for axes on non-colour devices</TD>
+</TR>
+<TR><TD ALIGN="LEFT">break</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">csize</TD>
+<TD ALIGN="LEFT">Unset; character sizes of axes may need fiddling</TD>
+</TR>
+<TR><TD ALIGN="LEFT">olay=locations.spc</TD>
+<TD ALIGN="LEFT">Specify locations of spectra in this file; see help</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3338"
+  HREF="node156.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3334"
+  HREF="node151.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3330"
+  HREF="node154.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3336"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3339"
+  HREF="node156.html">Analysing Spectral Cubes</A>
+<B>Up:</B> <A NAME="tex2html3335"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B> Previous:</B> <A NAME="tex2html3331"
+  HREF="node154.html">Displaying spectra only</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

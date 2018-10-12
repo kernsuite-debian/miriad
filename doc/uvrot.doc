@@ -1,0 +1,23 @@
+%N uvrot
+%D Rotate uv coordinates.
+%P rjs
+%: uv analysis
+%B
+        uvrot rotates the uv coordinates of a Miriad dataset by a given
+        angle.
+%A vis
+        The name of the input uv datasets. Several can be given
+        Wildcards are supported. No default.
+%A out
+        The name of the output uv data-set. There is no default name.
+%A select
+        The normal uv selection commands. The default is to select everything.
+%A angle
+        The angle to rotate the coordinates by, given in degrees. No default.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           nocal       Do not apply the gains table.
+           nopass      Do not apply bandpass corrections.
+           nopol       Do not apply polarization corrections.

@@ -1,0 +1,99 @@
+%N imgen
+%D All-purpose image manipulator/creator
+%P rjs
+%: utility, map manipulation
+%B
+        IMGEN is a MIRIAD task that modifies an image, or creates a new
+        image.  See also maths to create images based on expressions
+        involving X, Y and Z.
+%A in
+        The input image, which is to be modified. The default is a map
+        with one plane which consists entirely of zeros.
+%A out
+        The name of the output image.  The output image has the same
+        characteristics as the input image, if present.  If no input
+        image is given, the `imsize', `cell' and `radec' keywords give
+        the characteristics of the output.  No default.
+%A factor
+        Factor to multiply the input image by. This is meaningless if no
+        input image is given.  The default is 1.
+%A object
+        This determines the type of objects added to the input image.
+        Several objects can be given (of the same type or different).
+        Minimum match is supported.  Possible objects are:
+ 
+           level      An offset (DC) level.
+           noise      Noise (gaussian distribution).
+           point      A point source.
+           gaussian   An elliptical or circular gaussian.
+           gauss3     3D elliptical or circular gaussian (for cubes).
+           disk       An elliptical or circular disk.
+           j1x        J1(x)/x function
+           jet        Jet model with power law brightness.
+           shell      2D projection of an optically-thin spherical shell
+           comet      2D projection of a parent molecule in comet.
+           cluster    standard isothermal 2D projection for cluster gas.
+%A spar
+        Parameters which give the characteristics of the object. The
+        parameters are given as a sequence of values, with one to six
+        values needed per object (depending on the object type). When
+        there are multiple objects, the parameter value for the second
+        object follow those for the first object, etc. The values are
+        as follows:
+          Object Type           SPAR values
+          -----------           -----------
+           level                  offset
+           noise                  rms
+           point                  amp,x,y
+           gaussian               amp,x,y,bmaj,bmin,pa
+           gauss3                 amp,x,y,z,bmaj,bmin,pa,bz
+           disk                   amp,x,y,bmaj,bmin,pa
+           j1x                    amp,x,y,bmaj,bmin,pa
+           jet                    amp,x,y,bmaj,bmin,pa
+           shell                  amp,x,y,bmaj
+           comet                  amp,x,y,scalelength
+           cluster                amp,x,y,core radius
+ 
+        Here "offset" is the offset level, "rms" is the rms value of the
+        noise, "amp" is the normally peak value of the object (but see
+        options=totflux below), "x" and "y" are the offset positions (in
+        arcsec) of the object relative to the reference pixel, "z" is
+        the absolute pixel position on the third axis, "bmaj" and "bmin"
+        are the major and minor axes FWHM (in arcsec), "pa" is the
+        position angle of the major axis (in deg), and "bz" is the FWHM
+        (in pixels) in the 3rd dimension.  The position angle is
+        measured from north towards east.
+ 
+        Comet scalelength, and cluster core radius are in arcsec units.
+        Jet model has brightness with power law index bmaj and bmin
+        along major and minor axes.
+ 
+        The default is an object of unit amplitude, at the reference
+        pixel, with a FWHM of 5 arcsec in x and y and 5 pixels in z.
+%A imsize
+        If not input image is given, then this determines the size, in
+        pixels, of the output image. Either one or two numbers can be
+        given.  If only one number is given, then the output is square.
+        For testing purposes a third number can be given to create a
+        cube, no good coordinate headers however are written for such
+        cubes.  Default is 256 pixels square.
+%A cell
+        The increment between pixels, in arcsec.  Only used if there is
+        no input map.  Default is 1 arcsec.
+%A radec
+        If no input image is given, this gives the RA and DEC of the
+        image, in hours and degrees, respectively.  They can be given in
+        hh:mm:ss,dd:mm:ss, or as decimal hours and degrees. The default
+        is RA=0, DEC=30.
+%A options
+        Extra processing options. Several can be given, separated by
+        commas. Minimum match is used. Possible values are:
+          totflux  Interpret the "amp" values in the spar keyword as
+                   total integrated flux densities (Normally the "amp"
+                   parameters are interpretted as peak values).
+%A seed
+        Integer used to initialise the random number generator.  The
+        same value of SEED produces the same noise, different values
+        produce different noise.
+ 
+%R 1.6, 2011/10/24 06:35:38 UTC

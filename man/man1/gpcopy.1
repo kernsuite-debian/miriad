@@ -1,0 +1,60 @@
+.TH gpcopy 1
+.SH NAME
+gpcopy - Copy or merge gains, bandpass and polarization correction.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+GpCopy is a MIRIAD task which copies or merges calibration corrections
+(antenna gains, polarization leakages, frequency table, bandpass item)
+from one data-set to another.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input data-set. This will normally be a visibility
+data-set. No default.
+.TP
+\fIout\fP
+The name of the output data-set. This is NOT created by GPCOPY, but
+rather the relevant items are copied to this data-set.
+.TP
+\fImode\fP
+This determines how the calibration tables, etc, are ``copied''
+to the output. The default is to ``copy''. Possible values are:
+.nf
+  create   Create the output, and copy the calibration tables to it.
+  copy     Copy the calibration tables to the output, overwriting
+           and previously existing calibration tables. This is the
+           default.
+  apply    Apply the input calibration tables to the output calibration
+           tables. This is the sort of operation that you might do
+           if you have two sets of calibration tables that you wish
+           to "multiply" together (implemented for gains and bandpass
+           only).
+  merge    Merge the two calibration tables together. This is the
+           sort of operation that you will want to perform if you
+           have two sets of calibration tables which are disjoint in
+           time (e.g. you used two secondary calibrators). The
+           merge opertation will weave the two sets of tables together.
+           (implemented for gain tables only).
+.TP
+\fIoptions\fP
+.fi
+This gives extra processing options, which are used to suppress
+the copying of certain items. Several options can be given,
+separated by commands. Minimum match is used:
+.nf
+  nopol    Do not copy the items dealing with polarization
+           calibration.
+  nocal    Do not copy the items dealing with antenna gain
+           calibration.
+  nopass   Do not copy the items dealing with bandpass
+           calibration (this includes the cgains and wgains tables).
+  relax    Relax the interpolation interval limits to 0.5 days.
+           Use this when copying gain tables created by selfcal
+           or gpscal to other sources.
+           With mode=apply: simply adjust the existing output gains,
+           rather than doing the default merge & multiply of solutions.
+.fi
+.sp

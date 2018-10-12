@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Listing Image Values</TITLE>
+<META NAME="description" CONTENT="Listing Image Values">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node144.html">
+<LINK REL="previous" HREF="node142.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node144.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3194"
+  HREF="node144.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3190"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3184"
+  HREF="node142.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3192"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3195"
+  HREF="node144.html">Source Fitting and Positions</A>
+<B>Up:</B> <A NAME="tex2html3191"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3185"
+  HREF="node142.html">Image Statistics and Histograms</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001820000000000000000"></A><A NAME="11668"></A>
+<BR>
+Listing Image Values
+</H1>
+
+<P>
+You might like to list some of the pixel values
+from a section of an image.  You can do this with the task
+<A NAME="tex2html650"
+  HREF="../doc/imlist.html">imlist</A>.  Because it is always very difficult to format numbers in
+a way which suits every application, <A NAME="tex2html651"
+  HREF="../doc/imlist.html">imlist</A>
+gives you this job. 
+You do this via the <TT>format</TT> keyword, into which you put a FORTRAN
+format specifier such as `1pe11.4', or `f7.2' etc.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMLIST</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=data</TD>
+<TD ALIGN="LEFT">Display pixel values</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=relpix,box(-10,-10,10,10)</TD>
+<TD ALIGN="LEFT">Select region</TD>
+</TR>
+<TR><TD ALIGN="LEFT">format=f8.3</TD>
+<TD ALIGN="LEFT">Select display format</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Any pixel which is blanked will be listed as ``...'' (ellipsis).
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

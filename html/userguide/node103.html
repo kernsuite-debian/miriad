@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The SDI CLEAN</TITLE>
+<META NAME="description" CONTENT="The SDI CLEAN">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node104.html">
+<LINK REL="previous" HREF="node102.html">
+<LINK REL="up" HREF="node101.html">
+<LINK REL="next" HREF="node104.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2686"
+  HREF="node104.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2682"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2676"
+  HREF="node102.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2684"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2687"
+  HREF="node104.html">Region-of-Interest Considerations</A>
+<B>Up:</B> <A NAME="tex2html2683"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2677"
+  HREF="node102.html">The Clark CLEAN</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001422000000000000000"></A> <A NAME="3708"></A>
+<BR>
+The SDI CLEAN
+</H2>
+
+<P>
+CLEAN sometimes runs into an instability when working on extended
+sources of fairly uniform surface brightness.  It produces obviously
+wrong `CLEAN stripes' in your image.  The Fourier transform of these
+stripes tends to be found in UN-sampled parts of the <I>u-v</I> plane.  This is
+a complicated way of saying that the visibility data do not constrain
+CLEAN's interpolation between the measured visibilities sufficiently
+well to prevent it putting in badly wrong values.
+
+<P>
+Another variant of the CLEAN algorithm which helps suppress CLEAN stripes,
+is the SDI CLEAN <A NAME="tex2html398"
+  HREF="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1984A%26A...137..159S">(Steer, Dewdney, and Ito 1984)</A>
+(A&amp;A 137, 159).
+In this variant
+any point in the residual image greater than some factor times the
+maximum residual point is taken as a CLEAN component.  The factor is less than
+one.  Thus, when the residual image has become very smooth, this avoids
+introducing ripples into it (which occur when subtracting the beam from just
+one location) which lead to the stripes.  This algorithm can be quite
+successful. A version of this algorithm that works on Stokes Q and U combined is
+available as task <A NAME="tex2html399"
+  HREF="../doc/csdi.html">csdi</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2686"
+  HREF="node104.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2682"
+  HREF="node101.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2676"
+  HREF="node102.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2684"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2687"
+  HREF="node104.html">Region-of-Interest Considerations</A>
+<B>Up:</B> <A NAME="tex2html2683"
+  HREF="node101.html">Deconvolution with CLEAN</A>
+<B> Previous:</B> <A NAME="tex2html2677"
+  HREF="node102.html">The Clark CLEAN</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

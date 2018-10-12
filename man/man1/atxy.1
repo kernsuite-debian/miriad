@@ -1,0 +1,71 @@
+.TH atxy 1
+.SH NAME
+atxy - Apply on-line XY phase measurements to Miriad data.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+ATXY corrects data for XY phase errors. It determines the XY phase
+measurements, either from the xyphase visibility variable or from
+the text file written by AIPS ATLOD, averages them, and then
+applies them to the data. The averaging step consists of finding
+the median XY phase in a given interval.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The names of the input uv data sets. No default.
+.TP
+\fIxyphase\fP
+If the data were loaded with Miriad ATLOD, then they should contain
+the on-line XY phase measurements in the xyphase variable. Howver
+if the data were loaded with AIPS (and then transferred to Miriad
+via FITS files), then you must give the name of the XY phase
+text file written by AIPS. Generally it will be XYPHS_xx, where
+xx is an AIPS user number.
+.TP
+\fIrefant\fP
+Antennas to apply XY phase corrections to. Generally it is best to
+apply corrections to only a single antenna -- the antenna which you
+have the greatest confidence in the XY phase measurements. Often
+this antenna will be the reference antenna during the observation.
+If you apply the XY phase to a subset of antennas, one of these
+antennas should be used as the ``refant'' antenna to GPCAL.
+No default.
+.TP
+\fIinterval\fP
+This gives the length of an averaging interval, in minutes. The
+default is 30 minutes, but larger values may be useful.
+.TP
+\fIbreak\fP
+The times, in the normal Miriad format, where there are
+break points. A ``break point'' gives a time where some form of
+instrumental glitch took place, and the xyphases jumped. By
+giving a break point, you prevent a solution interval from spanning
+this time.
+.TP
+\fIsideband\fP
+Sideband indicators. If the input was loaded with AIPS ATLOD, and
+if you averaged it into a channel-0 data-set, you must give the
+sideband indicator (+1 or -1) for each IF. This information is needed
+to convert between the AIPS and Miriad XY phase convention.
+If the input is still multi-channel data, or you used Miriad ATLOD,
+it is wiser to let this parameter default. Note that ATXY cannot
+cope with channel-0 data-sets when the sideband indicators
+change with time.
+.TP
+\fIout\fP
+The name of the output uv data set. No default.
+.TP
+\fIoptions\fP
+Extra processing options. Several options can be given,
+separated by commas. Minimum match is supported. Possible values
+are:
+.nf
+  srcbreak  Generate break points every time there is a change
+            in source.
+  undo      Apply the negative of the XY phase correction. There
+            should be no sensible reason to ever use this option.
+  reweight  Reweight the data (in the lag domain) to minimise the
+            so-called Gibbs phenomena and to help localise
+            interference.

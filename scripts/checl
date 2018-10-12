@@ -1,0 +1,14 @@
+#!/bin/csh -f
+
+foreach f ($MIRBIN/*)
+  set t = $f:t
+  if (-f $MIR/prog/$t.for) continue
+  if (-f $MIR/tools/$t.c)  continue
+  if (-f $MIR/spec/$t/$t.csh) continue
+  if (-f $MIR/scripts/$t.csh) continue
+
+  if ($t:e == exe && -f $MIR/spec/$t:r/$t:r.c) continue
+  if ($t == uem) continue
+  
+  echo "$f does not have a source file."
+end

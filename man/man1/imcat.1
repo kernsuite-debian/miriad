@@ -1,0 +1,36 @@
+.TH imcat 1
+.SH NAME
+imcat - Concatenate several images into one.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+map combination
+.SH DESCRIPTION
+IMCAT is a MIRIAD task to concatenate several images together
+along an axis (generally the frequency or velocity
+dimension).
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input images.  Several file names can be entered, separated
+by commas.  No default.
+.TP
+\fIout\fP
+The output image.  No default.
+.TP
+\fIaxis\fP
+The axis to concatentate together.  The default is the 3rd axis
+(i.e. axis=3).  You cannot concatenate together on the first
+axis.
+.TP
+\fIoptions\fP
+Task enrichment options.  Minimum match is used.  Currently
+there is only a single option:
+.nf
+  relax  This instructs IMCAT to ignore axis descriptor
+         mismatches (e.g. pixel increments etc).  Use this with
+         care.
+.fi
+.sp
+.SH REVISION
+1.8, 2013/08/30 01:49:21 UTC

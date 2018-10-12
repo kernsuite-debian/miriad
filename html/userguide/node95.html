@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node96.html">
+<LINK REL="previous" HREF="node94.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node96.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2573"
+  HREF="node96.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2569"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2563"
+  HREF="node94.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2571"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2574"
+  HREF="node96.html">Spectral Line Imaging Considerations</A>
+<B>Up:</B> <A NAME="tex2html2570"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2564"
+  HREF="node94.html">Imaging</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001310000000000000000">
+Introduction</A>
+</H1>
+The task <A NAME="tex2html358"
+  HREF="../doc/invert.html">invert</A>
+is used to produce an image (or image cube)
+given a collection of visibility datasets.
+
+<P>
+Even if you are only interested in continuum imaging, your data may
+contain several frequencies. Unless you have averaged over frequency
+channels earlier, your data still contains the 33 frequency channels produced
+by the ATCA correlator. Additionally as
+the ATCA can observe two frequency windows simultaneously, and if these two
+windows are relatively close (within about 25% of each other), then you
+can get extra sensitivity and improved <I>u-v</I> coverage by combining the
+two sets of data during imaging. Indeed you can enhance your <I>u-v</I> coverage
+further (but not sensitivity)
+by time-switching the frequency setup used, and so you might have
+observations at several frequencies, perhaps from different configurations.
+
+<P>
+The net result is that you possibly have data observed at multiple frequencies,
+and you are faced with the question of how to make an image from these
+data. Generally, unless perhaps your observation consists of a single frequency
+band at 3 cm, now is <EM>not</EM> the time to do any more averaging. It is
+better to let the imaging task, <A NAME="tex2html359"
+  HREF="../doc/invert.html">invert</A>, do its job with the
+UN-averaged data. By giving <A NAME="tex2html360"
+  HREF="../doc/invert.html">invert</A>
+data that has not been averaged
+in frequency, it can grid the individual channels at their correct location
+in the <I>u-v</I> plane (rather than some average location). In this way bandwidth
+smearing is reduced and the better
+<I>u-v</I> coverage results in a better beam. The advantage of doing this
+decrease with
+the fractional bandwidth that your data occupies, and so the reasons for
+not averaging are less compelling when imaging using a single frequency band
+at 3 cm.
+In this case, the small disadvantages of not doing the frequency averaging
+(somewhat slower run time, and a larger scratch file) might
+outweigh the advantages.
+
+<P>
+The technique of forming a single continuum image from a variety of
+frequencies is called ``multi-frequency synthesis'' (MFS). It produces an
+image with a frequency corresponding to some average of the frequencies
+of the input data. There is nothing particularly magical about combining
+different frequencies to produce a single continuum image. This is done
+all the time (interferometers are never monochromatic). The advantage of
+MFS is that it can take a greater fractional spread in frequencies before
+artifacts become a problem.
+
+<P>
+Eventually MFS will break down because of the variation in the sources
+flux density with frequency.
+If the fractional spread in frequencies is small (<SPAN CLASS="MATH"><IMG
+ WIDTH="50" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img33.png"
+ ALT="$&lt;10\%$"></SPAN>) or if
+high dynamic range imaging is not required (dynamic ranges less than a few
+hundred or so), then spectral index effects are unimportant. You can
+make an MFS image, and deconvolve it using the conventional deconvolution
+tasks (if deconvolution is required). Otherwise, spectral index effects are
+likely to be important, and you should use a
+special task (<A NAME="tex2html361"
+  HREF="../doc/mfclean.html">mfclean</A>) for the deconvolution. Note that the decision
+to use MFS in the imaging <EM>does not</EM> require you to use <A NAME="tex2html362"
+  HREF="../doc/mfclean.html">mfclean</A>
+in the deconvolution. While many ATCA continuum observations will benefit
+from using MFS in the imaging, a much more select set will benefit from
+accounting for spectral index effects in the deconvolution.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2573"
+  HREF="node96.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2569"
+  HREF="node94.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2563"
+  HREF="node94.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2571"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2574"
+  HREF="node96.html">Spectral Line Imaging Considerations</A>
+<B>Up:</B> <A NAME="tex2html2570"
+  HREF="node94.html">Imaging</A>
+<B> Previous:</B> <A NAME="tex2html2564"
+  HREF="node94.html">Imaging</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

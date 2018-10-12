@@ -1,0 +1,343 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Miscellaneous Analysis Tasks</TITLE>
+<META NAME="description" CONTENT="Miscellaneous Analysis Tasks">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node149.html">
+<LINK REL="up" HREF="node141.html">
+<LINK REL="next" HREF="node151.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3276"
+  HREF="node151.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3272"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3268"
+  HREF="node149.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3274"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3277"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B>Up:</B> <A NAME="tex2html3273"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3269"
+  HREF="node149.html">Polarimetric Analysis Tasks</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001890000000000000000"></A><A NAME="12044"></A><A NAME="12045"></A><A NAME="12046"></A>
+<A NAME="12047"></A><A NAME="12048"></A>
+<BR>
+Miscellaneous Analysis Tasks
+</H1>
+
+<UL>
+<LI>The task <A NAME="tex2html733"
+  HREF="../doc/imdiff.html">imdiff</A>
+can be used to compare two images.  It
+finds optimum parameters (in a maximum likelihood sense) for making one
+image approximate another image.  The parameters are an amplitude scale
+factor, dc offset, shifts in the x and y directions and an expansion
+factor.  Any of these parameters can be fixed at a given
+value, and the others allowed to vary. 
+
+<P>
+Note that this task is suited only to small shifts, expansions
+and scale factors.
+You can use the self-explanatory task <A NAME="tex2html734"
+  HREF="../doc/shifty.html">shifty</A>
+for large
+integral pixel shifts.   The keyword <TT>in2</TT> gives the image
+which must be adjusted to look like the image given by keyword <TT>in1</TT>.
+Task <A NAME="tex2html735"
+  HREF="../doc/imdiff.html">imdiff</A>
+can also output a residual image - see the help
+file for the definition of the residual, but it is basically
+a combination of all the residuals of all the adjustable parameters.
+
+<P>
+To hold any particular parameter fixed, you simply specify the
+appropriate <TT>options</TT> string (see help file).  Otherwise,
+<A NAME="tex2html736"
+  HREF="../doc/imdiff.html">imdiff</A>
+will solve for that parameter.  Initial guesses can be
+entered through the keyword for each parameter. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMDIFF</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in1=vela.atca</TD>
+<TD ALIGN="LEFT">Template image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">in2=vela.vla</TD>
+<TD ALIGN="LEFT">Adjust this image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">adjust=vela.vla-atca</TD>
+<TD ALIGN="LEFT">Adjusted image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">resid=vela.resid</TD>
+<TD ALIGN="LEFT">The residual image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region</TD>
+<TD ALIGN="LEFT">Unset for entire image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">guard</TD>
+<TD ALIGN="LEFT">Unset for default OK</TD>
+</TR>
+<TR><TD ALIGN="LEFT">xshift</TD>
+<TD ALIGN="LEFT">Unset for initial guess of 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT">yshift</TD>
+<TD ALIGN="LEFT">Unset for initial guess of 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT">expand</TD>
+<TD ALIGN="LEFT">Unset for initial guess of 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">amp</TD>
+<TD ALIGN="LEFT">Unset for initial guess of 1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">offset</TD>
+<TD ALIGN="LEFT">Unset for initial guess of 0</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options=expand</TD>
+<TD ALIGN="LEFT">Unset to vary everything and x</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">and y expansions separately</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>A very useful tool for diagnosing errors in images is
+to Fourier Transform them.  The error may, under some conditions,
+be easier to recognise in the Fourier plane.  <I>Miriad</I> offers
+the task <A NAME="tex2html737"
+  HREF="../doc/fft.html">fft</A>
+for this purpose.  It can Fourier Transform
+real or complex images (you input there real and imaginary
+parts with separate keywords).    Note that blanked pixels
+in the input are treated as if their value was zero.
+
+<P>
+In the following example, we FFT a CLEANed image and form the amplitude
+and phase images of the Fourier Transform. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>FFT</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">rin=ic4296.icln</TD>
+<TD ALIGN="LEFT">Input real image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">iin</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">sign=+1</TD>
+<TD ALIGN="LEFT">Forwards transform</TD>
+</TR>
+<TR><TD ALIGN="LEFT">center</TD>
+<TD ALIGN="LEFT">Use ref. pix. for centre of transform</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rout</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">iout</TD>
+<TD ALIGN="LEFT">Unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mag=fftp.amp</TD>
+<TD ALIGN="LEFT">Amplitude image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">phase=fft.phase</TD>
+<TD ALIGN="LEFT">Phase image</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Task <A NAME="tex2html738"
+  HREF="../doc/fft.html">fft</A>
+produces gridded images,  so you can use all the usual
+display tools to look at them (see Chapter&nbsp;<A HREF="node135.html#c:display">17</A>).
+
+<P>
+</LI>
+<LI>For those of you wrestling with optical data in <I>Miriad</I>, the task
+<A NAME="tex2html739"
+  HREF="../doc/impoly.html">impoly</A>
+may be of benefit.  You may like to make a polynomial sky
+subtraction.  <A NAME="tex2html740"
+  HREF="../doc/impoly.html">impoly</A>
+allows you to define a region over which a
+2-D polynomial is fit.  The fit is the subtracted from the the full
+image, not just the designated fit region. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMPOLY</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=cluster.deep</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=cluster-sub.deep</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">order=#</TD>
+<TD ALIGN="LEFT">Order of polynomial</TD>
+</TR>
+<TR><TD ALIGN="LEFT">coeffs</TD>
+<TD ALIGN="LEFT">Unset not to see coefficients of fit</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=@cgcurs.region</TD>
+<TD ALIGN="LEFT">Fit over this region</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>As is discussed in Chapter&nbsp;<A HREF="node135.html#c:display">17</A>, there are a variety
+of transfer functions that you can apply to your image with the
+display tasks.   One that is particularly useful is histogram
+equalisation.   Essentially, this method assesses, via a histogram,
+which image intensities have the most pixels.  It then optimally expends the
+dynamic range of the device in displaying these pixels, rather than
+the pixels which have intensities that occur seldom.  
+
+<P>
+It may be that you would like the image to be written out with histogram
+equalisation applied, rather than it just being computed but not saved
+by the display task.  The task <A NAME="tex2html741"
+  HREF="../doc/imheq.html">imheq</A>
+will do this for you.
+You can specify the intensity range in which pixels will be included
+when computing the histogram.  It is useful to use this if you
+have outliers significantly from the bulk of the distribution.
+<A NAME="tex2html742"
+  HREF="../doc/imheq.html">imheq</A>
+will equalised each plane of a cube, and by default, use
+the image minimum and maximum of that plane.  If you set 
+<TT>options=global</TT> it will take the minimum and maximum from the whole
+cube instead.
+
+<P>
+If you set the <TT>device</TT> keyword, <A NAME="tex2html743"
+  HREF="../doc/imheq.html">imheq</A>
+will draw a plot
+of the image histogram and discretized cumulative histogram (see
+help file).  The latter is essentially the transfer function
+that is applied.   This plot is drawn after every plane of
+a cube.
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMHEQ</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=cluster.deep</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=cluster-heq.deep</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">nbins</TD>
+<TD ALIGN="LEFT">Default for 128 histogram bins</TD>
+</TR>
+<TR><TD ALIGN="LEFT">range</TD>
+<TD ALIGN="LEFT">Default is image min to max</TD>
+</TR>
+<TR><TD ALIGN="LEFT">options</TD>
+<TD ALIGN="LEFT">Unset for plane by plane equalisation</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">PGPLOT device for histogram</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+<LI>It is sometimes useful to replace the value of all image pixels
+which are blanked by some number (often zero). Task <A NAME="tex2html744"
+  HREF="../doc/imblr.html">imblr</A>
+offers this facility; it unblanks all blanked pixels and
+replaces their value with the one specified. 
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IMBLR</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=test.m1</TD>
+<TD ALIGN="LEFT">Input image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=test-2.m1</TD>
+<TD ALIGN="LEFT">Output image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">value=0.0</TD>
+<TD ALIGN="LEFT">Replacement value</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3276"
+  HREF="node151.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3272"
+  HREF="node141.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3268"
+  HREF="node149.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3274"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3277"
+  HREF="node151.html">Displaying Spectral Cubes</A>
+<B>Up:</B> <A NAME="tex2html3273"
+  HREF="node141.html">Image Analysis</A>
+<B> Previous:</B> <A NAME="tex2html3269"
+  HREF="node149.html">Polarimetric Analysis Tasks</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,26 @@
+.TH zapchan 1
+.SH NAME
+zapchan - replace range of channels with average of adjacent channels.
+.SH PERSON RESPONSIBLE
+thw
+.SH CATEGORIES
+image-analysis
+.SH DESCRIPTION
+zapchan reads in a datacube and replaces selected "bad" channels with
+the average of the two adjacent channels.  Needless to say, it will
+not work on edge channels or consecutive channels.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+Name of input datacube.  No default.
+.sp
+.TP
+\fIout\fP
+Name of output datacube to create.  No default.
+.sp
+.TP
+\fIchans\fP
+Integer list of channels to zap.  You cannot zap edge channels or
+consecutive channels.  Maximum 32.  No default.
+.sp

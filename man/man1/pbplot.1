@@ -1,0 +1,43 @@
+.TH pbplot 1
+.SH NAME
+pbplot - Plot primary beam shapes.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+PBPLOT plots the primary beam function.
+.SH PARAMETERS
+.TP
+\fItelescop\fP
+Used to determine the type of the primary beam.  Several values
+can be given.  Normally this will simply be a telescope name.
+.TP
+\fIfreq\fP
+Frequency at which to determine the primary beam, in GHz.
+Default is 1.4 GHz.
+.TP
+\fIbw\fP
+Bandwidth, in GHz.  The response is averaged over the bandwidth.
+The default is 0. An optional second parameter specifies how
+many intervals in frequency to use for the average. The default
+for this is 10. Steps may be visible at the edge of the beam.
+.TP
+\fIoptions\fP
+Extra processing options:
+.nf
+  derivative  Plot the derivative with frequency of the primary
+              beam (rather than the normal primary beam).
+  alpha       Plot the spectral index of the beam
+  frequency   Plot the effective frequency. This is only
+              useful for non zero bw.
+.TP
+\fIdevice\fP
+.fi
+PGPLOT device.  Default is no plot.
+.TP
+\fIlog\fP
+Log file for listing.  Default is no log file.
+.sp
+.SH REVISION
+1.6, 2013/10/24 01:03:53 UTC

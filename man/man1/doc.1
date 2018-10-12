@@ -1,0 +1,28 @@
+.TH doc 1
+.SH NAME
+doc - Strip preamble comments out of miriad source files
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+tools
+.SH DESCRIPTION
+doc strips preamble ("doc") comments out of Miriad source files,
+producing so-called ".doc" documentation files.
+.sp
+.nf
+  Usage:
+    doc [-O outdir] [-f] files ... [ > outfile ]
+.fi
+.sp
+.nf
+  where
+.fi
+.sp
+.nf
+    -O    Specify an output directory for the files.
+    -f    Pipe the output to standard output, rather than creating
+          output files.
+    -x    Generate "extra" help files as well.
+    -?    Give a brief usage message.
+.fi
+.sp

@@ -1,0 +1,15 @@
+%N tvset
+%D Set up and initialize the TV device.
+%P rjs
+%B
+        TVSET either sets the lookup table, or clears the TV device.
+%A server
+        Standard keyword server. See the help on "server" for more information.
+        No default.
+%A table
+        This gives the name of the operation to perform, or look-up
+        table to load. Possible values are:
+          'clear'    Reset the TV device.
+          'grey'     Black and white look-up table.
+          'colour'   Colour look-up table.
+          'rainbow'  Another colour look-up table.

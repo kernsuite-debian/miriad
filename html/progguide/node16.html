@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>General</TITLE>
+<META NAME="description" CONTENT="General">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node15.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html412"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html406"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html400"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html408"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html410"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html413"
+  HREF="node17.html">Open, Close and Rewind</A>
+<B>Up:</B> <A NAME="tex2html407"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html401"
+  HREF="node15.html">UV Data Sets</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00451000000000000000">
+General</A>
+</H2>
+At the very least, a uv data set can be viewed as a sequence of 
+correlation
+records, with associated u and v coordinates, time and baseline number.
+Associated with each correlation is a flag, indicating whether the
+correlation is believed to be good or bad.
+
+<P>
+The <I>Miriad</I> uv data structure required a more general structure. Unfortunately
+this is more complicated and somewhat cumbersome for simple cases.
+A uv data set can be viewed as an ordered (generally time ordered) stream of
+named records or ``variables''. There are markers in this data stream, to
+indicate when
+several variables change ``simultaneously'' (i.e. they correspond to the
+same time). Each variable
+consists of an array of values, the type of which can be either integer, real
+or double precision, etc. Correlation data, u and v coordinates,
+time and baseline numbers are specific examples of variables.
+Because of the special nature of these variables, special routines are
+available to simplify accessing them. A list of the variables
+that may be present in a uv data set is given in Appendix I.
+
+<P>
+In addition to this variable stream, a uv file will contain a file giving
+flagging information.
+
+<P>
+It should be noted that ``variables'' and ``items''
+are quite distinct. For a particular data set, variables vary, or at least may
+vary,
+whereas data items are fixed. The notion of variables is unique to uv data sets,
+whereas all <I>Miriad</I> data sets are composed of data items. The stream of
+uv variables is implemented as three data items, called <TT>visdata</TT>,
+<TT>vartable</TT> and <TT>flags</TT>.
+
+<P>
+There is a ``miriad'' of uv routines.
+The routines used to access and manipulate a uv data set are given in the
+following table.
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="189"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2.1:</STRONG>
+UV Data Subroutines</CAPTION>
+<TR><TD><IMG
+ WIDTH="423" HEIGHT="760" BORDER="0"
+ SRC="img2.png"
+ ALT="\begin{table}\begin{verbatim}subroutine uvopen(tno,dataname,status)
+subrouti...
+...object,p1,p2,flag)
+subroutine uvinfo(tno,object,data)\end{verbatim}
+\end{table}"></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html412"
+  HREF="node17.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html406"
+  HREF="node15.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html400"
+  HREF="node15.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html408"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html410"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html413"
+  HREF="node17.html">Open, Close and Rewind</A>
+<B>Up:</B> <A NAME="tex2html407"
+  HREF="node15.html">UV Data Sets</A>
+<B> Previous:</B> <A NAME="tex2html401"
+  HREF="node15.html">UV Data Sets</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

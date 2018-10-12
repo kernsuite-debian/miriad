@@ -1,0 +1,135 @@
+.TH imsad 1
+.SH NAME
+imsad - image search and destroy
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+IMSAD fits a Gaussian to the image histogram to determine the
+true image rms noise, then searches for islands of pixels above
+some cutoff, and attempts to fit Gaussian components to the
+islands.  The fitting is borrowed from the miriad imfit task and
+the island detection from the AIPS SAD task.
+.sp
+Pixels above the clip level are marked in yellow.  Then a square
+region centred on each island is coloured in.
+.sp
+When fitting Gaussians, a cross is plotted at the midpoint of
+the island.  Each island is displayed separately in the top
+left of the display as it is fit.  The centroid of the fit is
+plotted.
+.sp
+Information about the fit for each island is given.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+.sp
+The name of the input image data set.
+.TP
+\fIregion\fP
+.sp
+The region of interest within the image (rectangular only).
+.TP
+\fIrange\fP
+Image intensity range to display.  Default is min to max for the
+current plane being displayed.
+.TP
+\fIclip\fP
+Clip  level.  For input images of intensity, any pixels below
+the clip level are excluded from the fitting process.  For other
+sorts of images (e.g. Stokes Q, U or V) pixels whose absolute
+values are below the clip level are excluded from the fit.
+.sp
+The clip level can be specified as a multiple of the true image
+rms (using the hist option) or as an absolute pixel value.  No
+default.
+.TP
+\fIbox\fP
+The minimum extents for island boundaries.  This would usually
+be some multiple of the beam extents in x and y (2,2 is the
+default).  For images with no beam characteristics there is no
+default, the units in this case are pixels.
+.TP
+\fImax\fP
+Sets the maximum number of boxes to return, if more then max
+are detected then the max boxes with largest peak flux / pixel
+are returned.
+.TP
+\fIrad\fP
+Will only report those islands detected within some angular
+radius of the specified coordinate pair.  The default units are
+absolute pixels, e.g. 16,18,10.  If units other than the default
+are used you must specify these after the radius, e.g.
+10:34:45.3,-45:54:02,0.005,hms,dms,degrees.
+.TP
+\fIoptions\fP
+Extra processing options.  Possible values are:
+.sp
+hist ....... compute the image pixel histogram and compute the
+.nf
+             true image rms
+.fi
+gauss ...... fit a Gaussian model to each component
+fixed ...... the FWHM is fixed (circular cross-section)
+point ...... a Gaussian with the characteristics of the point-
+.nf
+             spread function is fit
+.fi
+box ........ return the island box extents
+arcsec ..... output box BLC/TRC units are arcsec offset from
+.nf
+             reference.  Default is absolute pixels.
+.fi
+fiddle ..... interactively adjust the display lookup table
+.nf
+             (LUT), and alter the transfer function.
+.fi
+nofit ...... do not perform any fitting
+noplt ...... disable the plotting features
+nodet ...... skip island detection and fit the box given by
+.nf
+             region - not implemented
+.TP
+\fIdevice\fP
+.fi
+PGPLOT plot device
+.TP
+\fIout\fP
+Dataset to write fitted source parameters.  Each line of this
+file summarises the result of the Gaussian fit for one island.
+Each line contains:
+.sp
+Island name, island number, ra and dec of island centroid,
+peak flux density, integrated flux density, deconvolved (from
+beam) major axis FWHM (arcsec), deconvolved minor axis (arcsec),
+deconvolved position angle (degrees), FLAG, DFLAG, FFLAG
+.sp
+FLAG:   IFAIL value (an integer) means Gaussian fit did not
+.nf
+          converge,
+        F means failed to find covariance matrix for Gaussian
+          fit,
+        N means it was not possible to attempt a Gaussian fit,
+        C converged OK.
+.fi
+.sp
+DFLAG:  D  deconvolution of size from beam OK,
+.nf
+        P  deconvolution gave result close to point source,
+        ?  No synthesised beam so could not deconvolve,
+        F  deconvolution failed.
+.fi
+.sp
+FFLAG:  F  Integrated flux < peak flux (caused by beam > source
+.nf
+           size).  If blank then ok.
+.TP
+\fIlog\fP
+.fi
+If specified, output is written to the specified file instead of
+to the terminal.
+.TP
+\fIlabel\fP
+Special purpose label

@@ -1,0 +1,83 @@
+.TH zeemap 1
+.SH NAME
+zeemap - Map the magnetic field from I and V cubes
+.SH PERSON RESPONSIBLE
+nebk
+.SH CATEGORIES
+profile analysis
+.SH DESCRIPTION
+ZEEMAP tries to find the line-of-sight magnetic field splitting
+a transition by measuring the shift in the line owing to the
+Zeeman effect.
+.sp
+.SH PARAMETERS
+.TP
+\fIiin\fP
+Stokes I spectral cube with channel on the first axis.
+.TP
+\fIvin\fP
+Stokes V spectral cube with channel on the first axis.
+.TP
+\fIb\fP
+Output file name for line-of-sight magnetic field.
+.TP
+\fId\fP
+Output file name for the derivative of I/2 spectrum (op=div
+only).
+.TP
+\fIbe\fP
+Output file name for the error in B (op=div only).
+.TP
+\fIg\fP
+Output file name for amount of residual I found in V (op=fit
+only).
+.TP
+\fIblc\fP
+Bottom left corner of box to be fit.
+.TP
+\fItrc\fP
+Top right corner of box to be fit.
+.TP
+\fIfreq\fP
+Frequency of line in GHz, used to determine amount of splitting
+per Gauss.
+.TP
+\fIop\fP
+Operation code that controls how the line shift is determined -
+.nf
+  div: by dividing V by the derivative of I/2, or
+  fit: by fitting of the derivative of I and I to V.
+.TP
+\fIcutoff\fP
+.fi
+For op="div", the division will not be performed unless the
+derivative of I/2 is greater than cutoff.
+For op="fit", the fit will not be performed unless one or more
+channels in the I spectrum is larger in absolute value than
+cutoff.
+.TP
+\fIvrms\fP
+RMS deviation in V spectrum in a signal free area.  This can
+be obtained using histo.  Used for calculating error in B
+for op=div.
+.TP
+\fImode\fP
+This determines the algorithms used, if operation="fit". It
+can consist of several flags:
+.nf
+ l  Include leakage term,
+ 2  Use 2 sided derivative approximation,
+ m  Use maximum likelihood technique,
+ x  Perform extra checks for better solutions, when
+    using the maximum likelihood technique.
+.fi
+Default mode=2m.
+.TP
+\fIy corlen\fP
+Correlation length.  Selected window must be divisible by this
+number, which is the number of pixels over which you think the
+magnetic field might be constant.  Default is 1, try maybe 2
+or 4.
+.sp
+.SH REVISION
+1.4, 2010/11/22 05:06:16 UTC

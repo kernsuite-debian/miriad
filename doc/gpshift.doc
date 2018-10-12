@@ -1,0 +1,10 @@
+%N gpshift
+%D Shift the frequency of bandpass solutions.
+%P rjs
+%: calibration
+%B
+%A vis
+        The name of the input data-set. This will normally be a visibility
+        data-set. No default.
+%A offset
+        Frequency offset to add, in GHz. Default is 0.

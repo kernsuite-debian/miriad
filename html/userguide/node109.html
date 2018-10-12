@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Computation</TITLE>
+<META NAME="description" CONTENT="Computation">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node108.html">
+<LINK REL="up" HREF="node108.html">
+<LINK REL="next" HREF="node110.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2755"
+  HREF="node110.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2751"
+  HREF="node108.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2747"
+  HREF="node108.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2753"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2756"
+  HREF="node110.html">Multi-frequency deconvolution - MFCLEAN</A>
+<B>Up:</B> <A NAME="tex2html2752"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+<B> Previous:</B> <A NAME="tex2html2748"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001431000000000000000">
+Computation</A>
+</H2>
+Maximum entropy algorithms tend to be less robust and harder to drive than
+CLEAN algorithms. The quality of the maximum entropy solution can depend
+very strongly on the <code>rms</code> and <code>flux</code> parameters - these parameters
+should be set with some care, or some experimentation may be necessary.
+
+<P>
+Various parameters to the task <A NAME="tex2html428"
+  HREF="../doc/maxen.html">maxen</A>
+are described below:
+
+<P>
+
+<UL>
+<LI><TT>map, beam</TT>: As with CLEAN, you give task <A NAME="tex2html429"
+  HREF="../doc/maxen.html">maxen</A>
+a dirty
+image and a dirty beam.
+
+<P>
+</LI>
+<LI><TT>default</TT>: You also have the option of supplying a default
+image.  The default image (<SPAN CLASS="MATH"><IMG
+ WIDTH="27" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img45.png"
+ ALT="$M_k$"></SPAN> in the equations above) is some
+estimate of what the algorithm should tend towards.  It could be some
+<I>a priori</I> model or low-resolution image of the source.  The default
+default (sic) image is a uniform image.  The units of the <code>default</code>
+image are not too important, though it should be positive valued if the
+Gull and Skilling entropy measure is used.
+
+<P>
+</LI>
+<LI><TT>model</TT>: The <code>model</code> is some initial estimate of the deconvolved
+image (units of Jy/pixel). In principle,
+the <code>model</code> image is simply a way to kick start <A NAME="tex2html430"
+  HREF="../doc/maxen.html">maxen</A>
+towards the
+correct solution. In principle it should not affect convergence to the final
+solution or its quality - it should just speed up the process. In practice,
+a good initial <code>model</code> can sometimes help.
+
+<P>
+</LI>
+<LI><TT>region</TT>: As with CLEAN, this gives the region in the dirty image
+which contains all the source emission, and much the same can be restated
+here about setting the parameter. In particular, you can
+deconvolve an area no more than a quarter the area of the beam (but see
+<TT>options=pad</TT> if you fail to heed this advice).
+
+<P>
+</LI>
+<LI><TT>measure</TT>: This determines the entropy measure used; specify either
+<TT>gull</TT> or <TT>cornwell</TT> (these  are the <SPAN CLASS="MATH"><IMG
+ WIDTH="56" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img50.png"
+ ALT="$p\log(p)$"></SPAN> and <!-- MATH
+ $\log(\cosh[p])$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="84" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img51.png"
+ ALT="$\log(\cosh[p])$"></SPAN> forms,
+respectively). The default is to use the Gull form, but if deconvolving
+<I>Q</I>, <I>U</I> or <I>V</I> images, the Cornwell form may be useful.
+
+<P>
+</LI>
+<LI><TT>out</TT>: This gives the name of the output image, which has units
+of Jy/pixel. This is the equivalent image to <A NAME="tex2html431"
+  HREF="../doc/clean.html">clean</A>'s CLEAN component
+image. However, unlike CLEAN, maximum entropy techniques tend to be more
+conservative in their extrapolation of high spatial frequencies, and so
+this output is more commonly viewed and used as a final image than
+the CLEAN component image would be. However it is just as valid an
+operation to pass this output from <A NAME="tex2html432"
+  HREF="../doc/maxen.html">maxen</A>
+through <A NAME="tex2html433"
+  HREF="../doc/restor.html">restor</A>,
+and so produce either a restored or a residual image. Those with some
+courage may choose to look at the residual image. Unlike CLEAN, the
+residuals tend to be strongly correlated with source structure.
+
+<P>
+</LI>
+<LI><TT>niters</TT>: Task <A NAME="tex2html434"
+  HREF="../doc/maxen.html">maxen</A>
+uses an iterative algorithm to
+arrive at its solution, and terminates when it believes it has
+converged.  The parameter <code>niters</code> gives the maximum number of
+iterations that <A NAME="tex2html435"
+  HREF="../doc/maxen.html">maxen</A>
+will attempt before giving up if it does
+not converge.  For low dynamic-range images, 10 iterations are usually
+sufficient.  Higher dynamic-ranges (greater than 1000) can require 30
+iterations to converge.  The default maximum number of iterations is 20.
+
+<P>
+</LI>
+<LI><TT>rms</TT>: This is a crucial parameter.  It gives the rms noise in
+Jy/beam.  The rms noise value printed by <A NAME="tex2html436"
+  HREF="../doc/invert.html">invert</A>
+should be some
+guide to setting this parameter, but see the caveats about this value
+under <A NAME="tex2html437"
+  HREF="../doc/invert.html">invert</A>.  An alternative way is to measure the rms in a
+blank portion of the sky.  If the beam has few sidelobes you will
+probably be able to measure this directly from the dirty image.
+Otherwise you would really need to CLEAN first! If <code>rms</code> is too
+large, the output image will be too smooth.  If it is too small,
+convergence will be prevented.  A useful trick is to underestimate
+<code>rms</code> and then stop after a few iterations, and then reset
+<code>rms</code> to the level achieved up to that point.  Do not leave
+<code>rms</code> unset.
+
+<P>
+</LI>
+<LI><TT>flux</TT>: The <code>flux</code> specifies how the zero-spacing flux density
+is to be estimated.  There are three modes of use.  First, you specify a
+known value which must be fitted to within 5%.  Second, if you have no
+idea what the zero-spacing flux density is, then leave <B>flux</B> unset;
+<A NAME="tex2html438"
+  HREF="../doc/maxen.html">maxen</A>
+will attempt to estimate it.  Third, if you have a rough
+idea (within a factor of 2, say) then set <code>flux</code> to the negative of
+your guess.  If at all possible, you should give some estimate of the
+total flux density.
+
+<P>
+</LI>
+<LI><TT>q</TT>: This gives an estimate of the volume of the main lobe of the
+dirty
+beam in units of pixels. Typically it is 10 to 30, and the algorithm does
+not depend critically on it. The default is determined from the data, and
+generally will be adequate.
+
+<P>
+</LI>
+<LI><TT>options</TT>, as usual, gives several processing options. Possible
+values are
+<DL>
+<DT><STRONG><TT>quiet, verbose:</TT></STRONG></DT>
+<DD>This controls the verbosity of <A NAME="tex2html439"
+  HREF="../doc/maxen.html">maxen</A>'s
+messages.
+</DD>
+<DT><STRONG><TT>asym:</TT></STRONG></DT>
+<DD>Normally <A NAME="tex2html440"
+  HREF="../doc/clean.html">clean</A>
+assumes that the beam has a 180
+degree rotational symmetry, which is the norm in radio interferometry.
+Making such an assumption allows some optimisations. You should instruct
+<A NAME="tex2html441"
+  HREF="../doc/clean.html">clean</A>
+if this is not the case, by using the <TT>asym</TT> switch.
+</DD>
+<DT><STRONG><TT>pad:</TT></STRONG></DT>
+<DD>Double the beam size by padding it with zeros. This will
+give better stability with Clark and Steer modes if you are daring enough
+to CLEAN an area which is more than a quarter of the beam area.
+</DD>
+</DL>
+
+<P>
+</LI>
+</UL>
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>MAXEN</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">map=vela.imap</TD>
+<TD ALIGN="LEFT">Dirty image</TD>
+</TR>
+<TR><TD ALIGN="LEFT">beam=vela.ibem</TD>
+<TD ALIGN="LEFT">Dirty beam</TD>
+</TR>
+<TR><TD ALIGN="LEFT">model</TD>
+<TD ALIGN="LEFT">An initial solution solution - generally unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">default</TD>
+<TD ALIGN="LEFT">The image that the solution should tend</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">towards - generally unset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=vela.ivm</TD>
+<TD ALIGN="LEFT">Output dataset</TD>
+</TR>
+<TR><TD ALIGN="LEFT">niters=20</TD>
+<TD ALIGN="LEFT">Maximum number of iterations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=</TD>
+<TD ALIGN="LEFT">Region to be deconvolved</TD>
+</TR>
+<TR><TD ALIGN="LEFT">measure</TD>
+<TD ALIGN="LEFT">Leaving unset gives you the Gull measure</TD>
+</TR>
+<TR><TD ALIGN="LEFT">flux=</TD>
+<TD ALIGN="LEFT">Total source flux - give some value</TD>
+</TR>
+<TR><TD ALIGN="LEFT">rms=</TD>
+<TD ALIGN="LEFT">Rms noise in the dirty image - <EM>IMPORTANT</EM>!</TD>
+</TR>
+<TR><TD ALIGN="LEFT">q=</TD>
+<TD ALIGN="LEFT">AN estimate of the value of the beams main lobe.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2755"
+  HREF="node110.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2751"
+  HREF="node108.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2747"
+  HREF="node108.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2753"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2756"
+  HREF="node110.html">Multi-frequency deconvolution - MFCLEAN</A>
+<B>Up:</B> <A NAME="tex2html2752"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+<B> Previous:</B> <A NAME="tex2html2748"
+  HREF="node108.html">Deconvolution with maximum entropy</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

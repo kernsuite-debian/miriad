@@ -1,0 +1,42 @@
+.TH velcolor 1
+.SH NAME
+velcolor - Make an RGB image cube to display velocity as color.
+.SH PERSON RESPONSIBLE
+mchw
+.SH CATEGORIES
+image analysis
+.SH DESCRIPTION
+VELCOLOR makes a three-plane, red-green-blue, Miriad image cube
+that can be used to generate a colour display of the third axis
+of a data cube, typically velocity.  The RGB planes must be
+superposed in a suitable viewer.
+.sp
+The algorithm weights the channels so that the apparent
+intensity of the superposed RGB planes is independent of color.
+For more details see Heiles & Jenkins (1976), A&A, 46, 33.
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+The input image.  No default.
+.TP
+\fIregion\fP
+The region of the input image to be used.  The 3rd axis region
+determines the range from blue to red.  See documentation on
+region for help of how to specify this.  Only the bounding box
+is supported.
+.TP
+\fIpivot\fP
+Center channel of input image for output green image.
+Default is 0.4*trc+0.6*blc
+.TP
+\fIout\fP
+The output RGB cube.  No default.
+.TP
+\fIclip\fP
+Two values.  Exclude pixels with values in the range clip(1) to
+clip(2).  If only one value is given, then exclude -abs(clip) to
++abs(clip).
+.sp
+.SH REVISION
+1.5, 2011/07/04 00:59:16 UTC

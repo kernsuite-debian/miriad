@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Generating Visibilities from a Model Image</TITLE>
+<META NAME="description" CONTENT="Generating Visibilities from a Model Image">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node56.html">
+<LINK REL="up" HREF="node55.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2082"
+  HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2078"
+  HREF="node55.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2074"
+  HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2080"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2083"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B>Up:</B> <A NAME="tex2html2079"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B> Previous:</B> <A NAME="tex2html2075"
+  HREF="node56.html">Making a Fake Observation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00920000000000000000">
+Generating Visibilities from a Model Image</A>
+</H1>
+
+<P>
+If you just want to generate visibilities corresponding to a particular
+model image, and do not care whether they follow realistic tracks in the
+<I>uv</I> plane, then <A NAME="tex2html153"
+  HREF="../doc/im2uv.html">im2uv</A>
+may suit you.  Task <A NAME="tex2html154"
+  HREF="../doc/im2uv.html">im2uv</A>
+simply
+Fourier transforms an image (whose units should be Jy/pixel) and writes
+this transform into a visibility dataset.  So you end up with
+visibilities sampled on a rectangular grid.  The task attempts to
+produce a visibility dataset which looks reasonably valid, but the
+output does have some odd characteristics (e.g.  all output visibilities
+consists of a single baseline, measured at the same time!!).
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>IM2UV</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">model=</TD>
+<TD ALIGN="LEFT">Name of the input model image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">out=</TD>
+<TD ALIGN="LEFT">Name of the output visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">region=</TD>
+<TD ALIGN="LEFT">Only pixels within the region are used</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">to generate the model visibilities.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select=</TD>
+<TD ALIGN="LEFT">Normal visibility selection. Only visibilities</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">obeying the selection criteria are stored. Only</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><TT>uvrange</TT> selection is currently honoured.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2082"
+  HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2078"
+  HREF="node55.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2074"
+  HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2080"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2083"
+  HREF="node58.html">Flagging, Manipulating and Examining</A>
+<B>Up:</B> <A NAME="tex2html2079"
+  HREF="node55.html">Generating Dummy Visibility Data</A>
+<B> Previous:</B> <A NAME="tex2html2075"
+  HREF="node56.html">Making a Fake Observation</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

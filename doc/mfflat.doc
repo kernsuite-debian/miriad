@@ -1,0 +1,21 @@
+%N mfflat
+%D Flatten the spectral variation of a visibility data-set.
+%P rjs
+%: calibration
+%B
+        MFFLAT is a MIRIAD task which flattens the spectral variation of a
+        visibility data-set. This is used in multi-frequency synthesis,
+        where it is desirable to eliminate the dominant spectral variation
+        from the data (i.e. flatten the spectral variation), and so reduce
+        the spectral artifacts in the mapping and deconvolution process.
+        MFFLAT works by modifying the calibration tables of the input
+        data-sets.
+%A vis
+        Names of the input visibility data-sets. Several can be given.
+        Wildcard expansion is supported. On output, the calibration tables
+        of the data-set have been modified in such a way as to eliminate
+        the dominant spectral variation.
+%A model
+        The input model. This must be MFS image, consisting of an intensity
+        and a scaled-derivative plane. This is analysed to determine the
+        dominant spectral index.

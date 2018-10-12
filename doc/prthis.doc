@@ -1,0 +1,15 @@
+%N prthis
+%D List history item of a dataset
+%P bpw
+%: utility
+%B
+        PRTHIS is a MIRIAD task to list the history item of a miriad
+        dataset.
+%A in
+        Standard keyword in. See the help on "in" for more information.
+%A bcount
+        The first line to list. Default is 1.
+%A log
+        The name of the output listing file. The default is the terminal
+%A task
+        List history only of this list of tasks (max=5). Default is all tasks.

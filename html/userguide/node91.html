@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Preventing Gain Interpolation - GPBREAK</TITLE>
+<META NAME="description" CONTENT="Preventing Gain Interpolation - GPBREAK">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node90.html">
+<LINK REL="up" HREF="node88.html">
+<LINK REL="next" HREF="node92.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2523"
+  HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2519"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2515"
+  HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2521"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2524"
+  HREF="node92.html">High precision polarimetric calibration</A>
+<B>Up:</B> <A NAME="tex2html2520"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2516"
+  HREF="node90.html">Averaging Antenna Gains with</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001243000000000000000"></A>
+<A NAME="3489"></A><A NAME="3490"></A>
+<BR>
+Preventing Gain Interpolation - GPBREAK
+</H2>
+
+<P>
+Up until now we have assumed that the antenna gains vary smoothly
+with time, and so it is appropriate to interpolate between them.
+However this is not always the case.
+If there is a major instrumental glitch between
+calibrator scans, then it may be more appropriate to attribute all the
+antenna gain difference to this glitch.
+In this case, interpolating the
+gain solutions will probably give poorer results than assuming constant
+gains before and after the glitch.
+
+<P>
+The task <A NAME="tex2html351"
+  HREF="../doc/gpbreak.html">gpbreak</A>
+can be used to insert a `break-point' into the
+antenna gains table, which indicates to the software which applies the
+calibration, that interpolation across this point should not be
+performed.  Rather the gain immediately before and after the break-point
+should be the gain from the previous or next calibrator observation.
+
+<P>
+Inserting a break-point modifies the antenna gains table, and so it is only
+meaningfully performed after the antenna gains table has been determined.
+To insert a break-point, you will need to know the exact time of the glitch.
+You may well know this from the observing log, or you may be able to deduce it
+from the program source data if you are observing a strong source.
+
+<P>
+Task <A NAME="tex2html352"
+  HREF="../doc/gpbreak.html">gpbreak</A>
+takes as its parameters the name of the visibility
+dataset (<TT>vis</TT> parameter), the times at which to insert break-points
+(<TT>break</TT> parameter), and the antennas and feeds for which to insert the
+break-points (parameters <TT>ants</TT> and <TT>feeds</TT> - the default
+is to insert break-points for all antennas and feeds).  The <TT>break</TT>
+parameter gives the time in normal <I>Miriad</I> format - either <I>hh</I><TT>:</TT><I>mm</I><TT>:</TT><I>ss</I> or
+<I>yymmmdd</I><TT>:</TT><I>hh</I><TT>:</TT><I>mm</I><TT>:</TT><I>ss</I>.
+The second form (giving year,
+month and day) will generally not be required for a single day's
+observing.  Several times can be given, separated by commas.  For
+example:
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>GPBREAK</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.4800</TD>
+<TD ALIGN="LEFT">Insert break points into the program source.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">break=20:30:10,21:15:45</TD>
+<TD ALIGN="LEFT">Give the times of the glitches.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ants=1,2</TD>
+<TD ALIGN="LEFT">Only antennas 1 and 2 were affected.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">feeds=x</TD>
+<TD ALIGN="LEFT">Only the X feeds were affected.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+Unfortunately break-points do not survive recalibration. If you re-determine
+the antenna gains (<I>e.g.</I> re-run <A NAME="tex2html353"
+  HREF="../doc/gpcal.html">gpcal</A>
+or the like), then you will
+overwrite the old antenna gains table, and will need to re-insert the
+break-points.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2523"
+  HREF="node92.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2519"
+  HREF="node88.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2515"
+  HREF="node90.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2521"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2524"
+  HREF="node92.html">High precision polarimetric calibration</A>
+<B>Up:</B> <A NAME="tex2html2520"
+  HREF="node88.html">The Interpolation Process</A>
+<B> Previous:</B> <A NAME="tex2html2516"
+  HREF="node90.html">Averaging Antenna Gains with</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

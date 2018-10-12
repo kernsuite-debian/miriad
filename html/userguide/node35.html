@@ -1,0 +1,244 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Channel Selection, Averaging and Doppler Correction - UV Linetypes</TITLE>
+<META NAME="description" CONTENT="Channel Selection, Averaging and Doppler Correction - UV Linetypes">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node36.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1811"
+  HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1807"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1801"
+  HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1809"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1812"
+  HREF="node36.html">Selecting UV Data in</A>
+<B>Up:</B> <A NAME="tex2html1808"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1802"
+  HREF="node34.html">On-the-Fly Calibration Correction</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00540000000000000000"></A>
+<A NAME="s:line"></A>
+<BR>
+Channel Selection, Averaging and Doppler Correction - UV Linetypes
+</H1>
+Many <I>Miriad</I> tasks support on-the-fly selection and averaging of the
+channels to be processed. However, before launching into a description
+of this, we will review some <I>Miriad</I> history.
+<I>Miriad</I> was originally designed for a telescope which simultaneously
+measured both spectral and
+continuum data using separate correlators. Spectral data are generally narrowband, and the
+<A NAME="1392"></A> <A NAME="1393"></A>
+frequencies <A NAME="1394"></A>
+are defined to high precision. Doppler tracking is often
+employed. Continuum, or wideband, data have a much larger bandwidth, and
+frequency
+tolerances are not as great.`Channel-0' data (data formed by averaging
+all spectral channels together) are also treated as continuum data.
+
+<P>
+For ATCA use, there is no real distinction between wideband (continuum)
+and spectral data, and the <I>Miriad</I> distinction is not really
+relevant. All ATCA data (even channel-0 data) are treated as spectral
+data.
+
+<P>
+All the same, a <I>Miriad</I> visibility dataset can, in principle,
+contain multiple spectral and wideband correlators.
+The spectral data is described by a set of `spectral windows' (`IFs' or
+`IF channels' in AIPS terminology); each window
+consists of a number of channels separated by a fixed increment in
+sky frequency (though this increment can vary with time). Similarly there
+can be several measured wideband correlations, simply called wideband channels.
+
+<P>
+It is quite common, when analysing, plotting or mapping visibility data,
+that you will want to perform some averaging and selection of the desired
+channels, and you might
+wish to examine either the spectral or the wideband data. For the
+spectral data, if the channel number does not correspond reasonably directly
+with velocity (<I>e.g.</I>
+if Doppler tracking was not used), then it might be
+desirable to resample the spectral data at equal increments in velocity.
+
+<P>
+The ability to select a range of wideband or spectral channels,
+to perform averaging, and to resample in velocity is provided by the
+`line' parameter - also called the linetype. If your data contain
+multiple spectral windows, you should also refer to Section&nbsp;<A HREF="node37.html#s:window">5.6</A>
+for more information on spectral channel selection.
+
+<P>
+The linetype parameter consists of a string followed by up to four numbers.
+Defaults will be used for any trailing part of the linetype specification that
+is missing. The string can be one of:
+<DL>
+<DT><STRONG><TT>channel</TT></STRONG></DT>
+<DD>This gives raw or averaged spectral channels. This is
+generally the default if spectral data are present. As all ATCA data
+are treated as spectral data, this will be the most commonly used
+linetype.
+<A NAME="1399"></A>
+</DD>
+<DT><STRONG><TT>wide</TT></STRONG></DT>
+<DD>This gives raw or averaged wideband (continuum) data.
+This is the default if only wideband data are present. Probably this will be
+of no interest to ATCA users.
+<A NAME="1401"></A>
+</DD>
+<DT><STRONG><TT>velocity</TT></STRONG></DT>
+<DD>This gives spectral data, that have been resampled at equal
+increments in radio velocity (or equivalently frequency). The resampling operation is a
+weighted average
+of spectral channels. See Section&nbsp;<A HREF="node131.html#s:veloline">16.8</A> for more information.
+<A NAME="1404"></A>
+</DD>
+<DT><STRONG><TT>felocity</TT></STRONG></DT>
+<DD>This is like <code>velocity</code>, but allows the velocity
+parameters to be given using the optical definition. Note, however,
+that the resampling operation is still in equal increments in <EM>frequency (or, equivalently, radio velocity)</EM>. Because of the difference between
+the radio and optical velocity definitions, equal increments in radio
+velocity are not quite equal in optical velocity, and visa versa.
+The velocity increment that you give is used as the optical
+velocity increment of the first channel.
+</DD>
+</DL>
+
+<P>
+The accompanying four numbers are used to specify the range of input channels
+selected and averaged to produce the output channels. The four numbers are:
+<BLOCKQUOTE>
+<I>nchan, start, width, step</I>
+
+</BLOCKQUOTE>
+For <TT>channel</TT> and <TT>wide</TT> linetypes, <I>start, width</I> and <I>step</I>
+are channel numbers (channels are numbered from 1 to <I>N</I>), whereas for
+<TT>velocity</TT> and <TT>felocity</TT> linetypes these values are in km/s (the velocity is relative
+to the rest frame - usually LSR). These values are
+<DL>
+<DT><STRONG><I>nchan</I></STRONG></DT>
+<DD>The number of output channels produced. Generally it defaults
+to the maximum number of channels that can be produced from the input
+data. A value of zero can also be used to give you the default.
+</DD>
+<DT><STRONG><I>start</I></STRONG></DT>
+<DD>For <TT>channel</TT> and <TT>wide</TT> linetypes, the <I>start</I> value
+is the first input channel to be selected. For <TT>velocity</TT> and <TT>felocity</TT>
+linetypes, <I>start</I> is the centre velocity of the first output channel to
+be formed. The default value is 1 channel.
+</DD>
+<DT><STRONG><I>width</I></STRONG></DT>
+<DD>This value determines the width of the selected channels.
+For <TT>channel</TT> and <TT>wide</TT> linetypes, this gives the
+number of input channels to average together to produce a single output
+channel. For <TT>velocity</TT> and <TT>felocity</TT> linetypes,
+this gives the velocity width (in km/s) of
+the output channels. The default value is again 1 channel.
+</DD>
+<DT><STRONG><I>step</I></STRONG></DT>
+<DD>This parameter gives the increment between channels. For
+<TT>channel</TT> and <TT>wide</TT> linetypes, this gives the increment between
+selected input channels. For <TT>velocity</TT> and <TT>felocity</TT>
+linetype this gives the
+velocity increment between the output channels. This defaults to the same
+value as <I>width</I>.
+</DD>
+</DL>
+
+<P>
+For example
+<PRE>
+   line=channel,10
+</PRE>
+selects 10 output channels, being input spectral channels 1 to 10. Similarly
+<PRE>
+   line=channel,10,8,1,2
+</PRE>
+again selects 10 output channels, starting at input spectral channel 8, and
+skipping every second input channel. If you wanted to average together
+every pair of channels (rather than skipping it), you would
+use something like
+<PRE>
+   line=channel,10,8,2,2
+</PRE>
+Finally a linetype of:
+<PRE>
+   line=velocity,10,1.5,1.0,3.0
+</PRE>
+would return 10 `velocity' channels with velocities <EM>centred</EM> at 1.5,
+4.5, 7.5, etc. km/s. Each channel would have a width of 1 km/s.
+
+<P>
+When using <TT>velocity</TT>, <TT>felocity</TT> or <TT>channel</TT> linetypes on
+datasets with multiple spectral windows, <TT>window</TT> selection, as
+described in the following sections, may be useful.
+
+<P>
+Some tasks require two linetypes, the first being the linetype of the
+data, and the second the linetype of a single reference channel
+(see <I>e.g.</I> <A NAME="tex2html44"
+  HREF="../doc/invert.html">invert</A>). <A NAME="1454"></A> When specifying a reference
+linetype, you do not give the <I>nchan</I> (it is always 1) or <I>step</I> (it
+makes no sense for a single channel).
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1811"
+  HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1807"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1801"
+  HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1809"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1812"
+  HREF="node36.html">Selecting UV Data in</A>
+<B>Up:</B> <A NAME="tex2html1808"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1802"
+  HREF="node34.html">On-the-Fly Calibration Correction</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

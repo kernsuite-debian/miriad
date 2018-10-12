@@ -1,0 +1,9 @@
+%N cginit
+%D Initialize a PGPLOT device.
+%P nebk
+%: plotting
+%B
+        CGINIT clears the display of the specified PGPLOT device.
+ 
+%A device
+        The PGPLOT plot device.   No default.

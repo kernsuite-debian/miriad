@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Time and FITS Files</TITLE>
+<META NAME="description" CONTENT="Time and FITS Files">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node50.html">
+<LINK REL="up" HREF="node48.html">
+<LINK REL="next" HREF="node52.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2012"
+  HREF="node52.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2008"
+  HREF="node48.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2004"
+  HREF="node50.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2010"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2013"
+  HREF="node52.html">Writing Visibility FITS Files</A>
+<B>Up:</B> <A NAME="tex2html2009"
+  HREF="node48.html">Reading Visibility FITS Files</A>
+<B> Previous:</B> <A NAME="tex2html2005"
+  HREF="node50.html">AIPS Frequency Bugs</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00833000000000000000">
+Time and FITS Files</A>
+</H2>
+The time stored in a <I>Miriad</I> visibility dataset is nominally UT1 (although
+the difference between UT1 and UTC is not significant for the purposes of
+<I>Miriad</I>). As <I>Miriad</I> relies on correct time in a number of calculations
+(e.g. computing the parallactic angle needed in polarization calibration and
+conversion, computing velocity information in <A NAME="tex2html117"
+  HREF="../doc/fits.html">fits</A>
+and <A NAME="tex2html118"
+  HREF="../doc/uvredo.html">uvredo</A>
+and recomputing <I>u-v</I> coordinates done by <A NAME="tex2html119"
+  HREF="../doc/uvedit.html">uvedit</A>),
+task <A NAME="tex2html120"
+  HREF="../doc/fits.html">fits</A>
+does its best to convert the time into UT1. <A NAME="tex2html121"
+  HREF="../doc/fits.html">fits</A>
+will give you messages about any time adjustments it makes.
+
+<P>
+When a FITS file contains multiple antenna tables,
+the times stored in the FITS file have usually  been offset from the true
+time by the AIPS task <TT>DBCON</TT>. Task
+<A NAME="tex2html122"
+  HREF="../doc/fits.html">fits</A>
+assumes that such an offset has been added, and corrects for it.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

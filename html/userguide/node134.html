@@ -1,0 +1,201 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Imaging and Image Velocity Definitions - INVERT and VELSW</TITLE>
+<META NAME="description" CONTENT="Imaging and Image Velocity Definitions - INVERT and VELSW">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node132.html">
+<LINK REL="up" HREF="node123.html">
+<LINK REL="next" HREF="node135.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html3074"
+  HREF="node135.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3070"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3066"
+  HREF="node133.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3072"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3075"
+  HREF="node135.html">Displaying Images</A>
+<B>Up:</B> <A NAME="tex2html3071"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3067"
+  HREF="node133.html">Computation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0016100000000000000000"></A>
+<A NAME="4454"></A>
+<A NAME="4455"></A>
+<A NAME="4456"></A><A NAME="s:slinvert"></A>
+<BR>
+Imaging and Image Velocity Definitions - INVERT and VELSW
+</H1>
+A few comments are in order when using the imaging task, <A NAME="tex2html596"
+  HREF="../doc/invert.html">invert</A>,
+to create spectral cubes (more information on <A NAME="tex2html597"
+  HREF="../doc/invert.html">invert</A>
+can be found
+in Chapter&nbsp;<A HREF="node94.html#c:imaging">13</A>):
+
+<UL>
+<LI>To conserve space, <A NAME="tex2html598"
+  HREF="../doc/invert.html">invert</A>
+produces a single beam dataset for
+all planes of a cube. For it to do this, the cell size of each plane is
+scaled with frequency. For the small fractional bandwidths typical in
+spectral-line experiments, this affect is small. Additionally the
+coordinate-handling software accounts for this scaling when converting
+between pixel and celestial coordinates.
+
+<P>
+For one beam to be valid for all planes, <A NAME="tex2html599"
+  HREF="../doc/invert.html">invert</A>
+usually insists that
+the <I>u-v</I> coverage for all planes is the same. That is, <A NAME="tex2html600"
+  HREF="../doc/invert.html">invert</A>
+usually insists that no channels of a spectrum are flagged before that
+spectrum can be used for imaging. This is required to ensure each image
+plane has the same point-spread function.
+
+<P>
+This rule can be too restrictive
+for some uses. For example if deconvolution is not envisaged or if one
+channel (the birdie channel?) is always bad.
+<A NAME="tex2html601"
+  HREF="../doc/invert.html">invert</A>'s <TT>slop</TT> keyword allows the rule to be relaxed.
+The <TT>slop</TT> keyword takes two values. The first is the fraction of channels
+that <A NAME="tex2html602"
+  HREF="../doc/invert.html">invert</A>
+will tolerate as being bad before a spectrum is
+rejected. The default is 0 (i.e. the entire spectrum is rejected if even a
+single channel is bad). A value of 1 indicates that <A NAME="tex2html603"
+  HREF="../doc/invert.html">invert</A>
+will
+accept a spectrum provided at least one channel is good.
+The second value dictates the `replacement' method, i.e. what value to
+assign for the flagged channel, when imaging with flagged channels.
+Possible values are `<TT>interpolate</TT>' and `<TT>zero</TT>'.
+
+<P>
+Interpolation replacement would be appropriate if there are a small
+number of channels that are always bad, and that you wish to replace them
+with something for, essentially, aesthetic reasons. Note that the interpolation
+is simple-minded linear interpolation.
+
+<P>
+Surprisingly zeroing the flagged correlation also has its advantages. When
+zeroing, the true beam (point-spread function) will be channel dependent
+and will differ from the computed beam.
+Consequently deconvolution should not be attempted.
+<A NAME="tex2html604"
+  HREF="../doc/invert.html">invert</A>
+attempts to scale each plane so that the true beam
+has a peak value of 1. This scaling is correct only for natural weighting
+when no tapering is used (i.e. <TT>sup=0</TT> and <TT>fwhm</TT> unset). If this
+is the case, the channel images can be astrophysically useful. For
+other weightings and taperings, the peal value of the true beam will not be
+exactly 1 - the flux density scale will no longer be what is conventionally
+understood by Jy/(dirty beam). Additionally the beam peak value can vary from
+plane to plane, and so the flux density scale may not be comparable between
+planes. Be warned.
+
+<P>
+</LI>
+<LI><A NAME="tex2html605"
+  HREF="../doc/invert.html">invert</A>
+checks that the velocity of visibilities gridded onto
+a particular plane remains constant. The velocity will not remain
+constant if the observatory does not Doppler track and velocity linetype
+is not being used. If the velocity of visibilities gridded onto a plane
+varies by more than 10% of the plane separation, <A NAME="tex2html606"
+  HREF="../doc/invert.html">invert</A>
+gives a warning.
+</LI>
+<LI>Regardless of the <code>line</code> parameter,
+<A NAME="tex2html607"
+  HREF="../doc/invert.html">invert</A>
+labels the velocity axis using the radio definition.
+However it is possible to switch the labelling of this
+axis to be either frequency or velocity using the optical definition,
+or indeed back to velocity using the radio convention. Note that for
+the optical velocity definition, the velocity separation between planes is
+not constant. The velocity increment stored in the header is that which
+corresponds to the reference frequency.
+The task <A NAME="tex2html608"
+  HREF="../doc/velsw.html">velsw</A><A NAME="4480"></A> performs this task. Its inputs are fairly simple:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>VELSW</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">in=line.map</TD>
+<TD ALIGN="LEFT">Input image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=optical</TD>
+<TD ALIGN="LEFT">Label as velocity using optical definition,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=radio</TD>
+<TD ALIGN="LEFT">or label as velocity using radio definition,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=frequency</TD>
+<TD ALIGN="LEFT">or label as frequency.</TD>
+</TR>
+</TABLE>
+</DIV>
+</LI>
+</UL>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html3074"
+  HREF="node135.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html3070"
+  HREF="node123.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html3066"
+  HREF="node133.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html3072"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html3075"
+  HREF="node135.html">Displaying Images</A>
+<B>Up:</B> <A NAME="tex2html3071"
+  HREF="node123.html">Spectral Line Data Reduction</A>
+<B> Previous:</B> <A NAME="tex2html3067"
+  HREF="node133.html">Computation</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

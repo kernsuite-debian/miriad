@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Frequency Handling</TITLE>
+<META NAME="description" CONTENT="Frequency Handling">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node121.html">
+<LINK REL="previous" HREF="node117.html">
+<LINK REL="up" HREF="node114.html">
+<LINK REL="next" HREF="node119.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2876"
+  HREF="node119.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2872"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2866"
+  HREF="node117.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2874"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2877"
+  HREF="node119.html">Multi-Plane Models</A>
+<B>Up:</B> <A NAME="tex2html2873"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2867"
+  HREF="node117.html">Polarisation Handling</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001514000000000000000"></A><A NAME="4052"></A>
+<BR>
+Frequency Handling
+</H2>
+
+<P>
+Both <A NAME="tex2html517"
+  HREF="../doc/selfcal.html">selfcal</A>
+and <A NAME="tex2html518"
+  HREF="../doc/gpscal.html">gpscal</A>
+assume that the gains are independent
+of frequency. This allows them to use data from all channels in forming
+gain solutions. However, as mentioned above, they do not apply bandpass
+corrections. Consequently, if you have multi-channel data and models, you will
+probably want to form a bandpass-corrected visibility dataset before
+doing self-calibration.
+
+<P>
+The assumption that the gains are independent of frequency should be
+treated with some caution. If all the visibilities for a given baseline
+go through one signal path, then the instrumental phase for the different
+visibilities should be equal (assuming the signal path is well equalised).
+However, atmospheric phase should vary linearly with frequency. Provided the
+fractional bandwidth is small, it is still a reasonable approximation
+that the gains are independent of frequency. Indeed this is the normal
+approximation used in deriving calibration solutions from a `channel 0'
+dataset.
+
+<P>
+If the visibilities for a given baseline go through multiple signal paths
+(<I>e.g.</I> the 2 IF system for the ATCA), then the instrumental phases for the
+different paths could be significantly different. Tentative
+results for the 2 IF system of the ATCA show that, apart from an offset,
+the phase of the two signal paths track each other as the ratio of the
+frequencies (<I>i.e.</I> the path length difference is constant). The offset
+between them can be eliminated either by adjusting the phases
+of the two paths to zero at the start of the observation, or by the primary
+calibration process. Provided the offset has been eliminated, and provided
+the frequencies are not too different, it
+may be useful to approximate the gains as independent of frequency.
+
+<P>
+If the phases vary significantly between the frequencies, then the different
+frequencies need to be self-calibrated individually. Ideally there would be a
+self-calibration task which knows that the phase errors at different
+frequencies tracked as the ratio of the frequencies.
+
+<P>
+When self-calibrating multi-channel visibility datasets, there are two
+distinct modes of calculating the variation of the model with
+frequency, depending on whether the model contains multiple planes,
+or whether multi-frequency techniques were used. We discuss
+these two possibilities in turn.
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2878"
+  HREF="node119.html">Multi-Plane Models</A>
+<LI><A NAME="tex2html2879"
+  HREF="node120.html">Multi-Frequency Models</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2876"
+  HREF="node119.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2872"
+  HREF="node114.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2866"
+  HREF="node117.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2874"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2877"
+  HREF="node119.html">Multi-Plane Models</A>
+<B>Up:</B> <A NAME="tex2html2873"
+  HREF="node114.html">Computation</A>
+<B> Previous:</B> <A NAME="tex2html2867"
+  HREF="node117.html">Polarisation Handling</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

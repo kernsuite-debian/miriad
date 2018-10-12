@@ -1,0 +1,33 @@
+.TH uvrot 1
+.SH NAME
+uvrot - Rotate uv coordinates.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+uv analysis
+.SH DESCRIPTION
+uvrot rotates the uv coordinates of a Miriad dataset by a given
+angle.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input uv datasets. Several can be given
+Wildcards are supported. No default.
+.TP
+\fIout\fP
+The name of the output uv data-set. There is no default name.
+.TP
+\fIselect\fP
+The normal uv selection commands. The default is to select everything.
+.TP
+\fIangle\fP
+The angle to rotate the coordinates by, given in degrees. No default.
+.TP
+\fIoptions\fP
+This gives extra processing options. Several options can be given,
+each separated by commas. They may be abbreviated to the minimum
+needed to avoid ambiguity. Possible options are:
+.nf
+   nocal       Do not apply the gains table.
+   nopass      Do not apply bandpass corrections.
+   nopol       Do not apply polarization corrections.

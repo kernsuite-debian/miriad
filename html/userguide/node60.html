@@ -1,0 +1,255 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Interactive Flagging - BLFLAG</TITLE>
+<META NAME="description" CONTENT="Interactive Flagging - BLFLAG">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node61.html">
+<LINK REL="previous" HREF="node59.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node61.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2135"
+  HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2131"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2125"
+  HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2133"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2136"
+  HREF="node61.html">Interactive Channel/Baseline Flagging -</A>
+<B>Up:</B> <A NAME="tex2html2132"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2126"
+  HREF="node59.html">Flagging Visibilities</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001011000000000000000"></A><A NAME="2312"></A>
+<BR>
+Interactive Flagging - BLFLAG
+</H2>
+The task <A NAME="tex2html174"
+  HREF="../doc/blflag.html">blflag</A>
+plots visibility data (usually baseline at a time,
+with axes such as amplitude, phase, real part, imaginary part, time, etc),
+and allows the user to interactively flag that data.
+
+<P>
+The user positions
+the plot cursor, and uses the mouse buttons or single keyboard
+characters to perform an operation.
+The interactive commands are as follows:
+<DL>
+<DT><STRONG><EM>Left-Button:</EM></STRONG></DT>
+<DD>Pressing the left mouse button flags the nearest visibility.
+</DD>
+<DT><STRONG><EM>Right-Button:</EM></STRONG></DT>
+<DD>Pressing the right mouse button causes <A NAME="tex2html175"
+  HREF="../doc/blflag.html">blflag</A>
+to precede to the next baseline (or to finish up, if all baselines have
+been cycled through).
+</DD>
+<DT><STRONG><EM>Carriage-return:</EM></STRONG></DT>
+<DD>This gives a brief help message.
+</DD>
+<DT><STRONG><TT>a:</TT></STRONG></DT>
+<DD>Flag nearest visibility (same as left mouse button).
+</DD>
+<DT><STRONG><TT>c:</TT></STRONG></DT>
+<DD>Clear the flagging for this baseline, and redraw plot.
+</DD>
+<DT><STRONG><TT>h:</TT></STRONG></DT>
+<DD>Give help (same as carriage return).
+</DD>
+<DT><STRONG><TT>p:</TT></STRONG></DT>
+<DD>Define a polygonal region, and flag visibilities
+within this region. You define the vertices of the
+polygon by moving the cursor and then hitting the
+left mouse button (or <code>a</code>). You finish defining the
+polygon by hitting the right mouse button (or <code>x</code>).
+You can delete vertices with the middle mouse button (or <code>d</code>).
+</DD>
+<DT><STRONG><TT>q:</TT></STRONG></DT>
+<DD>Abort completely. This exist without apply the flagging.
+</DD>
+<DT><STRONG><TT>r:</TT></STRONG></DT>
+<DD>Redraw plot.
+</DD>
+<DT><STRONG><TT>x:</TT></STRONG></DT>
+<DD>Move to next baseline (same as right mouse button).
+</DD>
+</DL>
+
+<P>
+The inputs to <A NAME="tex2html176"
+  HREF="../doc/blflag.html">blflag</A>
+are straightforward.
+
+<UL>
+<LI><TT>vis:</TT> The name of the visibility data-set to be flagged.
+</LI>
+<LI><TT>device:</TT> The PGPLOT device to use for plotting. This needs to
+be an interactive device.
+</LI>
+<LI><TT>line:</TT> This gives the normal linetype parameter (see
+Section&nbsp;<A HREF="node35.html#s:line">5.4</A>). <A NAME="tex2html177"
+  HREF="../doc/blflag.html">blflag</A>
+averages together all the selected
+channels before plotting it. The default is to use all channels.
+If you flag a data point on a plot, you flag all selected channels.
+</LI>
+<LI><TT>stokes:</TT> Polarization/Stokes selection - see Section&nbsp;<A HREF="node39.html#s:polar">5.8</A>.
+If several are given, <EM>these are averaged together</EM> before plotting. So
+normally you only select one. The default is `<code>ii</code>'. If you flag
+a point, you flag <EM>all</EM> polarizations (even if you did not select that
+polarization).
+</LI>
+<LI><TT>axis:</TT> This gives two values, being the X and Y axes of the plot.
+Possible values are time, lst, uvdistance (<!-- MATH
+ $\sqrt{u^2+v^2}$
+ -->
+<SPAN CLASS="MATH"><IMG
+ WIDTH="69" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img8.png"
+ ALT="$\sqrt{u^2+v^2}$"></SPAN>), hangle
+(hour angle), amplitude,
+phase, real and imaginary. The default is time vs amplitude.
+</LI>
+<LI><TT>options:</TT>
+The <code>options</code> keyword give extra processing options. These include:
+<DL>
+<DT><STRONG><TT>nobase</TT></STRONG></DT>
+<DD>Normally <A NAME="tex2html178"
+  HREF="../doc/blflag.html">blflag</A>
+plots each baseline separately,
+and cycles over all baselines. The <code>nobase</code> option allows all baselines
+to be displayed simultaneously. This is particularly useful for point
+sources or when the visibilities are purely noise-like.
+</DD>
+<DT><STRONG><TT>noapply</TT></STRONG></DT>
+<DD>This causes the flagging operations not to be
+actually applied to the dataset.
+</DD>
+<DT><STRONG><TT>selgen</TT></STRONG></DT>
+<DD>This option generates a text file, <code>blflag.select</code>. This
+file contains visibility data selection commands to select the flagged data.
+</DD>
+</DL>
+</LI>
+</UL>
+
+<P>
+The inputs are normally very simple:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>BLFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=vela.line</TD>
+<TD ALIGN="LEFT">Specify visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Specify an interactive PGPLOT device.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes</TD>
+<TD ALIGN="LEFT">Defaults to `<TT>ii</TT>'.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Defaults to all channels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis</TD>
+<TD ALIGN="LEFT">Defaults to time vs amplitude.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">select</TD>
+<TD ALIGN="LEFT">Defaults to selecting all data.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+For a point source (e.g. calibrator), a particularly useful way of
+flagging, at least after initial calibration, is to plot the
+``scatter diagram'' - real vs imaginary parts of the visibility,
+with all baselines simultaneously. This should show points scattered around
+the true flux of the source. An arc in such a plot indicates poor phase
+stability. Typical inputs in this mode are
+
+<P>
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="CENTER" COLSPAN=2><SPAN><B>BLFLAG</B></SPAN></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vis=cal.uv</TD>
+<TD ALIGN="LEFT">Specify visibility dataset.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">device=/xs</TD>
+<TD ALIGN="LEFT">Specify an interactive PGPLOT device.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">stokes</TD>
+<TD ALIGN="LEFT">Defaults to `<TT>ii</TT>'.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">line</TD>
+<TD ALIGN="LEFT">Defaults to all channels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">axis=real,imag</TD>
+<TD ALIGN="LEFT">Plot real vs imaginary.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">opptions=nobase</TD>
+<TD ALIGN="LEFT">Plot all baselines simultaneously.</TD>
+</TR>
+</TABLE>
+</DIV>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2135"
+  HREF="node61.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2131"
+  HREF="node59.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2125"
+  HREF="node59.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2133"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2136"
+  HREF="node61.html">Interactive Channel/Baseline Flagging -</A>
+<B>Up:</B> <A NAME="tex2html2132"
+  HREF="node59.html">Flagging Visibilities</A>
+<B> Previous:</B> <A NAME="tex2html2126"
+  HREF="node59.html">Flagging Visibilities</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

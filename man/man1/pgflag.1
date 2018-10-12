@@ -1,0 +1,371 @@
+.TH pgflag 1
+.SH NAME
+pgflag - displays waterfall plots of uv data and allows flagging
+.SH PERSON RESPONSIBLE
+jbs
+.SH CATEGORIES
+flagging
+.SH DESCRIPTION
+PGFLAG is a MIRIAD task that allows interactive baseline
+editing of a UV data set. It is much like the MIRIAD task
+TVFLAG, but it uses the PGPLOT display devices instead of
+of the TV devices, which should make it more accessible.
+.sp
+When this program is run, the first selectable baseline is
+displayed as a greyscale waterfall plot. The x-axis is
+labelled as channel number (increasing to the right), while
+the y-axis represents time (later is toward the top of the
+plot). The colour intensity represents the amplitude or phase
+(depending on the value of the keyword ``mode'') of the
+visibility. At the very right and bottom edges of the plot
+are averages of the data over all the channels and times
+respectively. Between the right-hand average and the main
+plot is a colour wedge that shows the amplitude/phase scaling.
+At the top of the plot is a box with information about the
+baseline that is being viewed, the last taken measurement,
+and a guide to the commonly required action keys.
+.sp
+Selecting data:
+The user may edit the data by selecting a range of channels
+and times with the mouse, and then flagging or unflagging them.
+This is done by selecting two points - one with the left mouse button
+and one with the right mouse button - that bound the desired range.
+When a selection is made with either the left mouse button or
+the right mouse button, a green point will be placed on the screen
+at the selected location. If both a left mouse selection and
+a right mouse selection have been made, a green box will be displayed
+that will have the two selected points as opposite corners.
+Selecting another point with either the left mouse button or
+the right mouse button will move the appropriate corner of the box
+to form a new selection.
+.sp
+To act upon this selection, or the plot itself, the user
+should press one of the following keys while the cursor is
+inside the main plot area:
+aAbcCdDfFgGhHjJkKlLmMnpPqrRsStTuvVwWxXzZ ,<.?;[]12=!@*
+.sp
+Exiting PGFLAG:
+.nf
+  a                Abort the editing procedure and quit
+                   PGFLAG immediately without applying
+                   any flags.
+  q                Apply any flagging that was requested
+                   and then exit PGFLAG.
+.fi
+.sp
+Editing data:
+.nf
+  w                Apply the flagging specified by the patch
+                   file.
+  W                Apply the flagging specified by the patch
+                   file, in reverse (ie. good <-> bad)
+  b                Blow away the dust: flag all visibilities
+                   with less than 3 good neighbours.
+  e                Extend the flagging to all sequences in
+                   time or channel with less than 20% good data.
+                   Only apply this once per baseline.
+  f                Flag the selected range of data on the
+                   currently displayed baseline only.
+  F                Flag the selected range of data on all
+                   the selectable baselines.
+  g                Unflag the selected range of data on the
+                   currently displayed baseline only.
+  G                Unflag the selected range of data on all
+                   the selectable baselines.
+  u                Undo the last flagging action - if the
+                   last flagging action was an undo of a
+                   previous flagging action, then the effect
+                   will be to redo the flagging.
+  1                Flag the selected range of data on all
+                   baselines A-n formed with the currently
+                   displayed antenna A.
+  !                Unflag the selected range of data on all
+                   baselines A-n formed with the currently
+                   displayed antenna A.
+  2                Flag the selected range of data on all
+                   baselines n-B formed with the currently
+                   displayed antenna B.
+  @                Unflag the selected range of data on all
+                   baselines n-B formed with the currently
+                   displayed antenna B.
+  v                Flag all visibilities that have values
+                   greater than the current maximum on the
+                   scale on the displayed baseline, for this
+                   baseline only.
+  V                Flag all visibilities that have values
+                   greater than the current maximum on the
+                   scale on the displayed baseline, for all
+                   baselines.
+  <                Flag using SumThreshold method, using
+                   the parameters in flagpar
+  T                Change the Threshold and other parameters
+                   of the SumThreshold algorithm
+  rr               Remove all current user-specified flags
+                   on this baseline; r must be pressed twice
+                   in a row for safety as this procedure
+                   cannot be undone.
+  RR               Remove all current user-specified flags
+                   on all baselines; R must be pressed twice
+                   in a row for safety as this procedure
+                   cannot be undone.
+  ?                Print some information about how many flagging
+                   operations have been made so far in total
+                   and on this baseline.
+.fi
+.sp
+Manipulating the selection:
+.nf
+  c                Extend the selection box to include all
+                   the displayed channels; press it twice in a row
+                   to extend to all channels.
+  t                Extend the selection box to include all
+                   the displayed times; press it twice in a row to
+                   extend to all times.
+  C                Clear the selected points.
+.fi
+.sp
+Manipulating the plot:
+.nf
+  z                Zoom into the selected region, ie. make
+                   the selected region cover the entire plot,
+                   and display green arrows on the sides of
+                   the plot to indicate available scrolling
+                   directions.
+  Z                Unzoom to show all the available data.
+  s                Unzoom to show all the available channels.
+  S                Unzoom to show all the available times.
+  h                Move the plot left by half the range shown
+                   on the plot.
+  H                Move the plot left by the range shown on the
+                   plot.
+  j                Move the plot down by half the range shown
+                   on the plot.
+  J                Move the plot down by the range shown on the
+                   plot.
+  k                Move the plot up by half the range shown
+                   on the plot.
+  K                Move the plot up by the range shown on the
+                   plot.
+  l                Move the plot right by half the range shown
+                   on the plot.
+  L                Move the plot right by the range shown on the
+                   plot.
+  n                Display the next selectable baseline in the
+                   main plot, leaving the selection and zoom
+                   as is.
+  p                Display the previous selectable baseline in
+                   the main plot, leaving the selection and
+                   zoom as is.
+  x                Subtract the average channel value from each
+                   channel value in the main plot. Pressing this
+                   key again adds back the average channel value
+                   to each channel value. When the channel average
+                   is being subtracted, the channel average box
+                   at the bottom of the plot will be outlined in
+                   red, otherwise it will be outlined in white.
+  d                Subtract the average time value from each
+                   time value in the main plot. Pressing this
+                   key again adds back the average time value to
+                   each time value. When the time average is being
+                   subtracted, the time average box at the right
+                   of the plot will be outlined in red, otherwise
+                   it will be outlined in white.
+  *                Subtract off a convolved version of the plot,
+                   the convolution parameters are specified by
+                   the flagpar parameters 2 and 3
+  ,                Fiddle the amplitude scale; press this key
+                   then click the left mouse button in the colour
+                   wedge to set the maximum value, or the right
+                   mouse button to set the minimum value.
+  .                Reset the user-set colour amplitude scale.
+  =                Autoscale plot from -10 to +10 times the
+                   median absolute deviation
+  [                Enable switch to use only the currently
+                   displayed points when deciding the colour
+                   amplitude scale.
+  ]                Set the colour amplitude scale from the current
+                   selection region.
+  ;                Lock the colour amplitude scale until it is
+                   reset or fiddled.
+.fi
+.sp
+Displaying information:
+.nf
+  m                Display information about the sample
+                   underneath the cursor, including the channel
+                   number (and associated frequency), the
+                   time, and the amplitude (or phase depending
+                   on the ``mode'' setting); all this information
+                   is shown at the top left of the plot in the red
+                   box.
+  spacebar         Does the same thing as 'm', except it will show
+                   the currently displayed value, which will be
+                   different from the value displayed by 'm' if
+                   the averages have been subtracted from the
+                   display.
+  M                Locate the sample with the maximum value on
+                   the currently displayed baseline, and print
+                   information about it into the controlling
+                   terminal. Pressing it twice in succession will
+                   make PGFLAG create a selection region of 20
+                   chans and 20 times centred on this sample.
+  P                Display the current selection on the secondary
+                   plot device as a spectrum. This command will
+                   work only if device2 is specified.
+  D                Dump the current page on to the tertiary plot
+                   device. This command will only work if
+                   device3 is specified.
+.fi
+.sp
+Non interactive flagging:
+Using the command parameter and the flagpar parameters you can use
+pgflag in non-interactive mode. The recommended strategy is to run
+pgflag interactively, work out what flagpar parameters work best
+using the * command to see the effect of background subtraction and
+the < command to see the effects of SumThreshold flagging.
+If too much or too little was flagged, change the parameters with
+the 'T' command and undo the flagging with the 'rr' command and try
+again. Once the right parameters are found you can abort with 'a'
+and run pgflag with command set to "<" or "<be" to flag the entire
+dataset. You can use options=nodisp if you don't want to watch the
+flagging. If you do want to see what is happening, you'll want to
+specify command='.=<' or the like to scale the data for the display.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+Input visibility dataset to be flagged. No default.
+.TP
+\fIline\fP
+This is the normal linetype specification. See the help on
+"line" for more information. The default is all channels.
+.TP
+\fIselect\fP
+This selects which visibilities to be used. Default is all
+visibilities. See the Users Guide for information about how
+to specify uv data selection.
+Default is all data
+.TP
+\fIstokes\fP
+Select Stokes parameter(s) or polarization(s) from:
+.nf
+  xx, yy, xy, yx,  i, q, u, v,
+  rr, ll, rl, lr
+.fi
+Default is Stokes i.
+If more than one polarization is specified only the LAST one is
+displayed.
+If one 'raw' polarization is specified, only that one is flagged.
+If multiple 'raw' polarizations or one or more 'converted'
+polarizations are specified, all polarizations in the data are
+flagged.
+.TP
+\fIdevice\fP
+PGPLOT plot device/type, which must be interactive. No default.
+.TP
+\fIdevice2\fP
+PGPLOT plot device/type, which must be interactive. This optional
+plot device will be used to display spectra from the selected
+region, if requested.
+.TP
+\fIdevice3\fP
+PGPLOT plot device/type, which does not need to be interactive.
+This optional plot device is the destination for the D command.
+.TP
+\fImode\fP
+Display ``amplitude'' or ``phase''. By default, ``amplitude''
+is selected. For mode=``phase'', the phase is in degrees.
+.TP
+\fIflagpar\fP
+Parameters for SumThreshold flagging, dusting and extending
+(see Offringa et al,2010, MNRAS 405,155)
+1 : Threshold in estimated sigma's (estimated using the
+.nf
+    median absolute deviation), default 7
+.fi
+2 : Convolution size for channel direction (in channels), used
+.nf
+    to generate a smooth background, default 1. Zero disables
+    convolution in the channel direction.
+.fi
+3 : Convolution size for time direction (in integrations), used
+.nf
+    to generate a smooth background, default 1. Zero disables
+    convolution in the time direction
+.fi
+4 : Number of iterations of the convolve/subtract/threshold
+.nf
+    operation.The threshold level decreases by a factor of two
+    each iteration. Default 3
+.fi
+5 : Power of two of the maximum number of points used in the
+.nf
+    SumThreshold operation (e.g., 5 -> 32 points). Default 5.
+.fi
+6 : Dust the plot - flag points with less than flagpar(6)
+.nf
+    unflagged neighbours. Useful range 1-4, default 3.
+.fi
+7 : Extend flags to all points which are in a time or
+.nf
+    channel sequence with less than flagpar(7) % good data,
+    default 20. This process 'eats' away at the data from the
+    flagged areas. (See Offringa et al 2012, A&A 539,A95)
+.TP
+\fIpatch\fP
+.fi
+The name of the flagging patch file, either to write (if the
+'patch' option is specified), or to use for the 'w' or 'W'
+commands.
+.TP
+\fIlog\fP
+The name of a log file to which will be output the entire set
+of flagging actions, in text format.
+.TP
+\fIcommand\fP
+Specify a series of commands for non-interactive flagging.
+E.g., '<be' will apply SumThreshold flagging followed
+.nf
+ by blowing away the dust and extending the flags for each baseline;
+.fi
+'.=vx=v' will autoscale the data, do a clip operation, then
+.nf
+ subtract the channel average, autoscale and clip again before
+.fi
+moving on to the next baseline. Note that '=' cannot be the first
+character of the command parameter or it will be skipped.
+There is no need to specify a 'q' in the command sequence,
+unless you want to quit before all baselines are processed.
+Default is no command.
+.TP
+\fIoptions\fP
+Task enrichment parameters. Several can be given, separated by
+commas. Minimum match is used. Possible values are:
+.nf
+  patch   Generate a flagging patch file that contains all the
+          flagging operations that are done by this run of
+          pgflag.
+  selgen  Generate a file appropriate for selecting the bad data
+          (via a 'select' keyword). The output is two text files
+          called 'pgflag_flag.select' (for flagging operations),
+          and 'pgflag_unflag.select' (for unflagging operations).
+          Unfortunately, since 'select' does not support the use
+          of a 'channel' selection, this option is of limited use,
+          but is supplied in case time-based selection is all that
+          is required.
+  nosrc   Do not cause a break in the display when the source
+          changes. Normally PGFLAG puts a gap in the display
+          whenever the source changes.
+  noapply Do not apply the flagging.
+  nodisp  Do not use the display, just use the specified command
+          to flag all baselines in the dataset.
+.fi
+The following options can be used to disable calibration.
+.nf
+  nocal   Do not apply antenna gain calibration.
+  nopass  Do not apply bandpass correction.
+  nopol   Do not apply polarisation leakage correction.
+.fi
+.sp
+.SH REVISION
+1.30, 2016/10/05 23:06:50 UTC

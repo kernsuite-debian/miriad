@@ -1,0 +1,97 @@
+.TH clstats 1
+.SH NAME
+clstats - Calculate dispersions, masses, etc for each clump from clfind file
+.SH PERSON RESPONSIBLE
+pjt
+.SH CATEGORIES
+utility
+.SH DESCRIPTION
+The mass is calculated in the following way;
+we define X such that,
+.sp
+X * (sum T) * delv = column density of molecular hydrogen
+.nf
+                     in units of 10^20 cm-2
+.fi
+.sp
+which implies that to convert to a mass, multiply by
+.sp
+10^20 * meanmol * m(H_2) * Area
+.sp
+.SH PARAMETERS
+.TP
+\fIin\fP
+.nf
+     file name of data cube
+     (no default)
+.fi
+.sp
+.TP
+\fIdist\fP
+.nf
+     the distance to the object in pc
+     (no default)
+.fi
+.sp
+.TP
+\fIdisterr\fP
+.nf
+     multiplicative error in the distance
+     eg disterr=2 means dist is uncertain by a factor of 2
+     (default=1)
+.fi
+.sp
+.TP
+\fIx\fP
+.nf
+     the X-factor to convert between column density of the
+     species observed to the column density of molecular hydrogen
+     --- see above. (Note that this includes any corrections for
+     abundance, excitation temperature, CMBR, antenna efficiency,etc.)
+     (In units of 10^20, default=2.4)
+.fi
+.sp
+.TP
+\fIxerr\fP
+.nf
+     multiplicative error in X -- from uncertainties in
+     abundances, excitation temperature, efficiency, etc.
+     (default=1)
+.fi
+.sp
+.TP
+\fImeanmol\fP
+.nf
+     the mean molecular weight of the gas
+     (default=1.38, corresponding to n(He)/n(H)=0.1)
+.fi
+.sp
+.TP
+\fIjyperk\fP
+.nf
+     the number of Jansky's per Kelvin for these observations
+     (default=1)
+.fi
+.sp
+.TP
+\fIxy\fP
+.nf
+     "rel" or "abs" for the clump positions - v is always absolute
+     (default=relative)
+.fi
+.sp
+.TP
+\fIrms\fP
+.nf
+     optional input to specify the rms error in temperature
+     for each pixel in the map (used to calcuate errors in
+     the masses). Otherwise 0.5*DeltaT, where DeltaT is the
+     clfind contour interval.
+.fi
+.sp
+.TP
+\fInmin\fP
+.nf
+     each clump must contain at least nmin pixels to be
+     written out to output file
+     (default=4)

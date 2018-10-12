@@ -1,0 +1,20 @@
+%N uvacflag
+%D Flag cross-correlations with flagged auto-correlations.
+%P mhw
+%: calibration
+%B
+      UVACFLAG will flag all cross-correlations corresponding to flagged
+      auto-correlations.  This can be useful, for example, if you run
+      TVFLAG, and flag data based upon the auto-correlations.  You then
+      use UVACFLAG and flag all other correlations at the same time when
+      the auto-correlations are flagged.
+ 
+%A vis
+        Input visibility file. No default.
+%A options
+        Task enrichment options.  Minimum match is active.
+ 
+        full    Instructs UVACFLAG to tell you about every record
+                it flags.  The default is a summary at the end.
+ 
+%R 1.7, 2013/08/30 01:49:21 UTC

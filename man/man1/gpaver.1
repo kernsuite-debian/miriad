@@ -1,0 +1,24 @@
+.TH gpaver 1
+.SH NAME
+gpaver - Average (smooth) gain solutions.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+calibration
+.SH DESCRIPTION
+GpAver is a Miriad task to average (smooth) antenna gains.
+Currently only boxcar averaging is supported.
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The input visibility file, containing the gain file to average.
+.TP
+\fIinterval\fP
+The time averaging interval, in minutes. The default is 10 minutes.
+.TP
+\fIoptions\fP
+.nf
+  vector  Do vector averaging of the gain amplitudes and
+          phases. This is the default.
+  scalar  Do scalar averaging of the gain amplitudes and vector
+          averaging of the gain phases

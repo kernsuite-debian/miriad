@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A Program Example</TITLE>
+<META NAME="description" CONTENT="A Program Example">
+<META NAME="keywords" CONTENT="progguide">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="progguide.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node5.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html226"
+  HREF="node7.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html220"
+  HREF="node5.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html214"
+  HREF="node5.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A> 
+<A NAME="tex2html222"
+  HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A> 
+<A NAME="tex2html224"
+  HREF="node61.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html227"
+  HREF="node7.html">A Subroutine Example</A>
+<B>Up:</B> <A NAME="tex2html221"
+  HREF="node5.html">In-Line Documentation</A>
+<B> Previous:</B> <A NAME="tex2html215"
+  HREF="node5.html">In-Line Documentation</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00321000000000000000">
+A Program Example</A>
+</H2>
+
+<P>
+By way of illustration, below is the in-code documentation for
+<I>Miriad</I> task <A NAME="tex2html1"
+  HREF="../doc/varplot.html">varplot</A>
+which uses the ``directives'' noted previously.
+<PRE>
+c= varplot - Plot uv variables
+c&amp; lgm
+c: uv analysis, plotting
+c+
+c       VARPLOT makes X,Y plots selected variables from a uv data set.
+c       Only integer, real, and double precision variables maybe plotted.
+c       When curser is in the plot window, the following keys are active:
+c          X - expand window in X to give one column of plots
+c          Y - expand window in Y to give one row of plots
+c          Z - expand window in both X and Y to show only one plot
+c          N - step to "next" plot in x or y or both depending on expansion
+c@ vis
+c       Miriad uv data-set. No default.
+c@ device
+c       PGPLOT plotting device. No default.
+c@ xaxis
+c       Name of variable to be plotted along x-axis. Default is ut time.
+c@ yaxis
+c       Name of variable to be plotted along y-axis. No default.
+c@ multi
+c       Make multiple plots or a single plot? Yes yields multiple plots,
+c       No yields a single plot with multiple lines as needed. Default
+c       is yes.
+c@ compr
+c       Compress number of x or y variables to be plotted by averaging
+c       over spectral windows. Currently only SYSTEMP can be averaged.
+c--
+</PRE>
+The task's name is ``varplot'', its one-line description is ``Plot uv
+variables'', the responsible programmer is ``lgm'', and the program is
+categorized as both a ``uv analysis'' program and a ``plotting'' program.
+It has a general description (the text following the <TT>c+</TT> line), and
+it has 6 keywords that the user may set:  ``vis'', ``device'',
+``xaxis'', ``yaxis'', ``multi'',
+and ``compr''.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2011-08-19</I>
+</ADDRESS>
+</BODY>
+</HTML>

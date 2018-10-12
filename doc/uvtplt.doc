@@ -1,0 +1,30 @@
+%N uvtplt
+%D Plot Tsys for each field of a mosaiced observation
+%P nebk
+%: plotting
+%B
+      UVTPLT plots Tsys for each field of a mosaiced observation
+ 
+%A vis
+        Input visibility file. No default.
+%A freq
+        Band centre frequencies of interest in MHz. No default.
+%A source
+        Root name of mosaiced field.  E.g. "cena_" with fields like
+        cena_1, cena_12  etc.  No default.
+%A fields
+        Integer range of fields such as 1,20  No default.
+%A device
+        PGPLOT device.  No default.
+%A nxy
+        Number of plots in z and y directions per page
+%A options
+        tsysm  Get Tsys from median smoothed variables "xtsysm"
+           and "ytsysm" rather than usual "xtsys" and "ytsys"
+        first  Drop the first cycle of each new mosaic field
+        median Draw the median Tsys curve on the plot as well.
+           Options=first is done before the median is worked out.
+ 
+%A size
+        PGPLOT character size.
+        Default is 1.0

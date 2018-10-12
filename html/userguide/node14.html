@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>TPUT and TGET</TITLE>
+<META NAME="description" CONTENT="TPUT and TGET">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node15.html">
+<LINK REL="previous" HREF="node13.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node15.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1551"
+  HREF="node15.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1547"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1541"
+  HREF="node13.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1549"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1552"
+  HREF="node15.html">Summary of miriad commands</A>
+<B>Up:</B> <A NAME="tex2html1548"
+  HREF="node6.html">The miriad Front-End</A>
+<B> Previous:</B> <A NAME="tex2html1542"
+  HREF="node13.html">SAVE and LOAD</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00228000000000000000">
+TPUT and TGET</A>
+</H2>
+
+<P>
+When you invoke a task, <TT>miriad</TT> saves all the parameters associated
+with this task in a keyword file, in the directory given by the <B>MIRDEF</B>
+environment variable (if <B>MIRDEF</B> is not set, the current directory
+will be used). The parameters will be saved in a file with name
+<I>taskname</I><TT>.def</TT>. Additionally you can force parameters to
+be saved using `<TT>tput</TT> <I>taskname</I>'. If the taskname is omitted,
+the parameters for the current task are saved. The <TT>tget</TT> command is
+used to retrieve the parameters at a later stage. For example, to save and
+then restore parameters, use
+<PRE>
+   miriad% tput histo
+   histo% tget histo
+</PRE>
+<TT>tput</TT> and <TT>tget</TT> normally expect the keyword files to be in the
+directory given by the <B>MIRDEF</B> environment variable.
+This is unlike <TT>lastexit</TT> and the <TT>save</TT> and <TT>load</TT> commands,
+which expect the keyword files to be in the current directory. The <code>-l</code>
+flag to <TT>tput</TT> and <TT>tget</TT> changes them to write/read the keyword
+file from the current directory.
+
+<P>
+<BR> <HR>
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

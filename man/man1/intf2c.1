@@ -1,0 +1,109 @@
+.TH intf2c 1
+.SH NAME
+intf2c - A C preprocessor, to aid calling C from FORTRAN.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+tools
+.SH DESCRIPTION
+Intf2c is a C preprocessor for MIRIAD source code, intended to aid the
+calling of C code by FORTRAN routines. For most C code, it merely
+copies the input to the output. However when it encounters a subroutine
+definition in a FORTRAN-like syntax, it translates the subroutine
+interface into what would be the appearance of the C routine being called.
+This is a system-dependent operation. In particular Intf2c simplifies the
+perenial question of what FORTRAN character strings and subroutine names
+appear as in a C routine.
+.sp
+Usage:
+.sp
+intf2c -s system [-i type] [-r type] [-d type] [-l type] [-p type] [in] [out]
+.sp
+.nf
+  system: One of "vms","hpux","sun","bsd","trace","alliant","convex",
+          "unicos","alpha", "sgi", "linux". No default.
+.fi
+.sp
+.nf
+  in:     Input file. Default is standard input.
+  out:    Output file. Default is standard output.
+.fi
+.sp
+.nf
+  -i,-r,-d,-l,-p Define the C datatype corresponding to FORTRAN
+          INTEGER, REAL, DOUBLE PRECISION, LOGICAL and PTRDIFF
+          respectively. The default is "int", "float", "double", "int"
+          and "int" respectively.
+  -c      Invoke code to convert between FORTRAN and C integers and logicals.
+.fi
+.sp
+Intf2c and the C preprocessor:
+.sp
+intf2c runs before the C preprocessor. This is good and bad. The
+good side of it is that it can produce code that is more machine
+independent, as some of the text it includes are later expanded by
+the C preprocessor. The bad side of it is that you cannot define
+macros which contain unbalanced { and } characters (otherwise
+you would screw up intf2c's tracking of the nesting depth) and you
+cannot define anything that intf2c would expand as part of a macro, #define
+or within a #include file.
+.sp
+Use:
+.sp
+As intf2c is a preprocessor of C code, most of the input source looks
+like normal C. However, intf2c provides a syntax to describe a routine
+interface. Additionally within the routine, you use special notations
+when manipulating the dummy arguments.
+.sp
+A routine declaration always starts with the word "fortran" followed
+by
+subroutine sub-name(type arg1, type arg2, ...)
+.sp
+or
+.sp
+type function sub-name(type arg1, type arg2, ...)
+.sp
+Here "type" can be any of integer, real, double, complex, logical or
+character. sub-name is the routine name (case is unimportant) and
+arg1, arg2, etc are names given to the routines dummy arguments.
+Character and complex functions are not supported.
+.sp
+For example
+.sp
+fortran subroutine output(character string)
+.sp
+defines a subroutine "output" which has a single character argument, called
+"string". Similarly
+.sp
+fortran integer function prime(integer n)
+.sp
+defines an integer function "prime" which has a single integer argument, "n".
+.sp
+Within the body of a routine, you access the routine arguments using a
+notation suggestive of structs. For argument, arg,
+.nf
+      arg.val         gives the value of arg.
+      arg.addr        gives the address of arg.
+      arg.len         gives the FORTRAN length of arg, assuming
+                      arg is a character string.
+      arg.zterm       gives a zero-terminated copy of arg, assuming
+                      arg is a blank padded character string. This
+                      copy should only be read.
+      arg.pad         gives the address of arg. In doing so, it converts
+                      arg from a zero-terminated string to one that it
+                      blank padded (to arg.len).
+.fi
+.sp
+Intf2c also generates #define statements for FORTRAN_TRUE and FORTRAN_FALSE,
+which are the values that FORTRAN uses to represent .true. and .false.
+.sp
+For example, the following code copies a character string from one character
+string to another.
+.sp
+fortran subroutine fstrcpy(character out,character in)
+{
+strcpy(out.addr,in.zterm);
+out.pad;
+}
+.sp
+.sp

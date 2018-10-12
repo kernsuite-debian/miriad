@@ -1,0 +1,27 @@
+.TH prthd 1
+.SH NAME
+prthd - Summarise the contents of a data-set.
+.SH PERSON RESPONSIBLE
+rjs
+.SH CATEGORIES
+miscellaneous
+.SH DESCRIPTION
+PRTHD is a Miriad task that summarises a Miriad data-set.
+.SH PARAMETERS
+.TP
+\fIin\fP
+Input image and/or uv data-sets.  Several may be given, and
+their names may include wildcards.  No default.
+.TP
+\fIlog\fP
+Output log file.  Default is the terminal.
+.TP
+\fIoptions\fP
+Extra processing options.  Possible values are:
+.nf
+  brief   Give one line description of each file.
+  full    Several line description of each file (default).
+.fi
+.sp
+.SH REVISION
+1.10, 2012/03/02 06:13:02 UTC

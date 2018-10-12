@@ -1,0 +1,24 @@
+%N maxfit
+%D Fits a 2-D parabola to a 3x3 region of an image
+%P nebk
+%: image analysis
+%B
+        MAXFIT finds the maximum value of a region of an image.
+        This region may be three dimensional.  It then fits a
+        parabola to a 3x3 array extracted from the first two
+        dimensions of the image and centred on the maximum pixel
+        in the specified region.  MAXFIT then returns the location
+        and value of the maximum pixel and the fitted pixel.
+%A in
+        The input image.
+%A region
+        Region of interest in which to search for the maximum pixel.
+        The default is the whole image.
+%A options
+        "abs"  means that MAXFIT search for the maximum absolute
+               pixel value rather than the default, which is just
+               the maximum pixel value.
+%A log
+        Write results to this log file as well as screen.
+ 
+%R 1.7, 2012/02/20 07:36:21 UTC

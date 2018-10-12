@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Calibration of Data with XX, YY, XY and YX</TITLE>
+<META NAME="description" CONTENT="Calibration of Data with XX, YY, XY and YX">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node77.html">
+<LINK REL="previous" HREF="node75.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node77.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2337"
+  HREF="node77.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2333"
+  HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2327"
+  HREF="node75.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2335"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2338"
+  HREF="node77.html">Calibration of Data with</A>
+<B>Up:</B> <A NAME="tex2html2334"
+  HREF="node75.html">Calibration Methods</A>
+<B> Previous:</B> <A NAME="tex2html2328"
+  HREF="node75.html">Calibration Methods</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION001121000000000000000">
+Calibration of Data with <I>XX</I>, <I>YY</I>, <I>XY</I> and <I>YX</I></A>
+</H2>
+If all four polarisation products are measured, a full polarimetric
+calibration is possible. We generally solve for the leakage terms,
+the gains, a bandpass function and calibrator <I>Q</I>
+and <I>U</I>.
+
+<P>
+In the solution process, we must consider the time variability of the
+various parameters. The gains vary fairly rapidly with time, and
+we typically solve for them every hour or so, with the
+assumption that they are steady over a solution interval of a few
+minutes - the calibrator scan.  On the other hand, the leakage terms
+are assumed to be steady over the entire length of the observation.  Our
+experience so far appears to support this. The bandpass function and
+the calibrator <I>Q</I> and <I>U</I> can also be assumed to remain unchanged during
+an observation.  It is not possible to solve for a calibrators
+<I>V</I> (circularly polarised flux density)
+However, a calibrator's <I>V</I> is unlikely to be significant ( <SPAN CLASS="MATH"><IMG
+ WIDTH="41" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img24.png"
+ ALT="$&lt; 0.1$"></SPAN> %).
+
+<P>
+If the calibrator is weakly polarised ( <SPAN CLASS="MATH"><IMG
+ WIDTH="29" HEIGHT="30" ALIGN="MIDDLE" BORDER="0"
+ SRC="img25.png"
+ ALT="$&lt; 5$"></SPAN>%), one quantity that it
+is difficult to solve for is the absolute <I>XY</I> phase, absolute feed
+alignment and absolute feed ellipticity.
+Generally these quantities
+on the reference antenna has to be either assumed, or measured, or derived
+from observations of a strongly polarised calibrator.  Unfortunately most
+calibrators are only weakly polarised. Fortunately, however, the
+alignment and ellipticity errors are small (assuming Faraday rotation is
+negligible). Additionally, since November 1992,
+the ATCA makes a good measurement of the absolute <I>XY</I> phase (accurate
+to a few degrees).
+If we assume that the absolute alignment and ellipticity errors of the
+reference antenna are zero and that the <I>XY</I> phase measurements are
+accurate, a ``polarisation position angle
+calibrator'' is not needed.
+
+<P>
+The recommended strategy for calibrating ATCA data is thus to observe
+a primary flux density calibrator, normally 1934-638, as well as a secondary phase calibrator
+close to the source. For polarimetric observations, as the polarisation of
+1934-638 is known (in fact it
+is <SPAN CLASS="MATH"><IMG
+ WIDTH="55" HEIGHT="32" ALIGN="MIDDLE" BORDER="0"
+ SRC="img26.png"
+ ALT="$&lt; 0.2\%$"></SPAN>), and the flux density is strong,
+it is possible to derive polarisation leakages from it given only a short
+observation (5-10 minutes). If you have good parallactic angle coverage of
+the secondary, it is possible
+to simultaneously determine the polarisation leakages as well as <I>Q</I> and <I>U</I>
+for the secondary (``good parallactic angle coverage'' means
+at least 5 observations spread over a parallactic angle range of <SPAN CLASS="MATH"><IMG
+ WIDTH="35" HEIGHT="15" ALIGN="BOTTOM" BORDER="0"
+ SRC="img27.png"
+ ALT="$100^\circ$"></SPAN>). This will be the normal case for a 12 hour observation of
+one source. Alternatively if there is poor parallactic angle coverage
+of the secondary (e.g. resulting from snapshot observations), the instrumental
+polarisation
+derived from 1934-638 can be used, and the <I>Q</I> and <I>U</I> of the secondary
+can still be determined.
+
+<P>
+The above strategy differs from that in the previous version of this guide.
+This is as prior to November 1992, the hardware to measure the <I>XY</I> phase
+produced unreliable results, particularly at
+20 and 13&nbsp;cm. Thus an observation of a strongly polarised calibrator was
+strongly advisable to determine <I>XY</I> phase. The strategy used for calibrating
+data prior to November 1992 will be somewhat different to that presented here.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2337"
+  HREF="node77.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2333"
+  HREF="node75.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2327"
+  HREF="node75.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2335"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2338"
+  HREF="node77.html">Calibration of Data with</A>
+<B>Up:</B> <A NAME="tex2html2334"
+  HREF="node75.html">Calibration Methods</A>
+<B> Previous:</B> <A NAME="tex2html2328"
+  HREF="node75.html">Calibration Methods</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

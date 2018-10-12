@@ -1,0 +1,47 @@
+%N uvredo
+%D Recompute various derived quantitues in a uv data-set
+%P rjs
+%: uv analysis
+%B
+        UVREDO recomputes various derived quantities in a uv data-set.
+        This may be needed if the derived quantities are wrong for some
+        reason, or if there is a need to change a coordinate system.
+        For example uvredo can recompute velocity information, thus
+        allowing conversion between different velocity rest frames.
+ 
+        NOTE: The recomputation relies on a number of parameters in the
+        data-set, such as "time". It is assumed that this information is
+        correct. Uv variables that are important are:
+        For velocity: time and latitu,longitu (or telescop is these are
+        missing).
+%A vis
+        The name of the input uv data set. No default.
+%A select
+        The normal uv selection commands. The default is to select everything.
+%A line
+        The normal uv linetype in the form:
+          line,nchan,start,width,step
+        The default is all channels. Note that if there are multiple
+        spectral windows, the fitting process is performed on each window
+        separately.
+%A stokes
+        The polarization/Stokes parameters to be copied to the output
+        data-set. The default is to copy the polarisation/Stokes parameters
+        unchanged.
+%A out
+        The name of the output uv data-set. There is no default name.
+%A options
+        This gives extra processing options. Several options can be given,
+        each separated by commas. They may be abbreviated to the minimum
+        needed to avoid ambiguity. Possible options are:
+           'velocity'    Recompute velocity information.
+           'chi'         Recompute polarisation feed angle information.
+        The following options can be used to turn off calibration corrections.
+        The default is to apply any calibration present.
+           'nocal'       Do not apply the gains table.
+           'nopass'      Do not apply bandpass corrections.
+           'nopol'       Do not apply polarizatiopn corrections.
+%A velocity
+        If options=velocity, this gives the rest frame of the output
+        data-set. Possible values are 'observatory', 'lsr' and 'barycentric'.
+        The default is the rest frame of the input data-set.

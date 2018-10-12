@@ -1,0 +1,26 @@
+%N calc
+%D A calculator program.
+%P rjs
+%: tools
+%B
+        CALC is a calculator program. An expression is given in FORTRAN
+        like syntax, and the result printed out.
+ 
+        Usage:
+          calc [-ir] [-f xxx] expression
+ 
+          -i             Print the result as an integer.
+          -f xxx         Print the result using FORTRAN format xxx.
+          -r             Treat the input as a single integer, and
+                         print it out in various radix formats.
+                         The input integer can be in a radix format.
+                         A %x introduces a hex number, %o an octal and
+                         %b a binary.
+          -c             Treat the input as a single constant, and print out
+                         information on it.
+          expression     A FORTRAN-like expression (except if the -r
+                         flag is given).
+                         NOTE: An asterisk and brackets are special
+                         characters to some UNIX shells. These characters
+                         may need to be escaped or quoted when giving the
+                         expression.

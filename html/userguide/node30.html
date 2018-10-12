@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Miriad Data Disks at Epping</TITLE>
+<META NAME="description" CONTENT="Miriad Data Disks at Epping">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node26.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1743"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1739"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1735"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1741"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1744"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B>Up:</B> <A NAME="tex2html1740"
+  HREF="node26.html">Miriad Datasets</A>
+<B> Previous:</B> <A NAME="tex2html1736"
+  HREF="node29.html">Scratch Files</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00440000000000000000"></A><A NAME="1334"></A><A NAME="1335"></A>
+<BR>
+<I>Miriad</I> Data Disks at Epping
+</H1>
+As datasets are normal directories, they can be created wherever you can create
+directories. Though it is possible to create them in your home directory,
+given the quotas enforced on home directories you are unlikely to be able to
+store much data there.
+
+<P>
+Epping users can use the <code>/DATA</code> disks (shared with AIPS users) to store
+their data for a few days to a few weeks. To do so, you should create
+a directory <TT>/DATA/<EM>host<code>_</code>x</EM>/<EM>username</EM></TT>, where
+<EM>host<code>_</code>x</EM> is a machine name and a number (<I>e.g.</I> <TT>ATLAS<code>_</code>1</TT>)
+and <EM>username</EM> is your login name. For example
+<PRE>
+     % mkdir /DATA/ATLAS_1/rsault
+</PRE>
+creates a directory for <code>rsault</code> on the first data disk of machine
+atlas.
+
+<P>
+All the disks attached to all the different workstations
+are accessible from any machine. That is, the disks are
+cross-mounted between the computers.  However there is a right way and a
+wrong way to use this cross-mounting - there is a large network penalty
+(particularly to write) to a remote disk.  For example, there is a large
+overhead if you write to a disk attached to APUS when you are logged
+into CARINA.  The penalty is smaller if you read from a network mounted
+disk, but is still substantial.  In general you should attempt to keep
+your data on the disks of one workstation, and use that workstation for
+all your compute and I/O intensive work.
+
+<P>
+There are two sorts of disks - public and bookable. Public disks can
+be used by anyone at anytime. However their contents
+<EM>may be automatically cleared</EM> at 5:00 am on Mondays. The bookable disks
+provide a private allocation of disk space, which is not subject
+to destruction on Monday morning. Note, however, when your booking has
+expired, your data can be deleted from a bookable disk without
+warning. Disks can be booked by e-mailing `bookings'.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1743"
+  HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1739"
+  HREF="node26.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1735"
+  HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1741"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1744"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B>Up:</B> <A NAME="tex2html1740"
+  HREF="node26.html">Miriad Datasets</A>
+<B> Previous:</B> <A NAME="tex2html1736"
+  HREF="node29.html">Scratch Files</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

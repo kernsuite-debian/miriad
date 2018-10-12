@@ -1,0 +1,48 @@
+%N velimage
+%D Make (x,y,z) image from an (x,y) image and model z-values.
+%P mchw
+%: image analysis
+%B
+        VELIMAGE is a MIRIAD task to make an (x,y,z) image from an (x,y)
+        image and a model for the z-values and dispersion.  The
+        z-values, for example the mean velocity, are input as an (x,y)
+        image, whilst the dispersion can be input as either an (x,y)
+        image or a fixed value.  The output image is formed as
+ 
+           out(x,y,z) = in1(x,y) * exp(-(z-in2(x,y))**2/(2*sigma**2)))
+ 
+        VELIMAGE can be used to compare models with the data.  For
+        example one can generate a model image corresponding to a
+        rotating galaxy, convolve it with the actual beam and subtract
+        the model from the data to determine if there is residual
+        emission which deviates from the model rotation curve.
+%A in
+        The input image names, separated by commas.  The first image is
+        the (x,y) intensity distribution integrated over the z-axis,
+        e.g. velocity-integrated image.  The second image is an (x,y)
+        model for the z-values, e.g. a mean velocity image.  No default
+        for either.
+        A 3rd input image gives the z-dispersion at each point, e.g. a
+        velocity dispersion image.  If the 3rd image is not specified
+        then fixed dispersion, sigma must be specified.
+%A region
+        Region of image to be used.  See documentation on region for
+        details.  All pixels within the bounding box are used; pixel
+        masking is not used.  Default is the entire image.
+%A sigma
+        Fixed value for z-dispersion if not specified by 3rd input
+        image.
+%A nchan
+        Number of channels for z-axis of output image.  Default=1.
+%A start
+        Starting value for z-axis of output image.  No default.
+%A step
+        Interval for z-axis of output image.  No default.
+%A out
+        The output (x,y,z) image.  No default.
+%A options
+        Options.  Minimum match is active.
+          relax  ignore axis descriptor mismatches
+                 (e.g. pixel increments etc).  Use with care.
+ 
+%R 1.7, 2017/12/11 22:26:28 UTC

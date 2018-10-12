@@ -1,0 +1,159 @@
+.TH tvflag 1
+.SH NAME
+tvflag - Interactive editing of a UV data set on a TV device.
+.SH PERSON RESPONSIBLE
+jm
+.SH CATEGORIES
+calibration, uv-data, tv, plotting, display
+.SH DESCRIPTION
+TVFLAG is a MIRIAD task which allows interactive baseline
+editing of a UV data set.  The user should make sure,
+if the display device is capable of creating menus that
+the menu program has been loaded ``before'' running this
+routine (eg. xpanel for the XMTV) - see the User's Guide
+or Cookbook under TV Devices for details.
+.sp
+When this program is run, each baseline is displayed,
+one at a time, with the x-axis representing channel
+number (increasing to the right), the y-axis representing
+the change in time (increasing upward), and the color
+intensity representing the amplitude or phase (depending
+on the value of the keyword ``mode'') of the visibility.
+The current antenna that constitute the baseline are
+labeled at the bottom of the plot (if room permits).
+In addition, if room permits, a color wedge is displayed
+to the right side of the visibility data and is the sum
+of the data over all displayed channels.  Also, a wedge
+of the sum of the data over all displayed times will
+appear above (or below) the data as room permits.
+.sp
+The user may edit the data in one of two ways: 1) By
+entering commands at the keyboard; or 2) by selecting
+commands from the listed menu items.  Which method is
+determined by the presence of a menu program (such as
+``XPANEL'' for the Sun systems).
+.sp
+If no menu program is currently active, then a message
+is issued to the user and all commands are prompted from
+the keyboard.  Commands are entered followed by a carriage
+return (<CR>).  Single letter abbreviations are used for
+all commands.  The current command list, each corresponding
+abbreviation, and a brief description of each command is
+available by entering a question mark (``?'') as a command.
+Commands requiring further interaction (eg. ``select'' and
+``value'') will prompt the user when they are invoked.
+.sp
+If a menu program is active, then TVFLAG will attempt
+to construct an assortment of menu buttons and other
+items that will perform the equivalent of entering commands
+at the keyboard.  Certain commands (eg. ``select'' and
+``value'') require further cursor input and will prompt
+the user for a particular action (for example: ``select''
+will request the user to select the region to box for
+further flagging commands).
+.sp
+The current technique of editing is to load the baseline
+to be edited, zoom and pan to the desired location, and
+then, select the region to be edited followed by an
+editing command.  To identify a region to edit, chose
+the ``select'' command (or ``channel'' or ``time'' select
+options) and then use the cursor to box the desired points.
+To select a desired region, move the cursor (mouse) to a
+corner of the region to select; identify, to the program,
+the corner (usually by pushing and holding the left mouse
+button); move the pointer to the other corner (by dragging
+the mouse), and then identify, again to the program, the
+other corner (usually by releasing the left mouse button).
+After the region to edit has been identified, the selected
+region may be flagged as good or bad using the appropriate
+editting command (or button).  If data is flagged improperly,
+the ``undo'' command will reverse the last editing operation.
+.sp
+NOTE:  If the device does not support this type of ``rubber-
+band'' selection (Eg. XMTV does; MXAS does not), then the
+user will be asked to use the cursor to identify two opposite
+corners to delimit the selected region.
+.sp
+To save the editing done to a particular baseline, use
+the ``exit'' command (or select the ``exit'' button).
+The flagging changes will be immediately applied to the
+data.  To NOT save the changes made to a particular
+baseline, use the ``quit'' command (or button).  After
+a ``quit'' or ``exit'' operation, the data for the next
+baseline is loaded onto the display and the user may continue
+editing.  Selecting the ``abort'' command (button) at any
+time will perform the same operation as ``quit'', but
+will also terminate the program.
+.sp
+.SH PARAMETERS
+.TP
+\fIvis\fP
+The name of the input UV data set.  A visibility file name
+must be supplied.  Only one file may be edited at a time.
+.sp
+.TP
+\fIserver\fP
+Standard keyword server. See the help on "server" for more information.
+.sp
+.TP
+\fItvchan\fP
+An integer specifying which TV channel the data is
+displayed.  The default is channel 1.
+.sp
+.TP
+\fIrange\fP
+The minimum and maximum range used in scaling the data
+on the TV.  Default is to autoscale to the first image.
+If this keyword is used, TWO parameters must be input.
+.sp
+.TP
+\fItvcorn\fP
+The integer device coordinate of the lower left corner
+of the image.  The default is to center the image on the
+display.  If this keyword is used and only the x coordinate
+value is input, the y coordinate value is set to the x value.
+.sp
+.TP
+\fIline\fP
+Standard keyword line. See the help on "line" for more information.
+.sp
+NOTE: Here ``type'' must be `channel' and the ``width'' and
+``step'' parameters must be equal. The default is
+to display all channels.
+.sp
+.TP
+\fImode\fP
+Display ``amplitude'', ``phase'', ``real'', ``imaginary''.
+By default, ``amplitude'' is selected. For mode=phase, the
+phase is in degrees.
+.sp
+.TP
+\fItaver\fP
+The length of time (in minutes) used to average the data when
+determining the running mean. This is used with the "DIFF"
+command, where the running mean of the data are subtraced off.
+Two values can be given for taver, being TTOT and TGAP
+respectively. If the time interval between any
+two successive data points is greater than TGAP, or if the
+total time between the first data point in an average
+and any succeeding data point exceeds TTOT, then a new
+average is started.  The default for TTOT is 5 minutes, whereas
+the default TGAP is the value of TTOT.
+.sp
+.TP
+\fIselect\fP
+Standard keyword select. See the help on "select" for more information.
+NOTE: The default is to use all visibilities.
+.sp
+.TP
+\fIoptions\fP
+Extra processing options. Several can be given, separated by
+commas. Minimum match is used. Possible values are:
+.nf
+  nosrc   Do not cause a break in the display when the source
+          changes. Normally TVFLAG puts a gap in the display
+          whenever the source changes.
+.fi
+.sp
+.SH REVISION
+1.8, 2013/08/30 01:49:21 UTC

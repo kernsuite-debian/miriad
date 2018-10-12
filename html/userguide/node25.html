@@ -1,0 +1,251 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>PGPLOT Plotting Devices</TITLE>
+<META NAME="description" CONTENT="PGPLOT Plotting Devices">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="previous" HREF="node24.html">
+<LINK REL="up" HREF="node21.html">
+<LINK REL="next" HREF="node26.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1681"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1677"
+  HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1673"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1679"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1682"
+  HREF="node26.html">Miriad Datasets</A>
+<B>Up:</B> <A NAME="tex2html1678"
+  HREF="node21.html">Plotting Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1674"
+  HREF="node24.html">Using X Windows</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00340000000000000000">
+PGPLOT Plotting Devices</A>
+</H1>
+Tasks which use the PGPLOT software always use the <TT>device</TT>
+keyword to allow you to select a plotting device. Only a brief review of PGPLOT, from a users
+perspective, is given here. A more complete description, both for users and
+programmers, can be found in the
+<A NAME="tex2html26"
+  HREF="http://astro.caltech.edu/~tjp/pgplot/">PGPLOT manual</A>.
+
+<P>
+PGPLOT devices are specified in the standard PGPLOT manner, namely
+<BLOCKQUOTE>
+<TT>device=</TT><I>name</I><TT>/</TT><I>type</I>
+
+</BLOCKQUOTE>
+The <I>name</I> part either gives a device name (usually for graphics
+devices) or a file name (usually for hardcopy devices, such as
+postscript printers).  In the case of a file name, any normal file name
+can be given.  However if it contains a <code>/</code> character, then the
+entire file name should be enclosed in double quotes (<code>"</code>).  Once a
+file has been created, you will generally have to issue operating system
+commands to spool this to the appropriate output plotter, etc.  The <I>name</I> part can often be left blank - it defaults to something sensible. 
+The most common case where you do not let it default is when you are
+specifying a disk plot file. 
+
+<P>
+The <I>type</I> part tells PGPLOT what sort of graphics or hardcopy
+device is being used. Minimum match is used. Some possible types are:
+
+<P>
+<DL>
+<DT><STRONG><TT>xs</TT></STRONG></DT>
+<DD>This is a re-sizable and persistent X window.
+
+<P>
+</DD>
+<DT><STRONG><TT>xw</TT></STRONG></DT>
+<DD>This is a transient X window.
+
+<P>
+</DD>
+<DT><STRONG><TT>xd</TT></STRONG></DT>
+<DD>This is the <TT>pgdisp</TT> X windows server (deprecated). 
+
+<P>
+</DD>
+<DT><STRONG><TT>ps</TT></STRONG></DT>
+<DD>Postscript. PGPLOT will write the plot as a disk file
+in postscript form. At ATNF sites, you can print this postscript file with
+the command:
+<BLOCKQUOTE>
+<TT>% lp </TT><I>filename</I>
+
+</BLOCKQUOTE>
+
+<P>
+</DD>
+<DT><STRONG><TT>vps</TT></STRONG></DT>
+<DD>Vertical postscript. The only difference between this and
+<TT>ps</TT>, is that <TT>vps</TT> generates a plot in portrait mode, whereas
+<TT>ps</TT> is in landscape mode.
+
+<P>
+</DD>
+<DT><STRONG><TT>cps</TT></STRONG></DT>
+<DD>Colour postscript in landscape mode.  
+
+<P>
+</DD>
+<DT><STRONG><TT>vcps</TT></STRONG></DT>
+<DD>Colour postscript in portrait mode.
+
+<P>
+</DD>
+<DT><STRONG><TT>null</TT></STRONG></DT>
+<DD>The null device.  Useful for debugging when you
+do not have a display.
+
+<P>
+</DD>
+<DT><STRONG><TT>re</TT></STRONG></DT>
+<DD>A VT100 with RETROgraphics card.
+
+<P>
+</DD>
+<DT><STRONG><TT>v603</TT></STRONG></DT>
+<DD>A V603 terminal.
+
+<P>
+</DD>
+<DT><STRONG><TT>krm3</TT></STRONG></DT>
+<DD>A Kermit 3 IBM-PC terminal emulator.
+
+<P>
+</DD>
+<DT><STRONG><TT>tek</TT></STRONG></DT>
+<DD>A TEK 4010 compatible terminal (or window).
+
+<P>
+</DD>
+</DL>
+
+<P>
+Examples of PGPLOT devices are:
+
+<UL>
+<LI><TT>device=4/xs</TT> directs output to the persistent X window number 4
+(you can have many of these windows)
+</LI>
+<LI><TT>device=/xw</TT> directs output to the transient X window.
+</LI>
+<LI><TT>device=plot.ps/ps</TT> create a postscript plot file called <TT>plot.ps</TT>
+</LI>
+<LI><TT>device=/tek</TT> assumes you are working at a Tektronix 4014 terminal. Graphics
+output is directed to your terminal.
+</LI>
+</UL>
+
+<P>
+Another useful pseudo-PGPLOT device is <TT>?</TT>. This causes a complete list
+of PGPLOT types to be printed, and then the task will prompt you to give
+a PGPLOT device.
+
+<P>
+When plotting in an X window, you must meet the conditions which allow
+PGPLOT to communicate with your X server.
+
+<P>
+PGPLOT has two X windows servers, and as of PGPLOT V5.0, one of which
+(<TT>pgdisp</TT>) is deprecated.  The PGPLOT device types <TT>/xs</TT> and
+<TT>/xd</TT> are now mediated by a server (called <TT>pgxwin_server</TT>). 
+This server is automatically started whenever either of these devices is
+invoked.  The <TT>/xs</TT> windows are permanent and resizable whereas the
+fixed size <TT>/xw</TT> windows disappear as the application terminates. 
+This server allows multiple windows and you can choose to write to
+whichever one you like (see above example).  The resources for these
+windows are managed through the standard X windows resource file.
+
+<P>
+The deprecated server, <TT>pgdisp</TT>, which creates a resizable
+persistent X window is started by hand with a command such as
+
+<P>
+<PRE>
+% pgdisp &amp;
+</PRE>
+
+<P>
+from a workstation window (usually the console window). This window
+is written to with the keyword <TT>device</TT>, see below).  This
+window can be used for line graphics as well as grey scales.  By
+default, the <TT>pgdisp</TT> window only has 16 colour levels, which is
+insufficient for most image display applications, but fine for line
+graphics. 
+
+<P>
+If you start it up with the command
+
+<P>
+<PRE>
+   % pgdisp -lineColors 128  &amp;
+</PRE>
+
+<P>
+then the window will be allocated 128 colours which is sufficient for
+imaging applications.    This window is much slower than the windows 
+mediated by the <TT>pgxwin_server</TT>. In addition you can only have
+one.  
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1681"
+  HREF="node26.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1677"
+  HREF="node21.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1673"
+  HREF="node24.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1679"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1682"
+  HREF="node26.html">Miriad Datasets</A>
+<B>Up:</B> <A NAME="tex2html1678"
+  HREF="node21.html">Plotting Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1674"
+  HREF="node24.html">Using X Windows</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

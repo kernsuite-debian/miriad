@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Multi-Plane Models</TITLE>
+<META NAME="description" CONTENT="Multi-Plane Models">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node120.html">
+<LINK REL="previous" HREF="node118.html">
+<LINK REL="up" HREF="node118.html">
+<LINK REL="next" HREF="node120.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html2890"
+  HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2886"
+  HREF="node118.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2880"
+  HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2888"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2891"
+  HREF="node120.html">Multi-Frequency Models</A>
+<B>Up:</B> <A NAME="tex2html2887"
+  HREF="node118.html">Frequency Handling</A>
+<B> Previous:</B> <A NAME="tex2html2881"
+  HREF="node118.html">Frequency Handling</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION001514100000000000000">
+Multi-Plane Models</A>
+</H3>
+
+<P>
+When the model contains multiple planes, it should be noted that the
+self-calibration
+tasks <EM>do not</EM> perform any interpolation of models along the spectral
+dimension.
+The self-calibration tasks assume that there is a one-to-one correspondence
+between a model plane and some average of the channels. The
+correspondence is determined in a rather imperfect fashion - the
+self-calibration tasks use the
+standard <TT>line</TT> parameter (see Section&nbsp;<A HREF="node35.html#s:line">5.4</A>).
+This parameter determines the channels selected from the visibility
+dataset, and the averaging performed on them. Unfortunately, the
+self-calibration tasks only perform rudimentary checks on whether the
+<TT>line</TT> parameter makes sense (<I>i.e.</I> whether the selected channels
+have the same frequencies as the model planes). Despite this, in
+many instances, the self-calibration tasks will provide appropriate defaults
+for the <TT>line</TT> parameter.
+Below we outline those instances where you can or should
+allow the <TT>line</TT> parameter to default, and those instances where you
+should not.
+
+<P>
+
+<UL>
+<LI><I>Miriad</I> tasks normally maintain a record of the <TT>line</TT>
+parameter used to form an image.  The imaging task, <A NAME="tex2html519"
+  HREF="../doc/invert.html">invert</A>,
+records the <TT>line</TT> parameter it uses, and the deconvolution tasks
+propagate it to their outputs.  The default <TT>line</TT> parameter used by
+the self-calibration tasks is that which was used to form the model.
+This is generally quite appropriate if the model was formed from the
+data being self-calibrated.  However if the model was formed by some
+other means, then the default will be quite inappropriate, and you
+should set the <TT>line</TT> parameter explicitly.
+
+<P>
+</LI>
+<LI><A NAME="tex2html520"
+  HREF="../doc/selfcal.html">selfcal</A>
+can cope with the case of several models being
+derived from different channel ranges from one visibility dataset.
+This might occur, for example, if multiple lines were being observed
+simultaneously (as often happens at millimeter wavelengths, but rarely
+with the ATCA).  In this case, the different models were formed with
+different <TT>line</TT> parameters.  <A NAME="tex2html521"
+  HREF="../doc/selfcal.html">selfcal</A>
+<EM>must</EM> rely on the
+record of the <TT>line</TT> parameter stored in the model.
+
+<P>
+</LI>
+<LI>If a point-source model is used (<I>i.e.</I> no input model dataset),
+then you should give the <TT>line</TT> parameter explicitly.
+
+<P>
+</LI>
+<LI>Similarly, if using the <code>mfs</code> option, you should also
+set the <TT>line</TT> parameter explicitly - see the next subsection.
+
+<P>
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html2890"
+  HREF="node120.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html2886"
+  HREF="node118.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html2880"
+  HREF="node118.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html2888"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html2891"
+  HREF="node120.html">Multi-Frequency Models</A>
+<B>Up:</B> <A NAME="tex2html2887"
+  HREF="node118.html">Frequency Handling</A>
+<B> Previous:</B> <A NAME="tex2html2881"
+  HREF="node118.html">Frequency Handling</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

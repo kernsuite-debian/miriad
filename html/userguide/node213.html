@@ -1,0 +1,409 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Image Items</TITLE>
+<META NAME="description" CONTENT="Image Items">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node214.html">
+<LINK REL="previous" HREF="node212.html">
+<LINK REL="up" HREF="userhtml.html">
+<LINK REL="next" HREF="node214.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html4092"
+  HREF="node214.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4088"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4082"
+  HREF="node212.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4090"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4093"
+  HREF="node214.html">UV Variables</A>
+<B>Up:</B> <A NAME="tex2html4089"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html4083"
+  HREF="node212.html">Setting Up Your Account</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002600000000000000000"></A>
+<A NAME="app:image"></A>
+<BR>
+Image Items
+</H1>
+
+<P>
+In this Appendix we will describe the items that can be present
+in an image dataset. <I>Miriad</I> utilities such as <TT>prthd</TT>, <TT>imlist</TT>,
+<TT>itemize</TT>, <TT>puthd</TT>,
+<TT>copyhd</TT> and <TT>delhd</TT> may
+be used to browse or modify these `header variables'.
+
+<P>
+Note that the units used in <I>Miriad</I> are not always FITS-like, 
+<I>e.g.</I> frequencies are stored in GHz in <I>Miriad</I>, whereas in FITS
+one finds Hz. <A NAME="16657"></A> For example, <I>Miriad</I> keeps
+velocity in km/s, sky coordinates in radians and frequencies
+in GHz.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="16659"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table B.1:</STRONG>
+Item names in <I>Miriad</I> image datasets</CAPTION>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Item</TD>
+<TD ALIGN="LEFT">Type</TD>
+<TD ALIGN="CENTER">Units</TD>
+<TD ALIGN="LEFT">Description/Comments</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bmaj,bmin</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">radians</TD>
+<TD ALIGN="LEFT">Beam major and minor axis FWHM.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bpa</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">degrees</TD>
+<TD ALIGN="LEFT">Beam position angle, measured</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">east from north.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">bunit</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">The units of the pixels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">btype</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">The type of the image. Possible values:</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>intensity</code> - Normal map.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>beam</code> - Point spread function.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>depolarisation_ratio</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>fractional_polarisation</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>optical_depth</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>polarised_intensity</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>position_angle</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>rotation_measure</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>spectral_index</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">cdelt1,cdelt2,...</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">See ctype</TD>
+<TD ALIGN="LEFT">The increment between pixels.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">cellscal</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">Latitude/longitude cell scaling</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">convention with frequency/velocity.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">Possible values are:</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>CONSTANT</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><code>1/F</code></TD>
+</TR>
+<TR><TD ALIGN="LEFT">crpix1,crpix2,...</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">pixels</TD>
+<TD ALIGN="LEFT">The pixel coordinate of the reference pixel.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">crval1,crval2,...</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">The coordinate value at the reference pixel.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">radians</TD>
+<TD ALIGN="LEFT">if ctype represents a celestial coordinate.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">km/s</TD>
+<TD ALIGN="LEFT">if ctype <TT>VELO</TT> or <TT>FELO</TT></TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">GHz</TD>
+<TD ALIGN="LEFT">if ctype <TT>FREQ</TT></TD>
+</TR>
+<TR><TD ALIGN="LEFT">ctype1,ctype2,...</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">The type of the nth axis (as FITS CTYPE).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">datamin,datamax</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">See bunit</TD>
+<TD ALIGN="LEFT">The minimum and maximum pixel values.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">epoch</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">years</TD>
+<TD ALIGN="LEFT">The epoch of the coordinate system.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">history</TD>
+<TD ALIGN="LEFT">text</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">A text item containing the history of</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">processing performed to the data set.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">image</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">See bunit</TD>
+<TD ALIGN="LEFT">The pixel data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">llrot</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">radians</TD>
+<TD ALIGN="LEFT">Eastward rotation relative to north of the</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">sky grid relative to the pixel grid.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">lstart,lstep,lwidth</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">ltype</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">The linetype used in making the map.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mask</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="CENTER">#</TD>
+<TD ALIGN="LEFT">Bitmap used to determine which pixels in</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">the image have been blanked.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">mostable</TD>
+<TD ALIGN="LEFT">binary</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">Mosaic information table.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">naxis</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="CENTER">#</TD>
+<TD ALIGN="LEFT">Number of dimensions.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">naxis1,naxis2,...</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="CENTER">#</TD>
+<TD ALIGN="LEFT">Number of pixels along each dimension.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">niters</TD>
+<TD ALIGN="LEFT">integer</TD>
+<TD ALIGN="CENTER">#</TD>
+<TD ALIGN="LEFT">The total number of deconvolution iterations</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">performed on the image.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">object</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">source name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">observer</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">observers name</TD>
+</TR>
+<TR><TD ALIGN="LEFT">obsra,obsdec</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">radians</TD>
+<TD ALIGN="LEFT">The apparent RA and DEC of the observation</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">centre.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">obstime</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">Julian date</TD>
+<TD ALIGN="LEFT">The mean observing time.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pbfwhm</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">arcsec</TD>
+<TD ALIGN="LEFT">Gaussian primary beam size (deprecated).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">pbtype</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">Primary beam type. Standard values include:</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><TT>HATCREEK, VLA, ATCA, WSRT</TT></TD>
+</TR>
+<TR><TD ALIGN="LEFT">restfreq</TD>
+<TD ALIGN="LEFT">double</TD>
+<TD ALIGN="CENTER">GHz</TD>
+<TD ALIGN="LEFT">The rest frequency of the observed data.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">telescop</TD>
+<TD ALIGN="LEFT">character</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">Telescope name. Standard values include:</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT"><TT>HATCREEK, VLA, ATCA, WSRT</TT></TD>
+</TR>
+<TR><TD ALIGN="LEFT">vobs</TD>
+<TD ALIGN="LEFT">real</TD>
+<TD ALIGN="CENTER">km/s</TD>
+<TD ALIGN="LEFT">Velocity of the observatory</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">with respect to the rest frame,</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="CENTER">&nbsp;</TD>
+<TD ALIGN="LEFT">during the observation.</TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+<P>
+
+<P>
+
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html4092"
+  HREF="node214.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html4088"
+  HREF="userhtml.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html4082"
+  HREF="node212.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html4090"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html4093"
+  HREF="node214.html">UV Variables</A>
+<B>Up:</B> <A NAME="tex2html4089"
+  HREF="userhtml.html">userhtml</A>
+<B> Previous:</B> <A NAME="tex2html4083"
+  HREF="node212.html">Setting Up Your Account</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

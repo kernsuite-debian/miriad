@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>On-the-Fly Calibration Correction</TITLE>
+<META NAME="description" CONTENT="On-the-Fly Calibration Correction">
+<META NAME="keywords" CONTENT="userhtml">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="userhtml.css">
+
+<LINK REL="next" HREF="node35.html">
+<LINK REL="previous" HREF="node33.html">
+<LINK REL="up" HREF="node31.html">
+<LINK REL="next" HREF="node35.html">
+</HEAD>
+
+<BODY background=../hmiriad.gif>
+
+<DIV CLASS="navigation">
+<A NAME="tex2html1799"
+  HREF="node35.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1795"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1789"
+  HREF="node33.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1797"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1800"
+  HREF="node35.html">Channel Selection, Averaging and</A>
+<B>Up:</B> <A NAME="tex2html1796"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1790"
+  HREF="node33.html">Miriad's Calibration Model</A>
+<BR> <P>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00530000000000000000"></A><A NAME="1370"></A>
+<A NAME="s:onthefly"></A>
+<BR>
+On-the-Fly Calibration Correction
+</H1>
+
+<P>
+Many tasks will apply calibration corrections `on-the-fly'.  This means
+that often there is no need to form a calibrated dataset.  Normally this
+calibration correction step is performed by default.  However, the correction
+stage
+can be disabled using some fairly standard switches in the
+<code>options</code> parameter.  These switches are:
+
+<P>
+<DL>
+<DT><STRONG><TT>nocal</TT>:</STRONG></DT>
+<DD>Do not apply antenna gain and delay
+corrections.
+</DD>
+<DT><STRONG><TT>nopol</TT>:</STRONG></DT>
+<DD>Do not apply polarisation leakage corrections.
+</DD>
+<DT><STRONG><TT>nopass</TT>:</STRONG></DT>
+<DD>Do not apply bandpass function corrections.
+</DD>
+</DL>
+
+<P>
+For example, to disable gain and bandpass correction in <A NAME="tex2html41"
+  HREF="../doc/uvspec.html">uvspec</A>,
+use:
+<PRE>
+     % uvspec options=nopass,nocal
+</PRE>
+
+<P>
+It is always possible to form a calibrated dataset by using either of the
+visibility copying tasks (<A NAME="tex2html42"
+  HREF="../doc/uvcat.html">uvcat</A>
+or <A NAME="tex2html43"
+  HREF="../doc/uvaver.html">uvaver</A>).  Whether or not
+you choose to do this may be often a matter of personal taste.  However
+there are three <EM>VERY</EM> important situations where you should form a
+calibrated copy of your dataset (<I>i.e.</I> where `on-the-fly' calibration is
+inadequate).
+
+<P>
+
+<UL>
+<LI>A still significant, but decreasing, number of tasks do not
+perform `on-the-fly' calibration.  Tasks
+which do apply calibration corrections will invariably have <TT>nocal,
+nopol</TT> and <TT>nopass</TT> options.  Additionally all tasks which are
+performing `on-the-fly' calibration will issue messages when they are
+performing these steps.
+
+<P>
+</LI>
+<LI>Many <I>Miriad</I> tasks allow `on-the-fly' averaging of spectral
+channels (using the <TT>line</TT> parameter with a width greater than 1 -
+see section&nbsp;<A HREF="node35.html#s:line">5.4</A>) in addition to bandpass correction.  However
+the technique used when simultaneously bandpass correcting and averaging
+is only approximately correct.  For arcane reasons, rather than applying
+the bandpass and then averaging the channels, the tasks correct the
+average of the channels with the average of the bandpass.  This can be
+significantly in error if the bandpass functions vary significantly over
+the range of channels being averaged.  Tasks performing this dubious
+operation issue warning messages to alert you of your possible folly.
+If this is a real problem, then it is best to form a copy of the
+bandpass-corrected data, and then use these corrected data for channel
+averaging.
+
+<P>
+</LI>
+<LI>The self-calibration tasks produce gain tables in the same format as
+the calibration tables derived from observations of calibrators. Thus if
+you self-calibrate a dataset containing you initial calibration, you
+will overwrite your initial calibration - a generally undesirable step.
+Additionally the self-calibration tasks do not apply some calibration
+corrections (e.g. bandpass and sometimes leakage corrections).
+Generally it is best to
+self-calibrate a dataset which has had the initial calibration applied.
+</LI>
+</UL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<A NAME="tex2html1799"
+  HREF="node35.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A> 
+<A NAME="tex2html1795"
+  HREF="node31.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A> 
+<A NAME="tex2html1789"
+  HREF="node33.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A>  
+<A NAME="tex2html1797"
+  HREF="node219.html">
+<IMG WIDTH="43" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="index" SRC="index.png"></A> <BR>
+<B> Next:</B> <A NAME="tex2html1800"
+  HREF="node35.html">Channel Selection, Averaging and</A>
+<B>Up:</B> <A NAME="tex2html1796"
+  HREF="node31.html">Visibility Data Concepts</A>
+<B> Previous:</B> <A NAME="tex2html1790"
+  HREF="node33.html">Miriad's Calibration Model</A>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Miriad manager <BR>
+2016-06-21</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,40 @@
+%N fft
+%D Fourier transform on image(s)
+%P mchw
+%: uv analysis, map making
+%B
+        FFT is a MIRIAD task that performs a fast Fourier transform on
+        an image.  If the input is a cube, then each plane is FFT'ed
+        individually (i.e. this does not perform a 3D FFT).
+ 
+        Blanked pixels in the input images are treated as zeroes.
+        The input image dimensions will be padded to a power of two if
+        necessary.
+ 
+        The output of the FFT is normally complex-valued.  You can save
+        it in any one of several ways -- as the real or imaginary part,
+        or as the magnitude (amplitude) and phase.
+%A rin
+        Input real image.  No default.
+%A iin
+        Input imaginary image.  The default is a zero image.
+%A sign
+        Sign of the exponent in the transform.  -1 gives a a forward
+        transform, +1 an inverse transform.  The inverse transform
+        applies 1/N scaling.  The default is a forward transform.
+%A center
+        Origin of the transform.  If two values are given they are used
+        as the origin in the x and y axis respectively.  If one value is
+        given then it's used for the origin for both the x and y.  The
+        default is the header value for CRPIX1 and CRPIX2 or N/2+1 if
+        they are not present in the header.
+%A rout
+        Output real image.  Default is not to write it
+%A iout
+        Output imaginary image.  Default is not to write it.
+%A mag
+        Output amplitude image.  Default is not to write it.
+%A phase
+        Output phase image.  Default is not to write it.
+ 
+%R 1.5, 2012/04/11 06:34:50 UTC

@@ -1,0 +1,54 @@
+%N mosgen
+%D Generate a mosaic file for the on-line system or for UVGEN.
+%P rjs
+%: uv analysis
+%B
+        MOSGEN generates a file containing mosaic pointing centres.  The
+        output format may be chosen either for the ATCA on-line system
+        or UVGEN.
+%A radec
+        RA and DEC of the centre of the mosaic in hh:mm:ss,dd:mm:ss
+        format, or decimal hours and degrees.  The default is 0,0.
+%A width
+        Width of the field to mosaic, in degrees.  One or two values can
+        be given, being the width in RA and DEC.  Default is 0.1 deg.
+%A freq
+        The observing frequency, in GHz.  Default is 1.4 GHz.
+%A device
+        Standard PGPLOT plotting device to display a diagram of the
+        pointing centres relative to the mosaic centre.  Default is not
+        to produce a plot.
+%A log
+        Output file listing the pointing centres.  Default is the
+        terminal.
+%A olay
+        Output file listing the pointing centres in a form suitable for
+        display with the task cgdisp. If unset, no overlay is output.
+ 
+%A mode
+        Format of the output file:
+          atmosaic  Mosaic file format understood by the ATCA on-line
+                    system.
+ 
+                    NOTE: The ATCA mosaic files produced by mosgen have
+                    the offsets referenced to the pointing in the lower
+                    left corner (earliest RA, least DEC value).  That
+                    is, it is not the centre of the mosaic given by the
+                    user.  The coordinate of the reference pointing is
+                    given as a comment in the head of the file.  The
+                    reason for the use of the lower left is to minimise
+                    drive times and to pixel the reference as the first
+                    point in the mosaic that rises. Note the ATCA on-
+                    line system has a limit of 2048 pointing centers.
+ 
+          uvgen     Format required for UVGEN's "center" keyword.
+%A telescop
+        Primary beam type.  Default is ATCA.
+%A name
+        For mode=atmosaic, a name used to derive the pointing name.  For
+        example, using name=lmc, MOSGEN will generate pointing names of
+        lmc_1, lmc_2, etc.  The full name must be 9 characters or less.
+%A cycles
+        For mode=atmosaic, the number of cycles spent on each pointing.
+ 
+%R 1.6, 2012/01/30 00:37:52 UTC

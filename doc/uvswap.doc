@@ -1,0 +1,18 @@
+%N uvswap
+%D Relabel polarizations in uvdata.
+%P nebk
+%: uv analysis
+%B
+        UVSWAP relabels RL correlations as LR and LR correlations as RL.
+        XY are relabeled YX and YX correlations as XY.
+        RR, LL, XX and YY  are left unchanged.  The data are copied in their
+        raw form only, gain, polarization and bandpass tables are
+        neither applied nor copied.
+ 
+%A vis
+        Input visibility data file. No default
+%A out
+        Output visibility data file name. No default.
+%A options
+       xyswap  swap X and Y pols.
+    XX to YY, YY to XX, XY to YX and YX to XY.

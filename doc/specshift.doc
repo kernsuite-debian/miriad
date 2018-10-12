@@ -1,0 +1,35 @@
+%N specshift
+%D shift velocity profiles
+%P tw
+%: analysis
+%B
+        SPECSHIFT shifts all spectra in a cube according to a 2-D
+        template (a velocity field).  The velocity of the template is
+        made the central pixel of the spectrum.  If the template is
+        blanked or out-of-range the spectrum is unchanged.  Based on
+        Bart Wakker's HANNING.
+ 
+%A in
+         The input data cube.  No default.
+ 
+%A tin
+         The template image, should be 2-D with same RA/DEC axes as the
+         input cube.
+ 
+%A out
+         The output image.  No default.
+ 
+%A region
+         The region of the input cube to modify.  Default is the whole
+         cube.
+ 
+%A refpix
+         The velocity pixel which will be assigned to the template
+         velocity.  Default is the middle pixel of the v-range.
+ 
+%A options
+         doblank    Don't wrap profile around; blank if out of range.
+                    By default the edge channels are assumed to be
+                    noise so the profile is wrapped when shifting
+                    beyond edges.
+%R 1.7, 2012/03/13 02:21:33 UTC
