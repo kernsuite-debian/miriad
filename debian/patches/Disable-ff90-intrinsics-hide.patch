@@ -1,0 +1,13 @@
+Description: Disable flag, gfortran doesn't understand
+
+--- miriad-20181011.orig/configure.ac
++++ miriad-20181011/configure.ac
+@@ -42,7 +42,7 @@ fi
+ if test "x$ac_cv_f77_compiler_gnu" = xyes ; then
+   # Beware of gfortran!
+   if test "x$F77" = xg77 -o "x$F77" = xf77 ; then
+-    FCSTD="-ff90-intrinsics-hide -Wno-globals"
++    FCSTD="-Wno-globals"
+   fi
+ fi
+ 

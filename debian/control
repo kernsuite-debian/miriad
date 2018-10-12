@@ -1,0 +1,24 @@
+Source: miriad
+Section: science
+Priority: optional
+Maintainer: KERN packaging <packaging@kernsuite.info>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.8
+Homepage: http://www.atnf.csiro.au/computing/software/miriad/
+
+Package: miriad
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: radio interferometry data reduction package
+ Miriad is a radio interferometry data reduction package of particular interest
+ to users of the Australia Telescope Compact Array (ATCA). It can be used for
+ the reduction of continuum and spectral line observations from beginning to
+ end, starting with the loading of the data (either FITS, the ATNF RPFITS or
+ old BIMA formats) through to image synthesis, analysis and display with
+ publication quality graphics.
+ .
+ In particular Miriad supports a number of niche areas including calibration
+ and analysis of polarimetric data from the ATCA, multi-frequency synthesis
+ imaging, mosaicing, ATCA pulsar bin mode, and specialized spectral line
+ observations (e.g. Zeeman).
