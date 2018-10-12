@@ -4,4 +4,10 @@ config.log
 config.status
 configure
 linux64/GNUmakedefs
+linux64/bin/*
+linux64/lib/*
+linux64/aux/subs.inc/*
+linux64/aux/subs.sym/*
+linux64/aux/subs.inclist
+linux64/aux/subs.symlist
 
